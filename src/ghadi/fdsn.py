@@ -126,6 +126,62 @@ class CachedWaveformClient:
         """Fetch a batch. One station being down never fails the batch."""
         return [self.get_waveforms(r) for r in requests]
 
+    def get_inventory(self, network: str, station: str) -> Any | None:
+        """Fetch and cache StationXML (response level) for one station.
+
+        Returns None on failure rather than raising, for the same reason waveform
+        fetches return failure records: metadata being unavailable must degrade the
+        pipeline, not stop it.
+        """
+        if is_synthetic(network):
+            return None
+
+        path = self.cache_dir / f"stationxml_{network}_{station}.xml"
+        if path.exists():
+            try:
+                from obspy import read_inventory
+
+                return read_inventory(str(path))
+            except Exception:
+                path.unlink(missing_ok=True)  # corrupt cache entry: refetch below
+
+        if is_offline():
+            return None
+
+        try:
+            from obspy import read_inventory
+
+            tmp = path.with_suffix(".part")
+            self._fdsn_client().get_stations(
+                network=network, station=station, level="response", filename=str(tmp)
+            )
+            tmp.replace(path)
+            return read_inventory(str(path))
+        except Exception:
+            return None
+
+    def to_velocity(
+        self,
+        stream: Any,
+        inventory: Any,
+        pre_filt: tuple[float, float, float, float] = (0.05, 0.1, 20.0, 25.0),
+    ) -> Any | None:
+        """Issue 2.4. Deconvolve the instrument response, returning ground velocity.
+
+        Without this, features are in raw counts and are comparable only within a
+        single station — which caps the project at one-station operation and makes
+        any cross-station threshold meaningless. Ground velocity in m/s is comparable
+        across NK.KKN, IO.EVN and the strong-motion stations alike.
+
+        Returns None on failure; the caller then keeps counts and says so.
+        """
+        try:
+            out = stream.copy()
+            out.remove_response(inventory=inventory, output="VEL", pre_filt=pre_filt)
+            return out
+        except Exception:
+            return None
+
     def _read_cached(self, request: WaveformRequest, path: Path) -> FetchResult:
         try:
             from obspy import read

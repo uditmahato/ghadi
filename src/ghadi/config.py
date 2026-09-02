@@ -75,7 +75,20 @@ class SeismicConfig:
     window_s: float = 240.0  # canonical analysis window length
     # Frequency split for the low/high spectral energy ratio. Earthquakes centre at
     # ~3-4 Hz on NK.KKN; the 2026 cascade at 1.44 Hz. The split is a tunable, not truth.
+    # exp001: the reported ratio changes by ~3x with this value, so any published
+    # LF/HF number must state the split that produced it.
     spectral_split_hz: float = 3.0
+    # Signal-presence gate (issue 2.3). A window whose peak envelope does not exceed
+    # this multiple of its median envelope has no event in it, and duration-based
+    # features must return NaN rather than a number that flatters diffuse noise.
+    signal_presence_ratio: float = 5.0
+    # How far after the onset to look for the peak that emergence is measured against.
+    # Unbounded, the search runs to the end of the window, so a small early trigger
+    # followed by a larger later arrival yields a huge emergence — exp002 measured
+    # 287.9 s for an earthquake whose window held four triggers. A bound also keeps
+    # the feature causal: in real time you act on the trigger you have, and cannot
+    # know which of the window's triggers will turn out to be the largest.
+    emergence_search_s: float = 120.0
 
 
 # --- hydrology ----------------------------------------------------------------------
