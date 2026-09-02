@@ -9,8 +9,20 @@ content-addressed cache and are re-fetchable from EarthScope by re-running the h
 | File | Label | Status |
 |---|---|---|
 | `earthquakes.json` | earthquake | 150 candidates, **64 usable** (harvested 2026-09-02) |
-| `noise.json` | noise | **not yet harvested** — `scripts/harvest_noise.py` is written and unrun |
+| `noise.json` | noise | harvested 2026-09-02 over months with confirmed coverage |
+| `availability.json` | — | monthly archive-coverage probe, 2016-05 to 2026-08 |
+| `exclusion_catalogue.json` | — | earthquakes excluded from the noise corpus as contamination |
 | positives | mass_movement | **n = 1 usable.** See "The class imbalance that matters" |
+
+## Archive coverage constrains everything below
+
+`NK.KKN..BHZ` advertises continuous operation from 2016-05-22, open-ended. The archive
+holds data at the probe point in **71 of 124 months**: nothing before ~2020-03, and gaps
+at 2025-01 and 2025-08 through 2025-12. **Usable history is roughly 3.8 years shorter
+than the station metadata implies**, and any corpus drawn without checking
+`availability.json` will silently sample dead months — the first noise-corpus attempt
+returned 2 usable windows from 80 for exactly that reason. Full map in
+[docs/DATA_SOURCES.md](../../docs/DATA_SOURCES.md).
 
 ## earthquakes.json
 
