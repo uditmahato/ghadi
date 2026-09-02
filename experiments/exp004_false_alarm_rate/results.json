@@ -1,0 +1,45 @@
+{
+  "experiment": "exp004_false_alarm_rate",
+  "noise_corpus": {
+    "usable_windows": 388,
+    "window_s": 2100.0,
+    "total_hours": 226.33333333333334,
+    "station_months": 0.30980800116805374
+  },
+  "thresholds": {
+    "source": "the 26 Aug 2026 cascade's own values (exp002)",
+    "lf_hf_min": 4.141,
+    "centroid_hz_max": 2.041,
+    "caveat": "fitted to the single positive event, so this is the most permissive operating point available and the rates below are lower bounds"
+  },
+  "layers": [
+    {
+      "name": "STA/LTA alone (baseline)",
+      "windows": 120,
+      "per_station_month": 387.3366715758468
+    },
+    {
+      "name": "+ signal-presence gate",
+      "windows": 120,
+      "per_station_month": 387.3366715758468
+    },
+    {
+      "name": "+ spectral criteria",
+      "windows": 4,
+      "per_station_month": 12.91122238586156
+    }
+  ],
+  "earthquakes": {
+    "usable": 64,
+    "passing_spectral": 8,
+    "fraction": 0.125
+  },
+  "probability_of_detection": {
+    "estimable": false,
+    "reason": "n = 1 positive example, and the thresholds are that example's own feature values, so any POD figure would be 100% by construction"
+  },
+  "target": {
+    "false_alarms_per_station_month": 1.0,
+    "source": "HANDOFF M3/issue 5.3"
+  }
+}
