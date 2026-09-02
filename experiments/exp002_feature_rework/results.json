@@ -1,0 +1,171 @@
+{
+  "experiment": "exp002_feature_rework",
+  "run_utc": "2026-09-02T11:16:49.707725+00:00",
+  "station": "NK.KKN..BHZ",
+  "config": {
+    "band_hz": [
+      0.5,
+      20.0
+    ],
+    "sta_s": 5.0,
+    "lta_s": 60.0,
+    "taper_s": 5.0,
+    "trigger_on": 5.0,
+    "spectral_split_hz": 3.0,
+    "signal_presence_ratio": 5.0
+  },
+  "cases": [
+    {
+      "case": "2026-08-26 Bhote Koshi",
+      "label": "mass_movement",
+      "counts": {
+        "onset_s": 620.32,
+        "n_triggers": 1,
+        "max_sta_lta": 9.497398083131902,
+        "signal_present": true,
+        "emergence_s": 28.3,
+        "kurtosis": 87.9203727519082,
+        "spectral_ratio_low_high": 4.1412841448122935,
+        "spectral_centroid_hz": 2.040557079216031,
+        "duration_80_s": 1096.34,
+        "duration_ratio": 0.5220616946505271,
+        "rise_to_duration": 0.002517467209077476,
+        "peak_amplitude": 24457.92398209343,
+        "rms_amplitude": 1002.0987983085959,
+        "snr_ratio": 104.18094593590904,
+        "emergence_s_global_peak": 28.3
+      },
+      "velocity_m_s": {
+        "onset_s": 620.32,
+        "n_triggers": 1,
+        "max_sta_lta": 9.497454254886739,
+        "signal_present": true,
+        "emergence_s": 28.3,
+        "kurtosis": 88.05089216767729,
+        "spectral_ratio_low_high": 4.142994235019375,
+        "spectral_centroid_hz": 2.0417003035716914,
+        "duration_80_s": 1076.42,
+        "duration_ratio": 0.5125760707040886,
+        "rise_to_duration": 0.002601215139072109,
+        "peak_amplitude": 3.827458914203147e-05,
+        "rms_amplitude": 1.5763672181693352e-06,
+        "snr_ratio": 107.31186362505186,
+        "emergence_s_global_peak": 28.3
+      }
+    },
+    {
+      "case": "Reference EQ M4.3 2026-08-18",
+      "label": "earthquake",
+      "counts": {
+        "onset_s": 324.32,
+        "n_triggers": 4,
+        "max_sta_lta": 11.949664698223614,
+        "signal_present": true,
+        "emergence_s": 3.94,
+        "kurtosis": 216.45594164687944,
+        "spectral_ratio_low_high": 0.3904387234810464,
+        "spectral_centroid_hz": 5.736097906806276,
+        "duration_80_s": 477.26,
+        "duration_ratio": 0.22726666666666667,
+        "rise_to_duration": 0.5052591878640573,
+        "peak_amplitude": 15981.887054309756,
+        "rms_amplitude": 465.4623172924616,
+        "snr_ratio": 680.8203749083315,
+        "emergence_s_global_peak": 287.86
+      },
+      "velocity_m_s": {
+        "onset_s": 324.32,
+        "n_triggers": 4,
+        "max_sta_lta": 11.949012334622394,
+        "signal_present": true,
+        "emergence_s": 3.94,
+        "kurtosis": 218.42980775733605,
+        "spectral_ratio_low_high": 0.3873165636234095,
+        "spectral_centroid_hz": 5.780283726170954,
+        "duration_80_s": 475.78,
+        "duration_ratio": 0.22656190476190474,
+        "rise_to_duration": 0.5061162722266594,
+        "peak_amplitude": 2.7069942743119285e-05,
+        "rms_amplitude": 7.34488438378408e-07,
+        "snr_ratio": 687.2288223973753,
+        "emergence_s_global_peak": 287.86
+      }
+    },
+    {
+      "case": "Reference EQ M4.5 2026-07-19",
+      "label": "earthquake",
+      "counts": {
+        "onset_s": 641.98,
+        "n_triggers": 2,
+        "max_sta_lta": 11.988623811271493,
+        "signal_present": true,
+        "emergence_s": 36.64,
+        "kurtosis": 208.55063435630106,
+        "spectral_ratio_low_high": 0.7599374061696318,
+        "spectral_centroid_hz": 3.9328488977707843,
+        "duration_80_s": 191.04,
+        "duration_ratio": 0.09097142857142856,
+        "rise_to_duration": 0.14782244556113902,
+        "peak_amplitude": 30762.792228385548,
+        "rms_amplitude": 998.3566755027459,
+        "snr_ratio": 1190.7457496147756,
+        "emergence_s_global_peak": 36.64
+      },
+      "velocity_m_s": {
+        "onset_s": 641.98,
+        "n_triggers": 2,
+        "max_sta_lta": 11.988587044045117,
+        "signal_present": true,
+        "emergence_s": 36.62,
+        "kurtosis": 208.47852837565523,
+        "spectral_ratio_low_high": 0.7588621592095661,
+        "spectral_centroid_hz": 3.940435827440085,
+        "duration_80_s": 189.84,
+        "duration_ratio": 0.09040000000000001,
+        "rise_to_duration": 0.1483354403708386,
+        "peak_amplitude": 4.967416429009887e-05,
+        "rms_amplitude": 1.5716817605278244e-06,
+        "snr_ratio": 1201.8904958393723,
+        "emergence_s_global_peak": 36.62
+      }
+    },
+    {
+      "case": "Quiet noise (T-7d)",
+      "label": "noise",
+      "counts": {
+        "onset_s": null,
+        "n_triggers": 0,
+        "max_sta_lta": 1.8575156792915921,
+        "signal_present": false,
+        "emergence_s": NaN,
+        "kurtosis": 3.039485043343875,
+        "spectral_ratio_low_high": 0.6918956070461165,
+        "spectral_centroid_hz": 5.399181320342578,
+        "duration_80_s": 1680.32,
+        "duration_ratio": NaN,
+        "rise_to_duration": 0.1316772995619882,
+        "peak_amplitude": 80.82747022701349,
+        "rms_amplitude": 18.83817860887808,
+        "snr_ratio": 3.951928060734522,
+        "emergence_s_global_peak": 391.24
+      },
+      "velocity_m_s": {
+        "onset_s": null,
+        "n_triggers": 0,
+        "max_sta_lta": 1.852724157164226,
+        "signal_present": false,
+        "emergence_s": NaN,
+        "kurtosis": 3.086244605281666,
+        "spectral_ratio_low_high": 0.6809795892605959,
+        "spectral_centroid_hz": 5.476503504567138,
+        "duration_80_s": 1653.3,
+        "duration_ratio": NaN,
+        "rise_to_duration": 0.12508316699933467,
+        "peak_amplitude": 1.283497040743977e-07,
+        "rms_amplitude": 2.941713545445445e-08,
+        "snr_ratio": 4.061138041541419,
+        "emergence_s_global_peak": 387.12
+      }
+    }
+  ]
+}
