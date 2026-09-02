@@ -1,5 +1,12 @@
 # Experiment 001 — Signal reconnaissance on NK.KKN
 
+> **Superseded in part by [exp003](../exp003_corpus_separation/FINDINGS.md).** Finding 2
+> below describes the spectral separation as "clean". That was measured against two
+> earthquakes. Against a corpus of 64, 12.5% of real earthquakes meet the cascade's own
+> values on both spectral features simultaneously. The separation is a tendency, not a
+> boundary. This document is left unedited because experiments are immutable; read
+> exp003 before quoting anything here about separability.
+
 **Question.** Is the 26 August 2026 mass-movement signal present on Nepal's one open
 broadband station, and does it separate from real earthquakes and from quiet noise?
 

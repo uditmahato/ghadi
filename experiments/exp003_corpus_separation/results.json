@@ -1,0 +1,76 @@
+{
+  "experiment": "exp003_corpus_separation",
+  "corpus": {
+    "candidates": 150,
+    "usable": 64,
+    "missing_waveform": 86,
+    "missing_top_dates": [
+      [
+        "2025-01-07",
+        47
+      ],
+      [
+        "2025-01-08",
+        8
+      ],
+      [
+        "2025-01-13",
+        5
+      ],
+      [
+        "2025-01-09",
+        3
+      ],
+      [
+        "2025-02-09",
+        2
+      ]
+    ],
+    "windows_with_pre_origin_triggers": 21,
+    "pre_origin_triggers_rejected": 32
+  },
+  "cascade": {
+    "lf_hf": 4.141,
+    "centroid_hz": 2.041,
+    "distance_km": 55.9
+  },
+  "earthquake_population": {
+    "n": 64,
+    "lf_hf": {
+      "median": 1.4766017615987075,
+      "p10": 0.37710652733267236,
+      "p90": 6.7102469556505335,
+      "max": 35.627681731707085
+    },
+    "centroid_hz": {
+      "median": 3.11096545298585,
+      "p10": 1.8954183464508398,
+      "p90": 4.925273723276422,
+      "min": 0.9808974772091789
+    }
+  },
+  "overlap": {
+    "eq_at_or_above_cascade_lf_hf": 13,
+    "eq_at_or_below_cascade_centroid": 8,
+    "eq_meeting_both": 8,
+    "fraction_meeting_both": 0.125
+  },
+  "confounds": {
+    "lf_hf_vs_distance_rank_r": 0.0391025641025641,
+    "centroid_vs_distance_rank_r": 0.027930402930402925,
+    "lf_hf_vs_magnitude_rank_r": 0.4419413919413918,
+    "centroid_vs_magnitude_rank_r": -0.42110805860805856
+  },
+  "matched_comparisons": {
+    "magnitude_matched": {
+      "criterion": "M 4.0-4.6",
+      "n": 48,
+      "meeting_both": 4
+    },
+    "magnitude_and_distance_matched": {
+      "criterion": "M 4.0-4.6 and < 250 km",
+      "n": 25,
+      "meeting_both": 1
+    }
+  }
+}
