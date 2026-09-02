@@ -26,6 +26,7 @@ from __future__ import annotations
 import argparse
 import json
 import sys
+import time
 from collections import Counter
 from datetime import UTC, datetime, timedelta
 from pathlib import Path
@@ -55,25 +56,85 @@ HOURS_UTC = (0, 4, 8, 12, 16, 20)
 EVENT_GUARD_S = 3600.0
 
 
-def catalogued_events(min_magnitude: float, max_radius_deg: float) -> list[datetime]:
-    """Origin times of catalogued earthquakes that could contaminate a noise window."""
+EXCLUSION_CATALOGUE = REPO_ROOT / "data" / "corpus" / "exclusion_catalogue.json"
+
+
+def _query_usgs(min_magnitude: float, max_radius_deg: float, attempts: int = 5) -> list[datetime]:
+    """Query USGS, retrying because service discovery is intermittently unavailable.
+
+    ObsPy discovers a server's capabilities when the client is constructed and raises
+    FDSNNoServiceException from ``get_events`` when that discovery came back without an
+    event service — which presents as "this client has no event service" even though the
+    same call succeeded minutes earlier and the raw endpoint answers HTTP 200. Observed
+    here failing five times across ten minutes and then succeeding, so the backoff is
+    deliberately long: a transient fault must not be reported as a missing service.
+    """
     from obspy import UTCDateTime
     from obspy.clients.fdsn import Client
 
-    client = Client("USGS", timeout=120)
-    catalog = client.get_events(
-        starttime=UTCDateTime(PERIOD_START - timedelta(seconds=EVENT_GUARD_S)),
-        endtime=UTCDateTime(PERIOD_END + timedelta(seconds=EVENT_GUARD_S)),
-        latitude=SOURCE_ZONE_LAT,
-        longitude=SOURCE_ZONE_LON,
-        maxradius=max_radius_deg,
-        minmagnitude=min_magnitude,
+    last_error: Exception | None = None
+    for attempt in range(1, attempts + 1):
+        try:
+            client = Client("USGS", timeout=120)
+            catalog = client.get_events(
+                starttime=UTCDateTime(PERIOD_START - timedelta(seconds=EVENT_GUARD_S)),
+                endtime=UTCDateTime(PERIOD_END + timedelta(seconds=EVENT_GUARD_S)),
+                latitude=SOURCE_ZONE_LAT,
+                longitude=SOURCE_ZONE_LON,
+                maxradius=max_radius_deg,
+                minmagnitude=min_magnitude,
+            )
+            out = []
+            for event in catalog:
+                origin = event.preferred_origin() or event.origins[0]
+                out.append(origin.time.datetime.replace(tzinfo=UTC))
+            return sorted(out)
+        except Exception as exc:
+            last_error = exc
+            print(f"  attempt {attempt}/{attempts} failed: {type(exc).__name__}: {exc}", flush=True)
+            if attempt < attempts:
+                time.sleep(15 * attempt)
+
+    raise RuntimeError(f"USGS event query failed after {attempts} attempts") from last_error
+
+
+def catalogued_events(min_magnitude: float, max_radius_deg: float) -> list[datetime]:
+    """Origin times of catalogued earthquakes that could contaminate a noise window.
+
+    Cached and committed. Which windows were excluded is part of how this corpus was
+    built, and re-querying a live catalogue on every run means a later revision, or an
+    outage, silently changes the corpus definition.
+    """
+    if EXCLUSION_CATALOGUE.exists():
+        cached = json.loads(EXCLUSION_CATALOGUE.read_text(encoding="utf-8"))
+        if (
+            cached["query"]["min_magnitude"] == min_magnitude
+            and cached["query"]["max_radius_deg"] == max_radius_deg
+        ):
+            return [datetime.fromisoformat(t) for t in cached["origins_utc"]]
+
+    origins = _query_usgs(min_magnitude, max_radius_deg)
+    EXCLUSION_CATALOGUE.parent.mkdir(parents=True, exist_ok=True)
+    EXCLUSION_CATALOGUE.write_text(
+        json.dumps(
+            {
+                "resolved_utc": datetime.now(UTC).isoformat(),
+                "purpose": "earthquakes excluded from the noise corpus as contamination",
+                "query": {
+                    "service": "USGS FDSN event",
+                    "centre": [SOURCE_ZONE_LAT, SOURCE_ZONE_LON],
+                    "min_magnitude": min_magnitude,
+                    "max_radius_deg": max_radius_deg,
+                    "start": PERIOD_START.isoformat(),
+                    "end": PERIOD_END.isoformat(),
+                },
+                "origins_utc": [o.isoformat() for o in origins],
+            },
+            indent=2,
+        ),
+        encoding="utf-8",
     )
-    out = []
-    for event in catalog:
-        origin = event.preferred_origin() or event.origins[0]
-        out.append(origin.time.datetime.replace(tzinfo=UTC))
-    return sorted(out)
+    return origins
 
 
 def candidate_windows(per_cell: int, seed: int) -> list[datetime]:
