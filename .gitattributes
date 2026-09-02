@@ -1,0 +1,7 @@
+# Normalise line endings. CI runs on both Linux and Windows; committing CRLF would
+# make every cross-platform diff noisy and can break shebangs on Linux checkouts.
+* text=auto eol=lf
+
+# Binary: never touch these.
+*.mseed binary
+*.png binary
