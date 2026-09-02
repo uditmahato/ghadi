@@ -3,13 +3,19 @@
 Classical recursive-free STA/LTA over the envelope of a band-passed trace.
 
 **The settling artefact (HANDOFF §2.2, Finding 5).** Every window produces a spurious
-trigger at exactly ``+lta_s`` because the long-term average has not yet settled: for
+trigger shortly after the start because the long-term average has not yet settled: for
 the first LTA-length of a window the LTA is computed over fewer samples than it needs
-and is biased low, so the ratio spikes. This is not a detection. The first LTA-length
-of every window is therefore discarded here, unconditionally, and
-``tests/test_sta_lta.py`` asserts that no trigger survives at ``+lta_s``. Do not
-"fix" this by lowering the threshold, and never let such a trigger into a training
-set as a positive.
+and is biased low, so the ratio spikes. This is not a detection.
+
+Experiment 001 showed the contaminated region is **taper + LTA**, not LTA alone: the
+preprocessing taper suppresses the earliest samples, and those suppressed samples sit
+inside the LTA's trailing window for a further ``taper_s`` seconds after the taper
+itself has ended. Discarding only ``lta_s`` leaves a trigger standing at ``lta_s + ε``
+on real data. Both are handled — the taper is now a fixed few seconds (see
+``ghadi.features.preprocess``) *and* the guard covers ``taper_s + lta_s``.
+
+Do not "fix" a surviving edge trigger by lowering the threshold, and never let one
+into a training set as a positive.
 
 Latency budget: < 100 ms (HANDOFF §5.1).
 """
@@ -69,10 +75,13 @@ def sta_lta_ratio(
 
     n_sta = max(round(config.sta_s * sampling_rate), 1)
     n_lta = max(round(config.lta_s * sampling_rate), n_sta + 1)
-    if power.size <= n_lta:
+    n_settle = n_lta + max(round(config.taper_s * sampling_rate), 0)
+    if power.size <= n_settle:
         raise ValueError(
             f"window of {power.size / sampling_rate:.1f} s is shorter than the "
-            f"{config.lta_s:.0f} s LTA — nothing can be detected in it"
+            f"{config.lta_s + config.taper_s:.0f} s settling region "
+            f"({config.lta_s:.0f} s LTA + {config.taper_s:.0f} s taper) — "
+            "nothing can be detected in it"
         )
 
     cumulative = np.concatenate([[0.0], np.cumsum(power)])
@@ -88,9 +97,9 @@ def sta_lta_ratio(
     with np.errstate(divide="ignore", invalid="ignore"):
         ratio = np.where(lta > 0, sta / lta, np.nan)
 
-    # Discard the first LTA-length: the LTA has not settled and the ratio is not
-    # meaningful there. This is the +60 s artefact guard.
-    ratio[:n_lta] = np.nan
+    # Discard taper + LTA: until then the LTA's trailing window still contains
+    # taper-suppressed samples, so the ratio is biased high and not meaningful.
+    ratio[:n_settle] = np.nan
 
     times = np.arange(power.size) / sampling_rate
     return ratio, times
@@ -139,6 +148,6 @@ def sta_lta(
         ratio=ratio,
         times_s=times,
         triggers=tuple(triggers),
-        settling_s=config.lta_s,
+        settling_s=config.lta_s + config.taper_s,
         sampling_rate=sampling_rate,
     )

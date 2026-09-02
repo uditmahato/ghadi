@@ -9,21 +9,22 @@ from ghadi.config import DEFAULT
 from ghadi.detect import sta_lta, sta_lta_ratio
 
 
-def test_no_trigger_survives_at_the_lta_settling_boundary(
+def test_no_trigger_survives_the_settling_boundary(
     noise_window: np.ndarray, emergent_window: np.ndarray, sampling_rate: float
 ) -> None:
     """HANDOFF §2.2 Finding 5 / issue 2.2.
 
-    Every window produced a spurious trigger at exactly +60 s because the 60 s LTA had
-    not settled. The first LTA-length is discarded; nothing may fire there.
+    Every window produced a spurious trigger at the settling boundary because the LTA
+    had not settled. Nothing may fire inside the discarded region.
     """
-    lta_s = DEFAULT.seismic.lta_s
+    settling_s = DEFAULT.seismic.lta_s + DEFAULT.seismic.taper_s
     for window in (noise_window, emergent_window):
         result = sta_lta(window, sampling_rate)
+        assert result.settling_s == settling_s
         for trigger in result.triggers:
-            assert trigger.on_s > lta_s, (
-                f"trigger at {trigger.on_s:.1f}s is inside the {lta_s:.0f}s settling "
-                "region — this is the artefact, not a detection"
+            assert trigger.on_s > settling_s, (
+                f"trigger at {trigger.on_s:.1f}s is inside the {settling_s:.0f}s "
+                "settling region — this is the artefact, not a detection"
             )
 
 
@@ -31,9 +32,36 @@ def test_settling_region_is_nan_not_a_number(
     noise_window: np.ndarray, sampling_rate: float
 ) -> None:
     ratio, times = sta_lta_ratio(noise_window, sampling_rate)
-    settling = times < DEFAULT.seismic.lta_s
+    settling = times < DEFAULT.seismic.lta_s + DEFAULT.seismic.taper_s
     assert np.all(np.isnan(ratio[settling]))
     assert np.any(np.isfinite(ratio[~settling]))
+
+
+def test_taper_does_not_scale_with_window_length(sampling_rate: float) -> None:
+    """The taper must be a fixed few seconds, not a fraction of the window.
+
+    Experiment 001: a fractional taper (alpha=0.05) on a 35-minute window suppressed
+    52 s of samples at each end. Those suppressed samples sit inside the LTA's
+    trailing window and manufacture a trigger the moment the STA clears the taper.
+    Assert the tapered fraction shrinks as the window grows.
+    """
+    from ghadi.features import preprocess
+
+    rng = np.random.default_rng(101)
+    tapered_fractions = []
+    for duration_s in (240.0, 2100.0):
+        n = int(duration_s * sampling_rate)
+        flat = np.ones(n) + rng.normal(0, 0.001, n)
+        out = np.abs(preprocess(flat, sampling_rate))
+        # Fraction of the leading half whose amplitude is visibly suppressed.
+        half = out[: n // 2]
+        suppressed = int(np.sum(half < 0.5 * np.median(half)))
+        tapered_fractions.append(suppressed / n)
+
+    assert tapered_fractions[1] < tapered_fractions[0], (
+        "tapered fraction did not shrink with a longer window — the taper is still "
+        "length-proportional and will corrupt the LTA baseline"
+    )
 
 
 def test_emergent_event_triggers_near_its_onset(

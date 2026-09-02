@@ -65,6 +65,11 @@ class SeismicConfig:
     sta_s: float = 5.0  # short-term average window
     lta_s: float = 60.0  # long-term average window; the first LTA-length of every
     # analysis window is discarded (settling artefact — HANDOFF §2.2 Finding 5)
+    # Edge taper, in SECONDS rather than as a fraction of the window. A fractional
+    # taper scales with window length: alpha=0.05 on a 35-minute window tapers 52 s
+    # at each end, which suppresses the samples the LTA baseline is built from and
+    # manufactures a trigger the moment the STA clears the taper. See exp001.
+    taper_s: float = 5.0
     trigger_on: float = 5.0  # STA/LTA ratio to open a trigger
     trigger_off: float = 2.0  # ratio to close it
     window_s: float = 240.0  # canonical analysis window length

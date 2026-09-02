@@ -75,6 +75,11 @@ def preprocess(
 ) -> np.ndarray:
     """Demean, taper and band-pass into the analysis band.
 
+    The taper is a fixed number of seconds, not a fraction of the window. It exists
+    only to suppress filter edge transients, and a few seconds does that at any
+    window length; a fractional taper instead grows with the window and destroys the
+    early samples that the LTA baseline is computed from (exp001).
+
     Instrument-response deconvolution is *not* done here — it is issue 2.4. Until it
     lands, features are in counts and are only comparable within one station.
     """
@@ -84,7 +89,10 @@ def preprocess(
 
     x = np.asarray(data, dtype=float)
     x = x - x.mean()
-    x = x * sp_signal.windows.tukey(x.size, alpha=0.05)
+    duration_s = x.size / sampling_rate
+    # Tukey's alpha is the total tapered fraction, split between the two ends.
+    alpha = min(2.0 * config.taper_s / duration_s, 1.0) if duration_s > 0 else 1.0
+    x = x * sp_signal.windows.tukey(x.size, alpha=alpha)
 
     nyquist = 0.5 * sampling_rate
     low = config.band_hz[0] / nyquist
