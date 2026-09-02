@@ -12,27 +12,48 @@ Compiled from the research report §7 (full detail there). Status as of 2026-09-
 | USGS FDSN event service | Reference earthquake catalogue | PUBLIC | Open | 108 candidate events M≥4.3 within 4° of source, 2024-01-01→2026-08-25 (verified) |
 | Secondary stations | `IO.EVN` (130.9 km), `NQ.KNSET`, `NQ.KTNP2` (strong-motion, Kathmandu), `K5.WANG` (Bhutan) | PUBLIC | Open | |
 
-## A measured availability gap on the primary station
+## Archive coverage on the primary station — measured, and not what the metadata says
 
-Harvesting the reference-earthquake corpus (issue 1.2) returned **no archived waveform
-for 86 of 150 catalogue events**, and the gap is not random:
+The station metadata advertises `NK.KKN..BHZ` as operating continuously from
+**2016-05-22, open-ended**. The archive does not hold that. A one-window-per-month probe
+across the station's whole advertised life (`scripts/probe_availability.py`,
+`data/corpus/availability.json`) found data at the probe point in **71 of 124 months**:
 
-| Date | Events with no waveform |
-|---|---:|
-| 2025-01-07 | **47** |
-| 2025-01-08 | 8 |
-| 2025-01-13 | 5 |
-| everything else | 26 |
+```
+year  JFMAMJJASOND
+2016  ........          <- nothing before 2020-03, despite metadata from 2016-05
+2017  ............
+2018  ............
+2019  ............
+2020  ..##########
+2021  ############
+2022  ############
+2023  ######.#####
+2024  ############
+2025  .######.....      <- 2025-01 absent; 2025-08 to 2025-12 absent
+2026  ########
+```
 
-84 of the 86 fall in 2025. **2025-01-07 is the M7.1 Tibet earthquake**, and its entire
-aftershock sequence is missing along with the mainshock. Whether this was a station
-outage, a telemetry loss, or an archive gap cannot be determined from outside.
+**What the station claims to cover and what can actually be harvested are different
+things**, and only the second matters for building a corpus. Consequences:
 
-The operational implication is the same either way: **Nepal's one open broadband station
-may be unavailable exactly when a large regional event occurs.** That is risk R4 with a
-date attached. It is a specific question for the DMG/NEMRC letter (blocker B3), and it
-strengthens the case for secondary stations (`IO.EVN`, `NQ.*`) being wired in earlier
-than planned rather than treated as redundancy.
+1. **Usable history starts around 2020-03, not 2016.** Roughly 3.8 years less than the
+   handoff assumes. Any plan resting on ten years of archive should be re-scoped.
+2. **2025-01 is a gap, which explains the 47 missing 2025-01-07 events** (the M7.1
+   Tibet sequence). Earlier notes here read that as the station failing during a large
+   event; the coverage map shows the gap was already there and the M7.1 fell inside it.
+   That reading is **withdrawn** — see the correction at the top of
+   [exp003 FINDINGS](../experiments/exp003_corpus_separation/FINDINGS.md).
+3. **2025-08 to 2025-12 is a five-month gap**, which is why the first noise-corpus
+   attempt returned 2 usable windows from 80 — it was sampling a period with no data.
+4. A month marked present may still contain gaps. One probe per month cannot see them,
+   and the corpus manifests record per-window failures for that reason.
+
+This is a concrete question for the DMG/NEMRC letter (blocker B3): is the gap an
+archiving policy, a telemetry loss, or data held locally at NEMRC but never forwarded to
+EarthScope? The third case would be recoverable and would roughly double the usable
+history. It also strengthens the case for wiring in secondary stations (`IO.EVN`,
+`NQ.*`) earlier than planned.
 
 ## Blocked / negotiation required (owners in handoff §11)
 

@@ -43,9 +43,14 @@ from ghadi.fdsn import CachedWaveformClient, WaveformRequest  # noqa: E402
 from ghadi.features import extract, preprocess  # noqa: E402
 
 MANIFEST = REPO_ROOT / "data" / "corpus" / "noise.json"
+AVAILABILITY = REPO_ROOT / "data" / "corpus" / "availability.json"
 
-# A full year, so every season is represented, ending before the 2026 cascade.
-PERIOD_START = datetime(2025, 8, 1, tzinfo=UTC)
+# Sampling period. Ends before the 2026 cascade so the target cannot leak into the
+# negative class. The start is early enough to span whole seasons, but which months
+# inside it are actually usable is decided by the coverage map, not by this constant:
+# the first attempt at this corpus sampled 2025-08 to 2026-08 and returned 2 usable
+# windows from 80, because five of those months hold no archived data at all.
+PERIOD_START = datetime(2024, 1, 1, tzinfo=UTC)
 PERIOD_END = datetime(2026, 8, 1, tzinfo=UTC)
 
 WINDOW_S = 2100.0  # same length as the event windows, so features are comparable
@@ -137,24 +142,43 @@ def catalogued_events(min_magnitude: float, max_radius_deg: float) -> list[datet
     return origins
 
 
+def available_months() -> set[str] | None:
+    """Months the coverage probe found data in, as ``YYYY-MM``.
+
+    Returns None when no probe has been run, in which case every month is attempted
+    and the failures are recorded rather than avoided.
+    """
+    if not AVAILABILITY.exists():
+        return None
+    probe = json.loads(AVAILABILITY.read_text(encoding="utf-8"))
+    return {row["month"] for row in probe["months"] if row["present"]}
+
+
 def candidate_windows(per_cell: int, seed: int) -> list[datetime]:
-    """Sample window starts stratified over (month, hour-of-day) cells."""
+    """Sample window starts stratified over (month, hour-of-day) cells.
+
+    Months the coverage probe found empty are skipped. Sampling them would not make
+    the corpus more honest, only smaller and slower: their absence is already recorded
+    in ``availability.json``, and spending hundreds of requests rediscovering it would
+    say nothing new.
+    """
     rng = np.random.default_rng(seed)
     starts: list[datetime] = []
+    usable = available_months()
 
     month = datetime(PERIOD_START.year, PERIOD_START.month, 1, tzinfo=UTC)
     while month < PERIOD_END:
-        # Days available in this month, within the period.
         next_month = (month.replace(day=28) + timedelta(days=8)).replace(day=1)
-        for hour in HOURS_UTC:
-            for _ in range(per_cell):
-                span_days = (min(next_month, PERIOD_END) - month).days
-                if span_days <= 0:
-                    continue
-                day = int(rng.integers(0, span_days))
-                start = month + timedelta(days=day, hours=hour)
-                if PERIOD_START <= start < PERIOD_END:
-                    starts.append(start)
+        if usable is None or month.strftime("%Y-%m") in usable:
+            for hour in HOURS_UTC:
+                for _ in range(per_cell):
+                    span_days = (min(next_month, PERIOD_END) - month).days
+                    if span_days <= 0:
+                        continue
+                    day = int(rng.integers(0, span_days))
+                    start = month + timedelta(days=day, hours=hour)
+                    if PERIOD_START <= start < PERIOD_END:
+                        starts.append(start)
         month = next_month
 
     return sorted(set(starts))

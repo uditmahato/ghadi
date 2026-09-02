@@ -1,5 +1,27 @@
 # Experiment 003 — Does the spectral separation survive a real earthquake corpus?
 
+> ### Correction, appended 2026-09-02
+>
+> **I over-read the availability finding below.** This document says the missing
+> 2025-01-07 waveforms mean "the station may be unavailable precisely when a large
+> regional event occurs", which implies the outage and the M7.1 are connected.
+>
+> A monthly coverage probe across the station's whole life
+> (`scripts/probe_availability.py`, `data/corpus/availability.json`) shows they are not.
+> **NK.KKN's archive has multi-month gaps, and 2025-01 is one of them** — as are
+> 2025-08 through 2025-12, and everything before 2020-03. The M7.1 fell inside a gap
+> that was already there. That is coincidence, not causation, and the original wording
+> claimed a pattern from a single date.
+>
+> The operational concern survives in weaker and more general form: the archive is
+> discontinuous, so corpus coverage cannot be assumed from station metadata. The
+> specific claim that the station fails during large events is **withdrawn** — nothing
+> measured here supports it.
+>
+> The separation results below are unaffected. The correction is appended rather than
+> edited in because experiments are immutable, and a claim I got wrong is worth more
+> to a future reader visible than erased.
+
 **Question.** exp001 and exp002 compared the 26 August 2026 cascade against *two*
 hand-picked earthquakes and found the spectral features separated cleanly. Both said
 in terms that four windows cannot establish separability. Issue 1.2 has now harvested

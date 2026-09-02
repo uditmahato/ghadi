@@ -28,6 +28,40 @@ public, minutes before the water. Nobody was listening. GHADI listens.
 See [docs/HANDOFF.md](docs/HANDOFF.md) for the full engineering plan and
 [docs/RESEARCH_REPORT.md](docs/RESEARCH_REPORT.md) for the evidence base.
 
+## What is actually established, as of 2026-09-02
+
+Read this before quoting anything about GHADI's feasibility. Details and caveats in
+[docs/EXPERIMENTS.md](docs/EXPERIMENTS.md).
+
+**Encouraging.**
+
+- The 26 August 2026 signal is present and cleanly triggered on NK.KKN, and the
+  station's metadata and sample count reproduce the handoff's verified figures exactly.
+- Real-time SeedLink latency is **median 16 s, p95 22 s** on a short sample, well inside
+  the ~120 s viability threshold ([docs/LATENCY.md](docs/LATENCY.md)). A seven-day
+  measurement is still outstanding.
+- Against earthquakes matched for magnitude and distance, the cascade is distinctive:
+  1 in 25 looks like it on both spectral features.
+
+**Sobering, and load-bearing.**
+
+- **The spectral separation is not clean.** Against 64 real earthquakes, 12.5% meet the
+  cascade's own values on both features simultaneously. The earlier "clean separation"
+  claim came from a comparison against two events (exp003).
+- **The positive class is n = 1.** One usable mass-movement window exists. Two seed
+  events predate the station; three have news-derived origin times too coarse to cut a
+  window around ([data/corpus/DATA_CARD.md](data/corpus/DATA_CARD.md)).
+- **The two spectral features encode one physical idea**, so they are correlated and
+  fail together. Three-component polarisation is implemented but unmeasured.
+- **Magnitude is a confound** (rank correlation ±0.4). A classifier that does not
+  control for size may learn a size detector.
+- **NK.KKN was unavailable for the entire 2025-01-07 M7.1 sequence.** The one open
+  broadband station can be missing when a large regional event occurs.
+
+Nothing here falsifies the core hypothesis. It does mean the question "can mass
+movements be separated at a usable false-alarm rate" is still open, and is M3's to
+answer on the corpus rather than on four windows.
+
 ## Quickstart
 
 Requires Python ≥ 3.12 and [uv](https://docs.astral.sh/uv/).
