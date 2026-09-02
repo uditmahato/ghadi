@@ -1,0 +1,25 @@
+{
+  "experiment": "exp005_window_length",
+  "segment_s": 120.0,
+  "cascade": {
+    "whole_lf_hf": 4.1412841448122935,
+    "whole_centroid_hz": 2.040557079216031,
+    "segment_lf_hf": 4.918825432527951,
+    "segment_centroid_hz": 1.8851624520050314,
+    "background_lf_hf": 0.6553476874614401,
+    "background_centroid_hz": 5.032844145010637,
+    "onset_s": 620.32
+  },
+  "earthquakes": {
+    "n": 64,
+    "whole_lf_hf_median": 1.4766017615987075,
+    "whole_centroid_median": 3.11096545298585,
+    "segment_lf_hf_median": 1.6580506532004473,
+    "segment_centroid_median": 3.0377986592914876
+  },
+  "overlap": {
+    "whole_window": 8,
+    "segment": 11,
+    "n": 64
+  }
+}

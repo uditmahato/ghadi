@@ -45,9 +45,10 @@ Read this before quoting anything about GHADI's feasibility. Details and caveats
 
 **Sobering, and load-bearing.**
 
-- **The spectral separation is not clean.** Against 64 real earthquakes, 12.5% meet the
-  cascade's own values on both features simultaneously. The earlier "clean separation"
-  claim came from a comparison against two events (exp003).
+- **The spectral separation is not clean.** Against 64 real earthquakes, **17.2%** meet
+  the cascade's own values on both features simultaneously, measured over the 120 s
+  decision-time segment an operational detector could actually use. The earlier "clean
+  separation" claim came from a comparison against two events (exp003, exp005).
 - **The positive class is n = 1.** One usable mass-movement window exists. Two seed
   events predate the station; three have news-derived origin times too coarse to cut a
   window around ([data/corpus/DATA_CARD.md](data/corpus/DATA_CARD.md)).
