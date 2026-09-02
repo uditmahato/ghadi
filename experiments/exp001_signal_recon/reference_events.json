@@ -1,0 +1,22 @@
+{
+  "resolved_utc": "2026-09-02T10:48:53+00:00",
+  "note": "Resolved from the USGS FDSN event service during the first run of this experiment on 2026-09-02. Committed so the experiment is reproducible from a cold cache: re-querying a live catalogue on every run means a service outage, or a later revision to the catalogue, silently changes which events the comparison is made against.",
+  "query": {
+    "service": "USGS FDSN event",
+    "centre": [28.255, 85.52],
+    "maxradius_deg": 4.0,
+    "minmagnitude": 4.3,
+    "starttime": "2026-06-27T02:52:10+00:00",
+    "endtime": "2026-08-25T02:52:10+00:00"
+  },
+  "events": [
+    {
+      "origin_utc": "2026-08-18T19:59:08.089000+00:00",
+      "magnitude": 4.3
+    },
+    {
+      "origin_utc": "2026-07-19T10:45:31.176000+00:00",
+      "magnitude": 4.5
+    }
+  ]
+}

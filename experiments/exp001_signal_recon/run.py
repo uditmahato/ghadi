@@ -59,8 +59,29 @@ def _window(centre: datetime) -> tuple[datetime, datetime]:
     return centre - timedelta(seconds=WINDOW_PRE_S), centre + timedelta(seconds=WINDOW_POST_S)
 
 
+REFERENCE_EVENTS_PATH = Path(__file__).parent / "reference_events.json"
+
+
 def reference_earthquakes(limit: int = 2) -> list[dict[str, Any]]:
-    """Resolve real regional earthquakes recorded on the same station, from USGS."""
+    """Resolve real regional earthquakes recorded on the same station.
+
+    The resolved list is cached to ``reference_events.json`` and committed, because
+    an experiment that re-queries a live catalogue on every run is not reproducible:
+    a USGS outage, or a later revision to the catalogue, silently changes which
+    events the comparison is made against. The cache is the record of what this
+    experiment actually used.
+    """
+    if REFERENCE_EVENTS_PATH.exists():
+        cached = json.loads(REFERENCE_EVENTS_PATH.read_text(encoding="utf-8"))
+        return [
+            {
+                "origin_utc": datetime.fromisoformat(e["origin_utc"]),
+                "magnitude": e["magnitude"],
+                "label": "earthquake",
+            }
+            for e in cached["events"][:limit]
+        ]
+
     from obspy.clients.fdsn import Client
 
     client = Client("USGS")
@@ -83,6 +104,25 @@ def reference_earthquakes(limit: int = 2) -> list[dict[str, Any]]:
                 "label": "earthquake",
             }
         )
+
+    REFERENCE_EVENTS_PATH.write_text(
+        json.dumps(
+            {
+                "resolved_utc": datetime.now(UTC).isoformat(),
+                "query": {
+                    "maxradius_deg": 4.0,
+                    "minmagnitude": 4.3,
+                    "centre": [SOURCE_ZONE_LAT, SOURCE_ZONE_LON],
+                },
+                "events": [
+                    {"origin_utc": e["origin_utc"].isoformat(), "magnitude": e["magnitude"]}
+                    for e in events
+                ],
+            },
+            indent=2,
+        ),
+        encoding="utf-8",
+    )
     return events
 
 

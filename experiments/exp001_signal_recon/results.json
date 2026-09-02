@@ -1,0 +1,120 @@
+{
+  "experiment": "exp001_signal_recon",
+  "run_utc": "2026-09-02T10:52:49.388998+00:00",
+  "station": "NK.KKN..BHZ",
+  "config": {
+    "band_hz": [
+      0.5,
+      20.0
+    ],
+    "sta_s": 5.0,
+    "lta_s": 60.0,
+    "trigger_on": 5.0,
+    "trigger_off": 2.0,
+    "spectral_split_hz": 3.0
+  },
+  "event_origin_utc": "2026-08-26T02:52:10+00:00",
+  "event_origin_npt": "2026-08-26T08:37:10+05:45",
+  "cases": [
+    {
+      "case": "2026-08-26 Bhote Koshi",
+      "label": "mass_movement",
+      "window_start_utc": "2026-08-26T02:42:10+00:00",
+      "window_end_utc": "2026-08-26T03:17:10+00:00",
+      "sampling_rate": 50.0,
+      "n_samples": 105001,
+      "features": {
+        "emergence_s_global_peak": 28.3,
+        "kurtosis": 87.9203727519082,
+        "spectral_ratio_low_high": 4.1412841448122935,
+        "spectral_centroid_hz": 2.040557079216031,
+        "duration_80_s": 1096.34,
+        "duration_ratio": 0.5220616946505271,
+        "rise_to_duration": 0.002517467209077476,
+        "peak_amplitude": 24457.92398209343,
+        "rms_amplitude": 1002.0987983085959
+      },
+      "max_sta_lta": 9.497398083131902,
+      "n_triggers": 1,
+      "first_trigger_on_s": 620.32,
+      "first_trigger_duration_s": 47.33999999999992,
+      "first_trigger_onset_utc": "2026-08-26T02:52:30.320000+00:00",
+      "snr_db": 59.371924960387815
+    },
+    {
+      "case": "Reference EQ M4.3 2026-08-18",
+      "label": "earthquake",
+      "window_start_utc": "2026-08-18T19:49:08.089000+00:00",
+      "window_end_utc": "2026-08-18T20:24:08.089000+00:00",
+      "sampling_rate": 50.0,
+      "n_samples": 105000,
+      "features": {
+        "emergence_s_global_peak": 287.86,
+        "kurtosis": 216.45594164687944,
+        "spectral_ratio_low_high": 0.3904387234810464,
+        "spectral_centroid_hz": 5.736097906806276,
+        "duration_80_s": 477.26,
+        "duration_ratio": 0.22726666666666667,
+        "rise_to_duration": 0.5052591878640573,
+        "peak_amplitude": 15981.887054309756,
+        "rms_amplitude": 465.4623172924616
+      },
+      "max_sta_lta": 11.949664698223614,
+      "n_triggers": 4,
+      "first_trigger_on_s": 324.32,
+      "first_trigger_duration_s": 18.360000000000014,
+      "first_trigger_onset_utc": "2026-08-18T19:54:32.409000+00:00",
+      "snr_db": 61.21612539578341
+    },
+    {
+      "case": "Reference EQ M4.5 2026-07-19",
+      "label": "earthquake",
+      "window_start_utc": "2026-07-19T10:35:31.176000+00:00",
+      "window_end_utc": "2026-07-19T11:10:31.176000+00:00",
+      "sampling_rate": 50.0,
+      "n_samples": 105000,
+      "features": {
+        "emergence_s_global_peak": 36.64,
+        "kurtosis": 208.55063435630106,
+        "spectral_ratio_low_high": 0.7599374061696318,
+        "spectral_centroid_hz": 3.9328488977707843,
+        "duration_80_s": 191.04,
+        "duration_ratio": 0.09097142857142856,
+        "rise_to_duration": 0.14782244556113902,
+        "peak_amplitude": 30762.792228385548,
+        "rms_amplitude": 998.3566755027459
+      },
+      "max_sta_lta": 11.988623811271493,
+      "n_triggers": 2,
+      "first_trigger_on_s": 641.98,
+      "first_trigger_duration_s": 22.620000000000005,
+      "first_trigger_onset_utc": "2026-07-19T10:46:13.156000+00:00",
+      "snr_db": 63.54990612596857
+    },
+    {
+      "case": "Quiet noise (T-7d)",
+      "label": "noise",
+      "window_start_utc": "2026-08-19T02:42:10+00:00",
+      "window_end_utc": "2026-08-19T03:17:10+00:00",
+      "sampling_rate": 50.0,
+      "n_samples": 105001,
+      "features": {
+        "emergence_s_global_peak": 391.24,
+        "kurtosis": 3.039485043343875,
+        "spectral_ratio_low_high": 0.6918956070461165,
+        "spectral_centroid_hz": 5.399181320342578,
+        "duration_80_s": 1680.32,
+        "duration_ratio": 0.8001447605260902,
+        "rise_to_duration": 0.1316772995619882,
+        "peak_amplitude": 80.82747022701349,
+        "rms_amplitude": 18.83817860887808
+      },
+      "max_sta_lta": 1.8575156792915921,
+      "n_triggers": 0,
+      "first_trigger_on_s": null,
+      "first_trigger_duration_s": null,
+      "first_trigger_onset_utc": null,
+      "snr_db": 12.818835003525317
+    }
+  ]
+}
