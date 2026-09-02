@@ -1,0 +1,24 @@
+# The 15 June 2021 Melamchi flood, Sindhupalchok: a cascading chain — heavy rain,
+# snowmelt, a glacial-lake-related outburst in the Pemdang Khola headwaters, breach
+# of an old landslide dam at Bremthang, and a fresh landslide at Melamchigaon.
+# Origin time is news-derived and coarse; the cascade had multiple pulses.
+event_id: NPL-2021-06-15-MELAMCHI-001
+origin_utc: 2021-06-15T09:30:00Z
+origin_uncertainty_s: 10800
+time_source: news
+label: mass_movement
+lat: 28.100
+lon: 85.550
+location_uncertainty_km: 15.0
+hazard_subtype: cascade_landslide_dam_outburst
+river_system: "Pemdang Khola -> Melamchi Khola -> Indrawati"
+deaths: 5
+missing: 20
+deaths_status: PROVISIONAL
+sources:
+  - https://www.icimod.org/article/the-melamchi-flood-disaster/
+notes: >-
+  Informal upstream-to-downstream phone relay reduced casualties. ICIMOD noted the
+  HIWAT model could in principle have forecast the flood two days ahead but was never
+  operationalised as a warning. Multi-pulse event: expect an extended, complex seismic
+  signature rather than a single onset.

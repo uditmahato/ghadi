@@ -1,0 +1,26 @@
+# The 25 April 2015 Langtang ice/rock avalanche (14.4 million m^3), triggered by the
+# Gorkha Mw 7.8 mainshock (06:11:25 UTC). More than 350 people killed or missing,
+# most by the air blast. Timing is bounded by the mainshock, hence time_source
+# "seismic" with a wide window: the avalanche signal sits INSIDE the mainshock coda,
+# which is the hard research problem flagged in issue 1.5.
+event_id: NPL-2015-04-25-LANGTANG-001
+origin_utc: 2015-04-25T06:13:00Z
+origin_uncertainty_s: 300
+time_source: seismic
+label: mass_movement
+lat: 28.210
+lon: 85.520
+location_uncertainty_km: 5.0
+hazard_subtype: coseismic_ice_rock_avalanche
+river_system: "Langtang Khola -> Trishuli"
+deaths: 350
+deaths_status: ESTIMATE
+sources:
+  - https://www.nature.com/articles/s43247-024-01624-z
+  - https://www.icimod.org/impact-of-nepal-earthquake-2015-on-langthang-valley/
+notes: >-
+  NK.KKN began operating 2016-05-22, so there is NO primary-station record for this
+  event — fetches against NK.KKN must fail gracefully (this entry doubles as the
+  failure-path test case in the real catalogue). Usable records may exist on other
+  regional stations; investigate in M1 alongside the wider Gorkha co-seismic
+  landslide population (4,312+ mapped, issue 1.5).

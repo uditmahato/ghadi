@@ -1,0 +1,26 @@
+# The 26 August 2026 Bhote Koshi / Trishuli transboundary cascade.
+# Origin refined from the NK.KKN trigger onset (02:52:24 UTC) minus ~15 s travel time
+# over 55.9 km — Experiment 001 Finding 3 (HANDOFF §2.2). Published accounts give only
+# "~08:37-08:40 NPT".
+event_id: NPL-2026-08-26-BHOTEKOSHI-001
+origin_utc: 2026-08-26T02:52:10Z
+origin_uncertainty_s: 15
+time_source: seismic
+label: mass_movement
+lat: 28.255
+lon: 85.520
+location_uncertainty_km: 8.0
+hazard_subtype: ice_rock_avalanche_dam_break
+river_system: "Lhende Khola -> Bhote Koshi -> Trishuli"
+deaths: 1058
+missing: 4606
+deaths_status: PROVISIONAL
+sources:
+  - https://www.usgs.gov/programs/landslide-hazards/science/2026-nepal-debris-avalanche-and-flash-flood
+  - https://english.nepalnews.com/s/nation/bhote-koshi-flood-latest-update-1058-human-remains-recovered-4606-people-still-unaccounted-for-as-of-2-pm/
+  - https://wmo.int/media/news/flood-tragedy-nepal-highlights-cross-border-and-cascading-risks
+notes: >-
+  Dry-day event: no meteorological precursor. USGS initially catalogued the seismic
+  signal as an M4.4 earthquake before identifying it as landslide-generated. Four of
+  five downstream gauges destroyed before stage thresholds triggered. Casualty figures
+  were still being revised daily at the time of entry (2026-09-02).

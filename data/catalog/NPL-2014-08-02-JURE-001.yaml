@@ -1,0 +1,22 @@
+# The 2 August 2014 Jure / Sunkoshi landslide and landslide dam. ~5.5 million m^3;
+# buried Jure village around 02:30 NPT (which is 20:45 UTC on 1 August — the event_id
+# keeps the local date the event is known by). The debris dam impounded a 47 m lake
+# and took 45 days to drain under controlled excavation.
+event_id: NPL-2014-08-02-JURE-001
+origin_utc: 2014-08-01T20:45:00Z
+origin_uncertainty_s: 1800
+time_source: news
+label: mass_movement
+lat: 27.771
+lon: 85.878
+location_uncertainty_km: 3.0
+hazard_subtype: landslide_dam
+river_system: "Sun Koshi"
+deaths: 156
+deaths_status: ESTIMATE
+sources:
+  - https://en.wikipedia.org/wiki/2014_Sunkoshi_blockage
+notes: >-
+  The widely cited ~156 figure mixes confirmed dead and missing; sources vary
+  (HANDOFF/report §3.1.8). Pre-dates NK.KKN (operating from 2016-05-22): no
+  primary-station record; regional stations may hold usable waveforms (M1).
