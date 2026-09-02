@@ -44,9 +44,17 @@ def collect(
     station: str,
     location: str,
     channel: str,
+    connect_timeout_s: float = 60.0,
 ) -> int:
-    """Stream packets and log per-packet arrival delay. Returns packets logged."""
-    from obspy.clients.seedlink.easyseedlink import create_client
+    """Stream packets and log per-packet arrival delay. Returns packets logged.
+
+    Note on construction: ObsPy's ``create_client`` connects immediately, and the
+    underlying ``SeedLinkConnection`` defaults its timeout to ``None``, which makes
+    ``connect()`` raise ``TypeError: '<' not supported between float and NoneType``
+    before it ever reaches the network. Build with ``autoconnect=False``, set the
+    timeout, then connect.
+    """
+    from obspy.clients.seedlink.easyseedlink import EasySeedLinkClient
 
     deadline = time.monotonic() + hours * 3600.0
     count = 0
@@ -82,8 +90,14 @@ def collect(
         if time.monotonic() > deadline:
             raise KeyboardInterrupt("collection window elapsed")
 
+    class LatencyClient(EasySeedLinkClient):  # type: ignore[misc]
+        def on_data(self, trace: object) -> None:
+            on_data(trace)
+
     print(f"Connecting to {server} for {network}.{station}.{location}.{channel} ...", flush=True)
-    client = create_client(server, on_data=on_data)
+    client = LatencyClient(server, autoconnect=False)
+    client.conn.timeout = connect_timeout_s
+    client.connect()
     client.select_stream(network, station, channel)
     try:
         client.run()
