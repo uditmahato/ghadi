@@ -1,0 +1,1116 @@
+{
+  "experiment": "exp006_teleseism_suppression",
+  "station_months": 0.30980800116805374,
+  "catalogue_origins": 1133,
+  "triggering_windows": 120,
+  "suppressed_windows": 10,
+  "false_alarms_before": 4,
+  "false_alarms_after": 2,
+  "rate_before_per_station_month": 12.91122238586156,
+  "rate_after_per_station_month": 6.45561119293078,
+  "over_suppression_fraction": 0.08333333333333333,
+  "windows": [
+    {
+      "window_start_utc": "2024-01-01T08:00:00+00:00",
+      "n_triggers": 2,
+      "spectral_pass": false,
+      "suppressed": true,
+      "reasons": [
+        "M5.6 at 44 deg: detection falls in its P-to-surface window (P 08:04:57Z, 2s from detection) (7 km N of Anamizu, Japan)"
+      ],
+      "lf_hf": 0.8157242982223322,
+      "centroid_hz": 4.87525777735885
+    },
+    {
+      "window_start_utc": "2024-01-03T08:00:00+00:00",
+      "n_triggers": 1,
+      "spectral_pass": false,
+      "suppressed": true,
+      "reasons": [
+        "M5.5 at 157 deg: detection falls in its P-to-surface window (P 08:17:11Z, 428s from detection) (68 km WNW of Vinchina, Argentina)"
+      ],
+      "lf_hf": 0.7141593481632291,
+      "centroid_hz": 4.82680103175885
+    },
+    {
+      "window_start_utc": "2024-01-06T08:00:00+00:00",
+      "n_triggers": 1,
+      "spectral_pass": false,
+      "suppressed": false,
+      "reasons": [],
+      "lf_hf": 0.3364606960674751,
+      "centroid_hz": 6.345271841206483
+    },
+    {
+      "window_start_utc": "2024-01-10T04:00:00+00:00",
+      "n_triggers": 1,
+      "spectral_pass": false,
+      "suppressed": false,
+      "reasons": [],
+      "lf_hf": 0.481076823272251,
+      "centroid_hz": 5.488658534585254
+    },
+    {
+      "window_start_utc": "2024-01-19T16:00:00+00:00",
+      "n_triggers": 1,
+      "spectral_pass": false,
+      "suppressed": false,
+      "reasons": [],
+      "lf_hf": 0.526844611429443,
+      "centroid_hz": 5.1675276290776075
+    },
+    {
+      "window_start_utc": "2024-01-31T16:00:00+00:00",
+      "n_triggers": 1,
+      "spectral_pass": false,
+      "suppressed": false,
+      "reasons": [],
+      "lf_hf": 0.27776214765956553,
+      "centroid_hz": 7.622034029075173
+    },
+    {
+      "window_start_utc": "2024-02-01T12:00:00+00:00",
+      "n_triggers": 1,
+      "spectral_pass": false,
+      "suppressed": false,
+      "reasons": [],
+      "lf_hf": 0.20243210168479767,
+      "centroid_hz": 7.128159493763746
+    },
+    {
+      "window_start_utc": "2024-02-06T16:00:00+00:00",
+      "n_triggers": 1,
+      "spectral_pass": false,
+      "suppressed": false,
+      "reasons": [],
+      "lf_hf": 0.8567116727598857,
+      "centroid_hz": 4.601840322738583
+    },
+    {
+      "window_start_utc": "2024-02-16T20:00:00+00:00",
+      "n_triggers": 1,
+      "spectral_pass": false,
+      "suppressed": false,
+      "reasons": [],
+      "lf_hf": 0.8442670828593593,
+      "centroid_hz": 4.389726781321272
+    },
+    {
+      "window_start_utc": "2024-02-25T08:00:00+00:00",
+      "n_triggers": 2,
+      "spectral_pass": false,
+      "suppressed": false,
+      "reasons": [],
+      "lf_hf": 0.4792927115491261,
+      "centroid_hz": 5.442174855510994
+    },
+    {
+      "window_start_utc": "2024-03-01T04:00:00+00:00",
+      "n_triggers": 1,
+      "spectral_pass": false,
+      "suppressed": false,
+      "reasons": [],
+      "lf_hf": 0.22268835750174218,
+      "centroid_hz": 7.447575218829548
+    },
+    {
+      "window_start_utc": "2024-03-24T16:00:00+00:00",
+      "n_triggers": 2,
+      "spectral_pass": false,
+      "suppressed": false,
+      "reasons": [],
+      "lf_hf": 0.4904531143960868,
+      "centroid_hz": 5.376069475591633
+    },
+    {
+      "window_start_utc": "2024-04-10T20:00:00+00:00",
+      "n_triggers": 1,
+      "spectral_pass": false,
+      "suppressed": false,
+      "reasons": [],
+      "lf_hf": 0.5284929163238673,
+      "centroid_hz": 6.028182606061926
+    },
+    {
+      "window_start_utc": "2024-04-16T20:00:00+00:00",
+      "n_triggers": 1,
+      "spectral_pass": false,
+      "suppressed": false,
+      "reasons": [],
+      "lf_hf": 0.2843661691630701,
+      "centroid_hz": 9.002024388967474
+    },
+    {
+      "window_start_utc": "2024-05-10T12:00:00+00:00",
+      "n_triggers": 1,
+      "spectral_pass": false,
+      "suppressed": true,
+      "reasons": [
+        "M5.6 at 72 deg: detection falls in its P-to-surface window (P 11:59:46Z, 1917s from detection) (100 km SSW of Kokopo, Papua New Guinea)"
+      ],
+      "lf_hf": 0.5043465401025844,
+      "centroid_hz": 5.941040553963305
+    },
+    {
+      "window_start_utc": "2024-05-12T08:00:00+00:00",
+      "n_triggers": 1,
+      "spectral_pass": false,
+      "suppressed": false,
+      "reasons": [],
+      "lf_hf": 0.5913600579141519,
+      "centroid_hz": 5.516351108858201
+    },
+    {
+      "window_start_utc": "2024-05-16T00:00:00+00:00",
+      "n_triggers": 2,
+      "spectral_pass": false,
+      "suppressed": false,
+      "reasons": [],
+      "lf_hf": 0.374624211248062,
+      "centroid_hz": 6.410455988033661
+    },
+    {
+      "window_start_utc": "2024-05-23T00:00:00+00:00",
+      "n_triggers": 1,
+      "spectral_pass": false,
+      "suppressed": false,
+      "reasons": [],
+      "lf_hf": 0.19779827512497175,
+      "centroid_hz": 7.415681379006119
+    },
+    {
+      "window_start_utc": "2024-06-02T08:00:00+00:00",
+      "n_triggers": 1,
+      "spectral_pass": false,
+      "suppressed": false,
+      "reasons": [],
+      "lf_hf": 0.4166328227213111,
+      "centroid_hz": 6.20148612736291
+    },
+    {
+      "window_start_utc": "2024-06-03T20:00:00+00:00",
+      "n_triggers": 2,
+      "spectral_pass": false,
+      "suppressed": false,
+      "reasons": [],
+      "lf_hf": 0.31530604793777817,
+      "centroid_hz": 9.021630461615448
+    },
+    {
+      "window_start_utc": "2024-06-10T00:00:00+00:00",
+      "n_triggers": 1,
+      "spectral_pass": false,
+      "suppressed": false,
+      "reasons": [],
+      "lf_hf": 0.26952696402348497,
+      "centroid_hz": 5.383438200071684
+    },
+    {
+      "window_start_utc": "2024-06-12T08:00:00+00:00",
+      "n_triggers": 1,
+      "spectral_pass": false,
+      "suppressed": false,
+      "reasons": [],
+      "lf_hf": 0.04735580629591299,
+      "centroid_hz": 11.656259194917556
+    },
+    {
+      "window_start_utc": "2024-06-13T12:00:00+00:00",
+      "n_triggers": 2,
+      "spectral_pass": false,
+      "suppressed": false,
+      "reasons": [],
+      "lf_hf": 0.06686307804409646,
+      "centroid_hz": 11.49002621460291
+    },
+    {
+      "window_start_utc": "2024-06-19T04:00:00+00:00",
+      "n_triggers": 1,
+      "spectral_pass": false,
+      "suppressed": false,
+      "reasons": [],
+      "lf_hf": 1.945472787277994,
+      "centroid_hz": 3.798486495080379
+    },
+    {
+      "window_start_utc": "2024-06-22T04:00:00+00:00",
+      "n_triggers": 1,
+      "spectral_pass": false,
+      "suppressed": false,
+      "reasons": [],
+      "lf_hf": 0.06154406060715064,
+      "centroid_hz": 7.485880783388199
+    },
+    {
+      "window_start_utc": "2024-06-25T12:00:00+00:00",
+      "n_triggers": 1,
+      "spectral_pass": false,
+      "suppressed": false,
+      "reasons": [],
+      "lf_hf": 0.05705592212320702,
+      "centroid_hz": 7.068616928235317
+    },
+    {
+      "window_start_utc": "2024-06-27T20:00:00+00:00",
+      "n_triggers": 7,
+      "spectral_pass": false,
+      "suppressed": false,
+      "reasons": [],
+      "lf_hf": 0.4320661868288128,
+      "centroid_hz": 7.398714134392945
+    },
+    {
+      "window_start_utc": "2024-07-07T20:00:00+00:00",
+      "n_triggers": 4,
+      "spectral_pass": true,
+      "suppressed": true,
+      "reasons": [
+        "M6.2 at 47 deg: detection falls in its P-to-surface window (P 20:09:45Z, 48s from detection) (Bonin Islands, Japan region)",
+        "M6.2 at 47 deg: detection falls in its P-to-surface window (P 20:09:45Z, 325s from detection) (Bonin Islands, Japan region)"
+      ],
+      "lf_hf": 19.21627845309619,
+      "centroid_hz": 1.5987405554860035
+    },
+    {
+      "window_start_utc": "2024-07-14T04:00:00+00:00",
+      "n_triggers": 2,
+      "spectral_pass": false,
+      "suppressed": false,
+      "reasons": [],
+      "lf_hf": 0.26558288957052467,
+      "centroid_hz": 5.923387981441599
+    },
+    {
+      "window_start_utc": "2024-07-30T20:00:00+00:00",
+      "n_triggers": 3,
+      "spectral_pass": false,
+      "suppressed": false,
+      "reasons": [],
+      "lf_hf": 0.2000137449035179,
+      "centroid_hz": 8.347681196743636
+    },
+    {
+      "window_start_utc": "2024-08-04T16:00:00+00:00",
+      "n_triggers": 1,
+      "spectral_pass": false,
+      "suppressed": false,
+      "reasons": [],
+      "lf_hf": 0.1270354672353515,
+      "centroid_hz": 9.569959624321138
+    },
+    {
+      "window_start_utc": "2024-08-28T04:00:00+00:00",
+      "n_triggers": 2,
+      "spectral_pass": false,
+      "suppressed": false,
+      "reasons": [],
+      "lf_hf": 0.21161845967071877,
+      "centroid_hz": 5.851493597236294
+    },
+    {
+      "window_start_utc": "2024-09-06T04:00:00+00:00",
+      "n_triggers": 1,
+      "spectral_pass": false,
+      "suppressed": false,
+      "reasons": [],
+      "lf_hf": 0.20742946960416425,
+      "centroid_hz": 5.478169522381191
+    },
+    {
+      "window_start_utc": "2024-09-23T20:00:00+00:00",
+      "n_triggers": 1,
+      "spectral_pass": true,
+      "suppressed": true,
+      "reasons": [
+        "M6.0 at 46 deg: detection falls in its P-to-surface window (P 19:59:23Z, 647s from detection) (67 km SSW of Gorontalo, Indonesia)"
+      ],
+      "lf_hf": 80.0297203614046,
+      "centroid_hz": 0.9709763344653134
+    },
+    {
+      "window_start_utc": "2024-09-29T04:00:00+00:00",
+      "n_triggers": 2,
+      "spectral_pass": false,
+      "suppressed": false,
+      "reasons": [],
+      "lf_hf": 1.3562937962732549,
+      "centroid_hz": 4.054778120895634
+    },
+    {
+      "window_start_utc": "2024-09-29T08:00:00+00:00",
+      "n_triggers": 1,
+      "spectral_pass": false,
+      "suppressed": false,
+      "reasons": [],
+      "lf_hf": 0.3486665411353516,
+      "centroid_hz": 6.806677191059455
+    },
+    {
+      "window_start_utc": "2024-09-30T12:00:00+00:00",
+      "n_triggers": 1,
+      "spectral_pass": false,
+      "suppressed": true,
+      "reasons": [
+        "M5.9 at 59 deg: detection falls in its P-to-surface window (P 12:31:50Z, 5s from detection) (108 km E of Petropavlovsk-Kamchatsky, Russia)"
+      ],
+      "lf_hf": 4.875312406919991,
+      "centroid_hz": 2.1387070499507637
+    },
+    {
+      "window_start_utc": "2024-10-16T00:00:00+00:00",
+      "n_triggers": 1,
+      "spectral_pass": false,
+      "suppressed": false,
+      "reasons": [],
+      "lf_hf": 0.017155762764764416,
+      "centroid_hz": 8.933420943672349
+    },
+    {
+      "window_start_utc": "2024-11-03T08:00:00+00:00",
+      "n_triggers": 1,
+      "spectral_pass": false,
+      "suppressed": false,
+      "reasons": [],
+      "lf_hf": 0.8770679524081183,
+      "centroid_hz": 5.290225675020431
+    },
+    {
+      "window_start_utc": "2024-11-04T08:00:00+00:00",
+      "n_triggers": 4,
+      "spectral_pass": false,
+      "suppressed": false,
+      "reasons": [],
+      "lf_hf": 0.14605172762216362,
+      "centroid_hz": 10.751353609925529
+    },
+    {
+      "window_start_utc": "2024-11-16T16:00:00+00:00",
+      "n_triggers": 1,
+      "spectral_pass": false,
+      "suppressed": false,
+      "reasons": [],
+      "lf_hf": 1.1313748914037973,
+      "centroid_hz": 4.507083495885054
+    },
+    {
+      "window_start_utc": "2024-11-26T08:00:00+00:00",
+      "n_triggers": 1,
+      "spectral_pass": false,
+      "suppressed": false,
+      "reasons": [],
+      "lf_hf": 1.7006624583858783,
+      "centroid_hz": 3.4384642199639637
+    },
+    {
+      "window_start_utc": "2024-11-27T20:00:00+00:00",
+      "n_triggers": 1,
+      "spectral_pass": false,
+      "suppressed": false,
+      "reasons": [],
+      "lf_hf": 0.892550439225523,
+      "centroid_hz": 5.24065063274525
+    },
+    {
+      "window_start_utc": "2024-12-05T08:00:00+00:00",
+      "n_triggers": 2,
+      "spectral_pass": false,
+      "suppressed": false,
+      "reasons": [],
+      "lf_hf": 0.21151507846988074,
+      "centroid_hz": 5.732754328340353
+    },
+    {
+      "window_start_utc": "2024-12-09T12:00:00+00:00",
+      "n_triggers": 1,
+      "spectral_pass": false,
+      "suppressed": false,
+      "reasons": [],
+      "lf_hf": 0.716334430871148,
+      "centroid_hz": 5.050320072627256
+    },
+    {
+      "window_start_utc": "2024-12-12T00:00:00+00:00",
+      "n_triggers": 3,
+      "spectral_pass": false,
+      "suppressed": false,
+      "reasons": [],
+      "lf_hf": 0.6195047668073914,
+      "centroid_hz": 5.125692023607784
+    },
+    {
+      "window_start_utc": "2024-12-25T08:00:00+00:00",
+      "n_triggers": 1,
+      "spectral_pass": false,
+      "suppressed": false,
+      "reasons": [],
+      "lf_hf": 0.7190536372442862,
+      "centroid_hz": 4.878315717990166
+    },
+    {
+      "window_start_utc": "2024-12-26T00:00:00+00:00",
+      "n_triggers": 2,
+      "spectral_pass": false,
+      "suppressed": false,
+      "reasons": [],
+      "lf_hf": 1.7076009737437992,
+      "centroid_hz": 3.4291829855168654
+    },
+    {
+      "window_start_utc": "2025-02-01T08:00:00+00:00",
+      "n_triggers": 3,
+      "spectral_pass": false,
+      "suppressed": false,
+      "reasons": [],
+      "lf_hf": 0.2976463463420809,
+      "centroid_hz": 5.6632658869012955
+    },
+    {
+      "window_start_utc": "2025-02-01T12:00:00+00:00",
+      "n_triggers": 2,
+      "spectral_pass": false,
+      "suppressed": false,
+      "reasons": [],
+      "lf_hf": 0.035315343784714695,
+      "centroid_hz": 6.459213240314316
+    },
+    {
+      "window_start_utc": "2025-02-02T00:00:00+00:00",
+      "n_triggers": 2,
+      "spectral_pass": false,
+      "suppressed": false,
+      "reasons": [],
+      "lf_hf": 0.34977807940958416,
+      "centroid_hz": 5.971977882994542
+    },
+    {
+      "window_start_utc": "2025-02-05T16:00:00+00:00",
+      "n_triggers": 1,
+      "spectral_pass": false,
+      "suppressed": false,
+      "reasons": [],
+      "lf_hf": 0.7574522235279226,
+      "centroid_hz": 4.647423433506464
+    },
+    {
+      "window_start_utc": "2025-02-06T04:00:00+00:00",
+      "n_triggers": 1,
+      "spectral_pass": false,
+      "suppressed": false,
+      "reasons": [],
+      "lf_hf": 0.3747641356024687,
+      "centroid_hz": 5.727433238289717
+    },
+    {
+      "window_start_utc": "2025-02-21T12:00:00+00:00",
+      "n_triggers": 4,
+      "spectral_pass": false,
+      "suppressed": false,
+      "reasons": [],
+      "lf_hf": 0.20090826288226307,
+      "centroid_hz": 5.341736766086367
+    },
+    {
+      "window_start_utc": "2025-03-03T04:00:00+00:00",
+      "n_triggers": 1,
+      "spectral_pass": false,
+      "suppressed": false,
+      "reasons": [],
+      "lf_hf": 0.25085482788312025,
+      "centroid_hz": 5.971377820919007
+    },
+    {
+      "window_start_utc": "2025-03-05T16:00:00+00:00",
+      "n_triggers": 1,
+      "spectral_pass": false,
+      "suppressed": false,
+      "reasons": [],
+      "lf_hf": 0.5139432532382775,
+      "centroid_hz": 6.619441046858293
+    },
+    {
+      "window_start_utc": "2025-03-09T00:00:00+00:00",
+      "n_triggers": 1,
+      "spectral_pass": false,
+      "suppressed": true,
+      "reasons": [
+        "M5.7 at 39 deg: detection falls in its P-to-surface window (P 23:50:32Z, 1208s from detection) (74 km ENE of Tatsug\u014d, Japan)"
+      ],
+      "lf_hf": 1.026972608885418,
+      "centroid_hz": 4.601222215511922
+    },
+    {
+      "window_start_utc": "2025-03-20T04:00:00+00:00",
+      "n_triggers": 1,
+      "spectral_pass": false,
+      "suppressed": false,
+      "reasons": [],
+      "lf_hf": 0.6030871020741975,
+      "centroid_hz": 5.069112548465928
+    },
+    {
+      "window_start_utc": "2025-03-21T08:00:00+00:00",
+      "n_triggers": 2,
+      "spectral_pass": false,
+      "suppressed": false,
+      "reasons": [],
+      "lf_hf": 4.5897007671899726,
+      "centroid_hz": 2.195844839239491
+    },
+    {
+      "window_start_utc": "2025-03-28T12:00:00+00:00",
+      "n_triggers": 1,
+      "spectral_pass": false,
+      "suppressed": false,
+      "reasons": [],
+      "lf_hf": 0.2420890408098568,
+      "centroid_hz": 6.00214794128019
+    },
+    {
+      "window_start_utc": "2025-03-30T12:00:00+00:00",
+      "n_triggers": 1,
+      "spectral_pass": false,
+      "suppressed": false,
+      "reasons": [],
+      "lf_hf": 0.20892411960835383,
+      "centroid_hz": 5.328385818689357
+    },
+    {
+      "window_start_utc": "2025-04-02T16:00:00+00:00",
+      "n_triggers": 1,
+      "spectral_pass": true,
+      "suppressed": false,
+      "reasons": [],
+      "lf_hf": 5.469943099532925,
+      "centroid_hz": 1.9816184654405167
+    },
+    {
+      "window_start_utc": "2025-04-07T00:00:00+00:00",
+      "n_triggers": 1,
+      "spectral_pass": false,
+      "suppressed": false,
+      "reasons": [],
+      "lf_hf": 0.6222991284619802,
+      "centroid_hz": 4.753578878496643
+    },
+    {
+      "window_start_utc": "2025-04-09T08:00:00+00:00",
+      "n_triggers": 1,
+      "spectral_pass": false,
+      "suppressed": false,
+      "reasons": [],
+      "lf_hf": 0.36294818545780094,
+      "centroid_hz": 6.315361567021425
+    },
+    {
+      "window_start_utc": "2025-04-14T20:00:00+00:00",
+      "n_triggers": 3,
+      "spectral_pass": false,
+      "suppressed": false,
+      "reasons": [],
+      "lf_hf": 0.5556976040488449,
+      "centroid_hz": 5.623380359125874
+    },
+    {
+      "window_start_utc": "2025-04-23T16:00:00+00:00",
+      "n_triggers": 2,
+      "spectral_pass": true,
+      "suppressed": false,
+      "reasons": [],
+      "lf_hf": 8.005784417336503,
+      "centroid_hz": 1.561214814090619
+    },
+    {
+      "window_start_utc": "2025-04-25T08:00:00+00:00",
+      "n_triggers": 1,
+      "spectral_pass": false,
+      "suppressed": false,
+      "reasons": [],
+      "lf_hf": 0.4845781915899448,
+      "centroid_hz": 6.056311216348965
+    },
+    {
+      "window_start_utc": "2025-04-27T00:00:00+00:00",
+      "n_triggers": 2,
+      "spectral_pass": false,
+      "suppressed": false,
+      "reasons": [],
+      "lf_hf": 0.5674663811297062,
+      "centroid_hz": 5.455837464643768
+    },
+    {
+      "window_start_utc": "2025-05-01T16:00:00+00:00",
+      "n_triggers": 2,
+      "spectral_pass": false,
+      "suppressed": false,
+      "reasons": [],
+      "lf_hf": 3.1651036707380964,
+      "centroid_hz": 2.793619132048261
+    },
+    {
+      "window_start_utc": "2025-05-13T00:00:00+00:00",
+      "n_triggers": 1,
+      "spectral_pass": false,
+      "suppressed": false,
+      "reasons": [],
+      "lf_hf": 0.7637970623348131,
+      "centroid_hz": 4.975832639819644
+    },
+    {
+      "window_start_utc": "2025-05-15T00:00:00+00:00",
+      "n_triggers": 1,
+      "spectral_pass": false,
+      "suppressed": false,
+      "reasons": [],
+      "lf_hf": 0.5492073183140985,
+      "centroid_hz": 5.453192458331702
+    },
+    {
+      "window_start_utc": "2025-05-18T12:00:00+00:00",
+      "n_triggers": 2,
+      "spectral_pass": false,
+      "suppressed": false,
+      "reasons": [],
+      "lf_hf": 0.1746397710752562,
+      "centroid_hz": 5.708371691061008
+    },
+    {
+      "window_start_utc": "2025-05-20T08:00:00+00:00",
+      "n_triggers": 2,
+      "spectral_pass": false,
+      "suppressed": false,
+      "reasons": [],
+      "lf_hf": 0.3074560428817957,
+      "centroid_hz": 5.887540147094028
+    },
+    {
+      "window_start_utc": "2025-06-26T12:00:00+00:00",
+      "n_triggers": 1,
+      "spectral_pass": false,
+      "suppressed": false,
+      "reasons": [],
+      "lf_hf": 0.41543375211306177,
+      "centroid_hz": 6.448167053016672
+    },
+    {
+      "window_start_utc": "2025-06-28T04:00:00+00:00",
+      "n_triggers": 2,
+      "spectral_pass": false,
+      "suppressed": true,
+      "reasons": [
+        "M5.5 at 107 deg: detection falls in its P-to-surface window (P 04:30:15Z, 267s from detection) (161 km NNW of Houma, Tonga)"
+      ],
+      "lf_hf": 1.1996905540052867,
+      "centroid_hz": 4.060864921716172
+    },
+    {
+      "window_start_utc": "2025-06-29T04:00:00+00:00",
+      "n_triggers": 3,
+      "spectral_pass": false,
+      "suppressed": false,
+      "reasons": [],
+      "lf_hf": 0.1246091141045813,
+      "centroid_hz": 6.182959648604304
+    },
+    {
+      "window_start_utc": "2025-07-09T00:00:00+00:00",
+      "n_triggers": 2,
+      "spectral_pass": false,
+      "suppressed": false,
+      "reasons": [],
+      "lf_hf": 0.7414771472535722,
+      "centroid_hz": 4.821405834284583
+    },
+    {
+      "window_start_utc": "2025-07-09T04:00:00+00:00",
+      "n_triggers": 1,
+      "spectral_pass": false,
+      "suppressed": false,
+      "reasons": [],
+      "lf_hf": 0.6550046994945997,
+      "centroid_hz": 5.815333934654835
+    },
+    {
+      "window_start_utc": "2025-07-12T20:00:00+00:00",
+      "n_triggers": 13,
+      "spectral_pass": false,
+      "suppressed": false,
+      "reasons": [],
+      "lf_hf": 4.346296278058035,
+      "centroid_hz": 2.219946759223858
+    },
+    {
+      "window_start_utc": "2025-07-13T16:00:00+00:00",
+      "n_triggers": 9,
+      "spectral_pass": false,
+      "suppressed": false,
+      "reasons": [],
+      "lf_hf": 2.563121117495047,
+      "centroid_hz": 2.8435380675260946
+    },
+    {
+      "window_start_utc": "2025-07-14T20:00:00+00:00",
+      "n_triggers": 17,
+      "spectral_pass": false,
+      "suppressed": false,
+      "reasons": [],
+      "lf_hf": 3.7563057816311836,
+      "centroid_hz": 2.3806751226189835
+    },
+    {
+      "window_start_utc": "2026-01-01T08:00:00+00:00",
+      "n_triggers": 8,
+      "spectral_pass": false,
+      "suppressed": false,
+      "reasons": [],
+      "lf_hf": 0.22506535903142807,
+      "centroid_hz": 9.279365483628068
+    },
+    {
+      "window_start_utc": "2026-01-16T20:00:00+00:00",
+      "n_triggers": 1,
+      "spectral_pass": false,
+      "suppressed": false,
+      "reasons": [],
+      "lf_hf": 2.001383411366266,
+      "centroid_hz": 3.5855579537811844
+    },
+    {
+      "window_start_utc": "2026-01-22T04:00:00+00:00",
+      "n_triggers": 1,
+      "spectral_pass": false,
+      "suppressed": false,
+      "reasons": [],
+      "lf_hf": 0.3361300477068192,
+      "centroid_hz": 7.308351173876506
+    },
+    {
+      "window_start_utc": "2026-02-06T04:00:00+00:00",
+      "n_triggers": 1,
+      "spectral_pass": false,
+      "suppressed": false,
+      "reasons": [],
+      "lf_hf": 0.6070650359696785,
+      "centroid_hz": 5.45028617142191
+    },
+    {
+      "window_start_utc": "2026-02-08T08:00:00+00:00",
+      "n_triggers": 3,
+      "spectral_pass": false,
+      "suppressed": false,
+      "reasons": [],
+      "lf_hf": 0.30283131484640247,
+      "centroid_hz": 5.997392737172398
+    },
+    {
+      "window_start_utc": "2026-02-08T12:00:00+00:00",
+      "n_triggers": 2,
+      "spectral_pass": false,
+      "suppressed": true,
+      "reasons": [
+        "M5.5 at 128 deg: detection falls in its P-to-surface window (P 12:13:16Z, 362s from detection) (42 km SSW of Mais\u00ed, Cuba)",
+        "M5.5 at 128 deg: detection falls in its P-to-surface window (P 12:13:16Z, 793s from detection) (42 km SSW of Mais\u00ed, Cuba)"
+      ],
+      "lf_hf": 0.5340298888597986,
+      "centroid_hz": 5.786164487179646
+    },
+    {
+      "window_start_utc": "2026-02-09T04:00:00+00:00",
+      "n_triggers": 1,
+      "spectral_pass": false,
+      "suppressed": false,
+      "reasons": [],
+      "lf_hf": 0.35432415784509663,
+      "centroid_hz": 6.41331106801553
+    },
+    {
+      "window_start_utc": "2026-02-15T16:00:00+00:00",
+      "n_triggers": 1,
+      "spectral_pass": false,
+      "suppressed": true,
+      "reasons": [
+        "M5.9 at 56 deg: detection falls in its P-to-surface window (P 16:08:18Z, 6s from detection) (299 km SSW of Severo-Kuril\u2019sk, Russia)"
+      ],
+      "lf_hf": 6.130261240077854,
+      "centroid_hz": 2.0736149119371077
+    },
+    {
+      "window_start_utc": "2026-02-21T20:00:00+00:00",
+      "n_triggers": 1,
+      "spectral_pass": false,
+      "suppressed": false,
+      "reasons": [],
+      "lf_hf": 0.48241392079849077,
+      "centroid_hz": 5.946671125045196
+    },
+    {
+      "window_start_utc": "2026-02-27T20:00:00+00:00",
+      "n_triggers": 2,
+      "spectral_pass": false,
+      "suppressed": false,
+      "reasons": [],
+      "lf_hf": 0.22409191675986045,
+      "centroid_hz": 6.065393669095321
+    },
+    {
+      "window_start_utc": "2026-03-05T04:00:00+00:00",
+      "n_triggers": 1,
+      "spectral_pass": false,
+      "suppressed": false,
+      "reasons": [],
+      "lf_hf": 0.2238345733514572,
+      "centroid_hz": 9.589068026248796
+    },
+    {
+      "window_start_utc": "2026-03-08T04:00:00+00:00",
+      "n_triggers": 1,
+      "spectral_pass": false,
+      "suppressed": false,
+      "reasons": [],
+      "lf_hf": 0.40956513607098505,
+      "centroid_hz": 5.785118144683049
+    },
+    {
+      "window_start_utc": "2026-03-13T16:00:00+00:00",
+      "n_triggers": 1,
+      "spectral_pass": false,
+      "suppressed": false,
+      "reasons": [],
+      "lf_hf": 0.7784819875022883,
+      "centroid_hz": 5.263600333611188
+    },
+    {
+      "window_start_utc": "2026-03-18T04:00:00+00:00",
+      "n_triggers": 1,
+      "spectral_pass": false,
+      "suppressed": false,
+      "reasons": [],
+      "lf_hf": 0.27998700747394867,
+      "centroid_hz": 5.984268121581135
+    },
+    {
+      "window_start_utc": "2026-03-18T20:00:00+00:00",
+      "n_triggers": 1,
+      "spectral_pass": false,
+      "suppressed": false,
+      "reasons": [],
+      "lf_hf": 0.3235332772496977,
+      "centroid_hz": 6.797309697884587
+    },
+    {
+      "window_start_utc": "2026-03-21T08:00:00+00:00",
+      "n_triggers": 2,
+      "spectral_pass": false,
+      "suppressed": false,
+      "reasons": [],
+      "lf_hf": 0.22090835449356744,
+      "centroid_hz": 8.882611509096446
+    },
+    {
+      "window_start_utc": "2026-04-03T12:00:00+00:00",
+      "n_triggers": 1,
+      "spectral_pass": false,
+      "suppressed": false,
+      "reasons": [],
+      "lf_hf": 0.2910936461763198,
+      "centroid_hz": 8.665294021557573
+    },
+    {
+      "window_start_utc": "2026-04-22T00:00:00+00:00",
+      "n_triggers": 1,
+      "spectral_pass": false,
+      "suppressed": false,
+      "reasons": [],
+      "lf_hf": 2.785693030365037,
+      "centroid_hz": 3.8232353144370737
+    },
+    {
+      "window_start_utc": "2026-04-23T00:00:00+00:00",
+      "n_triggers": 1,
+      "spectral_pass": false,
+      "suppressed": false,
+      "reasons": [],
+      "lf_hf": 0.7262317253232179,
+      "centroid_hz": 6.87787158972301
+    },
+    {
+      "window_start_utc": "2026-04-30T12:00:00+00:00",
+      "n_triggers": 2,
+      "spectral_pass": false,
+      "suppressed": false,
+      "reasons": [],
+      "lf_hf": 0.2983827473398728,
+      "centroid_hz": 7.999113100949454
+    },
+    {
+      "window_start_utc": "2026-05-06T08:00:00+00:00",
+      "n_triggers": 1,
+      "spectral_pass": false,
+      "suppressed": false,
+      "reasons": [],
+      "lf_hf": 0.5266226076191114,
+      "centroid_hz": 6.402583516988724
+    },
+    {
+      "window_start_utc": "2026-05-17T00:00:00+00:00",
+      "n_triggers": 1,
+      "spectral_pass": false,
+      "suppressed": false,
+      "reasons": [],
+      "lf_hf": 1.0004617683712789,
+      "centroid_hz": 5.3674285201193985
+    },
+    {
+      "window_start_utc": "2026-05-18T12:00:00+00:00",
+      "n_triggers": 1,
+      "spectral_pass": false,
+      "suppressed": false,
+      "reasons": [],
+      "lf_hf": 0.10981661164451219,
+      "centroid_hz": 7.113152172921021
+    },
+    {
+      "window_start_utc": "2026-05-25T08:00:00+00:00",
+      "n_triggers": 2,
+      "spectral_pass": false,
+      "suppressed": false,
+      "reasons": [],
+      "lf_hf": 0.704912893841639,
+      "centroid_hz": 4.9236693998530985
+    },
+    {
+      "window_start_utc": "2026-05-29T16:00:00+00:00",
+      "n_triggers": 1,
+      "spectral_pass": false,
+      "suppressed": false,
+      "reasons": [],
+      "lf_hf": 1.5961442502943834,
+      "centroid_hz": 4.01179716579723
+    },
+    {
+      "window_start_utc": "2026-06-02T12:00:00+00:00",
+      "n_triggers": 4,
+      "spectral_pass": false,
+      "suppressed": false,
+      "reasons": [],
+      "lf_hf": 0.1813256996329546,
+      "centroid_hz": 9.78220425747689
+    },
+    {
+      "window_start_utc": "2026-06-10T08:00:00+00:00",
+      "n_triggers": 3,
+      "spectral_pass": false,
+      "suppressed": false,
+      "reasons": [],
+      "lf_hf": 0.5411223817594184,
+      "centroid_hz": 5.7730130269620155
+    },
+    {
+      "window_start_utc": "2026-06-12T12:00:00+00:00",
+      "n_triggers": 1,
+      "spectral_pass": false,
+      "suppressed": false,
+      "reasons": [],
+      "lf_hf": 0.47084429130369015,
+      "centroid_hz": 5.598087898177614
+    },
+    {
+      "window_start_utc": "2026-06-15T04:00:00+00:00",
+      "n_triggers": 1,
+      "spectral_pass": false,
+      "suppressed": false,
+      "reasons": [],
+      "lf_hf": 0.4737314847015723,
+      "centroid_hz": 6.094589255304155
+    },
+    {
+      "window_start_utc": "2026-06-17T04:00:00+00:00",
+      "n_triggers": 1,
+      "spectral_pass": false,
+      "suppressed": false,
+      "reasons": [],
+      "lf_hf": 0.42376295632865507,
+      "centroid_hz": 6.36314190669483
+    },
+    {
+      "window_start_utc": "2026-06-21T08:00:00+00:00",
+      "n_triggers": 1,
+      "spectral_pass": false,
+      "suppressed": false,
+      "reasons": [],
+      "lf_hf": 0.7548790480869239,
+      "centroid_hz": 4.86970522932438
+    },
+    {
+      "window_start_utc": "2026-06-23T04:00:00+00:00",
+      "n_triggers": 1,
+      "spectral_pass": false,
+      "suppressed": false,
+      "reasons": [],
+      "lf_hf": 0.30867106969282065,
+      "centroid_hz": 9.103024605682561
+    },
+    {
+      "window_start_utc": "2026-07-03T20:00:00+00:00",
+      "n_triggers": 1,
+      "spectral_pass": false,
+      "suppressed": false,
+      "reasons": [],
+      "lf_hf": 1.206763665997381,
+      "centroid_hz": 4.377094923832277
+    },
+    {
+      "window_start_utc": "2026-07-04T12:00:00+00:00",
+      "n_triggers": 1,
+      "spectral_pass": false,
+      "suppressed": false,
+      "reasons": [],
+      "lf_hf": 0.38351705456426816,
+      "centroid_hz": 7.305027766561009
+    },
+    {
+      "window_start_utc": "2026-07-05T08:00:00+00:00",
+      "n_triggers": 1,
+      "spectral_pass": false,
+      "suppressed": false,
+      "reasons": [],
+      "lf_hf": 0.9552741374272055,
+      "centroid_hz": 4.335537495120392
+    },
+    {
+      "window_start_utc": "2026-07-05T16:00:00+00:00",
+      "n_triggers": 1,
+      "spectral_pass": false,
+      "suppressed": false,
+      "reasons": [],
+      "lf_hf": 0.06651787130465579,
+      "centroid_hz": 8.466836087441182
+    },
+    {
+      "window_start_utc": "2026-07-07T20:00:00+00:00",
+      "n_triggers": 2,
+      "spectral_pass": false,
+      "suppressed": false,
+      "reasons": [],
+      "lf_hf": 1.4358774806986305,
+      "centroid_hz": 3.952078579505726
+    },
+    {
+      "window_start_utc": "2026-07-08T00:00:00+00:00",
+      "n_triggers": 1,
+      "spectral_pass": false,
+      "suppressed": false,
+      "reasons": [],
+      "lf_hf": 0.914587567861357,
+      "centroid_hz": 4.961129777880381
+    },
+    {
+      "window_start_utc": "2026-07-09T12:00:00+00:00",
+      "n_triggers": 3,
+      "spectral_pass": false,
+      "suppressed": false,
+      "reasons": [],
+      "lf_hf": 0.38048757375956355,
+      "centroid_hz": 4.904832340152602
+    }
+  ]
+}

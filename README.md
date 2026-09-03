@@ -55,13 +55,14 @@ Read this before quoting anything about GHADI's feasibility. Details and caveats
   window around ([data/corpus/DATA_CARD.md](data/corpus/DATA_CARD.md)).
 - **The two spectral features encode one physical idea**, so they are correlated and
   fail together. Three-component polarisation is implemented but unmeasured.
-- **The false-alarm rate is ~13× over target.** 12.9 per station-month against a target
-  of ≤1, over 226 hours of noise — and with a 95% interval of roughly 3.5–33, because it
-  rests on four events (exp004).
-- **Distant earthquakes are not separable from mass movements on these features.** Two of
-  those four false alarms are confirmed teleseisms: attenuation strips their high
-  frequencies, so they arrive looking exactly like a slow extended source. They must be
-  suppressed by cross-checking a global catalogue, which is cheap but architectural.
+- **The false-alarm rate is ~6× over target.** 6.5 per station-month against a target of
+  ≤1, over 226 hours of noise, after teleseism suppression — with a 95% interval of
+  roughly 0.8–23, because it rests on two surviving events (exp004, exp006).
+- **Distant earthquakes are not separable from mass movements on these features.** Half
+  the false alarms were teleseisms: attenuation strips their high frequencies, so they
+  arrive looking exactly like a slow extended source. `ghadi.teleseism` suppresses them
+  by global-catalogue cross-check, which halved the rate — but only once the rule spanned
+  a P-to-surface phase window rather than a tolerance around P (exp006).
 - **Magnitude is a confound** (rank correlation ±0.4). A classifier that does not
   control for size may learn a size detector.
 - **The archive is discontinuous, and shorter than the metadata claims.** NK.KKN
