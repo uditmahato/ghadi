@@ -210,3 +210,98 @@ def test_broken_emergence_is_still_named_as_broken() -> None:
     assert "DEPRECATED" in (features.__doc__ or "") or "DEPRECATED" in (
         features._emergence_global_peak.__doc__ or ""
     )
+
+
+# --- decision-time segments (issue #1, from exp005) ---------------------------------
+
+
+def test_a_segment_feature_cannot_see_past_its_end(sampling_rate: float) -> None:
+    """The guarantee that makes segment features safe to deploy.
+
+    Whatever happens after the segment ends must not change the features, because at
+    decision time that data does not exist yet. If it leaks in, the model is trained
+    on information the detector will never have — train/serve skew with a safety cost.
+    """
+    from ghadi.features import extract
+
+    rng = np.random.default_rng(21)
+    n = int(600 * sampling_rate)
+    t = np.arange(n) / sampling_rate
+    onset, segment = 100.0, 60.0
+
+    base = rng.normal(0, 1, n) + 40.0 * np.where(
+        t >= onset, np.exp(-(t - onset) / 8.0), 0.0
+    ) * np.sin(2 * np.pi * 4.0 * t)
+
+    # An enormous later arrival, well outside the segment.
+    contaminated = base.copy()
+    after = int((onset + segment + 30.0) * sampling_rate)
+    contaminated[after:] += 5000.0 * np.sin(2 * np.pi * 1.0 * t[after:])
+
+    a = extract(base, sampling_rate, onset_s=onset, segment_s=segment).as_dict()
+    b = extract(contaminated, sampling_rate, onset_s=onset, segment_s=segment).as_dict()
+
+    for key in a:
+        if np.isnan(a[key]) and np.isnan(b[key]):
+            continue
+        assert a[key] == pytest.approx(b[key], rel=1e-6), (
+            f"{key} changed when data *after* the segment changed — the segment leaks"
+        )
+
+
+def test_a_whole_window_feature_does_leak(sampling_rate: float) -> None:
+    """The contrast that shows the previous test is not vacuous: without a segment,
+    later data does change the features. That is exactly the problem."""
+    from ghadi.features import extract
+
+    rng = np.random.default_rng(21)
+    n = int(600 * sampling_rate)
+    t = np.arange(n) / sampling_rate
+    base = rng.normal(0, 1, n) + 40.0 * np.where(
+        t >= 100.0, np.exp(-(t - 100.0) / 8.0), 0.0
+    ) * np.sin(2 * np.pi * 4.0 * t)
+
+    contaminated = base.copy()
+    after = int(190.0 * sampling_rate)
+    contaminated[after:] += 5000.0 * np.sin(2 * np.pi * 1.0 * t[after:])
+
+    a = extract(base, sampling_rate, onset_s=100.0)
+    b = extract(contaminated, sampling_rate, onset_s=100.0)
+    assert a.spectral_centroid_hz != pytest.approx(b.spectral_centroid_hz, rel=1e-6)
+
+
+def test_segment_without_an_onset_is_refused(
+    emergent_window: np.ndarray, sampling_rate: float
+) -> None:
+    from ghadi.features import extract
+
+    with pytest.raises(ValueError, match="requires onset_s"):
+        extract(emergent_window, sampling_rate, segment_s=60.0)
+
+
+def test_a_segment_outside_the_window_is_refused(
+    emergent_window: np.ndarray, sampling_rate: float
+) -> None:
+    from ghadi.features import extract
+
+    with pytest.raises(ValueError, match="falls outside"):
+        extract(emergent_window, sampling_rate, onset_s=10_000.0, segment_s=60.0)
+
+
+def test_segment_features_differ_from_whole_window_features(
+    sampling_rate: float,
+) -> None:
+    """exp005 measured this difference and found it mattered: the earthquake overlap
+    moved from 12.5% to 17.2% when both classes were measured on segments."""
+    from ghadi.features import extract
+
+    rng = np.random.default_rng(33)
+    n = int(600 * sampling_rate)
+    t = np.arange(n) / sampling_rate
+    data = rng.normal(0, 1, n) + 60.0 * np.where(
+        t >= 100.0, np.exp(-(t - 100.0) / 5.0), 0.0
+    ) * np.sin(2 * np.pi * 2.0 * t)
+
+    whole = extract(data, sampling_rate, onset_s=100.0)
+    segment = extract(data, sampling_rate, onset_s=100.0, segment_s=60.0)
+    assert segment.spectral_centroid_hz != pytest.approx(whole.spectral_centroid_hz, rel=1e-3)

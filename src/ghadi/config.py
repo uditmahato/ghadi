@@ -89,6 +89,11 @@ class SeismicConfig:
     # the feature causal: in real time you act on the trigger you have, and cannot
     # know which of the window's triggers will turn out to be the largest.
     emergence_search_s: float = 120.0
+    # How much post-onset signal a feature may use. A feature computed over more than
+    # this is unavailable when the alert has to fire, so training on it and serving on
+    # a segment is train/serve skew with a safety cost (exp005). Sits inside the 180 s
+    # end-to-end budget. Not tuned — a sweep belongs with issue 2.6.
+    decision_segment_s: float = 120.0
 
 
 # --- hydrology ----------------------------------------------------------------------
