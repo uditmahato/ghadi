@@ -1,0 +1,1157 @@
+{
+  "probed_utc": "2026-09-03T05:06:27.124332+00:00",
+  "station": "IO.EVN..BHZ",
+  "method": "one 10-minute window per month, day 15 at 06:00 UTC. A month marked present may still contain gaps; one probe cannot see them.",
+  "months_probed": 164,
+  "months_present": 98,
+  "months": [
+    {
+      "month": "2013-01",
+      "probe_utc": "2013-01-15T06:00:00+00:00",
+      "present": false,
+      "n_samples": 0,
+      "error": "FDSNNoDataException: No data available for request.\nHTTP Status code: 204\nDetailed response of server:\n\n"
+    },
+    {
+      "month": "2013-02",
+      "probe_utc": "2013-02-15T06:00:00+00:00",
+      "present": false,
+      "n_samples": 0,
+      "error": "FDSNNoDataException: No data available for request.\nHTTP Status code: 204\nDetailed response of server:\n\n"
+    },
+    {
+      "month": "2013-03",
+      "probe_utc": "2013-03-15T06:00:00+00:00",
+      "present": false,
+      "n_samples": 0,
+      "error": "FDSNNoDataException: No data available for request.\nHTTP Status code: 204\nDetailed response of server:\n\n"
+    },
+    {
+      "month": "2013-04",
+      "probe_utc": "2013-04-15T06:00:00+00:00",
+      "present": false,
+      "n_samples": 0,
+      "error": "FDSNNoDataException: No data available for request.\nHTTP Status code: 204\nDetailed response of server:\n\n"
+    },
+    {
+      "month": "2013-05",
+      "probe_utc": "2013-05-15T06:00:00+00:00",
+      "present": false,
+      "n_samples": 0,
+      "error": "FDSNNoDataException: No data available for request.\nHTTP Status code: 204\nDetailed response of server:\n\n"
+    },
+    {
+      "month": "2013-06",
+      "probe_utc": "2013-06-15T06:00:00+00:00",
+      "present": false,
+      "n_samples": 0,
+      "error": "FDSNNoDataException: No data available for request.\nHTTP Status code: 204\nDetailed response of server:\n\n"
+    },
+    {
+      "month": "2013-07",
+      "probe_utc": "2013-07-15T06:00:00+00:00",
+      "present": false,
+      "n_samples": 0,
+      "error": "FDSNNoDataException: No data available for request.\nHTTP Status code: 204\nDetailed response of server:\n\n"
+    },
+    {
+      "month": "2013-08",
+      "probe_utc": "2013-08-15T06:00:00+00:00",
+      "present": false,
+      "n_samples": 0,
+      "error": "FDSNNoDataException: No data available for request.\nHTTP Status code: 204\nDetailed response of server:\n\n"
+    },
+    {
+      "month": "2013-09",
+      "probe_utc": "2013-09-15T06:00:00+00:00",
+      "present": false,
+      "n_samples": 0,
+      "error": "FDSNNoDataException: No data available for request.\nHTTP Status code: 204\nDetailed response of server:\n\n"
+    },
+    {
+      "month": "2013-10",
+      "probe_utc": "2013-10-15T06:00:00+00:00",
+      "present": false,
+      "n_samples": 0,
+      "error": "FDSNNoDataException: No data available for request.\nHTTP Status code: 204\nDetailed response of server:\n\n"
+    },
+    {
+      "month": "2013-11",
+      "probe_utc": "2013-11-15T06:00:00+00:00",
+      "present": false,
+      "n_samples": 0,
+      "error": "FDSNNoDataException: No data available for request.\nHTTP Status code: 204\nDetailed response of server:\n\n"
+    },
+    {
+      "month": "2013-12",
+      "probe_utc": "2013-12-15T06:00:00+00:00",
+      "present": false,
+      "n_samples": 0,
+      "error": "FDSNNoDataException: No data available for request.\nHTTP Status code: 204\nDetailed response of server:\n\n"
+    },
+    {
+      "month": "2014-01",
+      "probe_utc": "2014-01-15T06:00:00+00:00",
+      "present": false,
+      "n_samples": 0,
+      "error": "FDSNNoDataException: No data available for request.\nHTTP Status code: 204\nDetailed response of server:\n\n"
+    },
+    {
+      "month": "2014-02",
+      "probe_utc": "2014-02-15T06:00:00+00:00",
+      "present": false,
+      "n_samples": 0,
+      "error": "FDSNNoDataException: No data available for request.\nHTTP Status code: 204\nDetailed response of server:\n\n"
+    },
+    {
+      "month": "2014-03",
+      "probe_utc": "2014-03-15T06:00:00+00:00",
+      "present": false,
+      "n_samples": 0,
+      "error": "FDSNNoDataException: No data available for request.\nHTTP Status code: 204\nDetailed response of server:\n\n"
+    },
+    {
+      "month": "2014-04",
+      "probe_utc": "2014-04-15T06:00:00+00:00",
+      "present": false,
+      "n_samples": 0,
+      "error": "FDSNNoDataException: No data available for request.\nHTTP Status code: 204\nDetailed response of server:\n\n"
+    },
+    {
+      "month": "2014-05",
+      "probe_utc": "2014-05-15T06:00:00+00:00",
+      "present": false,
+      "n_samples": 0,
+      "error": "FDSNNoDataException: No data available for request.\nHTTP Status code: 204\nDetailed response of server:\n\n"
+    },
+    {
+      "month": "2014-06",
+      "probe_utc": "2014-06-15T06:00:00+00:00",
+      "present": true,
+      "n_samples": 12001,
+      "error": null
+    },
+    {
+      "month": "2014-07",
+      "probe_utc": "2014-07-15T06:00:00+00:00",
+      "present": true,
+      "n_samples": 12001,
+      "error": null
+    },
+    {
+      "month": "2014-08",
+      "probe_utc": "2014-08-15T06:00:00+00:00",
+      "present": true,
+      "n_samples": 12001,
+      "error": null
+    },
+    {
+      "month": "2014-09",
+      "probe_utc": "2014-09-15T06:00:00+00:00",
+      "present": true,
+      "n_samples": 12001,
+      "error": null
+    },
+    {
+      "month": "2014-10",
+      "probe_utc": "2014-10-15T06:00:00+00:00",
+      "present": true,
+      "n_samples": 12001,
+      "error": null
+    },
+    {
+      "month": "2014-11",
+      "probe_utc": "2014-11-15T06:00:00+00:00",
+      "present": true,
+      "n_samples": 12001,
+      "error": null
+    },
+    {
+      "month": "2014-12",
+      "probe_utc": "2014-12-15T06:00:00+00:00",
+      "present": true,
+      "n_samples": 12001,
+      "error": null
+    },
+    {
+      "month": "2015-01",
+      "probe_utc": "2015-01-15T06:00:00+00:00",
+      "present": true,
+      "n_samples": 12001,
+      "error": null
+    },
+    {
+      "month": "2015-02",
+      "probe_utc": "2015-02-15T06:00:00+00:00",
+      "present": true,
+      "n_samples": 12001,
+      "error": null
+    },
+    {
+      "month": "2015-03",
+      "probe_utc": "2015-03-15T06:00:00+00:00",
+      "present": true,
+      "n_samples": 12001,
+      "error": null
+    },
+    {
+      "month": "2015-04",
+      "probe_utc": "2015-04-15T06:00:00+00:00",
+      "present": true,
+      "n_samples": 12001,
+      "error": null
+    },
+    {
+      "month": "2015-05",
+      "probe_utc": "2015-05-15T06:00:00+00:00",
+      "present": false,
+      "n_samples": 0,
+      "error": "FDSNNoDataException: No data available for request.\nHTTP Status code: 204\nDetailed response of server:\n\n"
+    },
+    {
+      "month": "2015-06",
+      "probe_utc": "2015-06-15T06:00:00+00:00",
+      "present": true,
+      "n_samples": 12001,
+      "error": null
+    },
+    {
+      "month": "2015-07",
+      "probe_utc": "2015-07-15T06:00:00+00:00",
+      "present": true,
+      "n_samples": 12001,
+      "error": null
+    },
+    {
+      "month": "2015-08",
+      "probe_utc": "2015-08-15T06:00:00+00:00",
+      "present": true,
+      "n_samples": 12001,
+      "error": null
+    },
+    {
+      "month": "2015-09",
+      "probe_utc": "2015-09-15T06:00:00+00:00",
+      "present": true,
+      "n_samples": 12001,
+      "error": null
+    },
+    {
+      "month": "2015-10",
+      "probe_utc": "2015-10-15T06:00:00+00:00",
+      "present": true,
+      "n_samples": 12001,
+      "error": null
+    },
+    {
+      "month": "2015-11",
+      "probe_utc": "2015-11-15T06:00:00+00:00",
+      "present": false,
+      "n_samples": 0,
+      "error": "FDSNNoDataException: No data available for request.\nHTTP Status code: 204\nDetailed response of server:\n\n"
+    },
+    {
+      "month": "2015-12",
+      "probe_utc": "2015-12-15T06:00:00+00:00",
+      "present": false,
+      "n_samples": 0,
+      "error": "FDSNNoDataException: No data available for request.\nHTTP Status code: 204\nDetailed response of server:\n\n"
+    },
+    {
+      "month": "2016-01",
+      "probe_utc": "2016-01-15T06:00:00+00:00",
+      "present": false,
+      "n_samples": 0,
+      "error": "FDSNNoDataException: No data available for request.\nHTTP Status code: 204\nDetailed response of server:\n\n"
+    },
+    {
+      "month": "2016-02",
+      "probe_utc": "2016-02-15T06:00:00+00:00",
+      "present": false,
+      "n_samples": 0,
+      "error": "FDSNNoDataException: No data available for request.\nHTTP Status code: 204\nDetailed response of server:\n\n"
+    },
+    {
+      "month": "2016-03",
+      "probe_utc": "2016-03-15T06:00:00+00:00",
+      "present": false,
+      "n_samples": 0,
+      "error": "FDSNNoDataException: No data available for request.\nHTTP Status code: 204\nDetailed response of server:\n\n"
+    },
+    {
+      "month": "2016-04",
+      "probe_utc": "2016-04-15T06:00:00+00:00",
+      "present": false,
+      "n_samples": 0,
+      "error": "FDSNNoDataException: No data available for request.\nHTTP Status code: 204\nDetailed response of server:\n\n"
+    },
+    {
+      "month": "2016-05",
+      "probe_utc": "2016-05-15T06:00:00+00:00",
+      "present": false,
+      "n_samples": 0,
+      "error": "FDSNNoDataException: No data available for request.\nHTTP Status code: 204\nDetailed response of server:\n\n"
+    },
+    {
+      "month": "2016-06",
+      "probe_utc": "2016-06-15T06:00:00+00:00",
+      "present": false,
+      "n_samples": 0,
+      "error": "FDSNNoDataException: No data available for request.\nHTTP Status code: 204\nDetailed response of server:\n\n"
+    },
+    {
+      "month": "2016-07",
+      "probe_utc": "2016-07-15T06:00:00+00:00",
+      "present": false,
+      "n_samples": 0,
+      "error": "FDSNNoDataException: No data available for request.\nHTTP Status code: 204\nDetailed response of server:\n\n"
+    },
+    {
+      "month": "2016-08",
+      "probe_utc": "2016-08-15T06:00:00+00:00",
+      "present": false,
+      "n_samples": 0,
+      "error": "FDSNNoDataException: No data available for request.\nHTTP Status code: 204\nDetailed response of server:\n\n"
+    },
+    {
+      "month": "2016-09",
+      "probe_utc": "2016-09-15T06:00:00+00:00",
+      "present": false,
+      "n_samples": 0,
+      "error": "FDSNNoDataException: No data available for request.\nHTTP Status code: 204\nDetailed response of server:\n\n"
+    },
+    {
+      "month": "2016-10",
+      "probe_utc": "2016-10-15T06:00:00+00:00",
+      "present": false,
+      "n_samples": 0,
+      "error": "FDSNNoDataException: No data available for request.\nHTTP Status code: 204\nDetailed response of server:\n\n"
+    },
+    {
+      "month": "2016-11",
+      "probe_utc": "2016-11-15T06:00:00+00:00",
+      "present": false,
+      "n_samples": 0,
+      "error": "FDSNNoDataException: No data available for request.\nHTTP Status code: 204\nDetailed response of server:\n\n"
+    },
+    {
+      "month": "2016-12",
+      "probe_utc": "2016-12-15T06:00:00+00:00",
+      "present": false,
+      "n_samples": 0,
+      "error": "FDSNNoDataException: No data available for request.\nHTTP Status code: 204\nDetailed response of server:\n\n"
+    },
+    {
+      "month": "2017-01",
+      "probe_utc": "2017-01-15T06:00:00+00:00",
+      "present": false,
+      "n_samples": 0,
+      "error": "FDSNNoDataException: No data available for request.\nHTTP Status code: 204\nDetailed response of server:\n\n"
+    },
+    {
+      "month": "2017-02",
+      "probe_utc": "2017-02-15T06:00:00+00:00",
+      "present": false,
+      "n_samples": 0,
+      "error": "FDSNNoDataException: No data available for request.\nHTTP Status code: 204\nDetailed response of server:\n\n"
+    },
+    {
+      "month": "2017-03",
+      "probe_utc": "2017-03-15T06:00:00+00:00",
+      "present": false,
+      "n_samples": 0,
+      "error": "FDSNNoDataException: No data available for request.\nHTTP Status code: 204\nDetailed response of server:\n\n"
+    },
+    {
+      "month": "2017-04",
+      "probe_utc": "2017-04-15T06:00:00+00:00",
+      "present": false,
+      "n_samples": 0,
+      "error": "FDSNNoDataException: No data available for request.\nHTTP Status code: 204\nDetailed response of server:\n\n"
+    },
+    {
+      "month": "2017-05",
+      "probe_utc": "2017-05-15T06:00:00+00:00",
+      "present": false,
+      "n_samples": 0,
+      "error": "FDSNNoDataException: No data available for request.\nHTTP Status code: 204\nDetailed response of server:\n\n"
+    },
+    {
+      "month": "2017-06",
+      "probe_utc": "2017-06-15T06:00:00+00:00",
+      "present": false,
+      "n_samples": 0,
+      "error": "FDSNNoDataException: No data available for request.\nHTTP Status code: 204\nDetailed response of server:\n\n"
+    },
+    {
+      "month": "2017-07",
+      "probe_utc": "2017-07-15T06:00:00+00:00",
+      "present": true,
+      "n_samples": 12001,
+      "error": null
+    },
+    {
+      "month": "2017-08",
+      "probe_utc": "2017-08-15T06:00:00+00:00",
+      "present": true,
+      "n_samples": 11001,
+      "error": null
+    },
+    {
+      "month": "2017-09",
+      "probe_utc": "2017-09-15T06:00:00+00:00",
+      "present": true,
+      "n_samples": 12001,
+      "error": null
+    },
+    {
+      "month": "2017-10",
+      "probe_utc": "2017-10-15T06:00:00+00:00",
+      "present": true,
+      "n_samples": 12001,
+      "error": null
+    },
+    {
+      "month": "2017-11",
+      "probe_utc": "2017-11-15T06:00:00+00:00",
+      "present": true,
+      "n_samples": 12001,
+      "error": null
+    },
+    {
+      "month": "2017-12",
+      "probe_utc": "2017-12-15T06:00:00+00:00",
+      "present": true,
+      "n_samples": 12001,
+      "error": null
+    },
+    {
+      "month": "2018-01",
+      "probe_utc": "2018-01-15T06:00:00+00:00",
+      "present": true,
+      "n_samples": 12001,
+      "error": null
+    },
+    {
+      "month": "2018-02",
+      "probe_utc": "2018-02-15T06:00:00+00:00",
+      "present": true,
+      "n_samples": 12001,
+      "error": null
+    },
+    {
+      "month": "2018-03",
+      "probe_utc": "2018-03-15T06:00:00+00:00",
+      "present": true,
+      "n_samples": 12001,
+      "error": null
+    },
+    {
+      "month": "2018-04",
+      "probe_utc": "2018-04-15T06:00:00+00:00",
+      "present": true,
+      "n_samples": 12001,
+      "error": null
+    },
+    {
+      "month": "2018-05",
+      "probe_utc": "2018-05-15T06:00:00+00:00",
+      "present": true,
+      "n_samples": 12001,
+      "error": null
+    },
+    {
+      "month": "2018-06",
+      "probe_utc": "2018-06-15T06:00:00+00:00",
+      "present": true,
+      "n_samples": 11001,
+      "error": null
+    },
+    {
+      "month": "2018-07",
+      "probe_utc": "2018-07-15T06:00:00+00:00",
+      "present": true,
+      "n_samples": 11001,
+      "error": null
+    },
+    {
+      "month": "2018-08",
+      "probe_utc": "2018-08-15T06:00:00+00:00",
+      "present": false,
+      "n_samples": 0,
+      "error": "FDSNNoDataException: No data available for request.\nHTTP Status code: 204\nDetailed response of server:\n\n"
+    },
+    {
+      "month": "2018-09",
+      "probe_utc": "2018-09-15T06:00:00+00:00",
+      "present": true,
+      "n_samples": 10001,
+      "error": null
+    },
+    {
+      "month": "2018-10",
+      "probe_utc": "2018-10-15T06:00:00+00:00",
+      "present": false,
+      "n_samples": 0,
+      "error": "FDSNNoDataException: No data available for request.\nHTTP Status code: 204\nDetailed response of server:\n\n"
+    },
+    {
+      "month": "2018-11",
+      "probe_utc": "2018-11-15T06:00:00+00:00",
+      "present": true,
+      "n_samples": 12001,
+      "error": null
+    },
+    {
+      "month": "2018-12",
+      "probe_utc": "2018-12-15T06:00:00+00:00",
+      "present": true,
+      "n_samples": 12001,
+      "error": null
+    },
+    {
+      "month": "2019-01",
+      "probe_utc": "2019-01-15T06:00:00+00:00",
+      "present": true,
+      "n_samples": 12001,
+      "error": null
+    },
+    {
+      "month": "2019-02",
+      "probe_utc": "2019-02-15T06:00:00+00:00",
+      "present": false,
+      "n_samples": 0,
+      "error": "FDSNNoDataException: No data available for request.\nHTTP Status code: 204\nDetailed response of server:\n\n"
+    },
+    {
+      "month": "2019-03",
+      "probe_utc": "2019-03-15T06:00:00+00:00",
+      "present": false,
+      "n_samples": 0,
+      "error": "FDSNNoDataException: No data available for request.\nHTTP Status code: 204\nDetailed response of server:\n\n"
+    },
+    {
+      "month": "2019-04",
+      "probe_utc": "2019-04-15T06:00:00+00:00",
+      "present": true,
+      "n_samples": 12001,
+      "error": null
+    },
+    {
+      "month": "2019-05",
+      "probe_utc": "2019-05-15T06:00:00+00:00",
+      "present": true,
+      "n_samples": 12001,
+      "error": null
+    },
+    {
+      "month": "2019-06",
+      "probe_utc": "2019-06-15T06:00:00+00:00",
+      "present": true,
+      "n_samples": 12001,
+      "error": null
+    },
+    {
+      "month": "2019-07",
+      "probe_utc": "2019-07-15T06:00:00+00:00",
+      "present": true,
+      "n_samples": 12001,
+      "error": null
+    },
+    {
+      "month": "2019-08",
+      "probe_utc": "2019-08-15T06:00:00+00:00",
+      "present": true,
+      "n_samples": 12001,
+      "error": null
+    },
+    {
+      "month": "2019-09",
+      "probe_utc": "2019-09-15T06:00:00+00:00",
+      "present": true,
+      "n_samples": 12001,
+      "error": null
+    },
+    {
+      "month": "2019-10",
+      "probe_utc": "2019-10-15T06:00:00+00:00",
+      "present": true,
+      "n_samples": 12001,
+      "error": null
+    },
+    {
+      "month": "2019-11",
+      "probe_utc": "2019-11-15T06:00:00+00:00",
+      "present": true,
+      "n_samples": 12001,
+      "error": null
+    },
+    {
+      "month": "2019-12",
+      "probe_utc": "2019-12-15T06:00:00+00:00",
+      "present": false,
+      "n_samples": 0,
+      "error": "FDSNNoDataException: No data available for request.\nHTTP Status code: 204\nDetailed response of server:\n\n"
+    },
+    {
+      "month": "2020-01",
+      "probe_utc": "2020-01-15T06:00:00+00:00",
+      "present": false,
+      "n_samples": 0,
+      "error": "FDSNNoDataException: No data available for request.\nHTTP Status code: 204\nDetailed response of server:\n\n"
+    },
+    {
+      "month": "2020-02",
+      "probe_utc": "2020-02-15T06:00:00+00:00",
+      "present": false,
+      "n_samples": 0,
+      "error": "FDSNNoDataException: No data available for request.\nHTTP Status code: 204\nDetailed response of server:\n\n"
+    },
+    {
+      "month": "2020-03",
+      "probe_utc": "2020-03-15T06:00:00+00:00",
+      "present": false,
+      "n_samples": 0,
+      "error": "FDSNNoDataException: No data available for request.\nHTTP Status code: 204\nDetailed response of server:\n\n"
+    },
+    {
+      "month": "2020-04",
+      "probe_utc": "2020-04-15T06:00:00+00:00",
+      "present": true,
+      "n_samples": 12001,
+      "error": null
+    },
+    {
+      "month": "2020-05",
+      "probe_utc": "2020-05-15T06:00:00+00:00",
+      "present": true,
+      "n_samples": 12001,
+      "error": null
+    },
+    {
+      "month": "2020-06",
+      "probe_utc": "2020-06-15T06:00:00+00:00",
+      "present": true,
+      "n_samples": 12001,
+      "error": null
+    },
+    {
+      "month": "2020-07",
+      "probe_utc": "2020-07-15T06:00:00+00:00",
+      "present": true,
+      "n_samples": 12001,
+      "error": null
+    },
+    {
+      "month": "2020-08",
+      "probe_utc": "2020-08-15T06:00:00+00:00",
+      "present": true,
+      "n_samples": 12001,
+      "error": null
+    },
+    {
+      "month": "2020-09",
+      "probe_utc": "2020-09-15T06:00:00+00:00",
+      "present": true,
+      "n_samples": 12001,
+      "error": null
+    },
+    {
+      "month": "2020-10",
+      "probe_utc": "2020-10-15T06:00:00+00:00",
+      "present": true,
+      "n_samples": 11001,
+      "error": null
+    },
+    {
+      "month": "2020-11",
+      "probe_utc": "2020-11-15T06:00:00+00:00",
+      "present": true,
+      "n_samples": 12001,
+      "error": null
+    },
+    {
+      "month": "2020-12",
+      "probe_utc": "2020-12-15T06:00:00+00:00",
+      "present": true,
+      "n_samples": 12001,
+      "error": null
+    },
+    {
+      "month": "2021-01",
+      "probe_utc": "2021-01-15T06:00:00+00:00",
+      "present": true,
+      "n_samples": 12001,
+      "error": null
+    },
+    {
+      "month": "2021-02",
+      "probe_utc": "2021-02-15T06:00:00+00:00",
+      "present": false,
+      "n_samples": 0,
+      "error": "FDSNNoDataException: No data available for request.\nHTTP Status code: 204\nDetailed response of server:\n\n"
+    },
+    {
+      "month": "2021-03",
+      "probe_utc": "2021-03-15T06:00:00+00:00",
+      "present": false,
+      "n_samples": 0,
+      "error": "FDSNNoDataException: No data available for request.\nHTTP Status code: 204\nDetailed response of server:\n\n"
+    },
+    {
+      "month": "2021-04",
+      "probe_utc": "2021-04-15T06:00:00+00:00",
+      "present": true,
+      "n_samples": 12001,
+      "error": null
+    },
+    {
+      "month": "2021-05",
+      "probe_utc": "2021-05-15T06:00:00+00:00",
+      "present": true,
+      "n_samples": 7901,
+      "error": null
+    },
+    {
+      "month": "2021-06",
+      "probe_utc": "2021-06-15T06:00:00+00:00",
+      "present": true,
+      "n_samples": 12001,
+      "error": null
+    },
+    {
+      "month": "2021-07",
+      "probe_utc": "2021-07-15T06:00:00+00:00",
+      "present": false,
+      "n_samples": 0,
+      "error": "FDSNNoDataException: No data available for request.\nHTTP Status code: 204\nDetailed response of server:\n\n"
+    },
+    {
+      "month": "2021-08",
+      "probe_utc": "2021-08-15T06:00:00+00:00",
+      "present": false,
+      "n_samples": 0,
+      "error": "FDSNNoDataException: No data available for request.\nHTTP Status code: 204\nDetailed response of server:\n\n"
+    },
+    {
+      "month": "2021-09",
+      "probe_utc": "2021-09-15T06:00:00+00:00",
+      "present": false,
+      "n_samples": 0,
+      "error": "FDSNNoDataException: No data available for request.\nHTTP Status code: 204\nDetailed response of server:\n\n"
+    },
+    {
+      "month": "2021-10",
+      "probe_utc": "2021-10-15T06:00:00+00:00",
+      "present": true,
+      "n_samples": 7001,
+      "error": null
+    },
+    {
+      "month": "2021-11",
+      "probe_utc": "2021-11-15T06:00:00+00:00",
+      "present": true,
+      "n_samples": 12001,
+      "error": null
+    },
+    {
+      "month": "2021-12",
+      "probe_utc": "2021-12-15T06:00:00+00:00",
+      "present": true,
+      "n_samples": 12001,
+      "error": null
+    },
+    {
+      "month": "2022-01",
+      "probe_utc": "2022-01-15T06:00:00+00:00",
+      "present": false,
+      "n_samples": 0,
+      "error": "FDSNNoDataException: No data available for request.\nHTTP Status code: 204\nDetailed response of server:\n\n"
+    },
+    {
+      "month": "2022-02",
+      "probe_utc": "2022-02-15T06:00:00+00:00",
+      "present": false,
+      "n_samples": 0,
+      "error": "FDSNNoDataException: No data available for request.\nHTTP Status code: 204\nDetailed response of server:\n\n"
+    },
+    {
+      "month": "2022-03",
+      "probe_utc": "2022-03-15T06:00:00+00:00",
+      "present": false,
+      "n_samples": 0,
+      "error": "FDSNNoDataException: No data available for request.\nHTTP Status code: 204\nDetailed response of server:\n\n"
+    },
+    {
+      "month": "2022-04",
+      "probe_utc": "2022-04-15T06:00:00+00:00",
+      "present": false,
+      "n_samples": 0,
+      "error": "FDSNNoDataException: No data available for request.\nHTTP Status code: 204\nDetailed response of server:\n\n"
+    },
+    {
+      "month": "2022-05",
+      "probe_utc": "2022-05-15T06:00:00+00:00",
+      "present": true,
+      "n_samples": 12001,
+      "error": null
+    },
+    {
+      "month": "2022-06",
+      "probe_utc": "2022-06-15T06:00:00+00:00",
+      "present": false,
+      "n_samples": 0,
+      "error": "FDSNNoDataException: No data available for request.\nHTTP Status code: 204\nDetailed response of server:\n\n"
+    },
+    {
+      "month": "2022-07",
+      "probe_utc": "2022-07-15T06:00:00+00:00",
+      "present": false,
+      "n_samples": 0,
+      "error": "FDSNNoDataException: No data available for request.\nHTTP Status code: 204\nDetailed response of server:\n\n"
+    },
+    {
+      "month": "2022-08",
+      "probe_utc": "2022-08-15T06:00:00+00:00",
+      "present": false,
+      "n_samples": 0,
+      "error": "FDSNNoDataException: No data available for request.\nHTTP Status code: 204\nDetailed response of server:\n\n"
+    },
+    {
+      "month": "2022-09",
+      "probe_utc": "2022-09-15T06:00:00+00:00",
+      "present": false,
+      "n_samples": 0,
+      "error": "FDSNNoDataException: No data available for request.\nHTTP Status code: 204\nDetailed response of server:\n\n"
+    },
+    {
+      "month": "2022-10",
+      "probe_utc": "2022-10-15T06:00:00+00:00",
+      "present": true,
+      "n_samples": 12001,
+      "error": null
+    },
+    {
+      "month": "2022-11",
+      "probe_utc": "2022-11-15T06:00:00+00:00",
+      "present": false,
+      "n_samples": 0,
+      "error": "FDSNNoDataException: No data available for request.\nHTTP Status code: 204\nDetailed response of server:\n\n"
+    },
+    {
+      "month": "2022-12",
+      "probe_utc": "2022-12-15T06:00:00+00:00",
+      "present": true,
+      "n_samples": 11520,
+      "error": null
+    },
+    {
+      "month": "2023-01",
+      "probe_utc": "2023-01-15T06:00:00+00:00",
+      "present": true,
+      "n_samples": 11001,
+      "error": null
+    },
+    {
+      "month": "2023-02",
+      "probe_utc": "2023-02-15T06:00:00+00:00",
+      "present": true,
+      "n_samples": 12001,
+      "error": null
+    },
+    {
+      "month": "2023-03",
+      "probe_utc": "2023-03-15T06:00:00+00:00",
+      "present": false,
+      "n_samples": 0,
+      "error": "FDSNNoDataException: No data available for request.\nHTTP Status code: 204\nDetailed response of server:\n\n"
+    },
+    {
+      "month": "2023-04",
+      "probe_utc": "2023-04-15T06:00:00+00:00",
+      "present": true,
+      "n_samples": 12001,
+      "error": null
+    },
+    {
+      "month": "2023-05",
+      "probe_utc": "2023-05-15T06:00:00+00:00",
+      "present": true,
+      "n_samples": 12001,
+      "error": null
+    },
+    {
+      "month": "2023-06",
+      "probe_utc": "2023-06-15T06:00:00+00:00",
+      "present": false,
+      "n_samples": 0,
+      "error": "FDSNNoDataException: No data available for request.\nHTTP Status code: 204\nDetailed response of server:\n\n"
+    },
+    {
+      "month": "2023-07",
+      "probe_utc": "2023-07-15T06:00:00+00:00",
+      "present": true,
+      "n_samples": 7500,
+      "error": null
+    },
+    {
+      "month": "2023-08",
+      "probe_utc": "2023-08-15T06:00:00+00:00",
+      "present": false,
+      "n_samples": 0,
+      "error": "FDSNNoDataException: No data available for request.\nHTTP Status code: 204\nDetailed response of server:\n\n"
+    },
+    {
+      "month": "2023-09",
+      "probe_utc": "2023-09-15T06:00:00+00:00",
+      "present": true,
+      "n_samples": 10120,
+      "error": null
+    },
+    {
+      "month": "2023-10",
+      "probe_utc": "2023-10-15T06:00:00+00:00",
+      "present": true,
+      "n_samples": 12001,
+      "error": null
+    },
+    {
+      "month": "2023-11",
+      "probe_utc": "2023-11-15T06:00:00+00:00",
+      "present": true,
+      "n_samples": 8001,
+      "error": null
+    },
+    {
+      "month": "2023-12",
+      "probe_utc": "2023-12-15T06:00:00+00:00",
+      "present": true,
+      "n_samples": 8001,
+      "error": null
+    },
+    {
+      "month": "2024-01",
+      "probe_utc": "2024-01-15T06:00:00+00:00",
+      "present": true,
+      "n_samples": 11001,
+      "error": null
+    },
+    {
+      "month": "2024-02",
+      "probe_utc": "2024-02-15T06:00:00+00:00",
+      "present": false,
+      "n_samples": 0,
+      "error": "FDSNNoDataException: No data available for request.\nHTTP Status code: 204\nDetailed response of server:\n\n"
+    },
+    {
+      "month": "2024-03",
+      "probe_utc": "2024-03-15T06:00:00+00:00",
+      "present": true,
+      "n_samples": 12001,
+      "error": null
+    },
+    {
+      "month": "2024-04",
+      "probe_utc": "2024-04-15T06:00:00+00:00",
+      "present": true,
+      "n_samples": 12001,
+      "error": null
+    },
+    {
+      "month": "2024-05",
+      "probe_utc": "2024-05-15T06:00:00+00:00",
+      "present": true,
+      "n_samples": 12001,
+      "error": null
+    },
+    {
+      "month": "2024-06",
+      "probe_utc": "2024-06-15T06:00:00+00:00",
+      "present": true,
+      "n_samples": 12001,
+      "error": null
+    },
+    {
+      "month": "2024-07",
+      "probe_utc": "2024-07-15T06:00:00+00:00",
+      "present": true,
+      "n_samples": 12001,
+      "error": null
+    },
+    {
+      "month": "2024-08",
+      "probe_utc": "2024-08-15T06:00:00+00:00",
+      "present": true,
+      "n_samples": 12001,
+      "error": null
+    },
+    {
+      "month": "2024-09",
+      "probe_utc": "2024-09-15T06:00:00+00:00",
+      "present": true,
+      "n_samples": 12001,
+      "error": null
+    },
+    {
+      "month": "2024-10",
+      "probe_utc": "2024-10-15T06:00:00+00:00",
+      "present": true,
+      "n_samples": 12001,
+      "error": null
+    },
+    {
+      "month": "2024-11",
+      "probe_utc": "2024-11-15T06:00:00+00:00",
+      "present": true,
+      "n_samples": 12001,
+      "error": null
+    },
+    {
+      "month": "2024-12",
+      "probe_utc": "2024-12-15T06:00:00+00:00",
+      "present": true,
+      "n_samples": 5001,
+      "error": null
+    },
+    {
+      "month": "2025-01",
+      "probe_utc": "2025-01-15T06:00:00+00:00",
+      "present": true,
+      "n_samples": 12001,
+      "error": null
+    },
+    {
+      "month": "2025-02",
+      "probe_utc": "2025-02-15T06:00:00+00:00",
+      "present": false,
+      "n_samples": 0,
+      "error": "FDSNNoDataException: No data available for request.\nHTTP Status code: 204\nDetailed response of server:\n\n"
+    },
+    {
+      "month": "2025-03",
+      "probe_utc": "2025-03-15T06:00:00+00:00",
+      "present": true,
+      "n_samples": 11501,
+      "error": null
+    },
+    {
+      "month": "2025-04",
+      "probe_utc": "2025-04-15T06:00:00+00:00",
+      "present": true,
+      "n_samples": 11861,
+      "error": null
+    },
+    {
+      "month": "2025-05",
+      "probe_utc": "2025-05-15T06:00:00+00:00",
+      "present": true,
+      "n_samples": 11221,
+      "error": null
+    },
+    {
+      "month": "2025-06",
+      "probe_utc": "2025-06-15T06:00:00+00:00",
+      "present": true,
+      "n_samples": 12001,
+      "error": null
+    },
+    {
+      "month": "2025-07",
+      "probe_utc": "2025-07-15T06:00:00+00:00",
+      "present": false,
+      "n_samples": 0,
+      "error": "FDSNNoDataException: No data available for request.\nHTTP Status code: 204\nDetailed response of server:\n\n"
+    },
+    {
+      "month": "2025-08",
+      "probe_utc": "2025-08-15T06:00:00+00:00",
+      "present": true,
+      "n_samples": 12001,
+      "error": null
+    },
+    {
+      "month": "2025-09",
+      "probe_utc": "2025-09-15T06:00:00+00:00",
+      "present": true,
+      "n_samples": 12001,
+      "error": null
+    },
+    {
+      "month": "2025-10",
+      "probe_utc": "2025-10-15T06:00:00+00:00",
+      "present": true,
+      "n_samples": 11001,
+      "error": null
+    },
+    {
+      "month": "2025-11",
+      "probe_utc": "2025-11-15T06:00:00+00:00",
+      "present": true,
+      "n_samples": 12001,
+      "error": null
+    },
+    {
+      "month": "2025-12",
+      "probe_utc": "2025-12-15T06:00:00+00:00",
+      "present": true,
+      "n_samples": 12001,
+      "error": null
+    },
+    {
+      "month": "2026-01",
+      "probe_utc": "2026-01-15T06:00:00+00:00",
+      "present": true,
+      "n_samples": 12001,
+      "error": null
+    },
+    {
+      "month": "2026-02",
+      "probe_utc": "2026-02-15T06:00:00+00:00",
+      "present": true,
+      "n_samples": 12001,
+      "error": null
+    },
+    {
+      "month": "2026-03",
+      "probe_utc": "2026-03-15T06:00:00+00:00",
+      "present": true,
+      "n_samples": 12001,
+      "error": null
+    },
+    {
+      "month": "2026-04",
+      "probe_utc": "2026-04-15T06:00:00+00:00",
+      "present": true,
+      "n_samples": 12001,
+      "error": null
+    },
+    {
+      "month": "2026-05",
+      "probe_utc": "2026-05-15T06:00:00+00:00",
+      "present": true,
+      "n_samples": 11501,
+      "error": null
+    },
+    {
+      "month": "2026-06",
+      "probe_utc": "2026-06-15T06:00:00+00:00",
+      "present": true,
+      "n_samples": 12001,
+      "error": null
+    },
+    {
+      "month": "2026-07",
+      "probe_utc": "2026-07-15T06:00:00+00:00",
+      "present": true,
+      "n_samples": 12001,
+      "error": null
+    },
+    {
+      "month": "2026-08",
+      "probe_utc": "2026-08-15T06:00:00+00:00",
+      "present": true,
+      "n_samples": 12001,
+      "error": null
+    }
+  ]
+}

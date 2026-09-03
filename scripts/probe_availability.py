@@ -1,4 +1,4 @@
-"""Map NK.KKN's actual archive coverage, month by month.
+"""Map a station's actual archive coverage, month by month.
 
 **Why.** Harvesting the earthquake corpus returned no waveform for 86 of 150 candidates,
 84 of them in 2025. A direct check confirmed the cause is not rate limiting: the server
@@ -33,7 +33,7 @@ sys.path.insert(0, str(REPO_ROOT / "src"))
 from ghadi.config import PRIMARY_STATION  # noqa: E402
 from ghadi.fdsn import CachedWaveformClient, WaveformRequest  # noqa: E402
 
-OUT = REPO_ROOT / "data" / "corpus" / "availability.json"
+DEFAULT_OUT = REPO_ROOT / "data" / "corpus" / "availability.json"
 STATION_START = datetime(2016, 5, 22, tzinfo=UTC)
 
 
@@ -53,6 +53,11 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--probe-minutes", type=float, default=10.0)
     parser.add_argument("--day", type=int, default=15, help="day of month to probe")
     parser.add_argument("--hour", type=int, default=6, help="UTC hour to probe")
+    parser.add_argument("--network", default=PRIMARY_STATION.network)
+    parser.add_argument("--station", default=PRIMARY_STATION.station)
+    parser.add_argument("--location", default=PRIMARY_STATION.location)
+    parser.add_argument("--channel", default=PRIMARY_STATION.channel)
+    parser.add_argument("--out", default=None, help="defaults to availability_<NET>_<STA>.json")
     args = parser.parse_args(argv)
 
     start = datetime.strptime(args.start, "%Y-%m").replace(tzinfo=UTC)
@@ -64,10 +69,10 @@ def main(argv: list[str] | None = None) -> int:
     for month in months(start, end):
         probe = month.replace(day=args.day, hour=args.hour)
         request = WaveformRequest(
-            PRIMARY_STATION.network,
-            PRIMARY_STATION.station,
-            PRIMARY_STATION.location,
-            PRIMARY_STATION.channel,
+            args.network,
+            args.station,
+            args.location,
+            args.channel,
             probe,
             probe + timedelta(minutes=args.probe_minutes),
         )
@@ -91,12 +96,21 @@ def main(argv: list[str] | None = None) -> int:
         print(f"  {rows[-1]['month']} {mark}", flush=True)
 
     present = [r for r in rows if r["present"]]
-    OUT.parent.mkdir(parents=True, exist_ok=True)
-    OUT.write_text(
+    out = (
+        Path(args.out)
+        if args.out
+        else (
+            DEFAULT_OUT
+            if (args.network, args.station) == (PRIMARY_STATION.network, PRIMARY_STATION.station)
+            else DEFAULT_OUT.parent / f"availability_{args.network}_{args.station}.json"
+        )
+    )
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(
         json.dumps(
             {
                 "probed_utc": datetime.now(UTC).isoformat(),
-                "station": PRIMARY_STATION.nslc,
+                "station": f"{args.network}.{args.station}.{args.location}.{args.channel}",
                 "method": (
                     f"one {args.probe_minutes:g}-minute window per month, day "
                     f"{args.day} at {args.hour:02d}:00 UTC. A month marked present may "
@@ -112,7 +126,7 @@ def main(argv: list[str] | None = None) -> int:
     )
 
     print(f"\n{len(present)}/{len(rows)} months have data at the probe point")
-    print(f"Wrote {OUT}\n")
+    print(f"Wrote {out}\n")
 
     by_year: dict[str, list[str]] = {}
     for row in rows:

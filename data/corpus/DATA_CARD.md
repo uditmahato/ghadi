@@ -79,7 +79,13 @@ six seed catalogue events, Jure 2014 and Langtang 2015 predate the station, and 
 with uncertainties of 1–3 hours, which is too coarse to cut a labelled window around
 without further work.
 
-**No amount of earthquake harvesting fixes this.** It is risk R1 in its most concrete
+**Five more positives are reachable on IO.EVN** (exp007), which holds all six
+candidate events including Gorkha 2015 and Jure 2014 that NK.KKN cannot reach. That
+makes R1 less severe than it looks here, but nothing has yet turned availability into a
+labelled window: four of the six still carry news-derived origin times with one-to-three
+hour uncertainties, and "has data" is not "has a detectable signal".
+
+**No amount of earthquake harvesting on a single station fixes this.** It is risk R1 in its most concrete
 form, and it is why the handoff proposes the Gorkha co-seismic landslide population
 (issue 1.5) — signals buried in the mainshock coda, which is a research problem in its
 own right — and why the honest deliverable may be a well-characterised physics detector
