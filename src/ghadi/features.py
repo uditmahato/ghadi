@@ -247,6 +247,7 @@ def extract(
     config: SeismicConfig | None = None,
     preprocessed: bool = False,
     onset_s: float | None = None,
+    segment_s: float | None = None,
 ) -> Features:
     """Extract the full discriminant feature set from one analysis window.
 
@@ -257,10 +258,34 @@ def extract(
             exists to fix. Callers on the detection path run the detector first and
             pass its onset through.
 
+        segment_s: restrict every feature to ``segment_s`` seconds from the onset.
+            This is what an operational detector can actually compute: a feature using
+            more post-onset data than the decision allows is unavailable when the alert
+            must fire, and training on whole windows while serving on segments is
+            train/serve skew with a safety cost (exp005). Requires ``onset_s``.
+
     Latency budget: < 1 s per 240 s window on CPU (HANDOFF §5.1).
     """
     config = config or DEFAULT.seismic
     x = np.asarray(data, dtype=float) if preprocessed else preprocess(data, sampling_rate, config)
+
+    if segment_s is not None:
+        if onset_s is None:
+            raise ValueError(
+                "segment_s requires onset_s: a segment is measured from an arrival, "
+                "and without one there is nothing to measure it from"
+            )
+        start = max(round(onset_s * sampling_rate), 0)
+        stop = min(start + round(segment_s * sampling_rate), x.size)
+        if stop - start < 2:
+            raise ValueError(
+                f"segment [{onset_s:.1f}s, +{segment_s:.1f}s] falls outside a "
+                f"{x.size / sampling_rate:.1f}s window"
+            )
+        x = x[start:stop]
+        # Features are now relative to the segment, so the arrival is at its start.
+        onset_s = 0.0
+
     env = envelope(x)
 
     present, snr_ratio = signal_presence(env, config)
