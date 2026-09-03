@@ -1,0 +1,178 @@
+{
+  "experiment": "exp008_candidate_positives",
+  "method": "selection by class-agnostic STA/LTA inside the reported uncertainty window; corroboration by cross-station timing agreement and teleseism exclusion; spectral features never used to select",
+  "min_peak_ratio": 6.0,
+  "lag_tolerance_s": 25.0,
+  "events": [
+    {
+      "event_id": "NPL-2014-08-02-JURE-001",
+      "origin_utc": "2014-08-01T20:45:00+00:00",
+      "origin_uncertainty_s": 1800.0,
+      "time_source": "news",
+      "search_hours": 1.5,
+      "stations": {
+        "IO.EVN": {
+          "chunks_ok": 2,
+          "chunks_failed": 0,
+          "distance_km": 94.3
+        },
+        "NK.KKN": {
+          "chunks_ok": 0,
+          "chunks_failed": 2,
+          "distance_km": 59.0
+        }
+      },
+      "triggers_per_station": {
+        "IO.EVN": 4,
+        "NK.KKN": 0
+      },
+      "cross_station_agreements": 0,
+      "expected_by_chance": 0.0,
+      "excess_over_chance": 0.0,
+      "surviving_candidates": []
+    },
+    {
+      "event_id": "NPL-2015-04-25-LANGTANG-001",
+      "origin_utc": "2015-04-25T06:13:00+00:00",
+      "origin_uncertainty_s": 300.0,
+      "time_source": "seismic",
+      "search_hours": 0.6666666666666666,
+      "stations": {
+        "IO.EVN": {
+          "chunks_ok": 1,
+          "chunks_failed": 0,
+          "distance_km": 129.9
+        },
+        "NK.KKN": {
+          "chunks_ok": 0,
+          "chunks_failed": 1,
+          "distance_km": 51.4
+        }
+      },
+      "triggers_per_station": {
+        "IO.EVN": 4,
+        "NK.KKN": 0
+      },
+      "cross_station_agreements": 0,
+      "expected_by_chance": 0.0,
+      "excess_over_chance": 0.0,
+      "surviving_candidates": []
+    },
+    {
+      "event_id": "NPL-2021-06-15-MELAMCHI-001",
+      "origin_utc": "2021-06-15T09:30:00+00:00",
+      "origin_uncertainty_s": 10800.0,
+      "time_source": "news",
+      "search_hours": 6.5,
+      "stations": {
+        "IO.EVN": {
+          "chunks_ok": 7,
+          "chunks_failed": 0,
+          "distance_km": 125.0
+        },
+        "NK.KKN": {
+          "chunks_ok": 7,
+          "chunks_failed": 0,
+          "distance_km": 42.7
+        }
+      },
+      "triggers_per_station": {
+        "IO.EVN": 43,
+        "NK.KKN": 4
+      },
+      "cross_station_agreements": 2,
+      "expected_by_chance": 0.4683476835038984,
+      "excess_over_chance": 1.5316523164961016,
+      "surviving_candidates": [
+        {
+          "time_utc": "2021-06-15T08:42:26.100000+00:00",
+          "observed_lag_s": 1.0,
+          "predicted_lag_s": [
+            -27.4,
+            -13.7
+          ],
+          "peak_ratios": [
+            7.3,
+            9.4
+          ],
+          "stations": [
+            "IO.EVN",
+            "NK.KKN"
+          ],
+          "teleseism": null
+        },
+        {
+          "time_utc": "2021-06-15T08:54:41.880000+00:00",
+          "observed_lag_s": -40.6,
+          "predicted_lag_s": [
+            -27.4,
+            -13.7
+          ],
+          "peak_ratios": [
+            7.8,
+            6.9
+          ],
+          "stations": [
+            "IO.EVN",
+            "NK.KKN"
+          ],
+          "teleseism": null
+        }
+      ]
+    },
+    {
+      "event_id": "NPL-2024-08-16-THAME-001",
+      "origin_utc": "2024-08-16T08:00:00+00:00",
+      "origin_uncertainty_s": 5400.0,
+      "time_source": "news",
+      "search_hours": 3.5,
+      "stations": {
+        "IO.EVN": {
+          "chunks_ok": 4,
+          "chunks_failed": 0,
+          "distance_km": 21.4
+        },
+        "NK.KKN": {
+          "chunks_ok": 4,
+          "chunks_failed": 0,
+          "distance_km": 132.1
+        }
+      },
+      "triggers_per_station": {
+        "IO.EVN": 9,
+        "NK.KKN": 0
+      },
+      "cross_station_agreements": 0,
+      "expected_by_chance": 0.0,
+      "excess_over_chance": 0.0,
+      "surviving_candidates": []
+    },
+    {
+      "event_id": "NPL-2025-07-08-RASUWAGADHI-001",
+      "origin_utc": "2025-07-08T03:00:00+00:00",
+      "origin_uncertainty_s": 3600.0,
+      "time_source": "news",
+      "search_hours": 2.5,
+      "stations": {
+        "IO.EVN": {
+          "chunks_ok": 3,
+          "chunks_failed": 0,
+          "distance_km": 129.5
+        },
+        "NK.KKN": {
+          "chunks_ok": 3,
+          "chunks_failed": 0,
+          "distance_km": 61.6
+        }
+      },
+      "triggers_per_station": {
+        "IO.EVN": 9,
+        "NK.KKN": 2
+      },
+      "cross_station_agreements": 0,
+      "expected_by_chance": 0.1226385108733606,
+      "excess_over_chance": -0.1226385108733606,
+      "surviving_candidates": []
+    }
+  ]
+}
