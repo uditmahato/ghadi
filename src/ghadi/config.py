@@ -117,6 +117,13 @@ class FusionConfig:
     advisory_p: float = 0.50  # => ADVISORY
     warning_p: float = 0.80  # => WARNING (also requires >= 2 independent groups alive)
     min_groups_for_warning: int = 2
+    # Operating-point probabilities for a binary hydro detection entering fusion.
+    # These are ASSUMED operating points, not a calibration: a rate-of-rise anomaly
+    # is a boolean, and turning it into P(mass movement) honestly needs corroborated
+    # events to calibrate against, which do not exist yet (positive class is n=1).
+    # Stated here so the assumption is visible and replaceable, never buried in code.
+    hydro_detected_p: float = 0.80
+    hydro_quiet_p: float = 0.05
 
 
 # --- CAP ----------------------------------------------------------------------------
