@@ -20,7 +20,7 @@ ANALYSIS PATH (not latency-critical):
 | # | Rule | Enforced by |
 |---|---|---|
 | 1 | Detection path and analysis path are physically separate. The detection modules (`ghadi.features`, `ghadi.detect`, `ghadi.hydro`, `ghadi.fusion`, `ghadi.cap`) must not import anything that can block on a satellite API — concretely: no `obspy`, no `matplotlib`, no network clients. They operate on plain numpy arrays and dataclasses. | `tests/test_layering.py` (subprocess import check) |
-| 2 | Degradation is a first-class output. Every fusion decision carries `channels_alive` / `channels_dead`, and alert text states them. | `ghadi.fusion.Decision`, `tests/test_fusion.py` |
+| 2 | Degradation is a first-class output. Every fusion decision carries `channels_alive` / `channels_dead`, and alert text states them. A gauge that dies without detecting becomes a **dead channel**, never a live low-risk one — sensor liveness is an explicit input to `channel_from_hydro`, not inferred from the waveform. | `ghadi.fusion.Decision`, `channel_from_hydro`, `tests/test_hydro_fusion.py` |
 | 3 | Corroboration requires source *independence*, not agreement count. Channels are collapsed into independence groups before noisy-OR. | `ghadi.fusion.fuse`, `tests/test_fusion.py` |
 | 4 | No generative model ever produces a number. CAP text is built from strict templates over structured records. | `ghadi.cap` (template-only), code review |
 

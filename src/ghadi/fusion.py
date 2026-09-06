@@ -21,6 +21,7 @@ from dataclasses import dataclass, field
 from enum import StrEnum
 
 from .config import DEFAULT, FusionConfig
+from .hydro import HydroAnomaly
 
 
 class Tier(StrEnum):
@@ -71,6 +72,67 @@ class Decision:
             f"({', '.join(self.channels_dead)}). "
             f"Live: {', '.join(self.channels_alive) or 'none'}."
         )
+
+
+def channel_from_hydro(
+    anomaly: HydroAnomaly,
+    sensor_alive: bool = True,
+    name: str = "hydro",
+    independence_group: str = "downstream_gauge",
+    config: FusionConfig | None = None,
+) -> Channel:
+    """Turn a gauge rate-of-rise result into a fusion channel.
+
+    ``sensor_alive`` is supplied by the caller, not inferred from the waveform. Whether
+    a gauge is still reporting is an ingestion-layer fact — did the expected next packet
+    arrive — and cannot be read off a short series, which looks identical whether the
+    sensor died or simply had little data. The anomaly detector must not guess it.
+
+    The safety-critical case is a sensor that died *without* detecting anything. A dead
+    gauge cannot report absence — concluding "no anomaly" from it is the
+    confidently-wrong failure the architecture exists to prevent, and it is what four of
+    five gauges did on 26 August 2026. So (not detected, sensor dead) becomes a **dead
+    channel** (``alive=False``) that fusion counts as lost and states in the alert,
+    never a live channel reporting low risk.
+
+    A detection stands even if the sensor died afterward: it is evidence already
+    recorded, so a detected anomaly is always a live channel regardless of ``sensor_alive``.
+
+    The probabilities are the assumed operating points in config, not a calibration — a
+    rate-of-rise anomaly is a boolean, and an honest P(mass movement) needs corroborated
+    events that do not exist yet. The number's provenance is stated, not hidden.
+    """
+    config = config or DEFAULT.fusion
+
+    if anomaly.detected:
+        return Channel(
+            name=name,
+            probability=config.hydro_detected_p,
+            independence_group=independence_group,
+            alive=True,
+            detail=f"rate-of-rise anomaly ({anomaly.reason})",
+        )
+
+    if not sensor_alive:
+        # No detection from a dead sensor: absence is unknowable, so the channel is lost.
+        return Channel(
+            name=name,
+            probability=config.hydro_quiet_p,
+            independence_group=independence_group,
+            alive=False,
+            detail=(
+                f"gauge offline after {anomaly.n_samples} samples with no anomaly — "
+                "absence cannot be concluded from a dead sensor"
+            ),
+        )
+
+    return Channel(
+        name=name,
+        probability=config.hydro_quiet_p,
+        independence_group=independence_group,
+        alive=True,
+        detail=f"no anomaly ({anomaly.reason})",
+    )
 
 
 def _noisy_or(probabilities: list[float]) -> float:
