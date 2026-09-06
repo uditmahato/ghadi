@@ -8,7 +8,7 @@ from __future__ import annotations
 
 import os
 from dataclasses import dataclass, field
-from datetime import timedelta, timezone
+from datetime import UTC, datetime, timedelta, timezone
 
 # --- time ---------------------------------------------------------------------------
 # Nepal Standard Time. The +05:45 offset is unusual and will be got wrong at least
@@ -49,6 +49,46 @@ PRIMARY_STATION_3C = (
     Station("NK", "KKN", "", "BHN"),
     Station("NK", "KKN", "", "BHE"),
 )
+
+
+@dataclass(frozen=True)
+class StationSite:
+    """A station with the location and archive facts a harvest needs.
+
+    Coordinates live here rather than being re-typed in every experiment (exp007,
+    exp008 both hardcoded IO.EVN). ``archive_start`` is the earliest date with usable
+    archived data, which is NOT the metadata start: NK.KKN advertises 2016 but the
+    archive begins ~2020 (see docs/DATA_SOURCES.md), and IO.EVN's usable record begins
+    around 2014 (exp007's coverage probe).
+    """
+
+    site: Station
+    latitude: float
+    longitude: float
+    archive_start: datetime
+
+    @property
+    def nslc(self) -> str:
+        return self.site.nslc
+
+
+# Kakani: nearest to the 2026 source (55.9 km) and the real-time feed, but the
+# shallower archive.
+KAKANI = StationSite(
+    site=PRIMARY_STATION,
+    latitude=27.800,
+    longitude=85.279,
+    archive_start=datetime(2016, 5, 22, tzinfo=UTC),
+)
+# Everest Pyramid Lab: 131 km from the source, but the deeper archive — the only open
+# station reaching Gorkha 2015 and Jure 2014 (exp007).
+EVEREST = StationSite(
+    site=Station("IO", "EVN", "", "BHZ"),
+    latitude=27.9592,
+    longitude=86.8133,
+    archive_start=datetime(2014, 1, 1, tzinfo=UTC),
+)
+STATION_SITES: dict[str, StationSite] = {"NK.KKN": KAKANI, "IO.EVN": EVEREST}
 
 # SY.* networks on FDSN are synthetics and must be excluded from every query.
 SYNTHETIC_NETWORKS = frozenset({"SY"})

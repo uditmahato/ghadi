@@ -1,0 +1,32 @@
+{
+  "experiment": "exp010_second_station",
+  "station": "IO.EVN..BHZ",
+  "segment_s": 120.0,
+  "cascade": {
+    "lf_hf": 15.072605742437103,
+    "centroid_hz": 1.5325246132329207
+  },
+  "earthquakes": {
+    "n": 132,
+    "lf_hf_median": 2.2230403705579445,
+    "centroid_median": 2.668704112645361
+  },
+  "overlap": {
+    "at_or_above_lf": 7,
+    "at_or_below_centroid": 7,
+    "meeting_both": 6,
+    "fraction_meeting_both": 0.045454545454545456,
+    "magnitude_matched_meeting_both": 5,
+    "magnitude_matched_n": 104
+  },
+  "confounds": {
+    "lf_vs_magnitude": 0.2617021387611986,
+    "centroid_vs_magnitude": -0.31379107031979664,
+    "lf_vs_distance": 0.2459392756700912,
+    "centroid_vs_distance": -0.29247650702050054
+  },
+  "nk_kkn_comparison": {
+    "note": "exp005 measured 17.2% overlap on NK.KKN, same 120 s segment basis",
+    "overlap_fraction": 0.172
+  }
+}
