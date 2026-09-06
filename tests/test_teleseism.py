@@ -192,3 +192,68 @@ def test_suppression_does_not_eat_the_target_event() -> None:
     assert not verdict.suppressed, (
         f"teleseism suppression would have removed the 26 Aug 2026 cascade: {verdict.reason}"
     )
+
+
+# --- the shared phase window, used by corpus construction and the suppressor ---------
+
+
+def test_corpus_exclusion_and_runtime_suppression_share_one_definition() -> None:
+    """They must not drift apart.
+
+    A noise corpus that excludes on one rule while the detector suppresses on another
+    would make the measured false-alarm rate describe a system nobody runs. Both call
+    `phase_window`, so a detection inside the window is suppressed *and* its window is
+    excluded.
+    """
+    from ghadi.teleseism import overlaps_window, phase_window
+
+    opens, closes, _ = phase_window(BONIN, STA_LAT, STA_LON)
+    midpoint = opens + (closes - opens) / 2
+
+    assert explain(midpoint, [BONIN], STA_LAT, STA_LON).suppressed
+    assert overlaps_window(BONIN, STA_LAT, STA_LON, opens, closes)
+
+
+def test_a_window_before_the_energy_arrives_is_not_excluded() -> None:
+    """Over-exclusion shrinks the corpus and biases it. A window that ends before P
+    arrives contains none of this earthquake's energy."""
+    from ghadi.teleseism import overlaps_window, phase_window
+
+    opens, _closes, _ = phase_window(BONIN, STA_LAT, STA_LON)
+    assert not overlaps_window(
+        BONIN, STA_LAT, STA_LON, opens - timedelta(hours=2), opens - timedelta(minutes=5)
+    )
+
+
+def test_a_window_after_the_surface_train_is_not_excluded() -> None:
+    from ghadi.teleseism import overlaps_window, phase_window
+
+    _opens, closes, _ = phase_window(BONIN, STA_LAT, STA_LON)
+    assert not overlaps_window(
+        BONIN, STA_LAT, STA_LON, closes + timedelta(minutes=5), closes + timedelta(hours=2)
+    )
+
+
+def test_a_small_earthquake_does_not_exclude_a_window() -> None:
+    """Below the magnitude floor a teleseism cannot trip a regional station, so
+    excluding on it would discard usable noise for no reason."""
+    from ghadi.teleseism import overlaps_window, phase_window
+
+    small = Origin(
+        time_utc=BONIN.time_utc,
+        latitude=BONIN.latitude,
+        longitude=BONIN.longitude,
+        magnitude=4.0,
+    )
+    opens, closes, _ = phase_window(small, STA_LAT, STA_LON)
+    assert not overlaps_window(small, STA_LAT, STA_LON, opens, closes)
+
+
+def test_the_phase_window_opens_at_p_and_closes_after_the_surface_train() -> None:
+    from ghadi.teleseism import phase_window, surface_wave_travel_time_s
+
+    opens, closes, degrees = phase_window(INDONESIA, STA_LAT, STA_LON)
+    p_time = INDONESIA.time_utc + timedelta(seconds=p_travel_time_s(degrees))
+    surface = INDONESIA.time_utc + timedelta(seconds=surface_wave_travel_time_s(degrees))
+    assert opens < p_time
+    assert closes > surface

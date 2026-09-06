@@ -41,6 +41,7 @@ from ghadi.config import PRIMARY_STATION, SOURCE_ZONE_LAT, SOURCE_ZONE_LON  # no
 from ghadi.detect import sta_lta  # noqa: E402
 from ghadi.fdsn import CachedWaveformClient, WaveformRequest  # noqa: E402
 from ghadi.features import extract, preprocess  # noqa: E402
+from ghadi.teleseism import Origin, overlaps_window  # noqa: E402
 
 MANIFEST = REPO_ROOT / "data" / "corpus" / "noise.json"
 AVAILABILITY = REPO_ROOT / "data" / "corpus" / "availability.json"
@@ -62,6 +63,8 @@ EVENT_GUARD_S = 3600.0
 
 
 EXCLUSION_CATALOGUE = REPO_ROOT / "data" / "corpus" / "exclusion_catalogue.json"
+GLOBAL_CATALOGUE = REPO_ROOT / "data" / "corpus" / "global_catalogue.json"
+STATION_LAT, STATION_LON = 27.800, 85.279
 
 
 def _query_usgs(min_magnitude: float, max_radius_deg: float, attempts: int = 5) -> list[datetime]:
@@ -184,13 +187,53 @@ def candidate_windows(per_cell: int, seed: int) -> list[datetime]:
     return sorted(set(starts))
 
 
-def contaminated(start: datetime, events: list[datetime]) -> datetime | None:
-    """Return the catalogued event contaminating this window, if any."""
+def load_global_origins() -> list[Origin]:
+    """Global M>=5.5 origins, for teleseism exclusion.
+
+    exp004 found half the surviving false alarms were distant earthquakes that the
+    6-degree regional exclusion never considered. Attenuation strips their high
+    frequencies, so they arrive looking exactly like a slow extended source — the
+    windows containing them are mislabelled, not noise.
+    """
+    if not GLOBAL_CATALOGUE.exists():
+        return []
+    data = json.loads(GLOBAL_CATALOGUE.read_text(encoding="utf-8"))
+    return [
+        Origin(
+            time_utc=datetime.fromisoformat(o["time_utc"]),
+            latitude=o["latitude"],
+            longitude=o["longitude"],
+            magnitude=o["magnitude"],
+            event_id=o.get("event_id", ""),
+            place=o.get("place", ""),
+        )
+        for o in data["origins"]
+    ]
+
+
+def contaminated(
+    start: datetime, events: list[datetime], global_origins: list[Origin]
+) -> tuple[str, str] | None:
+    """Return ``(kind, reason)`` if this window is not noise, else None.
+
+    Two exclusions, on different physics. A *regional* event is excluded by a flat
+    guard around its origin time, since at these distances everything arrives within
+    a minute or two. A *teleseism* is excluded on its P-to-surface phase window, which
+    can open ten minutes after the origin and stay open for twenty more — a flat guard
+    around the origin would miss it entirely (exp006).
+    """
     end = start + timedelta(seconds=WINDOW_S)
     guard = timedelta(seconds=EVENT_GUARD_S)
     for origin in events:
         if start - guard <= origin <= end + guard:
-            return origin
+            return "excluded_regional_event", f"regional event at {origin.isoformat()}"
+
+    for origin in global_origins:
+        if overlaps_window(origin, STATION_LAT, STATION_LON, start, end):
+            return (
+                "excluded_teleseism",
+                f"M{origin.magnitude:.1f} {origin.time_utc.isoformat()} ({origin.place})".strip(),
+            )
     return None
 
 
@@ -245,7 +288,12 @@ def harvest(
         f"Fetching catalogue to exclude contaminated windows (M>={min_magnitude}) ...", flush=True
     )
     events = catalogued_events(min_magnitude, max_radius_deg)
-    print(f"  {len(events)} catalogued events in the period\n", flush=True)
+    print(f"  {len(events)} regional events in the period", flush=True)
+    global_origins = load_global_origins()
+    print(
+        f"  {len(global_origins)} global M>=5.5 origins for teleseism exclusion",
+        flush=True,
+    )
 
     starts = candidate_windows(per_cell, seed)
     print(
@@ -256,15 +304,16 @@ def harvest(
     client = CachedWaveformClient()
     rows = []
     for i, start in enumerate(starts, start=1):
-        origin = contaminated(start, events)
-        if origin is not None:
+        verdict = contaminated(start, events, global_origins)
+        if verdict is not None:
+            status, reason = verdict
             rows.append(
                 {
                     "window_start_utc": start.isoformat(),
                     "month": start.month,
                     "hour_utc": start.hour,
-                    "status": "excluded_catalogued_event",
-                    "reason": f"catalogued event at {origin.isoformat()} within guard",
+                    "status": status,
+                    "reason": reason,
                 }
             )
             continue

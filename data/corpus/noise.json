@@ -1,5 +1,5 @@
 {
-  "created_utc": "2026-09-02T11:54:41.520251+00:00",
+  "created_utc": "2026-09-06T04:57:43.612699+00:00",
   "station": "NK.KKN..BHZ",
   "label": "noise",
   "period": {
@@ -23,27 +23,10 @@
   "windows": [
     {
       "window_start_utc": "2024-01-01T08:00:00+00:00",
-      "window_end_utc": "2024-01-01T08:35:00+00:00",
       "month": 1,
       "hour_utc": 8,
-      "n_samples": 105001,
-      "n_triggers": 2,
-      "max_sta_lta": 9.417413812152876,
-      "signal_present": true,
-      "features": {
-        "emergence_s": NaN,
-        "kurtosis": 14.400107461580367,
-        "spectral_ratio_low_high": 0.8157242982223322,
-        "spectral_centroid_hz": 4.87525777735885,
-        "duration_80_s": 1621.54,
-        "duration_ratio": 0.772154550909039,
-        "rise_to_duration": 0.8908445058401273,
-        "peak_amplitude": 429.5746361154364,
-        "rms_amplitude": 34.858152613167015,
-        "snr_ratio": 15.875364635555778,
-        "emergence_s_global_peak": 1685.0
-      },
-      "status": "ok"
+      "status": "excluded_teleseism",
+      "reason": "M5.6 2024-01-01T07:56:47.661000+00:00 (7 km N of Anamizu, Japan)"
     },
     {
       "window_start_utc": "2024-01-02T04:00:00+00:00",
@@ -71,27 +54,10 @@
     },
     {
       "window_start_utc": "2024-01-03T08:00:00+00:00",
-      "window_end_utc": "2024-01-03T08:35:00+00:00",
       "month": 1,
       "hour_utc": 8,
-      "n_samples": 105001,
-      "n_triggers": 1,
-      "max_sta_lta": 5.334827027427487,
-      "signal_present": true,
-      "features": {
-        "emergence_s": NaN,
-        "kurtosis": 6.920673593268162,
-        "spectral_ratio_low_high": 0.7141593481632291,
-        "spectral_centroid_hz": 4.82680103175885,
-        "duration_80_s": 1681.12,
-        "duration_ratio": 0.8005257092789592,
-        "rise_to_duration": 0.7454792043399638,
-        "peak_amplitude": 409.63507084085967,
-        "rms_amplitude": 27.193450198104138,
-        "snr_ratio": 14.135696084506145,
-        "emergence_s_global_peak": 1454.76
-      },
-      "status": "ok"
+      "status": "excluded_teleseism",
+      "reason": "M5.5 2024-01-03T08:04:04.468000+00:00 (68 km WNW of Vinchina, Argentina)"
     },
     {
       "window_start_utc": "2024-01-06T08:00:00+00:00",
@@ -1177,8 +1143,8 @@
       "window_start_utc": "2024-03-20T16:00:00+00:00",
       "month": 3,
       "hour_utc": 16,
-      "status": "excluded_catalogued_event",
-      "reason": "catalogued event at 2024-03-20T16:58:04.239000+00:00 within guard"
+      "status": "excluded_regional_event",
+      "reason": "regional event at 2024-03-20T16:58:04.239000+00:00"
     },
     {
       "window_start_utc": "2024-03-21T12:00:00+00:00",
@@ -1398,27 +1364,10 @@
     },
     {
       "window_start_utc": "2024-04-18T16:00:00+00:00",
-      "window_end_utc": "2024-04-18T16:35:00+00:00",
       "month": 4,
       "hour_utc": 16,
-      "n_samples": 105001,
-      "n_triggers": 0,
-      "max_sta_lta": 3.3640974907640873,
-      "signal_present": true,
-      "features": {
-        "emergence_s": NaN,
-        "kurtosis": 3.346040804211528,
-        "spectral_ratio_low_high": 0.768433681868942,
-        "spectral_centroid_hz": 4.999801950038216,
-        "duration_80_s": 1679.9,
-        "duration_ratio": 0.799944762430834,
-        "rise_to_duration": 0.49410083933567467,
-        "peak_amplitude": 113.47464163086094,
-        "rms_amplitude": 13.886390260014544,
-        "snr_ratio": 8.407746181229726,
-        "emergence_s_global_peak": 1044.2
-      },
-      "status": "ok"
+      "status": "excluded_teleseism",
+      "reason": "M5.6 2024-04-18T15:12:30.391000+00:00 (64 km ESE of Loreto, Mexico)"
     },
     {
       "window_start_utc": "2024-04-20T04:00:00+00:00",
@@ -1546,7 +1495,7 @@
       "month": 4,
       "hour_utc": 0,
       "status": "no_waveform",
-      "reason": "FDSNNoDataException: No data available for request.\nHTTP Status code: 204\nDetailed response of server:\n\n"
+      "reason": "offline mode (NK.KKN..BHZ): not in cache and network access is forbidden"
     },
     {
       "window_start_utc": "2024-04-26T08:00:00+00:00",
@@ -1554,7 +1503,7 @@
       "month": 4,
       "hour_utc": 8,
       "status": "no_waveform",
-      "reason": "FDSNNoDataException: No data available for request.\nHTTP Status code: 204\nDetailed response of server:\n\n"
+      "reason": "offline mode (NK.KKN..BHZ): not in cache and network access is forbidden"
     },
     {
       "window_start_utc": "2024-04-26T16:00:00+00:00",
@@ -1562,7 +1511,7 @@
       "month": 4,
       "hour_utc": 16,
       "status": "no_waveform",
-      "reason": "FDSNNoDataException: No data available for request.\nHTTP Status code: 204\nDetailed response of server:\n\n"
+      "reason": "offline mode (NK.KKN..BHZ): not in cache and network access is forbidden"
     },
     {
       "window_start_utc": "2024-04-27T12:00:00+00:00",
@@ -1570,7 +1519,7 @@
       "month": 4,
       "hour_utc": 12,
       "status": "no_waveform",
-      "reason": "FDSNNoDataException: No data available for request.\nHTTP Status code: 204\nDetailed response of server:\n\n"
+      "reason": "offline mode (NK.KKN..BHZ): not in cache and network access is forbidden"
     },
     {
       "window_start_utc": "2024-04-29T04:00:00+00:00",
@@ -1578,7 +1527,7 @@
       "month": 4,
       "hour_utc": 4,
       "status": "no_waveform",
-      "reason": "FDSNNoDataException: No data available for request.\nHTTP Status code: 204\nDetailed response of server:\n\n"
+      "reason": "offline mode (NK.KKN..BHZ): not in cache and network access is forbidden"
     },
     {
       "window_start_utc": "2024-04-30T00:00:00+00:00",
@@ -1586,7 +1535,7 @@
       "month": 4,
       "hour_utc": 0,
       "status": "no_waveform",
-      "reason": "FDSNNoDataException: No data available for request.\nHTTP Status code: 204\nDetailed response of server:\n\n"
+      "reason": "offline mode (NK.KKN..BHZ): not in cache and network access is forbidden"
     },
     {
       "window_start_utc": "2024-05-03T04:00:00+00:00",
@@ -1594,7 +1543,7 @@
       "month": 5,
       "hour_utc": 4,
       "status": "no_waveform",
-      "reason": "FDSNNoDataException: No data available for request.\nHTTP Status code: 204\nDetailed response of server:\n\n"
+      "reason": "offline mode (NK.KKN..BHZ): not in cache and network access is forbidden"
     },
     {
       "window_start_utc": "2024-05-08T12:00:00+00:00",
@@ -1622,27 +1571,10 @@
     },
     {
       "window_start_utc": "2024-05-10T12:00:00+00:00",
-      "window_end_utc": "2024-05-10T12:35:00+00:00",
       "month": 5,
       "hour_utc": 12,
-      "n_samples": 105001,
-      "n_triggers": 1,
-      "max_sta_lta": 10.367367819015756,
-      "signal_present": true,
-      "features": {
-        "emergence_s": NaN,
-        "kurtosis": 107.19386217060232,
-        "spectral_ratio_low_high": 0.5043465401025844,
-        "spectral_centroid_hz": 5.941040553963305,
-        "duration_80_s": 1724.1,
-        "duration_ratio": 0.8209921810268473,
-        "rise_to_duration": 0.9993619859636913,
-        "peak_amplitude": 1108.5396075644799,
-        "rms_amplitude": 27.326829905571323,
-        "snr_ratio": 45.14292065360512,
-        "emergence_s_global_peak": 1901.0
-      },
-      "status": "ok"
+      "status": "excluded_teleseism",
+      "reason": "M5.6 2024-05-10T11:48:41.811000+00:00 (100 km SSW of Kokopo, Papua New Guinea)"
     },
     {
       "window_start_utc": "2024-05-11T20:00:00+00:00",
@@ -2510,27 +2442,10 @@
     },
     {
       "window_start_utc": "2024-07-07T20:00:00+00:00",
-      "window_end_utc": "2024-07-07T20:35:00+00:00",
       "month": 7,
       "hour_utc": 20,
-      "n_samples": 105001,
-      "n_triggers": 4,
-      "max_sta_lta": 11.993131076691242,
-      "signal_present": true,
-      "features": {
-        "emergence_s": NaN,
-        "kurtosis": 220.30806414579882,
-        "spectral_ratio_low_high": 19.21627845309619,
-        "spectral_centroid_hz": 1.5987405554860035,
-        "duration_80_s": 725.8,
-        "duration_ratio": 0.34561575604041866,
-        "rise_to_duration": 0.0,
-        "peak_amplitude": 7684.525908419982,
-        "rms_amplitude": 189.57992709109402,
-        "snr_ratio": 336.27282509497604,
-        "emergence_s_global_peak": 2.38
-      },
-      "status": "ok"
+      "status": "excluded_teleseism",
+      "reason": "M5.5 2024-07-07T20:15:49.810000+00:00 (71 km SSW of Ust\u2019-Kamchatsk Staryy, Russia)"
     },
     {
       "window_start_utc": "2024-07-08T12:00:00+00:00",
@@ -2846,27 +2761,10 @@
     },
     {
       "window_start_utc": "2024-07-31T16:00:00+00:00",
-      "window_end_utc": "2024-07-31T16:35:00+00:00",
       "month": 7,
       "hour_utc": 16,
-      "n_samples": 105001,
-      "n_triggers": 0,
-      "max_sta_lta": 1.9008668029261255,
-      "signal_present": false,
-      "features": {
-        "emergence_s": NaN,
-        "kurtosis": 2.969432731607791,
-        "spectral_ratio_low_high": 0.7306533229590495,
-        "spectral_centroid_hz": 5.156099556848314,
-        "duration_80_s": 1678.8,
-        "duration_ratio": NaN,
-        "rise_to_duration": 0.41412913986180605,
-        "peak_amplitude": 63.30238418520311,
-        "rms_amplitude": 13.84425999921399,
-        "snr_ratio": 3.97980341141425,
-        "emergence_s_global_peak": 45.62
-      },
-      "status": "ok"
+      "status": "excluded_teleseism",
+      "reason": "M5.7 2024-07-31T15:18:03.258000+00:00 (80 km ENE of Levuka, Fiji)"
     },
     {
       "window_start_utc": "2024-08-02T12:00:00+00:00",
@@ -2942,27 +2840,10 @@
     },
     {
       "window_start_utc": "2024-08-10T04:00:00+00:00",
-      "window_end_utc": "2024-08-10T04:35:00+00:00",
       "month": 8,
       "hour_utc": 4,
-      "n_samples": 105001,
-      "n_triggers": 0,
-      "max_sta_lta": 4.78521995932691,
-      "signal_present": true,
-      "features": {
-        "emergence_s": NaN,
-        "kurtosis": 5.104414152244889,
-        "spectral_ratio_low_high": 0.38558182513141487,
-        "spectral_centroid_hz": 5.3075824267095975,
-        "duration_80_s": 1722.82,
-        "duration_ratio": 0.8203826630222569,
-        "rise_to_duration": 0.0,
-        "peak_amplitude": 268.4786667629684,
-        "rms_amplitude": 26.51315587662439,
-        "snr_ratio": 9.668892226741896,
-        "emergence_s_global_peak": 120.3
-      },
-      "status": "ok"
+      "status": "excluded_teleseism",
+      "reason": "M6.5 2024-08-10T03:28:32.681000+00:00 (151 km E of Dolinsk, Russia)"
     },
     {
       "window_start_utc": "2024-08-12T12:00:00+00:00",
@@ -3590,27 +3471,10 @@
     },
     {
       "window_start_utc": "2024-09-23T20:00:00+00:00",
-      "window_end_utc": "2024-09-23T20:35:00+00:00",
       "month": 9,
       "hour_utc": 20,
-      "n_samples": 105001,
-      "n_triggers": 1,
-      "max_sta_lta": 5.045490749148109,
-      "signal_present": true,
-      "features": {
-        "emergence_s": NaN,
-        "kurtosis": 64.89413393872307,
-        "spectral_ratio_low_high": 80.0297203614046,
-        "spectral_centroid_hz": 0.9709763344653134,
-        "duration_80_s": 1483.78,
-        "duration_ratio": 0.7065551756649937,
-        "rise_to_duration": 0.0,
-        "peak_amplitude": 1672.7522319993354,
-        "rms_amplitude": 94.13280264526719,
-        "snr_ratio": 96.40704874556602,
-        "emergence_s_global_peak": 8.34
-      },
-      "status": "ok"
+      "status": "excluded_teleseism",
+      "reason": "M6.0 2024-09-23T19:51:02.568000+00:00 (67 km SSW of Gorontalo, Indonesia)"
     },
     {
       "window_start_utc": "2024-09-26T20:00:00+00:00",
@@ -3710,27 +3574,10 @@
     },
     {
       "window_start_utc": "2024-09-30T12:00:00+00:00",
-      "window_end_utc": "2024-09-30T12:35:00+00:00",
       "month": 9,
       "hour_utc": 12,
-      "n_samples": 105001,
-      "n_triggers": 1,
-      "max_sta_lta": 11.515280111634935,
-      "signal_present": true,
-      "features": {
-        "emergence_s": NaN,
-        "kurtosis": 43.33450865067571,
-        "spectral_ratio_low_high": 4.875312406919991,
-        "spectral_centroid_hz": 2.1387070499507637,
-        "duration_80_s": 1785.32,
-        "duration_ratio": 0.8501442843401491,
-        "rise_to_duration": 0.9470235027894159,
-        "peak_amplitude": 810.8938150869017,
-        "rms_amplitude": 40.500881622490766,
-        "snr_ratio": 39.522110226077196,
-        "emergence_s_global_peak": 1912.62
-      },
-      "status": "ok"
+      "status": "excluded_teleseism",
+      "reason": "M5.9 2024-09-30T12:21:58.340000+00:00 (108 km E of Petropavlovsk-Kamchatsky, Russia)"
     },
     {
       "window_start_utc": "2024-10-03T08:00:00+00:00",
@@ -3926,27 +3773,10 @@
     },
     {
       "window_start_utc": "2024-10-14T00:00:00+00:00",
-      "window_end_utc": "2024-10-14T00:35:00+00:00",
       "month": 10,
       "hour_utc": 0,
-      "n_samples": 105001,
-      "n_triggers": 0,
-      "max_sta_lta": 4.223822245401227,
-      "signal_present": true,
-      "features": {
-        "emergence_s": NaN,
-        "kurtosis": 4.466444028131154,
-        "spectral_ratio_low_high": 0.866030559761101,
-        "spectral_centroid_hz": 5.421140540285197,
-        "duration_80_s": 1656.8,
-        "duration_ratio": 0.7889448671917411,
-        "rise_to_duration": 0.07897151134717528,
-        "peak_amplitude": 125.32662078347563,
-        "rms_amplitude": 10.945716798944813,
-        "snr_ratio": 11.485951248317157,
-        "emergence_s_global_peak": 383.84
-      },
-      "status": "ok"
+      "status": "excluded_teleseism",
+      "reason": "M5.5 2024-10-13T22:48:34.118000+00:00 (southeast of Easter Island)"
     },
     {
       "window_start_utc": "2024-10-16T00:00:00+00:00",
@@ -4814,27 +4644,10 @@
     },
     {
       "window_start_utc": "2024-12-21T16:00:00+00:00",
-      "window_end_utc": "2024-12-21T16:35:00+00:00",
       "month": 12,
       "hour_utc": 16,
-      "n_samples": 105001,
-      "n_triggers": 0,
-      "max_sta_lta": 2.470984136695018,
-      "signal_present": true,
-      "features": {
-        "emergence_s": NaN,
-        "kurtosis": 3.6962180560766837,
-        "spectral_ratio_low_high": 1.008553896789138,
-        "spectral_centroid_hz": 3.897370682485203,
-        "duration_80_s": 1692.54,
-        "duration_ratio": 0.8059637527261645,
-        "rise_to_duration": 0.018020253583371736,
-        "peak_amplitude": 100.28758258428958,
-        "rms_amplitude": 16.53563988068616,
-        "snr_ratio": 5.845080855381429,
-        "emergence_s_global_peak": 36.0
-      },
-      "status": "ok"
+      "status": "excluded_teleseism",
+      "reason": "M6.1 2024-12-21T15:30:53.399000+00:00 (33 km W of Port-Vila, Vanuatu)"
     },
     {
       "window_start_utc": "2024-12-25T08:00:00+00:00",
@@ -4888,8 +4701,8 @@
       "window_start_utc": "2024-12-28T08:00:00+00:00",
       "month": 12,
       "hour_utc": 8,
-      "status": "excluded_catalogued_event",
-      "reason": "catalogued event at 2024-12-28T07:02:12.064000+00:00 within guard"
+      "status": "excluded_regional_event",
+      "reason": "regional event at 2024-12-28T07:02:12.064000+00:00"
     },
     {
       "window_start_utc": "2024-12-29T12:00:00+00:00",
@@ -4897,7 +4710,7 @@
       "month": 12,
       "hour_utc": 12,
       "status": "no_waveform",
-      "reason": "FDSNNoDataException: No data available for request.\nHTTP Status code: 204\nDetailed response of server:\n\n"
+      "reason": "offline mode (NK.KKN..BHZ): not in cache and network access is forbidden"
     },
     {
       "window_start_utc": "2024-12-29T20:00:00+00:00",
@@ -4905,7 +4718,7 @@
       "month": 12,
       "hour_utc": 20,
       "status": "no_waveform",
-      "reason": "FDSNNoDataException: No data available for request.\nHTTP Status code: 204\nDetailed response of server:\n\n"
+      "reason": "offline mode (NK.KKN..BHZ): not in cache and network access is forbidden"
     },
     {
       "window_start_utc": "2024-12-31T12:00:00+00:00",
@@ -4913,7 +4726,7 @@
       "month": 12,
       "hour_utc": 12,
       "status": "no_waveform",
-      "reason": "FDSNNoDataException: No data available for request.\nHTTP Status code: 204\nDetailed response of server:\n\n"
+      "reason": "offline mode (NK.KKN..BHZ): not in cache and network access is forbidden"
     },
     {
       "window_start_utc": "2025-02-01T08:00:00+00:00",
@@ -5063,8 +4876,8 @@
       "window_start_utc": "2025-02-09T12:00:00+00:00",
       "month": 2,
       "hour_utc": 12,
-      "status": "excluded_catalogued_event",
-      "reason": "catalogued event at 2025-02-09T11:26:59.678000+00:00 within guard"
+      "status": "excluded_regional_event",
+      "reason": "regional event at 2025-02-09T11:26:59.678000+00:00"
     },
     {
       "window_start_utc": "2025-02-15T08:00:00+00:00",
@@ -5216,7 +5029,7 @@
       "month": 2,
       "hour_utc": 16,
       "status": "no_waveform",
-      "reason": "FDSNNoDataException: No data available for request.\nHTTP Status code: 204\nDetailed response of server:\n\n"
+      "reason": "offline mode (NK.KKN..BHZ): not in cache and network access is forbidden"
     },
     {
       "window_start_utc": "2025-02-23T00:00:00+00:00",
@@ -5248,7 +5061,7 @@
       "month": 2,
       "hour_utc": 8,
       "status": "no_waveform",
-      "reason": "FDSNNoDataException: No data available for request.\nHTTP Status code: 204\nDetailed response of server:\n\n"
+      "reason": "offline mode (NK.KKN..BHZ): not in cache and network access is forbidden"
     },
     {
       "window_start_utc": "2025-02-26T20:00:00+00:00",
@@ -5278,8 +5091,8 @@
       "window_start_utc": "2025-02-27T20:00:00+00:00",
       "month": 2,
       "hour_utc": 20,
-      "status": "excluded_catalogued_event",
-      "reason": "catalogued event at 2025-02-27T21:06:10.378000+00:00 within guard"
+      "status": "excluded_regional_event",
+      "reason": "regional event at 2025-02-27T21:06:10.378000+00:00"
     },
     {
       "window_start_utc": "2025-03-03T00:00:00+00:00",
@@ -5287,7 +5100,7 @@
       "month": 3,
       "hour_utc": 0,
       "status": "no_waveform",
-      "reason": "FDSNNoDataException: No data available for request.\nHTTP Status code: 204\nDetailed response of server:\n\n"
+      "reason": "offline mode (NK.KKN..BHZ): not in cache and network access is forbidden"
     },
     {
       "window_start_utc": "2025-03-03T04:00:00+00:00",
@@ -5341,39 +5154,22 @@
       "window_start_utc": "2025-03-08T08:00:00+00:00",
       "month": 3,
       "hour_utc": 8,
-      "status": "excluded_catalogued_event",
-      "reason": "catalogued event at 2025-03-08T08:50:17.952000+00:00 within guard"
+      "status": "excluded_regional_event",
+      "reason": "regional event at 2025-03-08T08:50:17.952000+00:00"
     },
     {
       "window_start_utc": "2025-03-08T20:00:00+00:00",
       "month": 3,
       "hour_utc": 20,
-      "status": "excluded_catalogued_event",
-      "reason": "catalogued event at 2025-03-08T21:00:14.264000+00:00 within guard"
+      "status": "excluded_regional_event",
+      "reason": "regional event at 2025-03-08T21:00:14.264000+00:00"
     },
     {
       "window_start_utc": "2025-03-09T00:00:00+00:00",
-      "window_end_utc": "2025-03-09T00:35:00+00:00",
       "month": 3,
       "hour_utc": 0,
-      "n_samples": 105001,
-      "n_triggers": 1,
-      "max_sta_lta": 6.106473352063748,
-      "signal_present": true,
-      "features": {
-        "emergence_s": NaN,
-        "kurtosis": 6.234043876762816,
-        "spectral_ratio_low_high": 1.026972608885418,
-        "spectral_centroid_hz": 4.601222215511922,
-        "duration_80_s": 1694.48,
-        "duration_ratio": 0.8068875534518719,
-        "rise_to_duration": 0.28684906283933714,
-        "peak_amplitude": 242.35606203021194,
-        "rms_amplitude": 17.21860252985383,
-        "snr_ratio": 13.402448406622634,
-        "emergence_s_global_peak": 665.64
-      },
-      "status": "ok"
+      "status": "excluded_teleseism",
+      "reason": "M5.7 2025-03-08T23:42:55.012000+00:00 (74 km ENE of Tatsug\u014d, Japan)"
     },
     {
       "window_start_utc": "2025-03-09T20:00:00+00:00",
@@ -5403,8 +5199,8 @@
       "window_start_utc": "2025-03-11T08:00:00+00:00",
       "month": 3,
       "hour_utc": 8,
-      "status": "excluded_catalogued_event",
-      "reason": "catalogued event at 2025-03-11T07:09:05.483000+00:00 within guard"
+      "status": "excluded_regional_event",
+      "reason": "regional event at 2025-03-11T07:09:05.483000+00:00"
     },
     {
       "window_start_utc": "2025-03-14T12:00:00+00:00",
@@ -5460,7 +5256,7 @@
       "month": 3,
       "hour_utc": 16,
       "status": "no_waveform",
-      "reason": "FDSNNoDataException: No data available for request.\nHTTP Status code: 204\nDetailed response of server:\n\n"
+      "reason": "offline mode (NK.KKN..BHZ): not in cache and network access is forbidden"
     },
     {
       "window_start_utc": "2025-03-20T04:00:00+00:00",
@@ -5584,27 +5380,10 @@
     },
     {
       "window_start_utc": "2025-03-30T12:00:00+00:00",
-      "window_end_utc": "2025-03-30T12:35:00+00:00",
       "month": 3,
       "hour_utc": 12,
-      "n_samples": 105001,
-      "n_triggers": 1,
-      "max_sta_lta": 6.902893549779051,
-      "signal_present": true,
-      "features": {
-        "emergence_s": NaN,
-        "kurtosis": 5.011298414965899,
-        "spectral_ratio_low_high": 0.20892411960835383,
-        "spectral_centroid_hz": 5.328385818689357,
-        "duration_80_s": 1662.5,
-        "duration_ratio": 0.7916591270559328,
-        "rise_to_duration": 0.5199278195488721,
-        "peak_amplitude": 401.1127405901381,
-        "rms_amplitude": 43.942653453475494,
-        "snr_ratio": 9.097557148088063,
-        "emergence_s_global_peak": 1057.12
-      },
-      "status": "ok"
+      "status": "excluded_teleseism",
+      "reason": "M7.0 2025-03-30T12:18:50.362000+00:00 (61 km SSE of Pangai, Tonga)"
     },
     {
       "window_start_utc": "2025-04-02T16:00:00+00:00",
@@ -6020,7 +5799,7 @@
       "month": 5,
       "hour_utc": 12,
       "status": "no_waveform",
-      "reason": "FDSNNoDataException: No data available for request.\nHTTP Status code: 204\nDetailed response of server:\n\n"
+      "reason": "offline mode (NK.KKN..BHZ): not in cache and network access is forbidden"
     },
     {
       "window_start_utc": "2025-05-05T20:00:00+00:00",
@@ -6028,7 +5807,7 @@
       "month": 5,
       "hour_utc": 20,
       "status": "no_waveform",
-      "reason": "FDSNNoDataException: No data available for request.\nHTTP Status code: 204\nDetailed response of server:\n\n"
+      "reason": "offline mode (NK.KKN..BHZ): not in cache and network access is forbidden"
     },
     {
       "window_start_utc": "2025-05-08T16:00:00+00:00",
@@ -6272,11 +6051,10 @@
     },
     {
       "window_start_utc": "2025-05-26T04:00:00+00:00",
-      "window_end_utc": "2025-05-26T04:35:00+00:00",
       "month": 5,
       "hour_utc": 4,
-      "status": "no_waveform",
-      "reason": "FDSNNoDataException: No data available for request.\nHTTP Status code: 204\nDetailed response of server:\n\n"
+      "status": "excluded_teleseism",
+      "reason": "M5.7 2025-05-26T03:50:25.655000+00:00 (33 km S of Cami\u00f1a, Chile)"
     },
     {
       "window_start_utc": "2025-05-27T20:00:00+00:00",
@@ -6284,7 +6062,7 @@
       "month": 5,
       "hour_utc": 20,
       "status": "no_waveform",
-      "reason": "FDSNNoDataException: No data available for request.\nHTTP Status code: 204\nDetailed response of server:\n\n"
+      "reason": "offline mode (NK.KKN..BHZ): not in cache and network access is forbidden"
     },
     {
       "window_start_utc": "2025-05-30T08:00:00+00:00",
@@ -6292,7 +6070,7 @@
       "month": 5,
       "hour_utc": 8,
       "status": "no_waveform",
-      "reason": "FDSNNoDataException: No data available for request.\nHTTP Status code: 204\nDetailed response of server:\n\n"
+      "reason": "offline mode (NK.KKN..BHZ): not in cache and network access is forbidden"
     },
     {
       "window_start_utc": "2025-05-30T20:00:00+00:00",
@@ -6300,7 +6078,7 @@
       "month": 5,
       "hour_utc": 20,
       "status": "no_waveform",
-      "reason": "FDSNNoDataException: No data available for request.\nHTTP Status code: 204\nDetailed response of server:\n\n"
+      "reason": "offline mode (NK.KKN..BHZ): not in cache and network access is forbidden"
     },
     {
       "window_start_utc": "2025-06-01T16:00:00+00:00",
@@ -6308,7 +6086,7 @@
       "month": 6,
       "hour_utc": 16,
       "status": "no_waveform",
-      "reason": "FDSNNoDataException: No data available for request.\nHTTP Status code: 204\nDetailed response of server:\n\n"
+      "reason": "offline mode (NK.KKN..BHZ): not in cache and network access is forbidden"
     },
     {
       "window_start_utc": "2025-06-02T00:00:00+00:00",
@@ -6316,7 +6094,7 @@
       "month": 6,
       "hour_utc": 0,
       "status": "no_waveform",
-      "reason": "FDSNNoDataException: No data available for request.\nHTTP Status code: 204\nDetailed response of server:\n\n"
+      "reason": "offline mode (NK.KKN..BHZ): not in cache and network access is forbidden"
     },
     {
       "window_start_utc": "2025-06-02T04:00:00+00:00",
@@ -6324,7 +6102,7 @@
       "month": 6,
       "hour_utc": 4,
       "status": "no_waveform",
-      "reason": "FDSNNoDataException: No data available for request.\nHTTP Status code: 204\nDetailed response of server:\n\n"
+      "reason": "offline mode (NK.KKN..BHZ): not in cache and network access is forbidden"
     },
     {
       "window_start_utc": "2025-06-03T20:00:00+00:00",
@@ -6332,7 +6110,7 @@
       "month": 6,
       "hour_utc": 20,
       "status": "no_waveform",
-      "reason": "FDSNNoDataException: No data available for request.\nHTTP Status code: 204\nDetailed response of server:\n\n"
+      "reason": "offline mode (NK.KKN..BHZ): not in cache and network access is forbidden"
     },
     {
       "window_start_utc": "2025-06-04T16:00:00+00:00",
@@ -6340,7 +6118,7 @@
       "month": 6,
       "hour_utc": 16,
       "status": "no_waveform",
-      "reason": "FDSNNoDataException: No data available for request.\nHTTP Status code: 204\nDetailed response of server:\n\n"
+      "reason": "offline mode (NK.KKN..BHZ): not in cache and network access is forbidden"
     },
     {
       "window_start_utc": "2025-06-04T20:00:00+00:00",
@@ -6348,7 +6126,7 @@
       "month": 6,
       "hour_utc": 20,
       "status": "no_waveform",
-      "reason": "FDSNNoDataException: No data available for request.\nHTTP Status code: 204\nDetailed response of server:\n\n"
+      "reason": "offline mode (NK.KKN..BHZ): not in cache and network access is forbidden"
     },
     {
       "window_start_utc": "2025-06-11T20:00:00+00:00",
@@ -6568,27 +6346,10 @@
     },
     {
       "window_start_utc": "2025-06-28T04:00:00+00:00",
-      "window_end_utc": "2025-06-28T04:35:00+00:00",
       "month": 6,
       "hour_utc": 4,
-      "n_samples": 105001,
-      "n_triggers": 2,
-      "max_sta_lta": 6.7987526414444615,
-      "signal_present": true,
-      "features": {
-        "emergence_s": NaN,
-        "kurtosis": 17.41759469261094,
-        "spectral_ratio_low_high": 1.1996905540052867,
-        "spectral_centroid_hz": 4.060864921716172,
-        "duration_80_s": 1608.1,
-        "duration_ratio": 0.7657546118608394,
-        "rise_to_duration": 0.7385610347615199,
-        "peak_amplitude": 521.5210578041126,
-        "rms_amplitude": 30.431809953148708,
-        "snr_ratio": 21.586159859300295,
-        "emergence_s_global_peak": 1464.4
-      },
-      "status": "ok"
+      "status": "excluded_teleseism",
+      "reason": "M5.5 2025-06-28T04:17:08.545000+00:00 (161 km NNW of Houma, Tonga)"
     },
     {
       "window_start_utc": "2025-06-29T04:00:00+00:00",
@@ -6812,7 +6573,7 @@
       "month": 7,
       "hour_utc": 16,
       "status": "no_waveform",
-      "reason": "FDSNNoDataException: No data available for request.\nHTTP Status code: 204\nDetailed response of server:\n\n"
+      "reason": "offline mode (NK.KKN..BHZ): not in cache and network access is forbidden"
     },
     {
       "window_start_utc": "2025-07-17T00:00:00+00:00",
@@ -6820,15 +6581,14 @@
       "month": 7,
       "hour_utc": 0,
       "status": "no_waveform",
-      "reason": "FDSNNoDataException: No data available for request.\nHTTP Status code: 204\nDetailed response of server:\n\n"
+      "reason": "offline mode (NK.KKN..BHZ): not in cache and network access is forbidden"
     },
     {
       "window_start_utc": "2025-07-20T08:00:00+00:00",
-      "window_end_utc": "2025-07-20T08:35:00+00:00",
       "month": 7,
       "hour_utc": 8,
-      "status": "no_waveform",
-      "reason": "FDSNNoDataException: No data available for request.\nHTTP Status code: 204\nDetailed response of server:\n\n"
+      "status": "excluded_teleseism",
+      "reason": "M5.9 2025-07-20T07:26:17.432000+00:00 (163 km E of Petropavlovsk-Kamchatsky, Russia)"
     },
     {
       "window_start_utc": "2025-07-21T00:00:00+00:00",
@@ -6836,7 +6596,7 @@
       "month": 7,
       "hour_utc": 0,
       "status": "no_waveform",
-      "reason": "FDSNNoDataException: No data available for request.\nHTTP Status code: 204\nDetailed response of server:\n\n"
+      "reason": "offline mode (NK.KKN..BHZ): not in cache and network access is forbidden"
     },
     {
       "window_start_utc": "2025-07-22T04:00:00+00:00",
@@ -6844,7 +6604,7 @@
       "month": 7,
       "hour_utc": 4,
       "status": "no_waveform",
-      "reason": "FDSNNoDataException: No data available for request.\nHTTP Status code: 204\nDetailed response of server:\n\n"
+      "reason": "offline mode (NK.KKN..BHZ): not in cache and network access is forbidden"
     },
     {
       "window_start_utc": "2025-07-25T08:00:00+00:00",
@@ -6852,7 +6612,7 @@
       "month": 7,
       "hour_utc": 8,
       "status": "no_waveform",
-      "reason": "FDSNNoDataException: No data available for request.\nHTTP Status code: 204\nDetailed response of server:\n\n"
+      "reason": "offline mode (NK.KKN..BHZ): not in cache and network access is forbidden"
     },
     {
       "window_start_utc": "2025-07-27T12:00:00+00:00",
@@ -6860,23 +6620,21 @@
       "month": 7,
       "hour_utc": 12,
       "status": "no_waveform",
-      "reason": "FDSNNoDataException: No data available for request.\nHTTP Status code: 204\nDetailed response of server:\n\n"
+      "reason": "offline mode (NK.KKN..BHZ): not in cache and network access is forbidden"
     },
     {
       "window_start_utc": "2025-07-30T04:00:00+00:00",
-      "window_end_utc": "2025-07-30T04:35:00+00:00",
       "month": 7,
       "hour_utc": 4,
-      "status": "no_waveform",
-      "reason": "FDSNNoDataException: No data available for request.\nHTTP Status code: 204\nDetailed response of server:\n\n"
+      "status": "excluded_teleseism",
+      "reason": "M5.6 2025-07-30T04:25:14.790000+00:00 (152 km S of Severo-Kuril\u2019sk, Russia)"
     },
     {
       "window_start_utc": "2025-07-30T08:00:00+00:00",
-      "window_end_utc": "2025-07-30T08:35:00+00:00",
       "month": 7,
       "hour_utc": 8,
-      "status": "no_waveform",
-      "reason": "FDSNNoDataException: No data available for request.\nHTTP Status code: 204\nDetailed response of server:\n\n"
+      "status": "excluded_teleseism",
+      "reason": "M5.6 2025-07-30T07:34:42.923000+00:00 (202 km S of Severo-Kuril\u2019sk, Russia)"
     },
     {
       "window_start_utc": "2026-01-01T08:00:00+00:00",
@@ -6908,7 +6666,7 @@
       "month": 1,
       "hour_utc": 16,
       "status": "no_waveform",
-      "reason": "FDSNNoDataException: No data available for request.\nHTTP Status code: 204\nDetailed response of server:\n\n"
+      "reason": "offline mode (NK.KKN..BHZ): not in cache and network access is forbidden"
     },
     {
       "window_start_utc": "2026-01-09T12:00:00+00:00",
@@ -6916,15 +6674,14 @@
       "month": 1,
       "hour_utc": 12,
       "status": "no_waveform",
-      "reason": "FDSNNoDataException: No data available for request.\nHTTP Status code: 204\nDetailed response of server:\n\n"
+      "reason": "offline mode (NK.KKN..BHZ): not in cache and network access is forbidden"
     },
     {
       "window_start_utc": "2026-01-10T00:00:00+00:00",
-      "window_end_utc": "2026-01-10T00:35:00+00:00",
       "month": 1,
       "hour_utc": 0,
-      "status": "no_waveform",
-      "reason": "FDSNNoDataException: No data available for request.\nHTTP Status code: 204\nDetailed response of server:\n\n"
+      "status": "excluded_teleseism",
+      "reason": "M5.5 2026-01-10T00:06:05.721000+00:00 (south of the Fiji Islands)"
     },
     {
       "window_start_utc": "2026-01-10T08:00:00+00:00",
@@ -6932,7 +6689,7 @@
       "month": 1,
       "hour_utc": 8,
       "status": "no_waveform",
-      "reason": "FDSNNoDataException: No data available for request.\nHTTP Status code: 204\nDetailed response of server:\n\n"
+      "reason": "offline mode (NK.KKN..BHZ): not in cache and network access is forbidden"
     },
     {
       "window_start_utc": "2026-01-11T20:00:00+00:00",
@@ -6940,7 +6697,7 @@
       "month": 1,
       "hour_utc": 20,
       "status": "no_waveform",
-      "reason": "FDSNNoDataException: No data available for request.\nHTTP Status code: 204\nDetailed response of server:\n\n"
+      "reason": "offline mode (NK.KKN..BHZ): not in cache and network access is forbidden"
     },
     {
       "window_start_utc": "2026-01-16T00:00:00+00:00",
@@ -7280,27 +7037,10 @@
     },
     {
       "window_start_utc": "2026-02-08T12:00:00+00:00",
-      "window_end_utc": "2026-02-08T12:35:00+00:00",
       "month": 2,
       "hour_utc": 12,
-      "n_samples": 105001,
-      "n_triggers": 2,
-      "max_sta_lta": 5.667366214722075,
-      "signal_present": true,
-      "features": {
-        "emergence_s": NaN,
-        "kurtosis": 6.5155085879046055,
-        "spectral_ratio_low_high": 0.5340298888597986,
-        "spectral_centroid_hz": 5.786164487179646,
-        "duration_80_s": 1624.1,
-        "duration_ratio": 0.7733735869182198,
-        "rise_to_duration": 0.5779816513761469,
-        "peak_amplitude": 2636.391488989148,
-        "rms_amplitude": 240.0805755863286,
-        "snr_ratio": 10.45413490898134,
-        "emergence_s_global_peak": 1154.26
-      },
-      "status": "ok"
+      "status": "excluded_teleseism",
+      "reason": "M5.5 2026-02-08T12:00:09.139000+00:00 (42 km SSW of Mais\u00ed, Cuba)"
     },
     {
       "window_start_utc": "2026-02-09T04:00:00+00:00",
@@ -7328,51 +7068,17 @@
     },
     {
       "window_start_utc": "2026-02-15T16:00:00+00:00",
-      "window_end_utc": "2026-02-15T16:35:00+00:00",
       "month": 2,
       "hour_utc": 16,
-      "n_samples": 105001,
-      "n_triggers": 1,
-      "max_sta_lta": 9.137474895754465,
-      "signal_present": true,
-      "features": {
-        "emergence_s": NaN,
-        "kurtosis": 29.18209247066479,
-        "spectral_ratio_low_high": 6.130261240077854,
-        "spectral_centroid_hz": 2.0736149119371077,
-        "duration_80_s": 1357.52,
-        "duration_ratio": 0.6464319387434405,
-        "rise_to_duration": 0.12291531616477107,
-        "peak_amplitude": 4002.0786506564464,
-        "rms_amplitude": 288.13124016041155,
-        "snr_ratio": 25.982075723224682,
-        "emergence_s_global_peak": 503.62
-      },
-      "status": "ok"
+      "status": "excluded_teleseism",
+      "reason": "M5.9 2026-02-15T15:58:45.737000+00:00 (299 km SSW of Severo-Kuril\u2019sk, Russia)"
     },
     {
       "window_start_utc": "2026-02-16T16:00:00+00:00",
-      "window_end_utc": "2026-02-16T16:35:00+00:00",
       "month": 2,
       "hour_utc": 16,
-      "n_samples": 105001,
-      "n_triggers": 0,
-      "max_sta_lta": 4.028378641789164,
-      "signal_present": true,
-      "features": {
-        "emergence_s": NaN,
-        "kurtosis": 4.083348376848553,
-        "spectral_ratio_low_high": 0.727185308406076,
-        "spectral_centroid_hz": 5.109142108949833,
-        "duration_80_s": 1645.58,
-        "duration_ratio": 0.783602060932753,
-        "rise_to_duration": 0.9182415926299542,
-        "peak_amplitude": 1199.6340489469808,
-        "rms_amplitude": 159.0467028620495,
-        "snr_ratio": 7.250981895036062,
-        "emergence_s_global_peak": 1758.76
-      },
-      "status": "ok"
+      "status": "excluded_teleseism",
+      "reason": "M5.7 2026-02-16T14:52:54.769000+00:00 (South Sandwich Islands region)"
     },
     {
       "window_start_utc": "2026-02-17T00:00:00+00:00",
@@ -7712,27 +7418,10 @@
     },
     {
       "window_start_utc": "2026-03-08T04:00:00+00:00",
-      "window_end_utc": "2026-03-08T04:35:00+00:00",
       "month": 3,
       "hour_utc": 4,
-      "n_samples": 105001,
-      "n_triggers": 1,
-      "max_sta_lta": 10.514538358591272,
-      "signal_present": true,
-      "features": {
-        "emergence_s": NaN,
-        "kurtosis": 41.258738119278945,
-        "spectral_ratio_low_high": 0.40956513607098505,
-        "spectral_centroid_hz": 5.785118144683049,
-        "duration_80_s": 1768.48,
-        "duration_ratio": 0.8421253130922562,
-        "rise_to_duration": 0.9901497331041346,
-        "peak_amplitude": 5654.539683656232,
-        "rms_amplitude": 276.0235657158039,
-        "snr_ratio": 26.740442278116532,
-        "emergence_s_global_peak": 1976.08
-      },
-      "status": "ok"
+      "status": "excluded_teleseism",
+      "reason": "M5.5 2026-03-08T03:32:31.239000+00:00 (1 km NW of Rodot\u00f3pi, Greece)"
     },
     {
       "window_start_utc": "2026-03-13T16:00:00+00:00",
@@ -7808,27 +7497,10 @@
     },
     {
       "window_start_utc": "2026-03-20T00:00:00+00:00",
-      "window_end_utc": "2026-03-20T00:35:00+00:00",
       "month": 3,
       "hour_utc": 0,
-      "n_samples": 105001,
-      "n_triggers": 0,
-      "max_sta_lta": 4.108825192629461,
-      "signal_present": true,
-      "features": {
-        "emergence_s": NaN,
-        "kurtosis": 3.492060648533727,
-        "spectral_ratio_low_high": 0.5363056045437279,
-        "spectral_centroid_hz": 5.71460052852505,
-        "duration_80_s": 1670.08,
-        "duration_ratio": 0.7952686164893668,
-        "rise_to_duration": 0.8920051734048668,
-        "peak_amplitude": 120.53622252455223,
-        "rms_amplitude": 15.835338924918846,
-        "snr_ratio": 7.272541663694938,
-        "emergence_s_global_peak": 1705.26
-      },
-      "status": "ok"
+      "status": "excluded_teleseism",
+      "reason": "M6.5 2026-03-20T00:22:04.661000+00:00 (South Shetland Islands)"
     },
     {
       "window_start_utc": "2026-03-21T08:00:00+00:00",
@@ -7856,27 +7528,10 @@
     },
     {
       "window_start_utc": "2026-03-22T16:00:00+00:00",
-      "window_end_utc": "2026-03-22T16:35:00+00:00",
       "month": 3,
       "hour_utc": 16,
-      "n_samples": 105001,
-      "n_triggers": 0,
-      "max_sta_lta": 2.7158152742029493,
-      "signal_present": true,
-      "features": {
-        "emergence_s": NaN,
-        "kurtosis": 3.487848852260732,
-        "spectral_ratio_low_high": 0.9000043850242245,
-        "spectral_centroid_hz": 4.3730173278749485,
-        "duration_80_s": 1638.36,
-        "duration_ratio": 0.78016399843811,
-        "rise_to_duration": 0.7818061964403429,
-        "peak_amplitude": 119.5874972134957,
-        "rms_amplitude": 15.523979924543319,
-        "snr_ratio": 7.204496960147423,
-        "emergence_s_global_peak": 1518.78
-      },
-      "status": "ok"
+      "status": "excluded_teleseism",
+      "reason": "M5.6 2026-03-22T16:00:18.732000+00:00 (135 km NE of Hihifo, Tonga)"
     },
     {
       "window_start_utc": "2026-03-23T12:00:00+00:00",
@@ -8504,27 +8159,10 @@
     },
     {
       "window_start_utc": "2026-05-10T04:00:00+00:00",
-      "window_end_utc": "2026-05-10T04:35:00+00:00",
       "month": 5,
       "hour_utc": 4,
-      "n_samples": 105001,
-      "n_triggers": 0,
-      "max_sta_lta": 2.281148754285816,
-      "signal_present": true,
-      "features": {
-        "emergence_s": NaN,
-        "kurtosis": 3.2843487196409424,
-        "spectral_ratio_low_high": 0.4169967353470346,
-        "spectral_centroid_hz": 6.480885197665618,
-        "duration_80_s": 1685.18,
-        "duration_ratio": 0.8024590241997696,
-        "rise_to_duration": 0.9492161074781328,
-        "peak_amplitude": 136.8303331416273,
-        "rms_amplitude": 20.52442466337956,
-        "snr_ratio": 6.202495381508455,
-        "emergence_s_global_peak": 1806.2
-      },
-      "status": "ok"
+      "status": "excluded_teleseism",
+      "reason": "M5.5 2026-05-10T02:34:07.091000+00:00 (19 km ENE of Ca\u00f1ete, Chile)"
     },
     {
       "window_start_utc": "2026-05-12T08:00:00+00:00",
@@ -9488,27 +9126,10 @@
     },
     {
       "window_start_utc": "2026-07-19T04:00:00+00:00",
-      "window_end_utc": "2026-07-19T04:35:00+00:00",
       "month": 7,
       "hour_utc": 4,
-      "n_samples": 105001,
-      "n_triggers": 0,
-      "max_sta_lta": 3.63124587116876,
-      "signal_present": true,
-      "features": {
-        "emergence_s": NaN,
-        "kurtosis": 3.266074007394491,
-        "spectral_ratio_low_high": 0.6316709408849881,
-        "spectral_centroid_hz": 5.721793566928781,
-        "duration_80_s": 1696.26,
-        "duration_ratio": 0.8077351644270054,
-        "rise_to_duration": 0.5920083006142927,
-        "peak_amplitude": 97.60817071233896,
-        "rms_amplitude": 17.12709212511895,
-        "snr_ratio": 5.3882250803485,
-        "emergence_s_global_peak": 1207.84
-      },
-      "status": "ok"
+      "status": "excluded_teleseism",
+      "reason": "M5.5 2026-07-19T02:24:35.612000+00:00 (5 km W of Huayucachi, Peru)"
     },
     {
       "window_start_utc": "2026-07-19T16:00:00+00:00",
