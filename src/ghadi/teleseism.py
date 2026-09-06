@@ -128,6 +128,46 @@ def epicentral_distance_deg(station_lat: float, station_lon: float, origin: Orig
     return haversine_km(station_lat, station_lon, origin.latitude, origin.longitude) / KM_PER_DEGREE
 
 
+def phase_window(
+    origin: Origin, station_lat: float, station_lon: float
+) -> tuple[datetime, datetime, float]:
+    """When this origin's energy is passing the station: ``(opens, closes, degrees)``.
+
+    From P (minus a lead margin for travel-time model error) to the slow end of the
+    surface train (plus a trail margin for coda). Shared by the runtime suppressor and
+    by corpus construction, so the two cannot drift apart — a noise corpus excluding
+    on one rule while the detector suppresses on another would make the measured
+    false-alarm rate describe a system nobody runs.
+    """
+    distance = epicentral_distance_deg(station_lat, station_lon, origin)
+    p_arrival = origin.time_utc + timedelta(seconds=p_travel_time_s(distance))
+    surface_arrival = origin.time_utc + timedelta(seconds=surface_wave_travel_time_s(distance))
+    extra = DIFFRACTED_EXTRA_S if distance > DIFFRACTED_BEYOND_DEG else 0.0
+    opens = p_arrival - timedelta(seconds=LEAD_MARGIN_S + extra)
+    closes = surface_arrival + timedelta(seconds=TRAIL_MARGIN_S + extra)
+    return opens, closes, distance
+
+
+def overlaps_window(
+    origin: Origin,
+    station_lat: float,
+    station_lon: float,
+    window_start: datetime,
+    window_end: datetime,
+    min_magnitude: float = DEFAULT_MIN_MAGNITUDE,
+) -> bool:
+    """Does this origin's energy pass the station at any point during the window?
+
+    Used to keep real earthquakes out of a *noise* corpus. A noise window containing a
+    teleseism is a mislabelled positive: it inflates the apparent false-alarm rate
+    while teaching a model that events are non-events.
+    """
+    if origin.magnitude < min_magnitude:
+        return False
+    opens, closes, _ = phase_window(origin, station_lat, station_lon)
+    return opens <= window_end and closes >= window_start
+
+
 def explain(
     detection_utc: datetime,
     origins: list[Origin] | tuple[Origin, ...],

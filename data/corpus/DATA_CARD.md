@@ -9,9 +9,10 @@ content-addressed cache and are re-fetchable from EarthScope by re-running the h
 | File | Label | Status |
 |---|---|---|
 | `earthquakes.json` | earthquake | 150 candidates, **64 usable** (harvested 2026-09-02) |
-| `noise.json` | noise | harvested 2026-09-02 over months with confirmed coverage |
+| `noise.json` | noise | **366 usable** windows (213.5 h). Re-harvested 2026-09-03 with global teleseism exclusion — 27 windows previously labelled noise held real distant earthquakes (exp009) |
 | `availability.json` | — | monthly archive-coverage probe, 2016-05 to 2026-08 |
-| `exclusion_catalogue.json` | — | earthquakes excluded from the noise corpus as contamination |
+| `exclusion_catalogue.json` | — | regional earthquakes excluded from the noise corpus |
+| `global_catalogue.json` | — | 1,133 global M≥5.5 origins, for teleseism exclusion and runtime suppression |
 | positives | mass_movement | **n = 1 usable.** See "The class imbalance that matters" |
 
 ## Archive coverage constrains everything below
