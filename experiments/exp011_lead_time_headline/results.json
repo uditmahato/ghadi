@@ -1,0 +1,113 @@
+{
+  "experiment": "exp011_lead_time_headline",
+  "reach": "TRISHULI-R07",
+  "detected_utc": "2026-08-26T02:52:24+00:00",
+  "calibration": "n=1, 26 Aug 2026; ghadi.travel observed arrivals 4/11/38 min",
+  "scenarios": {
+    "optimistic_30s": {
+      "warning_latency_s": 30.0,
+      "settlements": [
+        {
+          "settlement": "Timure",
+          "arrival_min": 4.0,
+          "lead_min": 3.5,
+          "actionable": false,
+          "method": "observed_2026"
+        },
+        {
+          "settlement": "Syabrubesi",
+          "arrival_min": 11.0,
+          "lead_min": 10.5,
+          "actionable": true,
+          "method": "observed_2026"
+        },
+        {
+          "settlement": "Bidur",
+          "arrival_min": 38.0,
+          "lead_min": 37.5,
+          "actionable": true,
+          "method": "observed_2026"
+        }
+      ]
+    },
+    "budget_60s": {
+      "warning_latency_s": 60.0,
+      "settlements": [
+        {
+          "settlement": "Timure",
+          "arrival_min": 4.0,
+          "lead_min": 3.0,
+          "actionable": false,
+          "method": "observed_2026"
+        },
+        {
+          "settlement": "Syabrubesi",
+          "arrival_min": 11.0,
+          "lead_min": 10.0,
+          "actionable": true,
+          "method": "observed_2026"
+        },
+        {
+          "settlement": "Bidur",
+          "arrival_min": 38.0,
+          "lead_min": 37.0,
+          "actionable": true,
+          "method": "observed_2026"
+        }
+      ]
+    },
+    "threshold_120s": {
+      "warning_latency_s": 120.0,
+      "settlements": [
+        {
+          "settlement": "Timure",
+          "arrival_min": 4.0,
+          "lead_min": 2.0,
+          "actionable": false,
+          "method": "observed_2026"
+        },
+        {
+          "settlement": "Syabrubesi",
+          "arrival_min": 11.0,
+          "lead_min": 9.0,
+          "actionable": false,
+          "method": "observed_2026"
+        },
+        {
+          "settlement": "Bidur",
+          "arrival_min": 38.0,
+          "lead_min": 36.0,
+          "actionable": true,
+          "method": "observed_2026"
+        }
+      ]
+    },
+    "reality_2026_20min": {
+      "warning_latency_s": 1200.0,
+      "settlements": [
+        {
+          "settlement": "Timure",
+          "arrival_min": 4.0,
+          "lead_min": -16.0,
+          "actionable": false,
+          "method": "observed_2026"
+        },
+        {
+          "settlement": "Syabrubesi",
+          "arrival_min": 11.0,
+          "lead_min": -9.0,
+          "actionable": false,
+          "method": "observed_2026"
+        },
+        {
+          "settlement": "Bidur",
+          "arrival_min": 38.0,
+          "lead_min": 18.0,
+          "actionable": true,
+          "method": "observed_2026"
+        }
+      ]
+    }
+  },
+  "sample_cap_budget_60s": "<?xml version='1.0' encoding='utf-8'?>\n<alert xmlns=\"urn:oasis:names:tc:emergency:cap:1.2\">\n  <identifier>GHADI-NPL-2026-08-26-BHOTEKOSHI-001-ad291e42</identifier>\n  <sender>ghadi@example.invalid</sender>\n  <sent>2026-09-07T06:21:11+00:00</sent>\n  <status>Test</status>\n  <msgType>Alert</msgType>\n  <scope>Restricted</scope>\n  <info>\n    <language>en-US</language>\n    <category>Geo</category>\n    <event>Cascading flood surge</event>\n    <urgency>Immediate</urgency>\n    <severity>Severe</severity>\n    <certainty>Likely</certainty>\n    <headline>WARNING: possible surge on Lhende Khola -&gt; Bhote Koshi -&gt; Trishuli</headline>\n    <description>A mass-movement signal was detected at 2026-08-26 02:52:24Z affecting Lhende Khola -&gt; Bhote Koshi -&gt; Trishuli. Fused confidence 0.99 from 2 independent evidence group(s). All 2 channels reporting. Timure: ~3 minutes of warning (surge arrival ~4 min). Syabrubesi: ~10 minutes of warning (surge arrival ~11 min). Bidur: ~37 minutes of warning (surge arrival ~38 min). Lead times are observed_2026; single-event calibration (26 Aug 2026, n=1); not a hydraulic model; the band reflects initiation-time uncertainty only and is not a confidence interval. Estimated exposed population: 1240. This is a detection, not a forecast. Confirm before acting where possible.</description>\n    <instruction>Move away from the river channel to higher ground immediately.</instruction>\n    <parameter>\n      <valueName>ghadi:model_version</valueName>\n      <value>sta_lta@v0.1.0</value>\n    </parameter>\n    <parameter>\n      <valueName>ghadi:tier</valueName>\n      <value>WARNING</value>\n    </parameter>\n    <parameter>\n      <valueName>ghadi:probability</valueName>\n      <value>0.9904</value>\n    </parameter>\n    <parameter>\n      <valueName>ghadi:independent_groups</valueName>\n      <value>2</value>\n    </parameter>\n    <parameter>\n      <valueName>ghadi:channels_alive</valueName>\n      <value>seismic_kkn,gauge_timure</value>\n    </parameter>\n    <parameter>\n      <valueName>ghadi:channels_dead</valueName>\n      <value>none</value>\n    </parameter>\n    <parameter>\n      <valueName>ghadi:rationale</valueName>\n      <value>p=0.99 &gt;= 0.80 with 2 independent groups (&gt;= 2 required)</value>\n    </parameter>\n    <parameter>\n      <valueName>ghadi:cost_ratio_miss_over_fa</valueName>\n      <value>50</value>\n    </parameter>\n    <parameter>\n      <valueName>ghadi:lead_min:Bidur</valueName>\n      <value>37.0</value>\n    </parameter>\n    <parameter>\n      <valueName>ghadi:lead_min:Syabrubesi</valueName>\n      <value>10.0</value>\n    </parameter>\n    <parameter>\n      <valueName>ghadi:lead_min:Timure</valueName>\n      <value>3.0</value>\n    </parameter>\n    <parameter>\n      <valueName>ghadi:travel_note</valueName>\n      <value>observed_2026; single-event calibration (26 Aug 2026, n=1); not a hydraulic model; the band reflects initiation-time uncertainty only and is not a confidence interval</value>\n    </parameter>\n    <area>\n      <areaDesc>Lhende Khola -&gt; Bhote Koshi -&gt; Trishuli (Timure, Syabrubesi, Bidur)</areaDesc>\n    </area>\n  </info>\n</alert>"
+}
