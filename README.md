@@ -115,7 +115,7 @@ uv run python scripts/seedlink_latency.py --report latency_log.csv
 
 ```
 src/ghadi/          the package: config, catalog, fdsn, features, detect/, hydro,
-                    fusion, cap, travel (M4), service (M5)
+                    dhm (gauge ingestion), fusion, cap, travel (M4), service (M5)
 data/catalog/       committed event definitions (YAML, schema-validated)
 data/cache/         gitignored content-addressed MiniSEED cache
 experiments/        immutable experiment directories with FINDINGS.md

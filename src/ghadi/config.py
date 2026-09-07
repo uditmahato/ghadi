@@ -178,6 +178,32 @@ class TravelConfig:
     actionable_lead_min: float = 10.0
 
 
+# --- DHM gauge telemetry ingestion --------------------------------------------------
+@dataclass(frozen=True)
+class DhmConfig:
+    """Cleaning and liveness parameters for real DHM gauge telemetry (Blocker B2).
+
+    The hydro detector takes a clean ``(times_s, stage_m)`` pair; this config governs
+    the adapter that produces one from a raw logger export. Every value is a property of
+    the data source, not of the physics, and lives here rather than in ``ghadi.dhm``.
+    """
+
+    # DHM telemetry is canonically 5-minute. Used only to judge liveness and to warn on
+    # sampling far coarser than the rate-of-rise window can resolve — never to resample.
+    expected_sample_interval_s: float = 300.0
+    # The gauge is declared dead if the newest sample is older than this multiple of the
+    # expected interval, relative to the ingestion time. A dead channel is NOT a
+    # low-risk channel (exp008, PR #12): liveness is an ingestion-layer fact, and this
+    # is where it is established, never guessed from the waveform.
+    staleness_factor: float = 3.0
+    # Logger sentinels for "no reading". Masked out, never fed to the detector as stage.
+    sentinel_values: tuple[float, ...] = (-9999.0, -999.0, 9999.0)
+    # Physically implausible stage bounds for a Himalayan river gauge, in metres after
+    # unit normalisation. Readings outside are dropped as bad, not clipped.
+    min_plausible_stage_m: float = -5.0
+    max_plausible_stage_m: float = 100.0
+
+
 # --- fusion -------------------------------------------------------------------------
 @dataclass(frozen=True)
 class FusionConfig:
@@ -214,6 +240,7 @@ class GhadiConfig:
     seismic: SeismicConfig = field(default_factory=SeismicConfig)
     hydro: HydroConfig = field(default_factory=HydroConfig)
     travel: TravelConfig = field(default_factory=TravelConfig)
+    dhm: DhmConfig = field(default_factory=DhmConfig)
     fusion: FusionConfig = field(default_factory=FusionConfig)
     cap: CapConfig = field(default_factory=CapConfig)
 
