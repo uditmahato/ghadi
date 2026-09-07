@@ -96,6 +96,57 @@ SYNTHETIC_NETWORKS = frozenset({"SY"})
 # 2026-08-26 source zone (inside TAR/China), reference figures from HANDOFF Appendix B.
 SOURCE_ZONE_LAT = 28.255
 SOURCE_ZONE_LON = 85.520
+# The source location carries ~8 km uncertainty and the initiation time ~180 s
+# (event catalogue schema, HANDOFF §6.3). Both feed the travel-time uncertainty band.
+SOURCE_ZONE_UNCERTAINTY_KM = 8.0
+SOURCE_ZONE_ORIGIN_UNCERTAINTY_S = 180.0
+
+
+# --- river reaches and downstream settlements (M4 travel-time tables) ----------------
+@dataclass(frozen=True)
+class Settlement:
+    """A settlement downstream of a source zone, on a river reach.
+
+    ``observed_arrival_min_2026`` is the surge arrival time measured in the single
+    26 August 2026 event, in minutes after initiation. It is the *only* calibration
+    point that exists (positive class n=1), so it is stored as a first-class datum
+    rather than derived from a model that does not exist. Coordinates are approximate
+    settlement centroids, adequate for a straight-line reference distance and no more.
+    """
+
+    name: str
+    lat: float
+    lon: float
+    observed_arrival_min_2026: float | None = None
+
+
+@dataclass(frozen=True)
+class RiverReach:
+    reach_id: str
+    river_system: str
+    source_lat: float
+    source_lon: float
+    settlements: tuple[Settlement, ...]
+
+
+# Lhende Khola -> Bhote Koshi -> Trishuli, the 26 August 2026 corridor. The three
+# settlements and their arrival times are the canonical record (RESEARCH_REPORT §14.2,
+# travel_time_to_settlements_min: { timure: 4, syabrubesi: 11, bidur: 38 }). Settlement
+# coordinates are approximate centroids on the Bhote Koshi/Trishuli; the observed times,
+# not the coordinates, are the calibration.
+TRISHULI_R07 = RiverReach(
+    reach_id="TRISHULI-R07",
+    river_system="Lhende Khola -> Bhote Koshi -> Trishuli",
+    source_lat=SOURCE_ZONE_LAT,
+    source_lon=SOURCE_ZONE_LON,
+    settlements=(
+        Settlement("Timure", 28.183, 85.378, observed_arrival_min_2026=4.0),
+        Settlement("Syabrubesi", 28.162, 85.334, observed_arrival_min_2026=11.0),
+        Settlement("Bidur", 27.870, 85.162, observed_arrival_min_2026=38.0),
+    ),
+)
+
+RIVER_REACHES: dict[str, RiverReach] = {TRISHULI_R07.reach_id: TRISHULI_R07}
 
 
 # --- seismic processing -------------------------------------------------------------
@@ -147,6 +198,26 @@ class HydroConfig:
     baseline_window_s: float = 6 * 3600.0  # history used for the robust baseline
 
 
+# --- travel time / warning budget ---------------------------------------------------
+@dataclass(frozen=True)
+class TravelConfig:
+    # Time from initiation to an issued alert, everything except the water's own travel:
+    # seismic wave to station, detection, fusion, CAP emission, dissemination hand-off.
+    # It is SUBTRACTED from the surge arrival time to get the lead time actually
+    # delivered. The default sits inside the 180 s end-to-end budget (HANDOFF), with a
+    # measured detection floor of median ~16 s SeedLink latency (docs/LATENCY.md).
+    warning_latency_s: float = 60.0
+    # A settlement's arrival time is honestly known only for the calibrated source. If a
+    # candidate source sits further than this from the reach's calibrated source, the
+    # observed anchors no longer apply and the estimate must be flagged as extrapolation.
+    source_match_tolerance_km: float = 15.0
+    # Lead time at or above which a settlement-scale evacuation is plausibly actionable.
+    # The Bidur precedent — a school of 1,643 evacuated on ~14 minutes' informal notice
+    # (HANDOFF §Appendix) — is the only real-world anchor; ~10 min is the report's [H]
+    # judgement, not a measured floor. It flags, it does not gate.
+    actionable_lead_min: float = 10.0
+
+
 # --- fusion -------------------------------------------------------------------------
 @dataclass(frozen=True)
 class FusionConfig:
@@ -182,6 +253,7 @@ class CapConfig:
 class GhadiConfig:
     seismic: SeismicConfig = field(default_factory=SeismicConfig)
     hydro: HydroConfig = field(default_factory=HydroConfig)
+    travel: TravelConfig = field(default_factory=TravelConfig)
     fusion: FusionConfig = field(default_factory=FusionConfig)
     cap: CapConfig = field(default_factory=CapConfig)
 
