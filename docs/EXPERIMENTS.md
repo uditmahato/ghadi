@@ -34,7 +34,8 @@ Things later work must not undo, each traceable to an experiment:
 | "First trigger in the window" is not a safe onset pick — a window cut on a catalogue time can contain an earlier unrelated event | `ghadi.detect.onset`, `scripts/harvest_earthquakes.py` | exp002, confirmed at scale by exp003 (a third of windows) |
 | Never describe the spectral separation as "clean" — 12.5% of real earthquakes meet the cascade's own values on both features | to be honoured by every paper and README | exp003 |
 | A classifier over these features must control for magnitude, or it learns a size detector rather than a mass-movement detector | to be honoured by M3 | exp003 |
-| Report the assumed operating point's margin: a threshold at the cascade's own value is fitted to one event and is a lower bound, not an estimate | to be honoured by issue 3.5 | exp003 |
+| Report the assumed operating point's margin: a threshold at the cascade's own value is fitted to one event and is a lower bound, not an estimate | `ghadi.classify` (carried in every classification's reason) | exp003 |
+| The seismic decision rule is a **conjunction of per-feature thresholds, never a hand-weighted composite score** | `ghadi.classify`, `tests/test_classify.py` | exp001 Finding 4 |
 | Train and evaluate on features computed over a **decision-time segment**, never a window extending past the moment the alert must fire — otherwise train/serve skew with a safety cost | to be honoured by M3 | exp005 |
 | Quote 17.2% as the earthquake overlap, not 12.5% | to be honoured by every paper and README | exp005 |
 | Teleseism suppression by global-catalogue cross-check is an architectural component, not a later filter — distant earthquakes are not separable from mass movements on the spectral features | `ghadi.teleseism` | exp004, implemented after exp006 |

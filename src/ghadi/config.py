@@ -147,6 +147,31 @@ class SeismicConfig:
     decision_segment_s: float = 120.0
 
 
+# --- seismic classification (the physics detector, not a learned model) -------------
+@dataclass(frozen=True)
+class ClassifyConfig:
+    """The decision rule that turns segment spectral features into a mass-movement call.
+
+    It is a conjunction of two per-feature thresholds, not a hand-weighted composite
+    score — a composite is forbidden (exp001 Finding 4, enforced in test_features.py).
+    The thresholds are the 26 Aug 2026 cascade's OWN decision-time-segment feature
+    values (exp005). A threshold at the target's own value is fitted to one event and is
+    a LOWER BOUND on separability, not an estimate (exp003, issue 3.5).
+    """
+
+    # exp005, cascade over the 120 s decision segment. A window is mass-movement-like
+    # when its low/high spectral ratio is at least this AND its centroid is at most the
+    # value below — a slow, low-frequency extended source.
+    cascade_segment_lf_hf: float = 4.9188
+    cascade_segment_centroid_hz: float = 1.8852
+    # Measured earthquake overlap AT this operating point: 11 of 64 real earthquakes meet
+    # BOTH thresholds on the 120 s segment (exp005). This is the honest false-positive
+    # context and travels with every classification. Quote 17.2%, never "clean" (exp003).
+    # It is magnitude-dependent — against magnitude-matched events it falls to ~1 in 25
+    # (exp003) — because the features correlate with size; a call must say so.
+    earthquake_overlap: float = 11.0 / 64.0
+
+
 # --- hydrology ----------------------------------------------------------------------
 @dataclass(frozen=True)
 class HydroConfig:
@@ -221,6 +246,13 @@ class FusionConfig:
     # Stated here so the assumption is visible and replaceable, never buried in code.
     hydro_detected_p: float = 0.80
     hydro_quiet_p: float = 0.05
+    # Operating-point probabilities for the seismic physics detector, same status as the
+    # hydro pair: ASSUMED, not calibrated. A mass-movement-like classification is a
+    # boolean over two thresholds fitted to n=1, and at this operating point 17.2% of
+    # real earthquakes also pass (exp005), so detected_p is deliberately below the hydro
+    # value — the seismic channel alone is weaker corroboration than a gauge surge.
+    seismic_detected_p: float = 0.60
+    seismic_quiet_p: float = 0.05
 
 
 # --- CAP ----------------------------------------------------------------------------
@@ -238,6 +270,7 @@ class CapConfig:
 @dataclass(frozen=True)
 class GhadiConfig:
     seismic: SeismicConfig = field(default_factory=SeismicConfig)
+    classify: ClassifyConfig = field(default_factory=ClassifyConfig)
     hydro: HydroConfig = field(default_factory=HydroConfig)
     travel: TravelConfig = field(default_factory=TravelConfig)
     dhm: DhmConfig = field(default_factory=DhmConfig)
