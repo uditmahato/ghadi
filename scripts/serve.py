@@ -666,8 +666,14 @@ def _cap_summary(o) -> str:  # type: ignore[no-untyped-def]
 
 
 def _details(inp: Inputs, o, ran: bool) -> str:  # type: ignore[no-untyped-def]
-    run_ts = datetime.now(UTC).strftime("%Y-%m-%d %H:%M:%S UTC")
-    cap = _cap_summary(o).replace("{QS}", _qs(inp)) if ran else ""
+    run_ts = datetime.now(UTC).strftime("%Y-%m-%d %H:%M:%S UTC") if ran else "Not run yet"
+    if ran:
+        cap = _cap_summary(o).replace("{QS}", _qs(inp))
+    else:
+        cap = "<p class='lede'>Run a simulation to generate an alert payload.</p>"
+    lede = (
+        "Reasoning, sources, and limits for this run." if ran else "Reasoning, sources, and limits."
+    )
     gauge_prov = {
         "surge": "synthetic surge, Trishuli reference of 9 m over 30 minutes",
         "quiet": "synthetic quiet river",
@@ -676,8 +682,8 @@ def _details(inp: Inputs, o, ran: bool) -> str:  # type: ignore[no-untyped-def]
     }[inp.gauge]
     return (
         "<div class='panel section' id='methodology'>"
-        "<h2 class='sec'>Research details</h2>"
-        "<p class='lede'>Reasoning, sources, and limits for this run.</p>"
+        "<h2 class='sec'>Research details and methodology</h2>"
+        f"<p class='lede'>{lede}</p>"
         "<details class='d'><summary>Decision logic</summary><div class='body'>"
         "<p>A seismic window is classified as mass-movement-like only when the low/high "
         f"spectral ratio is at least {LF_HF_THRESHOLD:.2f} <b>and</b> the spectral centroid is "
@@ -823,6 +829,18 @@ def _empty_outcome() -> str:
     )
 
 
+NAV_SCRIPT = """
+<script>
+function openHash(){var h=location.hash.slice(1);if(!h)return;
+var el=document.getElementById(h);if(!el)return;
+if(el.tagName==='DETAILS'){el.open=true;}
+var d=el.closest&&el.closest('details');if(d){d.open=true;}
+el.scrollIntoView();}
+window.addEventListener('hashchange',openHash);
+window.addEventListener('load',openHash);
+</script>
+"""
+
 SCRIPT = """
 <script>
 function copyCap(){var el=document.getElementById('cap');if(!el)return;
@@ -848,7 +866,10 @@ def _page(q: dict[str, str]) -> str:
                 "<p class='lede'>Fix the highlighted parameters and run again.</p></div>"
             )
         )
-        body = f"<div class='workspace'><div>{left}</div><div>{right}</div></div>"
+        default_inp = inp or Inputs(*CASCADE, "surge", True, False, 60.0)
+        body = f"<div class='workspace'><div>{left}</div><div>{right}</div></div>" + _details(
+            default_inp, None, ran=False
+        )
         return _shell(body, ran=False)
 
     o = _run(inp)
@@ -898,7 +919,7 @@ def _shell(body: str, ran: bool) -> str:
         + body
         + "</main><footer><div class='wrap'>GHADI research prototype. Offline simulation; "
         "not an operational warning system. Alert payloads remain status=Test, "
-        "scope=Restricted.</div></footer>" + (SCRIPT if ran else "") + "</body></html>"
+        "scope=Restricted.</div></footer>" + NAV_SCRIPT + (SCRIPT if ran else "") + "</body></html>"
     )
 
 
