@@ -21,3 +21,6 @@ latency_log*.csv
 # OS noise
 Thumbs.db
 .DS_Store
+
+# demo_pipeline.py output
+scratch_audit.jsonl
