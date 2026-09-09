@@ -43,6 +43,10 @@ Read this before quoting anything about GHADI's feasibility. Details and caveats
   is still outstanding; 3.4 hours cannot see diurnal structure or a monsoon outage.
 - Against earthquakes matched for magnitude and distance, the cascade is distinctive:
   1 in 25 looks like it on both spectral features.
+- **The separation is source physics, not a site effect.** It reproduces on a second
+  independent station 131 km away (IO.EVN), where the cascade sits even further into
+  the low-frequency tail — overlap 4.5% vs NK.KKN's 17.2% (exp010). This answered the
+  most serious internal challenge to the project's premise.
 - **The full detection→decision→alert pipeline runs end to end** (`ghadi.service`):
   seismic classification, teleseism cross-check, gauge corroboration, fusion, lead time,
   CAP emission, and a hash-chained tamper-evident audit log — exercised offline by a

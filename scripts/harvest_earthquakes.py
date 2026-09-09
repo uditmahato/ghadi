@@ -38,41 +38,71 @@ import numpy as np
 REPO_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO_ROOT / "src"))
 
-from ghadi.config import PRIMARY_STATION, SOURCE_ZONE_LAT, SOURCE_ZONE_LON  # noqa: E402
+from ghadi.config import (  # noqa: E402
+    SOURCE_ZONE_LAT,
+    SOURCE_ZONE_LON,
+    STATION_SITES,
+    StationSite,
+)
 from ghadi.detect import pick_onset, sta_lta  # noqa: E402
 from ghadi.fdsn import CachedWaveformClient, WaveformRequest  # noqa: E402
 from ghadi.features import extract, preprocess  # noqa: E402
 from ghadi.geo import haversine_km  # noqa: E402
 
-MANIFEST = REPO_ROOT / "data" / "corpus" / "earthquakes.json"
-
-# NK.KKN begins 2016-05-22. Nothing before that can be harvested on this station.
-STATION_START = datetime(2016, 5, 22, tzinfo=UTC)
 # Stop before the 2026 cascade so the corpus cannot contain the target event.
 CATALOGUE_END = datetime(2026, 8, 25, tzinfo=UTC)
 
 WINDOW_PRE_S = 600.0
 WINDOW_POST_S = 1500.0
-STATION_LAT, STATION_LON = 27.800, 85.279
+
+
+def manifest_path(site: StationSite) -> Path:
+    """NK.KKN keeps the original filename; other stations get a suffixed one, so a
+    per-station corpus never overwrites another. Rates and features are per station
+    (exp007), so the corpora must stay separate on disk too."""
+    corpus = REPO_ROOT / "data" / "corpus"
+    if site.site.station == "KKN" and site.site.network == "NK":
+        return corpus / "earthquakes.json"
+    return corpus / f"earthquakes_{site.site.network}_{site.site.station}.json"
 
 
 def query_catalogue(
-    limit: int, min_magnitude: float, max_radius_deg: float
+    site: StationSite, limit: int, min_magnitude: float, max_radius_deg: float
 ) -> list[dict[str, Any]]:
-    """Fetch candidate events from USGS, nearest-in-time first."""
+    """Fetch candidate events from USGS, nearest-in-time first.
+
+    Distance is to *this* station: the same earthquake is nearer NK.KKN than IO.EVN,
+    and the features track distance, so distance must be recomputed per station
+    rather than reused from another corpus."""
+    import time
+
     from obspy import UTCDateTime
     from obspy.clients.fdsn import Client
 
-    client = Client("USGS", timeout=120)
-    catalog = client.get_events(
-        starttime=UTCDateTime(STATION_START),
-        endtime=UTCDateTime(CATALOGUE_END),
-        latitude=SOURCE_ZONE_LAT,
-        longitude=SOURCE_ZONE_LON,
-        maxradius=max_radius_deg,
-        minmagnitude=min_magnitude,
-        limit=limit,
-    )
+    # USGS service discovery and connections reset intermittently — the same fault the
+    # noise harvester retries around. A transient reset must not lose a whole harvest.
+    catalog = None
+    last_error: Exception | None = None
+    for attempt in range(1, 6):
+        try:
+            client = Client("USGS", timeout=120)
+            catalog = client.get_events(
+                starttime=UTCDateTime(site.archive_start),
+                endtime=UTCDateTime(CATALOGUE_END),
+                latitude=SOURCE_ZONE_LAT,
+                longitude=SOURCE_ZONE_LON,
+                maxradius=max_radius_deg,
+                minmagnitude=min_magnitude,
+                limit=limit,
+            )
+            break
+        except Exception as exc:
+            last_error = exc
+            print(f"  catalogue attempt {attempt}/5 failed: {type(exc).__name__}", flush=True)
+            if attempt < 5:
+                time.sleep(15 * attempt)
+    if catalog is None:
+        raise RuntimeError("USGS event query failed after 5 attempts") from last_error
 
     events = []
     for event in catalog:
@@ -89,13 +119,15 @@ def query_catalogue(
                 "lat": lat,
                 "lon": lon,
                 "depth_km": float(origin.depth or 0.0) / 1000.0,
-                "distance_km": haversine_km(STATION_LAT, STATION_LON, lat, lon),
+                "distance_km": haversine_km(site.latitude, site.longitude, lat, lon),
             }
         )
     return events
 
 
-def process(event: dict[str, Any], client: CachedWaveformClient) -> dict[str, Any]:
+def process(
+    event: dict[str, Any], site: StationSite, client: CachedWaveformClient
+) -> dict[str, Any]:
     """Fetch one event's window, pick its onset, and extract features."""
     origin = datetime.fromisoformat(event["origin_utc"])
     start = origin - timedelta(seconds=WINDOW_PRE_S)
@@ -107,10 +139,10 @@ def process(event: dict[str, Any], client: CachedWaveformClient) -> dict[str, An
 
     result = client.get_waveforms(
         WaveformRequest(
-            PRIMARY_STATION.network,
-            PRIMARY_STATION.station,
-            PRIMARY_STATION.location,
-            PRIMARY_STATION.channel,
+            site.site.network,
+            site.site.station,
+            site.site.location,
+            site.site.channel,
             start,
             end,
         )
@@ -157,15 +189,20 @@ def process(event: dict[str, Any], client: CachedWaveformClient) -> dict[str, An
     return row
 
 
-def harvest(limit: int, min_magnitude: float, max_radius_deg: float) -> dict[str, Any]:
-    print(f"Querying USGS: M>={min_magnitude}, within {max_radius_deg} deg, limit {limit} ...")
-    events = query_catalogue(limit, min_magnitude, max_radius_deg)
+def harvest(
+    site: StationSite, limit: int, min_magnitude: float, max_radius_deg: float
+) -> dict[str, Any]:
+    print(
+        f"Harvesting {site.nslc}: M>={min_magnitude}, within {max_radius_deg} deg, "
+        f"limit {limit} ..."
+    )
+    events = query_catalogue(site, limit, min_magnitude, max_radius_deg)
     print(f"  {len(events)} candidate events\n")
 
     client = CachedWaveformClient()
     rows = []
     for i, event in enumerate(events, start=1):
-        row = process(event, client)
+        row = process(event, site, client)
         rows.append(row)
         if i % 10 == 0 or row["status"] != "ok":
             print(
@@ -175,13 +212,14 @@ def harvest(limit: int, min_magnitude: float, max_radius_deg: float) -> dict[str
 
     return {
         "created_utc": datetime.now(UTC).isoformat(),
-        "station": PRIMARY_STATION.nslc,
+        "station": site.nslc,
+        "station_lat_lon": [site.latitude, site.longitude],
         "query": {
             "service": "USGS FDSN event",
             "centre": [SOURCE_ZONE_LAT, SOURCE_ZONE_LON],
             "max_radius_deg": max_radius_deg,
             "min_magnitude": min_magnitude,
-            "starttime": STATION_START.isoformat(),
+            "starttime": site.archive_start.isoformat(),
             "endtime": CATALOGUE_END.isoformat(),
             "limit": limit,
         },
@@ -244,20 +282,29 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--limit", type=int, default=150)
     parser.add_argument("--min-magnitude", type=float, default=4.0)
     parser.add_argument("--max-radius-deg", type=float, default=4.0)
+    parser.add_argument(
+        "--station",
+        default="NK.KKN",
+        choices=sorted(STATION_SITES),
+        help="which station's corpus to harvest (default NK.KKN)",
+    )
     parser.add_argument("--report", action="store_true", help="report on the existing manifest")
     args = parser.parse_args(argv)
 
+    site = STATION_SITES[args.station]
+    path = manifest_path(site)
+
     if args.report:
-        if not MANIFEST.exists():
-            print(f"No manifest at {MANIFEST}. Run without --report first.")
+        if not path.exists():
+            print(f"No manifest at {path}. Run without --report first.")
             return 1
-        report(json.loads(MANIFEST.read_text(encoding="utf-8")))
+        report(json.loads(path.read_text(encoding="utf-8")))
         return 0
 
-    manifest = harvest(args.limit, args.min_magnitude, args.max_radius_deg)
-    MANIFEST.parent.mkdir(parents=True, exist_ok=True)
-    MANIFEST.write_text(json.dumps(manifest, indent=2), encoding="utf-8")
-    print(f"\nWrote {MANIFEST}")
+    manifest = harvest(site, args.limit, args.min_magnitude, args.max_radius_deg)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(manifest, indent=2), encoding="utf-8")
+    print(f"\nWrote {path}")
     report(manifest)
     return 0
 

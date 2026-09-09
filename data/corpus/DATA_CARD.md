@@ -13,6 +13,7 @@ content-addressed cache and are re-fetchable from EarthScope by re-running the h
 | `availability.json` | — | monthly archive-coverage probe, 2016-05 to 2026-08 |
 | `exclusion_catalogue.json` | — | regional earthquakes excluded from the noise corpus |
 | `global_catalogue.json` | — | 1,133 global M≥5.5 origins, for teleseism exclusion and runtime suppression |
+| `earthquakes_IO_EVN.json` | earthquake | **132 usable** (harvested 2026-09-06). Second station, deeper near-field coverage (60 within 100 km); features NOT interchangeable with NK.KKN's — per-station only (exp007) |
 | positives | mass_movement | **n = 1 usable.** See "The class imbalance that matters" |
 
 ## Archive coverage constrains everything below
