@@ -158,8 +158,13 @@ def _run(inp: Inputs):  # type: ignore[no-untyped-def]
     origins: tuple[Origin, ...] = ()
     if inp.teleseism:
         origins = (
-            Origin(time_utc=DETECTED, latitude=PRIMARY_STATION_LAT, longitude=PRIMARY_STATION_LON,
-                   magnitude=6.5, place="injected teleseism"),
+            Origin(
+                time_utc=DETECTED,
+                latitude=PRIMARY_STATION_LAT,
+                longitude=PRIMARY_STATION_LON,
+                magnitude=6.5,
+                place="injected teleseism",
+            ),
         )
     obs = WindowObservation(
         window_start_utc=DETECTED - timedelta(seconds=120),
@@ -172,7 +177,9 @@ def _run(inp: Inputs):  # type: ignore[no-untyped-def]
         event_id="NPL-2026-08-26-BHOTEKOSHI-001",
     )
     return process_window(
-        obs, reach="TRISHULI-R07", model_version="sta_lta@v0.1.0+classify@v0.1.0",
+        obs,
+        reach="TRISHULI-R07",
+        model_version="sta_lta@v0.1.0+classify@v0.1.0",
         warning_latency_s=inp.latency,
     )
 
@@ -197,16 +204,19 @@ def _result(inp: Inputs) -> str:
     color, icon, say = _TIER[tier]
     p = o.decision.probability
 
-    pills = "".join(f"<span class='pill alive'>{html.escape(c)}</span>"
-                    for c in o.decision.channels_alive)
-    pills += "".join(f"<span class='pill dead'>{html.escape(c)} ✕</span>"
-                     for c in o.decision.channels_dead)
+    pills = "".join(
+        f"<span class='pill alive'>{html.escape(c)}</span>" for c in o.decision.channels_alive
+    )
+    pills += "".join(
+        f"<span class='pill dead'>{html.escape(c)} ✕</span>" for c in o.decision.channels_dead
+    )
     pills = pills or "<span class='pill dead'>no live channel — blind</span>"
 
     leads = ""
     if o.lead_times_min:
-        leads = "".join(_lead_bar(s, v)
-                        for s, v in sorted(o.lead_times_min.items(), key=lambda kv: kv[1]))
+        leads = "".join(
+            _lead_bar(s, v) for s, v in sorted(o.lead_times_min.items(), key=lambda kv: kv[1])
+        )
         leads = (
             "<div class='card' style='margin-top:1rem'>"
             "<div class='k'>Minutes of warning</div>" + leads + "</div>"
@@ -214,8 +224,10 @@ def _result(inp: Inputs) -> str:
 
     supp = ""
     if o.suppression.suppressed:
-        supp = (f"<div class='note'>🛰️ <b>Teleseism suppressed:</b> "
-                f"{html.escape(o.suppression.reason)}</div>")
+        supp = (
+            f"<div class='note'>🛰️ <b>Teleseism suppressed:</b> "
+            f"{html.escape(o.suppression.reason)}</div>"
+        )
 
     alert = html.escape(o.alert_xml) if o.alert_xml else "No alert emitted (below threshold)."
     alert_block = (
@@ -276,9 +288,10 @@ def _page(q: dict[str, str]) -> str:
         "<h1>GHADI &nbsp;·&nbsp; detection → decision → alert</h1>"
         "<p class='sub'>One window through the whole pipeline. Pick a scenario or tune the "
         "inputs. Fully offline — every alert stays <b>Test / Restricted</b>.</p>"
-        + _form(inp) + _result(inp)
+        + _form(inp)
+        + _result(inp)
         + "<div class='banner'>GHADI testing interface · live SeedLink feed (issue 0.1) not "
-          "wired · not an operational warning system</div>"
+        "wired · not an operational warning system</div>"
         "</div></body></html>"
     )
 

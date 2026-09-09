@@ -44,7 +44,10 @@ def _obs(**kw: object) -> WindowObservation:
 def _gauge(**kw: object) -> GaugeObservation:
     times, stage = synthetic_surge()
     return GaugeObservation(
-        times_s=times.tolist(), stage_m=stage.tolist(), sensor_alive=True, **kw  # type: ignore[arg-type]
+        times_s=times.tolist(),
+        stage_m=stage.tolist(),
+        sensor_alive=True,
+        **kw,  # type: ignore[arg-type]
     )
 
 

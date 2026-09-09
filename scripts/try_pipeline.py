@@ -80,8 +80,13 @@ def main() -> None:
     origins: tuple[Origin, ...] = ()
     if args.teleseism:
         origins = (
-            Origin(time_utc=DETECTED, latitude=PRIMARY_STATION_LAT, longitude=PRIMARY_STATION_LON,
-                   magnitude=6.5, place="injected teleseism"),
+            Origin(
+                time_utc=DETECTED,
+                latitude=PRIMARY_STATION_LAT,
+                longitude=PRIMARY_STATION_LON,
+                magnitude=6.5,
+                place="injected teleseism",
+            ),
         )
 
     obs = WindowObservation(
@@ -96,7 +101,9 @@ def main() -> None:
     )
 
     outcome = process_window(
-        obs, reach="TRISHULI-R07", model_version="sta_lta@v0.1.0+classify@v0.1.0",
+        obs,
+        reach="TRISHULI-R07",
+        model_version="sta_lta@v0.1.0+classify@v0.1.0",
         warning_latency_s=args.latency,
     )
 

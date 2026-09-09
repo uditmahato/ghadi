@@ -82,8 +82,7 @@ def classify_segment(
             failed.append(f"LF/HF {segment_lf_hf:.2f} < {cfg.cascade_segment_lf_hf:.2f}")
         if not centroid_ok:
             failed.append(
-                f"centroid {segment_centroid_hz:.2f} > "
-                f"{cfg.cascade_segment_centroid_hz:.2f} Hz"
+                f"centroid {segment_centroid_hz:.2f} > {cfg.cascade_segment_centroid_hz:.2f} Hz"
             )
         reason = "not mass-movement-like: " + "; ".join(failed)
 
