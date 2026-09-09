@@ -122,7 +122,7 @@ def channel_from_hydro(
             independence_group=independence_group,
             alive=False,
             detail=(
-                f"gauge offline after {anomaly.n_samples} samples with no anomaly — "
+                f"gauge offline after {anomaly.n_samples} samples with no anomaly; "
                 "absence cannot be concluded from a dead sensor"
             ),
         )
@@ -218,7 +218,7 @@ def fuse(channels: list[Channel], config: FusionConfig | None = None) -> Decisio
             channels_alive=(),
             channels_dead=tuple(c.name for c in dead),
             independent_groups=0,
-            rationale="no live channels — the system is blind and says so",
+            rationale="no live channels; the system is blind and says so",
             degraded=True,
             config=config,
         )
@@ -244,7 +244,7 @@ def fuse(channels: list[Channel], config: FusionConfig | None = None) -> Decisio
         why = f"p={probability:.2f} >= {config.advisory_p:.2f}"
         if n_groups < config.min_groups_for_warning:
             why += (
-                f"; held below WARNING — only {n_groups} independent group(s), "
+                f"; held below WARNING, only {n_groups} independent group(s), "
                 "corroboration requirement not met"
             )
     elif probability >= config.watch_p:
