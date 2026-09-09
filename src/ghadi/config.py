@@ -44,6 +44,10 @@ class Station:
 # Primary open broadband station: Kakani, Nepal. 27.800N 85.279E, 2042 m, 50 Hz,
 # operating since 2016-05-22. 55.9 km from the 2026 Bhote Koshi source zone.
 PRIMARY_STATION = Station("NK", "KKN", "", "BHZ")
+# Kakani coordinates, used by the runtime teleseism suppressor to predict when a distant
+# origin's energy reaches this station. Consolidated here from exp007/exp008.
+PRIMARY_STATION_LAT = 27.800
+PRIMARY_STATION_LON = 85.279
 PRIMARY_STATION_3C = (
     Station("NK", "KKN", "", "BHZ"),
     Station("NK", "KKN", "", "BHN"),
