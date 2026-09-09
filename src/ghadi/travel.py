@@ -62,7 +62,8 @@ class LeadTime:
     note: str
 
 
-def _reach(reach: RiverReach | str) -> RiverReach:
+def get_reach(reach: RiverReach | str) -> RiverReach:
+    """Resolve a reach id (or pass a ``RiverReach`` through), raising on an unknown id."""
     if isinstance(reach, RiverReach):
         return reach
     try:
@@ -70,6 +71,10 @@ def _reach(reach: RiverReach | str) -> RiverReach:
     except KeyError:
         known = ", ".join(sorted(RIVER_REACHES)) or "(none)"
         raise KeyError(f"unknown river reach {reach!r}; known reaches: {known}") from None
+
+
+# Internal alias retained for the call sites in this module.
+_reach = get_reach
 
 
 def reach_celerity_km_per_min(

@@ -47,6 +47,12 @@ Read this before quoting anything about GHADI's feasibility. Details and caveats
   independent station 131 km away (IO.EVN), where the cascade sits even further into
   the low-frequency tail — overlap 4.5% vs NK.KKN's 17.2% (exp010). This answered the
   most serious internal challenge to the project's premise.
+- **The full detection→decision→alert pipeline runs end to end** (`ghadi.service`):
+  seismic classification, teleseism cross-check, gauge corroboration, fusion, lead time,
+  CAP emission, and a hash-chained tamper-evident audit log — exercised offline by a
+  replay driver (`scripts/demo_pipeline.py`). The one piece still outside is the **live
+  SeedLink feed**, which `run_forever` refuses to fake until the seven-day latency run
+  (issue 0.1) closes the go/no-go.
 
 **Sobering, and load-bearing.**
 
@@ -104,6 +110,14 @@ uv run python scripts/seedlink_latency.py --hours 168 --out latency_log.csv
 uv run python scripts/seedlink_latency.py --report latency_log.csv
 ```
 
+Watch the whole pipeline run end to end on a 2026-like window — classify, suppress,
+corroborate, fuse, compute lead time, emit a CAP alert, and write a verified audit chain
+(fully offline, no feed):
+
+```bash
+uv run python scripts/demo_pipeline.py
+```
+
 ## Repository conventions
 
 - `main` is always green. Branch per issue, named like `m2/emergence-rework`.
@@ -118,8 +132,9 @@ uv run python scripts/seedlink_latency.py --report latency_log.csv
 ## Layout
 
 ```
-src/ghadi/          the package: config, catalog, fdsn, features, detect/, hydro,
-                    fusion, cap, travel (M4), service (M5)
+src/ghadi/          the package: config, catalog, fdsn, features, detect/, classify,
+                    hydro, dhm (gauge ingestion), fusion, cap, travel, alerting,
+                    service (orchestration + hash-chained audit log)
 data/catalog/       committed event definitions (YAML, schema-validated)
 data/cache/         gitignored content-addressed MiniSEED cache
 experiments/        immutable experiment directories with FINDINGS.md

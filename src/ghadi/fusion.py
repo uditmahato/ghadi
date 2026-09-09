@@ -20,6 +20,7 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from enum import StrEnum
 
+from .classify import SeismicClassification
 from .config import DEFAULT, FusionConfig
 from .hydro import HydroAnomaly
 
@@ -132,6 +133,62 @@ def channel_from_hydro(
         independence_group=independence_group,
         alive=True,
         detail=f"no anomaly ({anomaly.reason})",
+    )
+
+
+def channel_from_seismic(
+    classification: SeismicClassification,
+    sensor_alive: bool = True,
+    name: str = "seismic",
+    independence_group: str = "upstream_seismic",
+    config: FusionConfig | None = None,
+) -> Channel:
+    """Turn a seismic mass-movement classification into a fusion channel.
+
+    The mirror of :func:`channel_from_hydro`, with the same dead-channel discipline:
+    ``sensor_alive`` is an ingestion-layer fact (did the station's data arrive), not
+    something the classifier can read off features. A station that went offline and
+    produced no classification is a **dead channel** counted as lost, never a live
+    channel reporting low risk — a mass movement can occur precisely while the nearest
+    station is down.
+
+    A positive classification stands regardless of ``sensor_alive``: it is evidence
+    already computed from a window that existed.
+
+    The probabilities are the assumed operating points in config, not a calibration.
+    Because 17.2% of real earthquakes also clear this rule (exp005), the seismic
+    detected-probability is deliberately below the hydro one: on its own, a
+    low-frequency window is weaker corroboration than a downstream gauge surge.
+    """
+    config = config or DEFAULT.fusion
+
+    if classification.mass_movement_like:
+        return Channel(
+            name=name,
+            probability=config.seismic_detected_p,
+            independence_group=independence_group,
+            alive=True,
+            detail=f"mass-movement-like ({classification.reason})",
+        )
+
+    if not sensor_alive:
+        return Channel(
+            name=name,
+            probability=config.seismic_quiet_p,
+            independence_group=independence_group,
+            alive=False,
+            detail=(
+                "station offline with no classification — absence cannot be concluded "
+                "from a dead station"
+            ),
+        )
+
+    return Channel(
+        name=name,
+        probability=config.seismic_quiet_p,
+        independence_group=independence_group,
+        alive=True,
+        detail=f"not mass-movement-like ({classification.reason})",
     )
 
 

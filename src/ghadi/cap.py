@@ -64,6 +64,15 @@ class AlertContext:
     model_version: str
     settlements: tuple[str, ...] = ()
     arrival_estimates_min: dict[str, float] | None = None
+    # Lead time actually delivered at each settlement: surge arrival minus the warning
+    # latency (detection + fusion + dissemination). This is the headline figure. A
+    # value <= 0 means the alert would reach the settlement after the water, and the
+    # text says so rather than hiding it. Assembled by ``ghadi.alerting``.
+    lead_times_min: dict[str, float] | None = None
+    # Provenance of the travel figures: method and the n=1 calibration caveat, carried
+    # verbatim from ``ghadi.travel`` so a consumer sees that every minute quoted rests
+    # on a single event.
+    travel_note: str | None = None
     exposed_population: int | None = None
 
 
@@ -93,9 +102,29 @@ def _description(decision: Decision, context: AlertContext) -> str:
         f"independent evidence group(s).",
         decision.degradation_note,
     ]
-    if context.arrival_estimates_min:
-        for settlement, minutes in sorted(context.arrival_estimates_min.items()):
-            lines.append(f"Estimated arrival at {settlement}: {minutes:.0f} minutes.")
+    # Order settlements by surge arrival, nearest (most urgent, least warning) first.
+    arrivals = context.arrival_estimates_min or {}
+    leads = context.lead_times_min or {}
+    ordered = sorted(
+        set(arrivals) | set(leads),
+        key=lambda s: arrivals.get(s, leads.get(s, float("inf"))),
+    )
+    for settlement in ordered:
+        if settlement in leads:
+            lead = leads[settlement]
+            arrival = arrivals.get(settlement)
+            arrival_clause = f" (surge arrival ~{arrival:.0f} min)" if arrival is not None else ""
+            if lead > 0:
+                lines.append(f"{settlement}: ~{lead:.0f} minutes of warning{arrival_clause}.")
+            else:
+                lines.append(
+                    f"{settlement}: surge may arrive before this alert "
+                    f"({lead:.0f} min lead){arrival_clause}."
+                )
+        elif settlement in arrivals:
+            lines.append(f"Estimated arrival at {settlement}: {arrivals[settlement]:.0f} minutes.")
+    if context.travel_note:
+        lines.append(f"Lead times are {context.travel_note}.")
     if context.exposed_population is not None:
         lines.append(f"Estimated exposed population: {context.exposed_population}.")
     lines.append("This is a detection, not a forecast. Confirm before acting where possible.")
@@ -164,6 +193,17 @@ def build_cap(
         parameter = ET.SubElement(info, "parameter")
         ET.SubElement(parameter, "valueName").text = name
         ET.SubElement(parameter, "value").text = value
+
+    # Per-settlement lead time as machine-readable provenance, plus the travel caveat.
+    if context.lead_times_min:
+        for settlement in sorted(context.lead_times_min):
+            parameter = ET.SubElement(info, "parameter")
+            ET.SubElement(parameter, "valueName").text = f"ghadi:lead_min:{settlement}"
+            ET.SubElement(parameter, "value").text = f"{context.lead_times_min[settlement]:.1f}"
+    if context.travel_note:
+        parameter = ET.SubElement(info, "parameter")
+        ET.SubElement(parameter, "valueName").text = "ghadi:travel_note"
+        ET.SubElement(parameter, "value").text = context.travel_note
 
     area = ET.SubElement(info, "area")
     settlements = f" ({', '.join(context.settlements)})" if context.settlements else ""
