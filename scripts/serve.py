@@ -36,10 +36,10 @@ CASCADE = (4.9188, 1.8852)
 MAX_LEAD_MIN = 40.0  # scale for the lead-time bars (Bidur ~38 min is the far end)
 
 _TIER = {
-    "WARNING": ("#c0392b", "🔴", "Move people now — corroborated surge threat."),
-    "ADVISORY": ("#d68910", "🟠", "Prepare and confirm — one line of evidence."),
-    "WATCH": ("#2471a3", "🟡", "Keep watching — weak or single signal."),
-    "NONE": ("#5d6d7e", "⚪", "No alert — nothing crossed the threshold."),
+    "WARNING": ("#c0392b", "🔴", "Move people now. Corroborated surge threat."),
+    "ADVISORY": ("#d68910", "🟠", "Prepare and confirm. One line of evidence."),
+    "WATCH": ("#2471a3", "🟡", "Keep watching. Weak or single signal."),
+    "NONE": ("#5d6d7e", "⚪", "No alert. Nothing crossed the threshold."),
 }
 
 # One-click scenarios (label, query string, hint).
@@ -62,7 +62,9 @@ CSS = """
 body { font: 15px/1.55 system-ui, -apple-system, Segoe UI, sans-serif;
        background: var(--bg); color: var(--ink); margin: 0; }
 .wrap { max-width: 860px; margin: 0 auto; padding: 2rem 1.2rem 4rem; }
-h1 { font-size: 1.5rem; margin: 0; letter-spacing: -.01em; }
+h1 { font-size: 1.6rem; margin: 0; letter-spacing: -.02em; font-weight: 800; }
+.flow { color: var(--accent); font-weight: 600; margin: .1rem 0 .1rem;
+        font-size: 1rem; letter-spacing: .01em; }
 .sub { color: var(--muted); margin: .3rem 0 1.4rem; font-size: .92rem; }
 .card { background: var(--card); border: 1px solid var(--line); border-radius: 14px;
         padding: 1.3rem; box-shadow: 0 1px 2px rgba(0,0,0,.04); }
@@ -210,7 +212,7 @@ def _result(inp: Inputs) -> str:
     pills += "".join(
         f"<span class='pill dead'>{html.escape(c)} ✕</span>" for c in o.decision.channels_dead
     )
-    pills = pills or "<span class='pill dead'>no live channel — blind</span>"
+    pills = pills or "<span class='pill dead'>no live channel (blind)</span>"
 
     leads = ""
     if o.lead_times_min:
@@ -231,7 +233,7 @@ def _result(inp: Inputs) -> str:
 
     alert = html.escape(o.alert_xml) if o.alert_xml else "No alert emitted (below threshold)."
     alert_block = (
-        f"<details><summary>📋 CAP alert (status=Test · scope=Restricted)</summary>"
+        f"<details><summary>📋 CAP alert (status=Test, scope=Restricted)</summary>"
         f"<pre>{alert}</pre></details>"
     )
 
@@ -255,7 +257,7 @@ def _form(inp: Inputs) -> str:
         return f"<option value='{val}' {s}>{text}</option>"
 
     presets = "".join(
-        f"<a class='chip' href='/?{qs}'>{html.escape(lbl)} <small>· {html.escape(hint)}</small></a>"
+        f"<a class='chip' href='/?{qs}'>{html.escape(lbl)} <small>({html.escape(hint)})</small></a>"
         for lbl, qs, hint in PRESETS
     )
     st = "checked" if inp.station_alive else ""
@@ -266,7 +268,7 @@ def _form(inp: Inputs) -> str:
         f"<label>Seismic LF/HF ratio<input name='lf_hf' value='{inp.lf_hf}'></label>"
         f"<label>Seismic centroid (Hz)<input name='centroid' value='{inp.centroid}'></label>"
         f"<label>Downstream gauge<select name='gauge'>"
-        f"{opt('surge', 'Surge — real flood')}{opt('quiet', 'Quiet river')}"
+        f"{opt('surge', 'Surge (real flood)')}{opt('quiet', 'Quiet river')}"
         f"{opt('dead', 'Sensor died early')}{opt('none', 'No gauge')}</select></label>"
         f"<label>Warning latency (seconds)"
         f"<input name='latency' type='number' value='{inp.latency:.0f}'></label>"
@@ -285,13 +287,15 @@ def _page(q: dict[str, str]) -> str:
         "<!doctype html><html lang='en'><head><meta charset='utf-8'>"
         "<meta name='viewport' content='width=device-width,initial-scale=1'>"
         "<title>GHADI pipeline</title><style>" + CSS + "</style></head><body><div class='wrap'>"
-        "<h1>GHADI &nbsp;·&nbsp; detection → decision → alert</h1>"
-        "<p class='sub'>One window through the whole pipeline. Pick a scenario or tune the "
-        "inputs. Fully offline — every alert stays <b>Test / Restricted</b>.</p>"
+        "<h1>GHADI</h1>"
+        "<p class='flow'>detection &nbsp;→&nbsp; decision &nbsp;→&nbsp; alert</p>"
+        "<p class='sub'>Run one window through the whole pipeline. Pick a scenario or tune "
+        "the inputs. Everything runs offline, and every alert stays "
+        "<b>Test / Restricted</b>.</p>"
         + _form(inp)
         + _result(inp)
-        + "<div class='banner'>GHADI testing interface · live SeedLink feed (issue 0.1) not "
-        "wired · not an operational warning system</div>"
+        + "<div class='banner'>GHADI testing interface. The live SeedLink feed (issue 0.1) "
+        "is not wired, so this is not an operational warning system.</div>"
         "</div></body></html>"
     )
 
