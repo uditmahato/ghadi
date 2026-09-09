@@ -1,144 +1,141 @@
 # GHADI
 
-**Sub-hourly detection of cascading flood surges in transboundary Himalayan rivers.**
+GHADI listens for the sound of a slope failing and tries to warn the villages downstream before the water reaches them.
 
-*(घडी — "clock/watch"; the point of the system is time.)*
+The name घडी means "clock" or "watch". The whole point of the system is time.
 
-## The one-line scope
+## The idea
 
-**Detection, not prediction.** GHADI does not forecast when a slope will fail. It hears
-the slope fail — from continuous seismic waveforms on open FDSN data — corroborates the
-detection against an independent downstream river-gauge rate-of-rise anomaly, and emits
-a CAP 1.2 alert into the SMS and siren infrastructure Nepal already operates.
+On 26 August 2026 a mass of ice and rock broke loose inside Tibet, blocked a small river, and then the block gave way. A wall of water raced down the Bhote Koshi and Trishuli rivers into Nepal and raised the river by about nine metres in thirty minutes. It was a dry day, so every flood system that watches for rain saw nothing. But the collapse itself made a strong ground signal, and an open seismic station recorded it minutes before the water arrived. Nobody was listening.
 
-On 26 August 2026, an ice-rock mass detached inside Tibet, dammed the Lhende Khola, and
-the dam-break surge raised the Trishuli ~9 m in 30 minutes. It was not raining, so every
-rainfall-driven system was blind. The initiating mass movement produced a seismic signal
-strong enough that USGS initially catalogued it as an M4.4 earthquake. That signal was
-public, minutes before the water. Nobody was listening. GHADI listens.
+GHADI is built to listen. It does not try to predict when a slope will fail. It detects the failure as it happens, from open seismic data, confirms it against a downstream river gauge, and produces an alert.
 
-## Non-goals — write these on the wall
+Detection, not prediction.
 
-- Earthquake prediction (not scientifically possible)
-- Another rainfall-driven flood forecast model
-- A general "disaster AI platform" (Nepal has BIPAD; we emit into it)
-- Public auto-alerting in v1
-- Anything requiring new field hardware in phase 1
+## Try the dashboard
 
-See [docs/HANDOFF.md](docs/HANDOFF.md) for the full engineering plan and
-[docs/RESEARCH_REPORT.md](docs/RESEARCH_REPORT.md) for the evidence base.
+You can run the whole pipeline in your browser and try different situations. It runs fully offline and connects to no live feed. Nothing it shows is a real alert.
 
-## What is actually established, as of 2026-09-02
-
-Read this before quoting anything about GHADI's feasibility. Details and caveats in
-[docs/EXPERIMENTS.md](docs/EXPERIMENTS.md).
-
-**Encouraging.**
-
-- The 26 August 2026 signal is present and cleanly triggered on NK.KKN, and the
-  station's metadata and sample count reproduce the handoff's verified figures exactly.
-- Real-time SeedLink latency is **median 15.8 s, p95 22.8 s, worst case 27.1 s** over
-  3.4 continuous hours with **no interruption over 120 s** — well inside the viability
-  threshold ([docs/LATENCY.md](docs/LATENCY.md)). The seven-day run issue 0.1 asks for
-  is still outstanding; 3.4 hours cannot see diurnal structure or a monsoon outage.
-- Against earthquakes matched for magnitude and distance, the cascade is distinctive:
-  1 in 25 looks like it on both spectral features.
-- **The separation is source physics, not a site effect.** It reproduces on a second
-  independent station 131 km away (IO.EVN), where the cascade sits even further into
-  the low-frequency tail — overlap 4.5% vs NK.KKN's 17.2% (exp010). This answered the
-  most serious internal challenge to the project's premise.
-- **The full detection→decision→alert pipeline runs end to end** (`ghadi.service`):
-  seismic classification, teleseism cross-check, gauge corroboration, fusion, lead time,
-  CAP emission, and a hash-chained tamper-evident audit log — exercised offline by a
-  replay driver (`scripts/demo_pipeline.py`). The one piece still outside is the **live
-  SeedLink feed**, which `run_forever` refuses to fake until the seven-day latency run
-  (issue 0.1) closes the go/no-go.
-
-**Sobering, and load-bearing.**
-
-- **The spectral separation is not clean.** Against 64 real earthquakes, **17.2%** meet
-  the cascade's own values on both features simultaneously, measured over the 120 s
-  decision-time segment an operational detector could actually use. The earlier "clean
-  separation" claim came from a comparison against two events (exp003, exp005).
-- **The positive class is n = 1.** One usable mass-movement window exists. Two seed
-  events predate the station; three have news-derived origin times too coarse to cut a
-  window around ([data/corpus/DATA_CARD.md](data/corpus/DATA_CARD.md)).
-- **The two spectral features encode one physical idea**, so they are correlated and
-  fail together. Three-component polarisation is implemented but unmeasured.
-- **The false-alarm rate is ~7× over target.** 6.8 per station-month against a target of
-  ≤1, over 214 hours of correctly-labelled noise — with a 95% interval of roughly
-  0.8–25, because it rests on two surviving events (exp004, exp006, exp009).
-- **Distant earthquakes are not separable from mass movements on these features.** Half
-  the false alarms were teleseisms: attenuation strips their high frequencies, so they
-  arrive looking exactly like a slow extended source. `ghadi.teleseism` suppresses them
-  by global-catalogue cross-check, which halved the rate — but only once the rule spanned
-  a P-to-surface phase window rather than a tolerance around P (exp006).
-- **Magnitude is a confound** (rank correlation ±0.4). A classifier that does not
-  control for size may learn a size detector.
-- **The archive is discontinuous, and shorter than the metadata claims.** NK.KKN
-  advertises operation from 2016-05-22 but holds data at the probe point in only 71 of
-  124 months, with nothing before ~2020-03 and a five-month gap in late 2025. Usable
-  history is ~3.8 years shorter than the handoff assumes
-  ([docs/DATA_SOURCES.md](docs/DATA_SOURCES.md)).
-
-Nothing here falsifies the core hypothesis. It does mean the question "can mass
-movements be separated at a usable false-alarm rate" is still open, and is M3's to
-answer on the corpus rather than on four windows.
-
-## Quickstart
-
-Requires Python ≥ 3.12 and [uv](https://docs.astral.sh/uv/).
+Start it:
 
 ```bash
-uv sync                      # create .venv and install all dependencies
-uv run pytest                # run the test suite (network-free)
-uv run ruff check .          # lint
-uv run mypy src              # type-check
+uv run python scripts/serve.py
 ```
 
-Reproduce Experiment 001 (fetches ~4 waveform windows from EarthScope on first run,
-then works from the local cache):
+Then open http://localhost:8770 in your browser.
+
+![The GHADI research dashboard](docs/images/hero_warning.png)
+
+The picture above shows the main case. The inputs from the 2026 event produce a **Warning**. Two independent sources agree, the seismic station and the Timure gauge, the fused score is 0.92, and the estimated warning time is about 3 minutes for Timure, 10 minutes for Syabrubesi, and 37 minutes for Bidur. Below the result you can see the evidence, the warning times on a shared scale, and the full method.
+
+### A distant earthquake is set aside
+
+A far away earthquake can look like a slow local source, because the signal loses its high notes over a long distance. GHADI checks a global earthquake list and sets those cases aside. Here the seismic channel is marked unavailable and there is no alert.
+
+![No alert from a distant earthquake](docs/images/result_no_alert.png)
+
+### A gauge that stops reporting
+
+In 2026 four of five gauges were destroyed by the water. A dead gauge is not treated as a calm river. If a gauge stops before it reports a rise, its channel is marked unavailable, not safe.
+
+![The gauge stops reporting](docs/images/result_gauge_unavailable.png)
+
+### Compare every scenario at once
+
+Each preset runs under its own inputs, so you can see the outcomes side by side.
+
+![Scenario comparison](docs/images/compare.png)
+
+## What is honest about this
+
+Please read this before you trust any number.
+
+Good signs:
+
+* The seismic signal from the 2026 event is clear on the open station at Kakani, and the station facts match the plan exactly.
+* The same difference shows up on a second station 131 km away, so it is a property of the source and not a quirk of one site.
+* A short real time test over SeedLink looks fast enough, about 16 seconds on average.
+
+Hard limits, and they matter:
+
+* There is only one confirmed event to learn from (n = 1). The confidence value is an assumed setting, not a tested probability.
+* About 17 in every 100 real earthquakes look like the target on the two features, so the false alarm rate is still several times higher than the goal.
+* The river gauge data needs an agreement with Nepal's hydrology office that is not yet in place, so the gauge data here is made up for testing.
+* The live feed is not connected. This is a research tool, not a working warning system.
+
+Nothing here proves the core idea wrong. It does mean the real question, can these events be told apart at a rate people can trust, is still open.
+
+## What is built
+
+Every part of the chain exists and is tested. In plain words:
+
+* **config**: every setting in one place.
+* **catalog** and **fdsn**: read event lists and waveforms from open sources.
+* **features**: measure the shape of the seismic signal.
+* **detect**: find the moment a signal starts.
+* **classify**: decide whether the seismic signal looks like a slope failure, using two simple measures against fixed thresholds.
+* **hydro**: find a fast rise in a river gauge.
+* **dhm**: clean raw gauge data into the tidy form the detector needs, and decide whether the sensor is still alive.
+* **teleseism**: recognise a distant earthquake and set it aside.
+* **fusion**: combine the sources into one tiered decision.
+* **travel**: turn a detection into minutes of warning for each village.
+* **cap** and **alerting**: write a standard alert message that carries the warning time.
+* **service**: run the whole chain and keep a record that cannot be quietly changed.
+
+See [docs/HANDOFF.md](docs/HANDOFF.md) for the full plan, [docs/RESEARCH_REPORT.md](docs/RESEARCH_REPORT.md) for the evidence, and [docs/EXPERIMENTS.md](docs/EXPERIMENTS.md) for the experiments.
+
+## Run it yourself
+
+You need Python 3.12 or newer and [uv](https://docs.astral.sh/uv/).
 
 ```bash
-uv run python experiments/exp001_signal_recon/run.py
+uv sync
+uv run pytest
+uv run ruff check .
+uv run mypy src
 ```
 
-Measure real-time SeedLink latency for NK.KKN (issue 0.1 — the project's go/no-go):
-
-```bash
-uv run python scripts/seedlink_latency.py --hours 168 --out latency_log.csv
-uv run python scripts/seedlink_latency.py --report latency_log.csv
-```
-
-Watch the whole pipeline run end to end on a 2026-like window — classify, suppress,
-corroborate, fuse, compute lead time, emit a CAP alert, and write a verified audit chain
-(fully offline, no feed):
+Watch the whole chain run once on a 2026 style window, fully offline:
 
 ```bash
 uv run python scripts/demo_pipeline.py
 ```
 
-## Repository conventions
+Open the dashboard:
 
-- `main` is always green. Branch per issue, named like `m2/emergence-rework`.
-- Commits explain *why*, not what.
-- Experiments are immutable once run — a new question gets a new experiment directory.
-- Negative results are committed, never deleted.
-- Every timestamp is timezone-aware UTC. Nepal Standard Time is **UTC+05:45**.
-- No generative model ever produces a number. Templates only.
-- `status` must never be `Actual` and `scope` must never be `Public` in any
-  non-authorised build. There is a test for this. Do not skip it.
+```bash
+uv run python scripts/serve.py
+```
 
-## Layout
+## Things this project will not do
+
+* Predict earthquakes. That is not possible.
+* Build another rain based flood model.
+* Send public alerts on its own in the first version.
+* Ask for new field hardware in the first phase.
+
+## Repository notes
+
+* The `main` branch is always green.
+* Commits explain why, not what.
+* Experiments never change once they are run. A new question gets a new folder.
+* Negative results are kept, never deleted.
+* Every time value is in UTC. Nepal time is UTC plus 5 hours 45 minutes.
+* No text model ever writes a number. Templates only.
+* An alert can never be marked Actual or Public unless the build is authorised. There is a test for this.
+
+## Where things live
 
 ```
-src/ghadi/          the package: config, catalog, fdsn, features, detect/, classify,
-                    hydro, dhm (gauge ingestion), fusion, cap, travel, alerting,
-                    service (orchestration + hash-chained audit log)
-data/catalog/       committed event definitions (YAML, schema-validated)
-data/cache/         gitignored content-addressed MiniSEED cache
-experiments/        immutable experiment directories with FINDINGS.md
-scripts/            operational scripts (SeedLink latency probe, bulk fetch)
-tests/              network-free test suite; run with GHADI_OFFLINE=1 in CI
-docs/               handoff, research report, architecture, data sources, ADRs
+src/ghadi/    the package: config, catalog, fdsn, features, detect, classify,
+              hydro, dhm, fusion, cap, travel, alerting, service
+scripts/      the demo, the dashboard, and helper tools
+data/         event definitions and the gitignored waveform cache
+experiments/  one folder per question, each with its findings
+tests/        the test suite, run with no network
+docs/         the plan, the report, the experiments, and dashboard images
 ```
+
+## Status
+
+The software chain is complete and runs from end to end, offline. The parts still missing are not code. They are the live seismic feed, a data agreement for the river gauges, and more confirmed events to learn from.

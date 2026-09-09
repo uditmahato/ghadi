@@ -74,7 +74,7 @@ def classify_segment(
             f"LF/HF {segment_lf_hf:.2f} >= {cfg.cascade_segment_lf_hf:.2f} and centroid "
             f"{segment_centroid_hz:.2f} <= {cfg.cascade_segment_centroid_hz:.2f} Hz; "
             f"{cfg.earthquake_overlap * 100:.1f}% of real earthquakes also meet both "
-            f"(magnitude-dependent) — a lower bound fitted to n=1, not a probability"
+            f"(magnitude-dependent); a lower bound fitted to n=1, not a probability"
         )
     else:
         failed = []
