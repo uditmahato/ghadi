@@ -11,6 +11,7 @@ Compiled from the research report §7 (full detail there). Status as of 2026-09-
 | NK.KKN (Kakani broadband) | Primary station: 27.800°N 85.279°E, 2042 m, CMG-3T, BHZ/BHN/BHE @ 50 Hz, since 2016-05-22 | PUBLIC | Open | 55.9 km from the 2026 source zone. Events before 2016-05-22 (Jure 2014, Langtang 2015) have **no NK.KKN record** — expect fetch failures, by design. **See the availability gap below.** |
 | USGS FDSN event service | Reference earthquake catalogue | PUBLIC | Open | 108 candidate events M≥4.3 within 4° of source, 2024-01-01→2026-08-25 (verified) |
 | Secondary stations | `IO.EVN` (130.9 km), `NQ.KNSET`, `NQ.KTNP2` (strong-motion, Kathmandu), `K5.WANG` (Bhutan) | PUBLIC | Open | |
+| Microsoft Planetary Computer STAC (`planetarycomputer.microsoft.com/api/stac/v1`) | Sentinel-1 RTC radar backscatter (10 m, 12-day repeat per track) and Sentinel-2 L2A optical reflectance | **PUBLIC, verified 2026-09-10** | Open (Copernicus) | Analysis path only. Imagery confirms and finds events after the fact and adds no lead time: revisit is days and monsoon cloud hides the ground. Only the region of interest is read from each cloud-optimised GeoTIFF (a 16 km square at 10 m is about 10 MB and 10 s). Cached under `data/cache/eo`; needs the `eo` extra (`uv sync --extra eo`). Three same-track radar pairs straddle the 2026 event (orbits 19, 85, 121). See `ghadi.eo`, `ghadi.eo_fetch`, exp012. |
 
 ## Archive coverage on the primary station — measured, and not what the metadata says
 
@@ -76,3 +77,9 @@ history. It also strengthens the case for wiring in secondary stations (`IO.EVN`
 All waveform/metadata fetches go through `ghadi.fdsn`'s content-addressed cache under
 `data/cache/` (gitignored), keyed by NSLC + window. A second run must be offline and
 byte-identical. `GHADI_OFFLINE=1` forbids network access entirely (CI default).
+
+Satellite searches and region reads follow the same rule through `ghadi.eo_fetch`'s
+cache under `data/cache/eo/`. A search is keyed by collection, region, and date range;
+a region read by scene, asset, and region. Under `GHADI_OFFLINE=1` a cache miss is a
+failure record, never an exception, and importing the module never loads the raster
+libraries.

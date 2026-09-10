@@ -273,6 +273,35 @@ class DhmConfig:
     max_plausible_stage_m: float = 100.0
 
 
+# --- satellite change detection (analysis path only) --------------------------------
+@dataclass(frozen=True)
+class EoConfig:
+    """Parameters for before/after satellite change detection (``ghadi.eo``).
+
+    These confirm and find events after the fact. They are never on the warning path:
+    revisit is days and monsoon cloud hides the ground, so imagery adds no lead time.
+    """
+
+    # Half-width of the square region of interest around a source zone. The 2026 source
+    # carries ~8 km location uncertainty, so 5 km each side covers it with margin.
+    roi_half_km: float = 5.0
+    # Sentinel-1 RTC and the Sentinel-2 10 m bands share this ground sampling.
+    pixel_size_m: float = 10.0
+    # Radar: backscatter change, in dB, that counts as changed ground. 3 dB is a factor
+    # of two in power, well above filtered speckle and typical of fresh debris or water.
+    sar_change_db: float = 3.0
+    # Median filter width (pixels) applied to the log-ratio to tame speckle.
+    speckle_filter_px: int = 3
+    # Optical: NDVI drop that counts as vegetation lost. 0.2 is a clear, coarse change.
+    ndvi_drop: float = 0.20
+    # Below this usable fraction the verdict is "inconclusive", never "no change". This
+    # is the rule that stops a cloud-covered scene from being read as a quiet one.
+    min_valid_fraction: float = 0.60
+    # Smallest connected changed patch that counts. 0.02 km2 is ~200 pixels at 10 m,
+    # enough to reject speckle blobs but far smaller than any dam-forming failure.
+    min_blob_km2: float = 0.02
+
+
 # --- fusion -------------------------------------------------------------------------
 @dataclass(frozen=True)
 class FusionConfig:
@@ -318,6 +347,7 @@ class GhadiConfig:
     hydro: HydroConfig = field(default_factory=HydroConfig)
     travel: TravelConfig = field(default_factory=TravelConfig)
     dhm: DhmConfig = field(default_factory=DhmConfig)
+    eo: EoConfig = field(default_factory=EoConfig)
     fusion: FusionConfig = field(default_factory=FusionConfig)
     cap: CapConfig = field(default_factory=CapConfig)
 
