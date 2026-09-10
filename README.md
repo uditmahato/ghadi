@@ -46,6 +46,14 @@ Each preset runs under its own inputs, so you can see the outcomes side by side.
 
 ![Scenario comparison](docs/images/compare.png)
 
+### Independent confirmation from radar imagery
+
+Satellites cannot give warning time. A free radar satellite passes over a spot only every 12 days, and cloud hides the ground for weeks in the monsoon, so no orbit can see a slope fail and tell a village in minutes. But radar sees through cloud, and it can confirm, after the fact, where the ground changed.
+
+We compared the last radar pass before 26 August 2026 with the first pass after it, on each of the three satellite tracks that cover the source zone, and judged each one against a pair from before the event on the same track. On two of the three tracks the changed patch is 3.3 and 4.0 times larger than the normal change on that ground, above a floor of 2.0 that was fixed before we looked. The third track sits just under, at 1.85. All three tracks put their largest patch in the same small area, about 3 km across, 4 to 6 km north of the catalogued source point and inside its stated uncertainty.
+
+This is the first confirmation of the 2026 source that does not come from the seismic station. The same method did not cleanly confirm any of the older events in the catalogue. Spring snowmelt and peak monsoon produce so much natural change that those events are lost in it, so the positive class is still one event. The full record is in `experiments/exp012_satellite_confirmation`, and the dashboard shows it in its own panel below the evidence.
+
 ## What is honest about this
 
 Please read this before you trust any number.

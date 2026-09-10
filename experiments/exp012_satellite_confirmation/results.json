@@ -1,0 +1,1156 @@
+{
+  "experiment": "exp012_satellite_confirmation",
+  "collection": "sentinel-1-rtc",
+  "asset": "vv",
+  "config": {
+    "roi_half_km_min": 5.0,
+    "sar_change_db": 3.0,
+    "speckle_filter_px": 3,
+    "min_valid_fraction": 0.6,
+    "min_blob_km2": 0.02,
+    "search_window_days": [
+      40,
+      30
+    ],
+    "max_gap_days": 30
+  },
+  "events": [
+    {
+      "event_id": "NPL-2014-08-02-JURE-001",
+      "origin_utc": "2014-08-01T20:45:00+00:00",
+      "hazard_subtype": "landslide_dam",
+      "catalogued_location": {
+        "lat": 27.771,
+        "lon": 85.878
+      },
+      "location_uncertainty_km": 3.0,
+      "status": "no_scene",
+      "reason": "predates the Sentinel-1 archive (October 2014)"
+    },
+    {
+      "event_id": "NPL-2015-04-25-LANGTANG-001",
+      "origin_utc": "2015-04-25T06:13:00+00:00",
+      "hazard_subtype": "coseismic_ice_rock_avalanche",
+      "catalogued_location": {
+        "lat": 28.21,
+        "lon": 85.52
+      },
+      "location_uncertainty_km": 5.0,
+      "roi_half_km": 5.0,
+      "scenes_found": 17,
+      "status": "analysed",
+      "pairs": [
+        {
+          "before": {
+            "item_id": "S1A_IW_GRDH_1SSV_20150424T001054_20150424T001123_005618_007323_rtc",
+            "date": "2015-04-24",
+            "orbit": 121
+          },
+          "after": {
+            "item_id": "S1A_IW_GRDH_1SSV_20150506T001033_20150506T001058_005793_007722_rtc",
+            "date": "2015-05-06",
+            "orbit": 121
+          },
+          "gap_days": 12.0,
+          "cache_hits": [
+            true,
+            true
+          ],
+          "verdict": "inconclusive",
+          "valid_fraction": 0.169,
+          "changed_fraction": 0.5092,
+          "changed_area_km2": 8.796,
+          "n_blobs": 1310,
+          "largest_blob_km2": 0.621,
+          "decrease_fraction": 0.2913,
+          "increase_fraction": 0.2179,
+          "reason": "only 17% of the region is usable, below the 60% floor; absence of usable pixels is not absence of change",
+          "largest_blob_centroid": {
+            "lat": 28.1734,
+            "lon": 85.5019
+          },
+          "blob_distance_from_source_km": 4.44,
+          "control": {
+            "before": {
+              "item_id": "S1A_IW_GRDH_1SSV_20150412T001032_20150412T001101_005443_006EFD_rtc",
+              "date": "2015-04-12",
+              "orbit": 121
+            },
+            "after": {
+              "item_id": "S1A_IW_GRDH_1SSV_20150424T001054_20150424T001123_005618_007323_rtc",
+              "date": "2015-04-24",
+              "orbit": 121
+            },
+            "gap_days": 12.0,
+            "cache_hits": [
+              true,
+              true
+            ],
+            "verdict": "inconclusive",
+            "valid_fraction": 0.169,
+            "changed_fraction": 0.5844,
+            "changed_area_km2": 10.096,
+            "n_blobs": 899,
+            "largest_blob_km2": 1.965,
+            "decrease_fraction": 0.3527,
+            "increase_fraction": 0.2317,
+            "reason": "only 17% of the region is usable, below the 60% floor; absence of usable pixels is not absence of change",
+            "largest_blob_centroid": {
+              "lat": 28.1732,
+              "lon": 85.5242
+            },
+            "blob_distance_from_source_km": 4.11
+          },
+          "control_comparison": {
+            "verdict": "inconclusive",
+            "event_largest_km2": 0.621,
+            "control_largest_km2": 1.965,
+            "ratio": null,
+            "min_ratio": 2.0,
+            "reason": "one of the two pairs could not be judged, so neither can the comparison"
+          }
+        },
+        {
+          "before": {
+            "item_id": "S1A_IW_GRDH_1SSV_20150417T001852_20150417T001921_005516_0070C1_rtc",
+            "date": "2015-04-17",
+            "orbit": 19
+          },
+          "after": {
+            "item_id": "S1A_IW_GRDH_1SDV_20150429T001844_20150429T001909_005691_0074DC_rtc",
+            "date": "2015-04-29",
+            "orbit": 19
+          },
+          "gap_days": 12.0,
+          "cache_hits": [
+            true,
+            true
+          ],
+          "verdict": "change_detected",
+          "valid_fraction": 1.0,
+          "changed_fraction": 0.4001,
+          "changed_area_km2": 40.936,
+          "n_blobs": 11329,
+          "largest_blob_km2": 5.435,
+          "decrease_fraction": 0.283,
+          "increase_fraction": 0.1171,
+          "reason": "largest connected changed patch 5.435 km2 (floor 0.02 km2); 40.0% of usable pixels changed (28.3% decrease, 11.7% increase)",
+          "largest_blob_centroid": {
+            "lat": 28.1805,
+            "lon": 85.5158
+          },
+          "blob_distance_from_source_km": 3.31,
+          "control": {
+            "before": {
+              "item_id": "S1A_IW_GRDH_1SSV_20150324T001852_20150324T001921_005166_00683B_rtc",
+              "date": "2015-03-24",
+              "orbit": 19
+            },
+            "after": {
+              "item_id": "S1A_IW_GRDH_1SSV_20150417T001852_20150417T001921_005516_0070C1_rtc",
+              "date": "2015-04-17",
+              "orbit": 19
+            },
+            "gap_days": 24.0,
+            "cache_hits": [
+              true,
+              true
+            ],
+            "verdict": "change_detected",
+            "valid_fraction": 1.0,
+            "changed_fraction": 0.2378,
+            "changed_area_km2": 24.329,
+            "n_blobs": 11074,
+            "largest_blob_km2": 2.456,
+            "decrease_fraction": 0.1783,
+            "increase_fraction": 0.0595,
+            "reason": "largest connected changed patch 2.456 km2 (floor 0.02 km2); 23.8% of usable pixels changed (17.8% decrease, 5.9% increase)",
+            "largest_blob_centroid": {
+              "lat": 28.1932,
+              "lon": 85.5163
+            },
+            "blob_distance_from_source_km": 1.9
+          },
+          "control_comparison": {
+            "verdict": "above_background",
+            "event_largest_km2": 5.435,
+            "control_largest_km2": 2.456,
+            "ratio": 2.2129478827361564,
+            "min_ratio": 2.0,
+            "reason": "event patch 5.435 km2 is 2.2x the control's 2.456 km2 (floor 2x)"
+          }
+        },
+        {
+          "before": {
+            "item_id": "S1A_IW_GRDH_1SSV_20150421T122150_20150421T122219_005582_007243_rtc",
+            "date": "2015-04-21",
+            "orbit": 85
+          },
+          "after": {
+            "item_id": "S1A_IW_GRDH_1SSV_20150503T122144_20150503T122209_005757_007649_rtc",
+            "date": "2015-05-03",
+            "orbit": 85
+          },
+          "gap_days": 12.0,
+          "cache_hits": [
+            true,
+            true
+          ],
+          "verdict": "change_detected",
+          "valid_fraction": 1.0,
+          "changed_fraction": 0.5016,
+          "changed_area_km2": 51.321,
+          "n_blobs": 7763,
+          "largest_blob_km2": 3.904,
+          "decrease_fraction": 0.162,
+          "increase_fraction": 0.3396,
+          "reason": "largest connected changed patch 3.904 km2 (floor 0.02 km2); 50.2% of usable pixels changed (16.2% decrease, 34.0% increase)",
+          "largest_blob_centroid": {
+            "lat": 28.2483,
+            "lon": 85.5016
+          },
+          "blob_distance_from_source_km": 4.62,
+          "control": {
+            "before": {
+              "item_id": "S1A_IW_GRDH_1SSV_20150409T122128_20150409T122153_005407_006E01_rtc",
+              "date": "2015-04-09",
+              "orbit": 85
+            },
+            "after": {
+              "item_id": "S1A_IW_GRDH_1SSV_20150421T122150_20150421T122219_005582_007243_rtc",
+              "date": "2015-04-21",
+              "orbit": 85
+            },
+            "gap_days": 12.0,
+            "cache_hits": [
+              true,
+              true
+            ],
+            "verdict": "change_detected",
+            "valid_fraction": 1.0,
+            "changed_fraction": 0.5656,
+            "changed_area_km2": 57.863,
+            "n_blobs": 6533,
+            "largest_blob_km2": 12.83,
+            "decrease_fraction": 0.4018,
+            "increase_fraction": 0.1638,
+            "reason": "largest connected changed patch 12.830 km2 (floor 0.02 km2); 56.6% of usable pixels changed (40.2% decrease, 16.4% increase)",
+            "largest_blob_centroid": {
+              "lat": 28.1812,
+              "lon": 85.5045
+            },
+            "blob_distance_from_source_km": 3.55
+          },
+          "control_comparison": {
+            "verdict": "within_background",
+            "event_largest_km2": 3.904,
+            "control_largest_km2": 12.83,
+            "ratio": 0.30428682774746685,
+            "min_ratio": 2.0,
+            "reason": "event patch 3.904 km2 is only 0.3x the control's 12.830 km2 (floor 2x); this is seasonal change, not a confirmation"
+          }
+        }
+      ]
+    },
+    {
+      "event_id": "NPL-2021-06-15-MELAMCHI-001",
+      "origin_utc": "2021-06-15T09:30:00+00:00",
+      "hazard_subtype": "cascade_landslide_dam_outburst",
+      "catalogued_location": {
+        "lat": 28.1,
+        "lon": 85.55
+      },
+      "location_uncertainty_km": 15.0,
+      "roi_half_km": 15.0,
+      "scenes_found": 18,
+      "status": "analysed",
+      "pairs": [
+        {
+          "before": {
+            "item_id": "S1A_IW_GRDH_1SDV_20210612T122224_20210612T122249_038307_048546_rtc",
+            "date": "2021-06-12",
+            "orbit": 85
+          },
+          "after": {
+            "item_id": "S1A_IW_GRDH_1SDV_20210624T122224_20210624T122249_038482_048A80_rtc",
+            "date": "2021-06-24",
+            "orbit": 85
+          },
+          "gap_days": 12.0,
+          "cache_hits": [
+            true,
+            true
+          ],
+          "verdict": "change_detected",
+          "valid_fraction": 1.0,
+          "changed_fraction": 0.1174,
+          "changed_area_km2": 107.955,
+          "n_blobs": 101147,
+          "largest_blob_km2": 0.528,
+          "decrease_fraction": 0.0557,
+          "increase_fraction": 0.0617,
+          "reason": "largest connected changed patch 0.528 km2 (floor 0.02 km2); 11.7% of usable pixels changed (5.6% decrease, 6.2% increase)",
+          "largest_blob_centroid": {
+            "lat": 28.1693,
+            "lon": 85.6769
+          },
+          "blob_distance_from_source_km": 14.64,
+          "control": {
+            "before": {
+              "item_id": "S1A_IW_GRDH_1SDV_20210531T122223_20210531T122248_038132_048019_rtc",
+              "date": "2021-05-31",
+              "orbit": 85
+            },
+            "after": {
+              "item_id": "S1A_IW_GRDH_1SDV_20210612T122224_20210612T122249_038307_048546_rtc",
+              "date": "2021-06-12",
+              "orbit": 85
+            },
+            "gap_days": 12.0,
+            "cache_hits": [
+              true,
+              true
+            ],
+            "verdict": "change_detected",
+            "valid_fraction": 1.0,
+            "changed_fraction": 0.1403,
+            "changed_area_km2": 128.999,
+            "n_blobs": 83973,
+            "largest_blob_km2": 4.162,
+            "decrease_fraction": 0.0294,
+            "increase_fraction": 0.1109,
+            "reason": "largest connected changed patch 4.162 km2 (floor 0.02 km2); 14.0% of usable pixels changed (2.9% decrease, 11.1% increase)",
+            "largest_blob_centroid": {
+              "lat": 28.1602,
+              "lon": 85.5641
+            },
+            "blob_distance_from_source_km": 6.83
+          },
+          "control_comparison": {
+            "verdict": "within_background",
+            "event_largest_km2": 0.528,
+            "control_largest_km2": 4.162,
+            "ratio": 0.1268620855358001,
+            "min_ratio": 2.0,
+            "reason": "event patch 0.528 km2 is only 0.1x the control's 4.162 km2 (floor 2x); this is seasonal change, not a confirmation"
+          }
+        },
+        {
+          "before": {
+            "item_id": "S1A_IW_GRDH_1SDV_20210615T001133_20210615T001158_038343_048668_rtc",
+            "date": "2021-06-15",
+            "orbit": 121
+          },
+          "after": {
+            "item_id": "S1A_IW_GRDH_1SDV_20210627T001134_20210627T001159_038518_048BA5_rtc",
+            "date": "2021-06-27",
+            "orbit": 121
+          },
+          "gap_days": 12.0,
+          "cache_hits": [
+            true,
+            true
+          ],
+          "verdict": "change_detected",
+          "valid_fraction": 0.996,
+          "changed_fraction": 0.1049,
+          "changed_area_km2": 96.055,
+          "n_blobs": 101664,
+          "largest_blob_km2": 0.655,
+          "decrease_fraction": 0.0728,
+          "increase_fraction": 0.0321,
+          "reason": "largest connected changed patch 0.655 km2 (floor 0.02 km2); 10.5% of usable pixels changed (7.3% decrease, 3.2% increase)",
+          "largest_blob_centroid": {
+            "lat": 28.1356,
+            "lon": 85.6397
+          },
+          "blob_distance_from_source_km": 9.65,
+          "control": {
+            "before": {
+              "item_id": "S1A_IW_GRDH_1SDV_20210603T001132_20210603T001157_038168_048136_rtc",
+              "date": "2021-06-03",
+              "orbit": 121
+            },
+            "after": {
+              "item_id": "S1A_IW_GRDH_1SDV_20210615T001133_20210615T001158_038343_048668_rtc",
+              "date": "2021-06-15",
+              "orbit": 121
+            },
+            "gap_days": 12.0,
+            "cache_hits": [
+              true,
+              true
+            ],
+            "verdict": "change_detected",
+            "valid_fraction": 0.996,
+            "changed_fraction": 0.2367,
+            "changed_area_km2": 216.775,
+            "n_blobs": 101687,
+            "largest_blob_km2": 8.844,
+            "decrease_fraction": 0.029,
+            "increase_fraction": 0.2077,
+            "reason": "largest connected changed patch 8.844 km2 (floor 0.02 km2); 23.7% of usable pixels changed (2.9% decrease, 20.8% increase)",
+            "largest_blob_centroid": {
+              "lat": 28.1349,
+              "lon": 85.5578
+            },
+            "blob_distance_from_source_km": 3.96
+          },
+          "control_comparison": {
+            "verdict": "within_background",
+            "event_largest_km2": 0.655,
+            "control_largest_km2": 8.844,
+            "ratio": 0.07406151062867482,
+            "min_ratio": 2.0,
+            "reason": "event patch 0.655 km2 is only 0.1x the control's 8.844 km2 (floor 2x); this is seasonal change, not a confirmation"
+          }
+        },
+        {
+          "before": {
+            "item_id": "S1A_IW_GRDH_1SDV_20210608T001925_20210608T001950_038241_048350_rtc",
+            "date": "2021-06-08",
+            "orbit": 19
+          },
+          "after": {
+            "item_id": "S1A_IW_GRDH_1SDV_20210620T001926_20210620T001951_038416_048884_rtc",
+            "date": "2021-06-20",
+            "orbit": 19
+          },
+          "gap_days": 12.0,
+          "cache_hits": [
+            true,
+            true
+          ],
+          "verdict": "change_detected",
+          "valid_fraction": 1.0,
+          "changed_fraction": 0.2079,
+          "changed_area_km2": 191.224,
+          "n_blobs": 97778,
+          "largest_blob_km2": 4.238,
+          "decrease_fraction": 0.028,
+          "increase_fraction": 0.1799,
+          "reason": "largest connected changed patch 4.238 km2 (floor 0.02 km2); 20.8% of usable pixels changed (2.8% decrease, 18.0% increase)",
+          "largest_blob_centroid": {
+            "lat": 28.1378,
+            "lon": 85.5596
+          },
+          "blob_distance_from_source_km": 4.31,
+          "control": {
+            "before": {
+              "item_id": "S1A_IW_GRDH_1SDV_20210527T001925_20210527T001950_038066_047E1D_rtc",
+              "date": "2021-05-27",
+              "orbit": 19
+            },
+            "after": {
+              "item_id": "S1A_IW_GRDH_1SDV_20210608T001925_20210608T001950_038241_048350_rtc",
+              "date": "2021-06-08",
+              "orbit": 19
+            },
+            "gap_days": 12.0,
+            "cache_hits": [
+              true,
+              true
+            ],
+            "verdict": "change_detected",
+            "valid_fraction": 1.0,
+            "changed_fraction": 0.2431,
+            "changed_area_km2": 223.568,
+            "n_blobs": 94398,
+            "largest_blob_km2": 12.656,
+            "decrease_fraction": 0.2163,
+            "increase_fraction": 0.0268,
+            "reason": "largest connected changed patch 12.656 km2 (floor 0.02 km2); 24.3% of usable pixels changed (21.6% decrease, 2.7% increase)",
+            "largest_blob_centroid": {
+              "lat": 28.1437,
+              "lon": 85.6287
+            },
+            "blob_distance_from_source_km": 9.13
+          },
+          "control_comparison": {
+            "verdict": "within_background",
+            "event_largest_km2": 4.238,
+            "control_largest_km2": 12.656,
+            "ratio": 0.33486093552465235,
+            "min_ratio": 2.0,
+            "reason": "event patch 4.238 km2 is only 0.3x the control's 12.656 km2 (floor 2x); this is seasonal change, not a confirmation"
+          }
+        }
+      ]
+    },
+    {
+      "event_id": "NPL-2024-08-16-THAME-001",
+      "origin_utc": "2024-08-16T08:00:00+00:00",
+      "hazard_subtype": "glacial_lake_outburst",
+      "catalogued_location": {
+        "lat": 27.87,
+        "lon": 86.62
+      },
+      "location_uncertainty_km": 6.0,
+      "roi_half_km": 6.0,
+      "scenes_found": 17,
+      "status": "analysed",
+      "pairs": [
+        {
+          "before": {
+            "item_id": "S1A_IW_GRDH_1SDV_20240807T122235_20240807T122300_055107_06B6FA_rtc",
+            "date": "2024-08-07",
+            "orbit": 85
+          },
+          "after": {
+            "item_id": "S1A_IW_GRDH_1SDV_20240819T122235_20240819T122300_055282_06BD59_rtc",
+            "date": "2024-08-19",
+            "orbit": 85
+          },
+          "gap_days": 12.0,
+          "cache_hits": [
+            true,
+            false
+          ],
+          "verdict": "change_detected",
+          "valid_fraction": 0.992,
+          "changed_fraction": 0.0679,
+          "changed_area_km2": 9.729,
+          "n_blobs": 12985,
+          "largest_blob_km2": 0.104,
+          "decrease_fraction": 0.0524,
+          "increase_fraction": 0.0155,
+          "reason": "largest connected changed patch 0.104 km2 (floor 0.02 km2); 6.8% of usable pixels changed (5.2% decrease, 1.6% increase)",
+          "largest_blob_centroid": {
+            "lat": 27.858,
+            "lon": 86.5638
+          },
+          "blob_distance_from_source_km": 5.69,
+          "control": {
+            "before": {
+              "item_id": "S1A_IW_GRDH_1SDV_20240726T122235_20240726T122300_054932_06B0EA_rtc",
+              "date": "2024-07-26",
+              "orbit": 85
+            },
+            "after": {
+              "item_id": "S1A_IW_GRDH_1SDV_20240807T122235_20240807T122300_055107_06B6FA_rtc",
+              "date": "2024-08-07",
+              "orbit": 85
+            },
+            "gap_days": 12.0,
+            "cache_hits": [
+              false,
+              true
+            ],
+            "verdict": "change_detected",
+            "valid_fraction": 0.992,
+            "changed_fraction": 0.0528,
+            "changed_area_km2": 7.576,
+            "n_blobs": 10984,
+            "largest_blob_km2": 0.056,
+            "decrease_fraction": 0.0415,
+            "increase_fraction": 0.0114,
+            "reason": "largest connected changed patch 0.056 km2 (floor 0.02 km2); 5.3% of usable pixels changed (4.1% decrease, 1.1% increase)",
+            "largest_blob_centroid": {
+              "lat": 27.9126,
+              "lon": 86.5623
+            },
+            "blob_distance_from_source_km": 7.39
+          },
+          "control_comparison": {
+            "verdict": "within_background",
+            "event_largest_km2": 0.104,
+            "control_largest_km2": 0.056,
+            "ratio": 1.857142857142857,
+            "min_ratio": 2.0,
+            "reason": "event patch 0.104 km2 is only 1.9x the control's 0.056 km2 (floor 2x); this is seasonal change, not a confirmation"
+          }
+        },
+        {
+          "before": {
+            "item_id": "S1A_IW_GRDH_1SDV_20240810T001133_20240810T001158_055143_06B85A_rtc",
+            "date": "2024-08-10",
+            "orbit": 121
+          },
+          "after": {
+            "item_id": "S1A_IW_GRDH_1SDV_20240822T001134_20240822T001159_055318_06BEBB_rtc",
+            "date": "2024-08-22",
+            "orbit": 121
+          },
+          "gap_days": 12.0,
+          "cache_hits": [
+            true,
+            true
+          ],
+          "verdict": "change_detected",
+          "valid_fraction": 1.0,
+          "changed_fraction": 0.0495,
+          "changed_area_km2": 7.146,
+          "n_blobs": 8716,
+          "largest_blob_km2": 0.068,
+          "decrease_fraction": 0.0139,
+          "increase_fraction": 0.0355,
+          "reason": "largest connected changed patch 0.068 km2 (floor 0.02 km2); 4.9% of usable pixels changed (1.4% decrease, 3.6% increase)",
+          "largest_blob_centroid": {
+            "lat": 27.916,
+            "lon": 86.5766
+          },
+          "blob_distance_from_source_km": 6.66,
+          "control": {
+            "before": {
+              "item_id": "S1A_IW_GRDH_1SDV_20240729T001133_20240729T001158_054968_06B230_rtc",
+              "date": "2024-07-29",
+              "orbit": 121
+            },
+            "after": {
+              "item_id": "S1A_IW_GRDH_1SDV_20240810T001133_20240810T001158_055143_06B85A_rtc",
+              "date": "2024-08-10",
+              "orbit": 121
+            },
+            "gap_days": 12.0,
+            "cache_hits": [
+              true,
+              true
+            ],
+            "verdict": "change_detected",
+            "valid_fraction": 1.0,
+            "changed_fraction": 0.0541,
+            "changed_area_km2": 7.819,
+            "n_blobs": 9358,
+            "largest_blob_km2": 0.126,
+            "decrease_fraction": 0.0256,
+            "increase_fraction": 0.0285,
+            "reason": "largest connected changed patch 0.126 km2 (floor 0.02 km2); 5.4% of usable pixels changed (2.6% decrease, 2.8% increase)",
+            "largest_blob_centroid": {
+              "lat": 27.848,
+              "lon": 86.5638
+            },
+            "blob_distance_from_source_km": 6.04
+          },
+          "control_comparison": {
+            "verdict": "within_background",
+            "event_largest_km2": 0.068,
+            "control_largest_km2": 0.126,
+            "ratio": 0.5396825396825398,
+            "min_ratio": 2.0,
+            "reason": "event patch 0.068 km2 is only 0.5x the control's 0.126 km2 (floor 2x); this is seasonal change, not a confirmation"
+          }
+        },
+        {
+          "before": {
+            "item_id": "S1A_IW_GRDH_1SDV_20240814T121403_20240814T121428_055209_06BAB8_rtc",
+            "date": "2024-08-14",
+            "orbit": 12
+          },
+          "after": {
+            "item_id": "S1A_IW_GRDH_1SDV_20240826T121404_20240826T121429_055384_06C139_rtc",
+            "date": "2024-08-26",
+            "orbit": 12
+          },
+          "gap_days": 12.0,
+          "cache_hits": [
+            true,
+            true
+          ],
+          "verdict": "change_detected",
+          "valid_fraction": 1.0,
+          "changed_fraction": 0.0901,
+          "changed_area_km2": 13.011,
+          "n_blobs": 12892,
+          "largest_blob_km2": 0.671,
+          "decrease_fraction": 0.037,
+          "increase_fraction": 0.0531,
+          "reason": "largest connected changed patch 0.671 km2 (floor 0.02 km2); 9.0% of usable pixels changed (3.7% decrease, 5.3% increase)",
+          "largest_blob_centroid": {
+            "lat": 27.8554,
+            "lon": 86.5642
+          },
+          "blob_distance_from_source_km": 5.72,
+          "control": {
+            "before": {
+              "item_id": "S1A_IW_GRDH_1SDV_20240802T121404_20240802T121429_055034_06B474_rtc",
+              "date": "2024-08-02",
+              "orbit": 12
+            },
+            "after": {
+              "item_id": "S1A_IW_GRDH_1SDV_20240814T121403_20240814T121428_055209_06BAB8_rtc",
+              "date": "2024-08-14",
+              "orbit": 12
+            },
+            "gap_days": 12.0,
+            "cache_hits": [
+              true,
+              true
+            ],
+            "verdict": "change_detected",
+            "valid_fraction": 1.0,
+            "changed_fraction": 0.0955,
+            "changed_area_km2": 13.804,
+            "n_blobs": 12934,
+            "largest_blob_km2": 0.3,
+            "decrease_fraction": 0.0654,
+            "increase_fraction": 0.0301,
+            "reason": "largest connected changed patch 0.300 km2 (floor 0.02 km2); 9.6% of usable pixels changed (6.5% decrease, 3.0% increase)",
+            "largest_blob_centroid": {
+              "lat": 27.8991,
+              "lon": 86.5614
+            },
+            "blob_distance_from_source_km": 6.6
+          },
+          "control_comparison": {
+            "verdict": "above_background",
+            "event_largest_km2": 0.671,
+            "control_largest_km2": 0.3,
+            "ratio": 2.236666666666667,
+            "min_ratio": 2.0,
+            "reason": "event patch 0.671 km2 is 2.2x the control's 0.300 km2 (floor 2x)"
+          }
+        }
+      ]
+    },
+    {
+      "event_id": "NPL-2025-07-08-RASUWAGADHI-001",
+      "origin_utc": "2025-07-08T03:00:00+00:00",
+      "hazard_subtype": "supraglacial_lake_drainage_debris_flow",
+      "catalogued_location": {
+        "lat": 28.3,
+        "lon": 85.55
+      },
+      "location_uncertainty_km": 12.0,
+      "roi_half_km": 12.0,
+      "scenes_found": 17,
+      "status": "analysed",
+      "pairs": [
+        {
+          "before": {
+            "item_id": "S1A_IW_GRDH_1SDV_20250627T122228_20250627T122253_059832_076E5B_rtc",
+            "date": "2025-06-27",
+            "orbit": 85
+          },
+          "after": {
+            "item_id": "S1A_IW_GRDH_1SDV_20250709T122227_20250709T122252_060007_rtc",
+            "date": "2025-07-09",
+            "orbit": 85
+          },
+          "gap_days": 12.0,
+          "cache_hits": [
+            true,
+            true
+          ],
+          "verdict": "change_detected",
+          "valid_fraction": 1.0,
+          "changed_fraction": 0.0825,
+          "changed_area_km2": 48.596,
+          "n_blobs": 53844,
+          "largest_blob_km2": 0.408,
+          "decrease_fraction": 0.0403,
+          "increase_fraction": 0.0422,
+          "reason": "largest connected changed patch 0.408 km2 (floor 0.02 km2); 8.3% of usable pixels changed (4.0% decrease, 4.2% increase)",
+          "largest_blob_centroid": {
+            "lat": 28.2863,
+            "lon": 85.5423
+          },
+          "blob_distance_from_source_km": 1.7,
+          "control": {
+            "before": {
+              "item_id": "S1A_IW_GRDH_1SDV_20250615T122228_20250615T122253_059657_076846_rtc",
+              "date": "2025-06-15",
+              "orbit": 85
+            },
+            "after": {
+              "item_id": "S1A_IW_GRDH_1SDV_20250627T122228_20250627T122253_059832_076E5B_rtc",
+              "date": "2025-06-27",
+              "orbit": 85
+            },
+            "gap_days": 12.0,
+            "cache_hits": [
+              true,
+              true
+            ],
+            "verdict": "change_detected",
+            "valid_fraction": 1.0,
+            "changed_fraction": 0.114,
+            "changed_area_km2": 67.101,
+            "n_blobs": 59151,
+            "largest_blob_km2": 0.965,
+            "decrease_fraction": 0.0243,
+            "increase_fraction": 0.0897,
+            "reason": "largest connected changed patch 0.965 km2 (floor 0.02 km2); 11.4% of usable pixels changed (2.4% decrease, 9.0% increase)",
+            "largest_blob_centroid": {
+              "lat": 28.2747,
+              "lon": 85.6576
+            },
+            "blob_distance_from_source_km": 10.91
+          },
+          "control_comparison": {
+            "verdict": "within_background",
+            "event_largest_km2": 0.408,
+            "control_largest_km2": 0.965,
+            "ratio": 0.42279792746113987,
+            "min_ratio": 2.0,
+            "reason": "event patch 0.408 km2 is only 0.4x the control's 0.965 km2 (floor 2x); this is seasonal change, not a confirmation"
+          }
+        },
+        {
+          "before": {
+            "item_id": "S1A_IW_GRDH_1SDV_20250705T001933_20250705T001958_059941_rtc",
+            "date": "2025-07-05",
+            "orbit": 19
+          },
+          "after": {
+            "item_id": "S1A_IW_GRDH_1SDV_20250717T001932_20250717T001957_060116_rtc",
+            "date": "2025-07-17",
+            "orbit": 19
+          },
+          "gap_days": 12.0,
+          "cache_hits": [
+            true,
+            true
+          ],
+          "verdict": "change_detected",
+          "valid_fraction": 1.0,
+          "changed_fraction": 0.079,
+          "changed_area_km2": 46.524,
+          "n_blobs": 52789,
+          "largest_blob_km2": 0.161,
+          "decrease_fraction": 0.0333,
+          "increase_fraction": 0.0457,
+          "reason": "largest connected changed patch 0.161 km2 (floor 0.02 km2); 7.9% of usable pixels changed (3.3% decrease, 4.6% increase)",
+          "largest_blob_centroid": {
+            "lat": 28.4047,
+            "lon": 85.6473
+          },
+          "blob_distance_from_source_km": 15.04,
+          "control": {
+            "before": {
+              "item_id": "S1A_IW_GRDH_1SDV_20250623T001933_20250623T001958_059766_rtc",
+              "date": "2025-06-23",
+              "orbit": 19
+            },
+            "after": {
+              "item_id": "S1A_IW_GRDH_1SDV_20250705T001933_20250705T001958_059941_rtc",
+              "date": "2025-07-05",
+              "orbit": 19
+            },
+            "gap_days": 12.0,
+            "cache_hits": [
+              true,
+              true
+            ],
+            "verdict": "change_detected",
+            "valid_fraction": 1.0,
+            "changed_fraction": 0.0838,
+            "changed_area_km2": 49.325,
+            "n_blobs": 59329,
+            "largest_blob_km2": 0.119,
+            "decrease_fraction": 0.041,
+            "increase_fraction": 0.0427,
+            "reason": "largest connected changed patch 0.119 km2 (floor 0.02 km2); 8.4% of usable pixels changed (4.1% decrease, 4.3% increase)",
+            "largest_blob_centroid": {
+              "lat": 28.4041,
+              "lon": 85.6478
+            },
+            "blob_distance_from_source_km": 15.01
+          },
+          "control_comparison": {
+            "verdict": "within_background",
+            "event_largest_km2": 0.161,
+            "control_largest_km2": 0.119,
+            "ratio": 1.3529411764705883,
+            "min_ratio": 2.0,
+            "reason": "event patch 0.161 km2 is only 1.4x the control's 0.119 km2 (floor 2x); this is seasonal change, not a confirmation"
+          }
+        },
+        {
+          "before": {
+            "item_id": "S1A_IW_GRDH_1SDV_20250618T001126_20250618T001151_059693_07698D_rtc",
+            "date": "2025-06-18",
+            "orbit": 121
+          },
+          "after": {
+            "item_id": "S1A_IW_GRDH_1SDV_20250712T001125_20250712T001150_060043_rtc",
+            "date": "2025-07-12",
+            "orbit": 121
+          },
+          "gap_days": 24.0,
+          "cache_hits": [
+            true,
+            true
+          ],
+          "verdict": "change_detected",
+          "valid_fraction": 0.996,
+          "changed_fraction": 0.0872,
+          "changed_area_km2": 51.139,
+          "n_blobs": 63377,
+          "largest_blob_km2": 0.417,
+          "decrease_fraction": 0.0485,
+          "increase_fraction": 0.0387,
+          "reason": "largest connected changed patch 0.417 km2 (floor 0.02 km2); 8.7% of usable pixels changed (4.8% decrease, 3.9% increase)",
+          "largest_blob_centroid": {
+            "lat": 28.2716,
+            "lon": 85.6526
+          },
+          "blob_distance_from_source_km": 10.53,
+          "control": {
+            "before": {
+              "item_id": "S1A_IW_GRDH_1SDV_20250606T001127_20250606T001152_059518_rtc",
+              "date": "2025-06-06",
+              "orbit": 121
+            },
+            "after": {
+              "item_id": "S1A_IW_GRDH_1SDV_20250618T001126_20250618T001151_059693_07698D_rtc",
+              "date": "2025-06-18",
+              "orbit": 121
+            },
+            "gap_days": 12.0,
+            "cache_hits": [
+              true,
+              true
+            ],
+            "verdict": "change_detected",
+            "valid_fraction": 0.996,
+            "changed_fraction": 0.2684,
+            "changed_area_km2": 157.446,
+            "n_blobs": 58711,
+            "largest_blob_km2": 7.611,
+            "decrease_fraction": 0.0915,
+            "increase_fraction": 0.1768,
+            "reason": "largest connected changed patch 7.611 km2 (floor 0.02 km2); 26.8% of usable pixels changed (9.2% decrease, 17.7% increase)",
+            "largest_blob_centroid": {
+              "lat": 28.299,
+              "lon": 85.6601
+            },
+            "blob_distance_from_source_km": 10.78
+          },
+          "control_comparison": {
+            "verdict": "within_background",
+            "event_largest_km2": 0.417,
+            "control_largest_km2": 7.611,
+            "ratio": 0.05478912100906583,
+            "min_ratio": 2.0,
+            "reason": "event patch 0.417 km2 is only 0.1x the control's 7.611 km2 (floor 2x); this is seasonal change, not a confirmation"
+          }
+        }
+      ]
+    },
+    {
+      "event_id": "NPL-2026-08-26-BHOTEKOSHI-001",
+      "origin_utc": "2026-08-26T02:52:10+00:00",
+      "hazard_subtype": "ice_rock_avalanche_dam_break",
+      "catalogued_location": {
+        "lat": 28.255,
+        "lon": 85.52
+      },
+      "location_uncertainty_km": 8.0,
+      "roi_half_km": 8.0,
+      "scenes_found": 14,
+      "status": "analysed",
+      "pairs": [
+        {
+          "before": {
+            "item_id": "S1D_IW_GRDH_1SDV_20260824T001844_20260824T001909_004260_007D5D_rtc",
+            "date": "2026-08-24",
+            "orbit": 19
+          },
+          "after": {
+            "item_id": "S1D_IW_GRDH_1SDV_20260905T001844_20260905T001909_004435_00837B_rtc",
+            "date": "2026-09-05",
+            "orbit": 19
+          },
+          "gap_days": 12.0,
+          "cache_hits": [
+            true,
+            true
+          ],
+          "verdict": "change_detected",
+          "valid_fraction": 1.0,
+          "changed_fraction": 0.0751,
+          "changed_area_km2": 19.654,
+          "n_blobs": 22562,
+          "largest_blob_km2": 0.641,
+          "decrease_fraction": 0.0321,
+          "increase_fraction": 0.043,
+          "reason": "largest connected changed patch 0.641 km2 (floor 0.02 km2); 7.5% of usable pixels changed (3.2% decrease, 4.3% increase)",
+          "largest_blob_centroid": {
+            "lat": 28.2879,
+            "lon": 85.5303
+          },
+          "blob_distance_from_source_km": 3.8,
+          "control": {
+            "before": {
+              "item_id": "S1D_IW_GRDH_1SDV_20260812T001844_20260812T001909_004085_007738_rtc",
+              "date": "2026-08-12",
+              "orbit": 19
+            },
+            "after": {
+              "item_id": "S1D_IW_GRDH_1SDV_20260824T001844_20260824T001909_004260_007D5D_rtc",
+              "date": "2026-08-24",
+              "orbit": 19
+            },
+            "gap_days": 12.0,
+            "cache_hits": [
+              true,
+              true
+            ],
+            "verdict": "change_detected",
+            "valid_fraction": 1.0,
+            "changed_fraction": 0.0781,
+            "changed_area_km2": 20.442,
+            "n_blobs": 24931,
+            "largest_blob_km2": 0.159,
+            "decrease_fraction": 0.0331,
+            "increase_fraction": 0.045,
+            "reason": "largest connected changed patch 0.159 km2 (floor 0.02 km2); 7.8% of usable pixels changed (3.3% decrease, 4.5% increase)",
+            "largest_blob_centroid": {
+              "lat": 28.2588,
+              "lon": 85.501
+            },
+            "blob_distance_from_source_km": 1.9
+          },
+          "control_comparison": {
+            "verdict": "above_background",
+            "event_largest_km2": 0.641,
+            "control_largest_km2": 0.159,
+            "ratio": 4.031446540880503,
+            "min_ratio": 2.0,
+            "reason": "event patch 0.641 km2 is 4.0x the control's 0.159 km2 (floor 2x)"
+          }
+        },
+        {
+          "before": {
+            "item_id": "S1D_IW_GRDH_1SDV_20260816T122141_20260816T122206_004151_007980_rtc",
+            "date": "2026-08-16",
+            "orbit": 85
+          },
+          "after": {
+            "item_id": "S1D_IW_GRDH_1SDV_20260828T122141_20260828T122206_004326_007FA4_rtc",
+            "date": "2026-08-28",
+            "orbit": 85
+          },
+          "gap_days": 12.0,
+          "cache_hits": [
+            true,
+            true
+          ],
+          "verdict": "change_detected",
+          "valid_fraction": 1.0,
+          "changed_fraction": 0.0754,
+          "changed_area_km2": 19.731,
+          "n_blobs": 20613,
+          "largest_blob_km2": 0.828,
+          "decrease_fraction": 0.0302,
+          "increase_fraction": 0.0452,
+          "reason": "largest connected changed patch 0.828 km2 (floor 0.02 km2); 7.5% of usable pixels changed (3.0% decrease, 4.5% increase)",
+          "largest_blob_centroid": {
+            "lat": 28.3034,
+            "lon": 85.5044
+          },
+          "blob_distance_from_source_km": 5.59,
+          "control": {
+            "before": {
+              "item_id": "S1D_IW_GRDH_1SDV_20260804T122140_20260804T122205_003976_00737A_rtc",
+              "date": "2026-08-04",
+              "orbit": 85
+            },
+            "after": {
+              "item_id": "S1D_IW_GRDH_1SDV_20260816T122141_20260816T122206_004151_007980_rtc",
+              "date": "2026-08-16",
+              "orbit": 85
+            },
+            "gap_days": 12.0,
+            "cache_hits": [
+              true,
+              true
+            ],
+            "verdict": "change_detected",
+            "valid_fraction": 1.0,
+            "changed_fraction": 0.0699,
+            "changed_area_km2": 18.288,
+            "n_blobs": 23676,
+            "largest_blob_km2": 0.255,
+            "decrease_fraction": 0.0436,
+            "increase_fraction": 0.0263,
+            "reason": "largest connected changed patch 0.255 km2 (floor 0.02 km2); 7.0% of usable pixels changed (4.4% decrease, 2.6% increase)",
+            "largest_blob_centroid": {
+              "lat": 28.2686,
+              "lon": 85.5694
+            },
+            "blob_distance_from_source_km": 5.07
+          },
+          "control_comparison": {
+            "verdict": "above_background",
+            "event_largest_km2": 0.828,
+            "control_largest_km2": 0.255,
+            "ratio": 3.2470588235294113,
+            "min_ratio": 2.0,
+            "reason": "event patch 0.828 km2 is 3.2x the control's 0.255 km2 (floor 2x)"
+          }
+        },
+        {
+          "before": {
+            "item_id": "S1D_IW_GRDH_1SDV_20260819T001036_20260819T001101_004187_007ABD_rtc",
+            "date": "2026-08-19",
+            "orbit": 121
+          },
+          "after": {
+            "item_id": "S1D_IW_GRDH_1SDV_20260831T001037_20260831T001102_004362_0080EC_rtc",
+            "date": "2026-08-31",
+            "orbit": 121
+          },
+          "gap_days": 12.0,
+          "cache_hits": [
+            true,
+            true
+          ],
+          "verdict": "change_detected",
+          "valid_fraction": 1.0,
+          "changed_fraction": 0.0768,
+          "changed_area_km2": 20.103,
+          "n_blobs": 25756,
+          "largest_blob_km2": 0.364,
+          "decrease_fraction": 0.0288,
+          "increase_fraction": 0.048,
+          "reason": "largest connected changed patch 0.364 km2 (floor 0.02 km2); 7.7% of usable pixels changed (2.9% decrease, 4.8% increase)",
+          "largest_blob_centroid": {
+            "lat": 28.2885,
+            "lon": 85.5205
+          },
+          "blob_distance_from_source_km": 3.73,
+          "control": {
+            "before": {
+              "item_id": "S1D_IW_GRDH_1SDV_20260807T001036_20260807T001101_004012_0074B7_rtc",
+              "date": "2026-08-07",
+              "orbit": 121
+            },
+            "after": {
+              "item_id": "S1D_IW_GRDH_1SDV_20260819T001036_20260819T001101_004187_007ABD_rtc",
+              "date": "2026-08-19",
+              "orbit": 121
+            },
+            "gap_days": 12.0,
+            "cache_hits": [
+              true,
+              true
+            ],
+            "verdict": "change_detected",
+            "valid_fraction": 1.0,
+            "changed_fraction": 0.0655,
+            "changed_area_km2": 17.16,
+            "n_blobs": 25810,
+            "largest_blob_km2": 0.197,
+            "decrease_fraction": 0.0271,
+            "increase_fraction": 0.0384,
+            "reason": "largest connected changed patch 0.197 km2 (floor 0.02 km2); 6.6% of usable pixels changed (2.7% decrease, 3.8% increase)",
+            "largest_blob_centroid": {
+              "lat": 28.2803,
+              "lon": 85.5386
+            },
+            "blob_distance_from_source_km": 3.35
+          },
+          "control_comparison": {
+            "verdict": "within_background",
+            "event_largest_km2": 0.364,
+            "control_largest_km2": 0.197,
+            "ratio": 1.847715736040609,
+            "min_ratio": 2.0,
+            "reason": "event patch 0.364 km2 is only 1.8x the control's 0.197 km2 (floor 2x); this is seasonal change, not a confirmation"
+          }
+        }
+      ]
+    }
+  ]
+}

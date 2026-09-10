@@ -851,6 +851,84 @@ if(f&&s){f.addEventListener('input',function(){s.hidden=false;});}})();
 """
 
 
+EXP012_RESULTS = REPO / "experiments" / "exp012_satellite_confirmation" / "results.json"
+_TD = "style='border-bottom:1px solid #DCE3EB;padding:8px 6px;vertical-align:top'"
+
+
+def _satellite_section() -> str:
+    """Independent radar confirmation of the 2026 source, read from exp012's record.
+
+    Shown after the fact and independent of the scenario above: imagery bounds where and
+    roughly when the ground changed, and adds no warning time.
+    """
+    head = (
+        "<div class='panel section' id='satellite'>"
+        "<h2 class='sec'>Independent radar confirmation of the 2026 source</h2>"
+        "<p class='lede'>After the fact, from free Sentinel-1 radar (experiment 012). Each "
+        "row is one satellite track: the last pass before 26 Aug 2026 compared with the "
+        "first pass after it, then judged against a pre-event control pair on the same "
+        "track. This is observed satellite data, not part of the simulation above, and it "
+        "adds no warning time.</p>"
+    )
+    if not EXP012_RESULTS.exists():
+        return head + (
+            "<p class='lede'>No satellite record yet. Run "
+            "<code>experiments/exp012_satellite_confirmation/run.py</code>.</p></div>"
+        )
+    try:
+        data = json.loads(EXP012_RESULTS.read_text(encoding="utf-8"))
+        rec = next(e for e in data["events"] if str(e["event_id"]).startswith("NPL-2026-08-26"))
+    except Exception:
+        return head + "<p class='lede'>The satellite record could not be read.</p></div>"
+    if rec.get("status") != "analysed":
+        why = html.escape(str(rec.get("reason", "not analysed")))
+        return head + f"<p class='lede'>{why}</p></div>"
+
+    rows = ""
+    for p in rec.get("pairs", []):
+        if "error" in p:
+            rows += (
+                f"<tr><td {_TD}>{p['before']['orbit']}</td><td {_TD} colspan='6'>"
+                f"{html.escape(str(p['error']))}</td></tr>"
+            )
+            continue
+        ctrl = p.get("control") or {}
+        cmp = p.get("control_comparison") or {}
+        verdict = str(cmp.get("verdict", "n/a"))
+        cls = {"above_background": "obs", "inconclusive": "syn"}.get(verdict, "")
+        ratio = cmp.get("ratio")
+        ratio_s = f"{ratio:.1f}x" if isinstance(ratio, int | float) else "n/a"
+        rows += (
+            f"<tr><td {_TD}>{p['before']['orbit']}</td>"
+            f"<td {_TD} class='tnum'>{p['before']['date']} to {p['after']['date']}</td>"
+            f"<td {_TD} class='tnum'>{p.get('largest_blob_km2', 'n/a')}</td>"
+            f"<td {_TD} class='tnum'>{ctrl.get('largest_blob_km2', 'n/a')}</td>"
+            f"<td {_TD} class='tnum'>{ratio_s}</td>"
+            f"<td {_TD} class='tnum'>{p.get('blob_distance_from_source_km', 'n/a')}</td>"
+            f"<td {_TD} class='{cls}'><b>{html.escape(verdict.replace('_', ' '))}</b></td></tr>"
+        )
+    header = (
+        f"<tr><td {_TD}><b>Track</b></td><td {_TD}><b>Before to after</b></td>"
+        f"<td {_TD}><b>Event patch (km2)</b></td><td {_TD}><b>Control patch (km2)</b></td>"
+        f"<td {_TD}><b>Ratio</b></td><td {_TD}><b>Distance from source (km)</b></td>"
+        f"<td {_TD}><b>Against control</b></td></tr>"
+    )
+    table = (
+        "<div style='overflow-x:auto'><table style='border-collapse:collapse;width:100%;"
+        f"font-size:.9rem'>{header}{rows}</table></div>"
+    )
+    note = (
+        "<p class='lede' style='margin-top:10px'>Above background means the event pair's "
+        "largest changed patch is at least "
+        f"{DEFAULT.eo.control_min_ratio:g} times the control's; that ratio was fixed before "
+        f"the 2026 pairs were seen. Region: {rec.get('roi_half_km', 'n/a')} km half width "
+        "around the catalogued source, which itself carries about 8 km of uncertainty. "
+        "Radar only; optical scenes around the event were cloud covered. The imagery bounds "
+        "the event to the 12 days between passes; the minute comes from the seismic onset.</p>"
+    )
+    return head + table + note + "</div>"
+
+
 def _page(q: dict[str, str]) -> str:
     ran = any(k in q for k in PARAM_KEYS)
     inp, errors = _validate(q)
@@ -867,8 +945,10 @@ def _page(q: dict[str, str]) -> str:
             )
         )
         default_inp = inp or Inputs(*CASCADE, "surge", True, False, 60.0)
-        body = f"<div class='workspace'><div>{left}</div><div>{right}</div></div>" + _details(
-            default_inp, None, ran=False
+        body = (
+            f"<div class='workspace'><div>{left}</div><div>{right}</div></div>"
+            + _satellite_section()
+            + _details(default_inp, None, ran=False)
         )
         return _shell(body, ran=False)
 
@@ -899,7 +979,14 @@ def _page(q: dict[str, str]) -> str:
         f"<a class='btn' href='/export?{_qs(inp)}&amp;format=csv'>Export warning times (CSV)</a>"
         "<a class='btn' href='/compare'>Compare scenarios</a></div></div>"
     )
-    body = workspace + _warning_chart(o) + evidence + exports + _details(inp, o, ran=True)
+    body = (
+        workspace
+        + _warning_chart(o)
+        + evidence
+        + _satellite_section()
+        + exports
+        + _details(inp, o, ran=True)
+    )
     return _shell(body, ran=True)
 
 
