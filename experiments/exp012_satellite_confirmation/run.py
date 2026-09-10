@@ -13,6 +13,10 @@ only the region of interest (VV backscatter) and run ``ghadi.eo.detect_change_sa
 For every event pair, also run a **control pair** on the same track from before the
 event, so that seasonal river change on the same ground is measured rather than assumed
 away. A "change detected" that is not larger than its control is not a confirmation.
+The comparison is explicit and recorded per pair (``ghadi.eo.compare_to_control``): an
+event pair counts as *above background* only if its largest changed patch is at least
+2.0 times the control's. That ratio was fixed before the 2026 pair was inspected, so it
+could not be tuned to the answer.
 
 **What this cannot say.** The imagery bounds the event between two acquisition dates;
 it does not give the minute. Confirming a patch at a candidate confirms WHERE, and
@@ -132,15 +136,16 @@ def analyse_pair(
 
 
 def control_for(scenes: list[SceneMeta], before: SceneMeta) -> SceneMeta | None:
-    """The scene on the same track immediately preceding ``before``, if any."""
-    earlier = [
-        s
-        for s in scenes
-        if s.relative_orbit == before.relative_orbit
-        and s.orbit_state == before.orbit_state
-        and s.when < before.when
-    ]
-    return max(earlier, key=lambda s: s.when) if earlier else None
+    """The previous acquisition cycle on the same track, never a frame of the same pass.
+
+    Two frames of one pass share a date and near-identical imagery over their overlap;
+    comparing them would give a control with almost no change and inflate the event
+    against it. The first run of this experiment did exactly that on Thame 2024, which
+    is why the rule now lives in ``ghadi.eo_fetch.previous_pass``.
+    """
+    from ghadi.eo_fetch import previous_pass
+
+    return previous_pass(scenes, before)
 
 
 def run_event(client: CachedSceneClient, ev: dict[str, Any]) -> dict[str, Any]:
@@ -196,6 +201,18 @@ def run_event(client: CachedSceneClient, ev: dict[str, Any]) -> dict[str, Any]:
             entry["control"] = analyse_pair(client, ctrl, before, bbox, ev["lat"], ev["lon"])
         else:
             entry["control"] = None
+        ctrl_rec = entry.get("control")
+        if ctrl_rec and "verdict" in entry and "verdict" in ctrl_rec:
+            from ghadi.eo import compare_to_control
+
+            comparison = compare_to_control(
+                entry["verdict"],
+                entry["largest_blob_km2"],
+                ctrl_rec["verdict"],
+                ctrl_rec["largest_blob_km2"],
+                config=DEFAULT.eo,
+            )
+            entry["control_comparison"] = dict(vars(comparison))
         record["pairs"].append(entry)
     return record
 
@@ -233,6 +250,7 @@ def main() -> None:
                 f" {p.get('blob_distance_from_source_km', 'n/a')} km from source"
                 f" | control: {ctrl.get('verdict', 'none')},"
                 f" largest {ctrl.get('largest_blob_km2', 'n/a')} km2"
+                f" | vs control: {(p.get('control_comparison') or {}).get('verdict', 'n/a')}"
             )
 
     out = Path(__file__).resolve().parent / "results.json"

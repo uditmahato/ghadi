@@ -200,3 +200,78 @@ def detect_change_optical(
     loss = drop >= cfg.ndvi_drop
     gain = drop <= -cfg.ndvi_drop
     return _finish("optical", loss | gain, loss, gain, valid, pixel_area_m2, cfg)
+
+
+@dataclass(frozen=True)
+class ControlComparison:
+    """An event pair judged against a pre-event control pair on the same track."""
+
+    verdict: str  # "above_background" | "within_background" | "inconclusive"
+    event_largest_km2: float
+    control_largest_km2: float
+    ratio: float | None  # event / control largest patch; None when the control has none
+    min_ratio: float
+    reason: str
+
+
+def compare_to_control(
+    event_verdict: str,
+    event_largest_km2: float,
+    control_verdict: str,
+    control_largest_km2: float,
+    config: EoConfig | None = None,
+) -> ControlComparison:
+    """Does the event pair's change stand clear of the seasonal background?
+
+    The raw per-pair verdict says whether a changed patch exists. In high mountains a
+    patch exists in most 12-day pairs, event or not: snow melts, glaciers move, rivers
+    shift. This step keeps the raw verdict untouched and adds a second, labelled
+    judgement: the event pair's largest patch must be at least ``control_min_ratio``
+    times the largest patch in a control pair from before the event, on the same track.
+    If either pair could not be judged, neither can the comparison.
+    """
+    cfg = config or DEFAULT.eo
+    if event_verdict == "inconclusive" or control_verdict == "inconclusive":
+        return ControlComparison(
+            "inconclusive",
+            event_largest_km2,
+            control_largest_km2,
+            None,
+            cfg.control_min_ratio,
+            "one of the two pairs could not be judged, so neither can the comparison",
+        )
+    if event_verdict != "change_detected":
+        return ControlComparison(
+            "within_background",
+            event_largest_km2,
+            control_largest_km2,
+            None,
+            cfg.control_min_ratio,
+            "no changed patch in the event pair",
+        )
+    if control_largest_km2 <= 0:
+        return ControlComparison(
+            "above_background",
+            event_largest_km2,
+            control_largest_km2,
+            None,
+            cfg.control_min_ratio,
+            f"event patch {event_largest_km2:.3f} km2 with no patch at all in the control",
+        )
+    ratio = event_largest_km2 / control_largest_km2
+    if ratio >= cfg.control_min_ratio:
+        verdict = "above_background"
+        reason = (
+            f"event patch {event_largest_km2:.3f} km2 is {ratio:.1f}x the control's "
+            f"{control_largest_km2:.3f} km2 (floor {cfg.control_min_ratio:g}x)"
+        )
+    else:
+        verdict = "within_background"
+        reason = (
+            f"event patch {event_largest_km2:.3f} km2 is only {ratio:.1f}x the control's "
+            f"{control_largest_km2:.3f} km2 (floor {cfg.control_min_ratio:g}x); this is "
+            f"seasonal change, not a confirmation"
+        )
+    return ControlComparison(
+        verdict, event_largest_km2, control_largest_km2, ratio, cfg.control_min_ratio, reason
+    )

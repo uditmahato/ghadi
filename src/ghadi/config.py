@@ -300,6 +300,12 @@ class EoConfig:
     # Smallest connected changed patch that counts. 0.02 km2 is ~200 pixels at 10 m,
     # enough to reject speckle blobs but far smaller than any dam-forming failure.
     min_blob_km2: float = 0.02
+    # A changed patch only counts as an event if it is at least this many times the
+    # largest patch in a pre-event control pair on the same track. Snowmelt, glacier
+    # motion, and river change produce large seasonal "change" on these slopes, so a
+    # raw threshold alone confirms nothing. Fixed at 2.0 in exp012 before the 2026 pair
+    # was inspected, so it could not be tuned to the answer.
+    control_min_ratio: float = 2.0
 
 
 # --- fusion -------------------------------------------------------------------------

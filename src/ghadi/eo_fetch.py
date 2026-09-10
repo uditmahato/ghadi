@@ -15,10 +15,17 @@ same contracts:
   importing this module costs nothing and the ``eo`` extra is only required when a
   fetch actually happens.
 
-Pairing rule, enforced here because it is the single most important thing in radar
-change detection: a before scene and an after scene must share the same relative orbit
-and pass direction. Comparing different tracks manufactures change from viewing angle
-alone. ``same_track_pairs`` is the only way this module hands out pairs.
+Two pairing rules are enforced here because they are the most important things in
+radar change detection, and both were learned the hard way in exp012:
+
+1. A before scene and an after scene must share the same relative orbit and pass
+   direction. Comparing different tracks manufactures change from viewing angle alone.
+   ``same_track_pairs`` is the only way this module hands out pairs.
+2. One satellite pass is delivered as several frames, all with the same date and track.
+   Two frames of one pass are near-identical over their overlap, so pairing them as a
+   "control" shows almost no change and falsely inflates an event against it. A search
+   therefore keeps one frame per pass, the one that best covers the region, and a
+   control is always taken from the previous acquisition cycle, never the same date.
 """
 
 from __future__ import annotations
@@ -47,12 +54,26 @@ SENTINEL2_START = datetime(2015, 7, 1, tzinfo=UTC)
 # 7 unclassified, 8 cloud medium, 9 cloud high, 10 cirrus, 11 snow/ice.
 SCL_CLEAR = (4, 5, 6, 7)
 
+# Search-cache schema. Bumped when the cached record gains fields, so old entries are
+# refetched rather than silently read back without them.
+_SEARCH_SCHEMA = "v2"
 
-def bbox_around(lat: float, lon: float, half_km: float) -> tuple[float, float, float, float]:
+Bbox = tuple[float, float, float, float]  # WGS84 (west, south, east, north)
+
+
+def bbox_around(lat: float, lon: float, half_km: float) -> Bbox:
     """A square WGS84 bounding box ``(west, south, east, north)`` around a point."""
     dlat = half_km / 111.2
     dlon = half_km / (111.2 * max(np.cos(np.radians(lat)), 1e-6))
     return (lon - dlon, lat - dlat, lon + dlon, lat + dlat)
+
+
+def bbox_overlap_fraction(box: Bbox, target: Bbox) -> float:
+    """Fraction of ``target``'s area that ``box`` covers, in degree space. 0 if disjoint."""
+    w = max(0.0, min(box[2], target[2]) - max(box[0], target[0]))
+    h = max(0.0, min(box[3], target[3]) - max(box[1], target[1]))
+    area = max(0.0, (target[2] - target[0]) * (target[3] - target[1]))
+    return (w * h) / area if area > 0 else 0.0
 
 
 def default_cache_dir() -> Path:
@@ -79,10 +100,16 @@ class SceneMeta:
     relative_orbit: int | None
     orbit_state: str | None
     cloud_cover: float | None
+    bbox: tuple[float, float, float, float] | None = None  # WGS84 footprint
 
     @property
     def when(self) -> datetime:
         return datetime.fromisoformat(self.datetime_utc.replace("Z", "+00:00")).astimezone(UTC)
+
+    @property
+    def pass_key(self) -> tuple[int | None, str | None, str]:
+        """Frames from one satellite pass share track, direction, and calendar day."""
+        return (self.relative_orbit, self.orbit_state, self.when.date().isoformat())
 
 
 @dataclass
@@ -109,10 +136,53 @@ class RoiResult:
         return self.pixel_size_m * self.pixel_size_m
 
 
+def one_per_pass(scenes: list[SceneMeta], roi_bbox: Bbox | None) -> list[SceneMeta]:
+    """Keep one frame per satellite pass: the one that best covers the region.
+
+    Without footprints (old cache entries) the first frame of each pass is kept.
+    """
+    best: dict[tuple[int | None, str | None, str], tuple[float, SceneMeta]] = {}
+    for s in scenes:
+        cover = (
+            bbox_overlap_fraction(s.bbox, roi_bbox)
+            if (s.bbox is not None and roi_bbox is not None)
+            else 0.0
+        )
+        current = best.get(s.pass_key)
+        if current is None or cover > current[0]:
+            best[s.pass_key] = (cover, s)
+    return sorted((s for _, s in best.values()), key=lambda s: s.when)
+
+
+def previous_pass(scenes: list[SceneMeta], before: SceneMeta) -> SceneMeta | None:
+    """The previous acquisition cycle on the same track, never a frame of the same pass.
+
+    Among frames on that earlier date, the one whose footprint best matches ``before``
+    is chosen, so the control covers the same ground.
+    """
+    same_track = [
+        s
+        for s in scenes
+        if s.relative_orbit == before.relative_orbit
+        and s.orbit_state == before.orbit_state
+        and s.when.date() < before.when.date()
+    ]
+    if not same_track:
+        return None
+    latest_day = max(s.when.date() for s in same_track)
+    candidates = [s for s in same_track if s.when.date() == latest_day]
+    if before.bbox is None:
+        return candidates[0]
+    return max(
+        candidates,
+        key=lambda s: bbox_overlap_fraction(s.bbox, before.bbox) if s.bbox else 0.0,  # type: ignore[arg-type]
+    )
+
+
 def same_track_pairs(
     scenes: list[SceneMeta], event_utc: datetime, max_gap_days: float = 30.0
 ) -> list[tuple[SceneMeta, SceneMeta]]:
-    """The last scene before the event and the first after it, per relative orbit.
+    """The last pass before the event and the first after it, per relative orbit.
 
     Only scenes on the same relative orbit and pass direction are ever paired. Pairs
     are returned shortest gap first. A track with no scene on one side of the event
@@ -173,17 +243,24 @@ class CachedSceneClient:
     def search(
         self,
         collection: str,
-        bbox: tuple[float, float, float, float],
+        bbox: Bbox,
         start: datetime,
         end: datetime,
+        dedupe: bool = True,
     ) -> tuple[list[SceneMeta], str | None]:
-        """Scenes touching ``bbox`` in ``[start, end]``. Cached; offline-safe."""
+        """Scenes touching ``bbox`` in ``[start, end]``. Cached; offline-safe.
+
+        With ``dedupe`` (the default) one frame is kept per satellite pass, the one that
+        best covers ``bbox``, so that callers can never pair two frames of one pass.
+        """
         s = start.astimezone(UTC).isoformat(timespec="seconds")
         e = end.astimezone(UTC).isoformat(timespec="seconds")
-        path = self.cache_dir / f"search_{_search_key(collection, bbox, s, e)}.json"
+        key = _search_key(collection, bbox, s, e)
+        path = self.cache_dir / f"search_{_SEARCH_SCHEMA}_{key}.json"
         if path.exists():
             data = json.loads(path.read_text(encoding="utf-8"))
-            return [SceneMeta(**d) for d in data], None
+            cached = [SceneMeta(**d) for d in data]
+            return (one_per_pass(cached, bbox) if dedupe else cached), None
         if is_offline():
             return [], f"offline mode: search for {collection} not in cache"
         try:
@@ -201,20 +278,19 @@ class CachedSceneClient:
                         relative_orbit=p.get("sat:relative_orbit"),
                         orbit_state=p.get("sat:orbit_state"),
                         cloud_cover=p.get("eo:cloud_cover"),
+                        bbox=tuple(float(v) for v in item.bbox) if item.bbox else None,  # type: ignore[arg-type]
                     )
                 )
             metas.sort(key=lambda m: m.when)
             tmp = path.with_suffix(".part")
             tmp.write_text(json.dumps([asdict(m) for m in metas]), encoding="utf-8")
             tmp.replace(path)
-            return metas, None
+            return (one_per_pass(metas, bbox) if dedupe else metas), None
         except Exception as exc:
             return [], f"{type(exc).__name__}: {exc}"
 
     # -- rasters -----------------------------------------------------------------
-    def read_roi(
-        self, scene: SceneMeta, asset: str, bbox: tuple[float, float, float, float]
-    ) -> RoiResult:
+    def read_roi(self, scene: SceneMeta, asset: str, bbox: Bbox) -> RoiResult:
         """Read one asset over ``bbox`` from one scene. Cached; offline-safe."""
         path = self.cache_dir / f"roi_{roi_cache_key(scene.item_id, asset, bbox)}.npz"
         if path.exists():
@@ -236,10 +312,10 @@ class CachedSceneClient:
         try:
             with np.load(path) as z:
                 arr = z["array"]
-                tr = tuple(float(v) for v in z["transform"])
+                t = [float(v) for v in z["transform"]]
                 epsg = int(z["epsg"])
                 px = float(z["pixel_size_m"])
-            assert len(tr) == 6
+            tr = (t[0], t[1], t[2], t[3], t[4], t[5])
             return RoiResult(scene, asset, arr, tr, epsg, px, cache_hit=True)
         except Exception as exc:
             return RoiResult(
