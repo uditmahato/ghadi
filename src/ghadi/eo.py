@@ -163,17 +163,8 @@ def detect_change_sar(
     a = np.asarray(after_linear, dtype=float)
     _check_shapes(b, a)
 
-    finite = np.isfinite(b) & np.isfinite(a) & (b > 0) & (a > 0)
-    valid = finite if valid_mask is None else (finite & np.asarray(valid_mask, dtype=bool))
-
-    ratio = sar_log_ratio_db(b, a)
-    ratio = np.where(valid, ratio, 0.0)  # neutralise unusable pixels before filtering
-    if cfg.speckle_filter_px > 1:
-        ratio = ndimage.median_filter(ratio, size=cfg.speckle_filter_px)
-
-    decrease = ratio <= -cfg.sar_change_db
-    increase = ratio >= cfg.sar_change_db
-    return _finish("sar", decrease | increase, decrease, increase, valid, pixel_area_m2, cfg)
+    change, decrease, increase, valid = sar_change_masks(b, a, valid_mask, cfg)
+    return _finish("sar", change, decrease, increase, valid, pixel_area_m2, cfg)
 
 
 def detect_change_optical(
@@ -275,3 +266,87 @@ def compare_to_control(
     return ControlComparison(
         verdict, event_largest_km2, control_largest_km2, ratio, cfg.control_min_ratio, reason
     )
+
+
+def sar_change_masks(
+    before_linear: np.ndarray,
+    after_linear: np.ndarray,
+    valid_mask: np.ndarray | None = None,
+    config: EoConfig | None = None,
+) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
+    """Per-pixel radar change masks: ``(change, decrease, increase, valid)``.
+
+    The primitive behind :func:`detect_change_sar`, exposed so that masks from several
+    tracks over one common grid can be combined (see :func:`cross_track_excess`).
+    """
+    cfg = config or DEFAULT.eo
+    b = np.asarray(before_linear, dtype=float)
+    a = np.asarray(after_linear, dtype=float)
+    _check_shapes(b, a)
+
+    finite = np.isfinite(b) & np.isfinite(a) & (b > 0) & (a > 0)
+    valid = finite if valid_mask is None else (finite & np.asarray(valid_mask, dtype=bool))
+
+    ratio = sar_log_ratio_db(b, a)
+    ratio = np.where(valid, ratio, 0.0)  # neutralise unusable pixels before filtering
+    if cfg.speckle_filter_px > 1:
+        ratio = ndimage.median_filter(ratio, size=cfg.speckle_filter_px)
+
+    decrease = (ratio <= -cfg.sar_change_db) & valid
+    increase = (ratio >= cfg.sar_change_db) & valid
+    return decrease | increase, decrease, increase, valid
+
+
+@dataclass(frozen=True)
+class CrossTrackResult:
+    """Where several independent tracks agree that the ground changed."""
+
+    n_tracks: int
+    min_tracks: int
+    area_km2_by_agreement: dict[int, float]  # {k: km2 of pixels with >= k tracks agreeing}
+    largest_patch_km2: float  # largest connected patch with >= min_tracks agreeing
+    largest_patch_centroid_rc: tuple[float, float] | None
+    per_track_excess_km2: list[float]
+    reason: str
+
+
+def cross_track_excess(
+    event_changes: list[np.ndarray],
+    control_changes: list[np.ndarray],
+    valid_masks: list[np.ndarray],
+    pixel_area_m2: float,
+    min_tracks: int = 2,
+) -> CrossTrackResult:
+    """Pixels that changed in the event window, not in the control window, on >= k tracks.
+
+    Each track contributes an *excess* mask: changed in its event pair and not changed in
+    its own pre-event control pair. Summing excess masks over tracks gives, per pixel, the
+    number of independent viewing geometries that saw new change there. A single track can
+    be fooled by its own geometry, speckle, or a river shifting; two or three agreeing at
+    the same pixel cannot easily be. All arrays must share one pixel grid.
+    """
+    n = len(event_changes)
+    if not (n == len(control_changes) == len(valid_masks)) or n == 0:
+        raise ValueError("need one event mask, one control mask and one valid mask per track")
+    shape = event_changes[0].shape
+    for arr in (*event_changes, *control_changes, *valid_masks):
+        if arr.shape != shape:
+            raise ValueError("all masks must share one pixel grid; align them first")
+
+    agreement = np.zeros(shape, dtype=int)
+    per_track: list[float] = []
+    for e, c, v in zip(event_changes, control_changes, valid_masks, strict=True):
+        excess = e & ~c & v
+        agreement += excess.astype(int)
+        per_track.append(float(excess.sum()) * pixel_area_m2 / 1e6)
+
+    by_k = {
+        k: float((agreement >= k).sum()) * pixel_area_m2 / 1e6 for k in range(min_tracks, n + 1)
+    }
+    n_blobs, sizes, centroid = _blobs(agreement >= min_tracks)
+    largest = float(sizes.max()) * pixel_area_m2 / 1e6 if n_blobs else 0.0
+    reason = (
+        f"{n} tracks; largest patch with >= {min_tracks} agreeing {largest:.3f} km2; "
+        + ", ".join(f">={k}: {v:.3f} km2" for k, v in by_k.items())
+    )
+    return CrossTrackResult(n, min_tracks, by_k, largest, centroid, per_track, reason)

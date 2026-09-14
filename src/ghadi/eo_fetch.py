@@ -386,3 +386,72 @@ def rowcol_to_lonlat(roi: RoiResult, row: float, col: float) -> tuple[float, flo
     y = f + d * (col + 0.5) + e * (row + 0.5)
     xs, ys = warp_transform(f"EPSG:{roi.epsg}", "EPSG:4326", [x], [y])
     return float(xs[0]), float(ys[0])
+
+
+def transform_rowcol_to_lonlat(
+    transform: tuple[float, float, float, float, float, float], epsg: int, row: float, col: float
+) -> tuple[float, float]:
+    """Map a pixel position on any grid with a known affine transform to ``(lon, lat)``."""
+    from rasterio.warp import transform as warp_transform
+
+    a, b, c, d, e, f = transform
+    x = c + a * (col + 0.5) + b * (row + 0.5)
+    y = f + d * (col + 0.5) + e * (row + 0.5)
+    xs, ys = warp_transform(f"EPSG:{epsg}", "EPSG:4326", [x], [y])
+    return float(xs[0]), float(ys[0])
+
+
+def align_arrays(
+    rois: list[RoiResult],
+) -> tuple[list[np.ndarray], tuple[float, float, float, float, float, float]]:
+    """Crop regions read from different scenes to their common pixel grid.
+
+    Scenes of one product family sit on one grid per UTM zone, so their windows differ by
+    whole pixels at most. Anything else (a different zone, a different pixel size, or a
+    sub-pixel offset) means the regions cannot be compared pixel by pixel, and this
+    raises rather than silently resampling. Returns the cropped arrays and the common
+    transform, so a pixel in the result can still be geolocated.
+    """
+    if not rois:
+        raise ValueError("no regions to align")
+    for r in rois:
+        if not r.ok or r.transform is None or r.array is None or r.pixel_size_m is None:
+            raise ValueError(f"cannot align a failed read: {r.scene.item_id}")
+    px = rois[0].pixel_size_m
+    epsg = rois[0].epsg
+    for r in rois:
+        if r.pixel_size_m != px or r.epsg != epsg:
+            raise ValueError("regions differ in pixel size or projection; cannot align")
+    assert px is not None
+    x0s: list[float] = []
+    x1s: list[float] = []
+    tops: list[float] = []
+    bots: list[float] = []
+    for r in rois:
+        assert r.transform is not None and r.array is not None
+        a, _b, c, _d, e, f = r.transform
+        if abs(abs(a) - px) > 1e-6 or abs(abs(e) - px) > 1e-6:
+            raise ValueError("non-square or mismatched pixel geometry; cannot align")
+        rows, cols = r.array.shape
+        x0s.append(c)
+        x1s.append(c + cols * px)
+        tops.append(f)
+        bots.append(f - rows * px)
+    x0, x1 = max(x0s), min(x1s)
+    top, bot = min(tops), max(bots)
+    ncols = round((x1 - x0) / px)
+    nrows = round((top - bot) / px)
+    if ncols <= 0 or nrows <= 0:
+        raise ValueError("regions do not overlap")
+    out: list[np.ndarray] = []
+    for r in rois:
+        assert r.transform is not None and r.array is not None
+        _a, _b, c, _d, _e, f = r.transform
+        col_off = (x0 - c) / px
+        row_off = (f - top) / px
+        if abs(col_off - round(col_off)) > 1e-3 or abs(row_off - round(row_off)) > 1e-3:
+            raise ValueError("regions are offset by a fraction of a pixel; cannot align")
+        co, ro = round(col_off), round(row_off)
+        out.append(r.array[ro : ro + nrows, co : co + ncols])
+    common = (px, 0.0, x0, 0.0, -px, top)
+    return out, common

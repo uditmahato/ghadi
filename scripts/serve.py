@@ -926,7 +926,26 @@ def _satellite_section() -> str:
         "Radar only; optical scenes around the event were cloud covered. The imagery bounds "
         "the event to the 12 days between passes; the minute comes from the seismic onset.</p>"
     )
-    return head + table + note + "</div>"
+    pix = ""
+    exp013 = REPO / "experiments" / "exp013_cross_track_excess" / "results.json"
+    if exp013.exists():
+        try:
+            d13 = json.loads(exp013.read_text(encoding="utf-8"))
+            r13 = next(e for e in d13["events"] if str(e["event_id"]).startswith("NPL-2026-08-26"))
+            if r13.get("status") == "analysed":
+                ew, nw = r13["event_window"], r13["null_window"]
+                pix = (
+                    "<p class='lede'>A stricter pixel level test (experiment 013) asks whether "
+                    "the change sits in the same pixels on at least two tracks, after each "
+                    f"track's own normal change is removed: a {ew['largest_patch_km2']} km2 patch "
+                    f"in the event window against {nw['largest_patch_km2']} km2 for the same test "
+                    f"on the weeks before the event, {r13.get('event_over_null_ratio', 'n/a')} "
+                    f"times larger, {ew.get('distance_from_source_km', 'n/a')} km from the "
+                    "catalogued point.</p>"
+                )
+        except Exception:
+            pix = ""
+    return head + table + note + pix + "</div>"
 
 
 def _page(q: dict[str, str]) -> str:

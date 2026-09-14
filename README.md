@@ -52,6 +52,8 @@ Satellites cannot give warning time. A free radar satellite passes over a spot o
 
 We compared the last radar pass before 26 August 2026 with the first pass after it, on each of the three satellite tracks that cover the source zone, and judged each one against a pair from before the event on the same track. On two of the three tracks the changed patch is 3.3 and 4.0 times larger than the normal change on that ground, above a floor of 2.0 that was fixed before we looked. The third track sits just under, at 1.85. All three tracks put their largest patch in the same small area, about 3 km across, 4 to 6 km north of the catalogued source point and inside its stated uncertainty.
 
+A stricter test asks whether the change sits in the same pixels on every track, after each track's own normal change is removed. For 2026 it finds a patch of 0.41 square kilometres where at least two of the three tracks agree, which is 5.5 times the size of the same test run on the weeks before the event. No older event passes this test, and Thame comes closest at 2.4 times.
+
 This is the first confirmation of the 2026 source that does not come from the seismic station. The same method did not cleanly confirm any of the older events in the catalogue. Spring snowmelt and peak monsoon produce so much natural change that those events are lost in it, so the positive class is still one event. The full record is in `experiments/exp012_satellite_confirmation`, and the dashboard shows it in its own panel below the evidence.
 
 ## What is honest about this
