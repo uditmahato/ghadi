@@ -83,22 +83,22 @@ PRESETS = [
     ),
     (
         "Distant earthquake",
-        "lf_hf=4.9188&centroid=1.8852&gauge=none&teleseism=on",
+        "lf_hf=4.9188&centroid=1.8852&gauge=none&station=on&teleseism=on",
         "A teleseism the catalogue explains and sets aside",
     ),
     (
         "Gauge unavailable",
-        "lf_hf=1.66&centroid=3.04&gauge=dead",
+        "lf_hf=1.66&centroid=3.04&gauge=dead&station=on",
         "Downstream sensor stops reporting mid-event",
     ),
     (
         "Background conditions",
-        "lf_hf=1.66&centroid=3.04&gauge=quiet",
+        "lf_hf=1.66&centroid=3.04&gauge=quiet&station=on",
         "Quiet seismic and river; no event",
     ),
     (
         "Increased processing latency",
-        "lf_hf=4.9188&centroid=1.8852&gauge=surge&latency=600",
+        "lf_hf=4.9188&centroid=1.8852&gauge=surge&station=on&latency=600",
         "A slow pipeline erodes the lead time",
     ),
 ]
@@ -493,7 +493,14 @@ def _outcome_panel(o) -> str:  # type: ignore[no-untyped-def]
 
 def _confidence(o) -> str:  # type: ignore[no-untyped-def]
     p = o.decision.probability
-    groups = o.decision.independent_groups
+    live = o.decision.independent_groups
+    supporting = o.decision.supporting_groups
+    strict = DEFAULT.fusion.warning_requires_supporting_groups
+    gate = (
+        "only groups that detected something count toward the warning gate"
+        if strict
+        else "any live group counts toward the warning gate, including a quiet one (issue #26)"
+    )
     width = min(100, p * 100)
     thr_x = WARNING_P * 100
     return (
@@ -505,12 +512,16 @@ def _confidence(o) -> str:  # type: ignore[no-untyped-def]
         "<span>1.00</span></div>"
         f"<div class='kvrow'><span>Configured warning threshold</span>"
         f"<span class='tnum'>{WARNING_P:.2f}</span></div>"
-        f"<div class='kvrow'><span>Supporting evidence groups</span>"
-        f"<span class='tnum'>{groups} of {MIN_GROUPS} required</span></div>"
+        f"<div class='kvrow'><span>Live evidence groups</span>"
+        f"<span class='tnum'>{live}</span></div>"
+        f"<div class='kvrow'><span>Groups that detected something</span>"
+        f"<span class='tnum'>{supporting}</span></div>"
+        f"<div class='kvrow'><span>Groups required for a warning</span>"
+        f"<span class='tnum'>{MIN_GROUPS}</span></div>"
         "<p class='lede' style='margin-top:12px'>Combined across independent evidence sources "
         "(noisy-OR). Calibration: not calibrated. The operating points are assumed, based on a "
-        "single confirmed event (n=1), so this is a decision score, not a validated probability."
-        "</p></div>"
+        "single confirmed event (n=1), so this is a decision score, not a validated probability. "
+        f"Gate rule in force: {html.escape(gate)}.</p></div>"
     )
 
 
@@ -518,7 +529,7 @@ def _channels(o) -> str:  # type: ignore[no-untyped-def]
     rows = ""
     for ch in o.channels:
         name = CHANNEL_LABEL.get(ch.name, ch.name)
-        supports = ch.probability >= 0.5 and ch.alive
+        supports = ch.probability >= DEFAULT.fusion.support_p and ch.alive
         if not ch.alive:
             dot, tag, tcls = "#A52828", "Unavailable", "off"
         elif supports:

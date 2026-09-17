@@ -1,0 +1,965 @@
+{
+  "experiment": "exp017_fusion_warning_gate",
+  "operating_points": {
+    "seismic_detected_p": 0.6,
+    "seismic_quiet_p": 0.05,
+    "hydro_detected_p": 0.8,
+    "hydro_quiet_p": 0.05,
+    "support_p": 0.5,
+    "warning_p": 0.8,
+    "advisory_p": 0.5,
+    "min_groups_for_warning": 2
+  },
+  "n_states": 64,
+  "n_differing": 7,
+  "differing_states": [
+    {
+      "seismic": "quiet",
+      "gauge_1": "absent",
+      "gauge_2": "detected",
+      "fused_p": 0.81,
+      "live_groups": 2,
+      "supporting_groups": 1,
+      "tier_historical": "WARNING",
+      "tier_strict": "ADVISORY",
+      "differs": true
+    },
+    {
+      "seismic": "quiet",
+      "gauge_1": "dead",
+      "gauge_2": "detected",
+      "fused_p": 0.81,
+      "live_groups": 2,
+      "supporting_groups": 1,
+      "tier_historical": "WARNING",
+      "tier_strict": "ADVISORY",
+      "differs": true
+    },
+    {
+      "seismic": "quiet",
+      "gauge_1": "quiet",
+      "gauge_2": "detected",
+      "fused_p": 0.81,
+      "live_groups": 2,
+      "supporting_groups": 1,
+      "tier_historical": "WARNING",
+      "tier_strict": "ADVISORY",
+      "differs": true
+    },
+    {
+      "seismic": "quiet",
+      "gauge_1": "detected",
+      "gauge_2": "absent",
+      "fused_p": 0.81,
+      "live_groups": 2,
+      "supporting_groups": 1,
+      "tier_historical": "WARNING",
+      "tier_strict": "ADVISORY",
+      "differs": true
+    },
+    {
+      "seismic": "quiet",
+      "gauge_1": "detected",
+      "gauge_2": "dead",
+      "fused_p": 0.81,
+      "live_groups": 2,
+      "supporting_groups": 1,
+      "tier_historical": "WARNING",
+      "tier_strict": "ADVISORY",
+      "differs": true
+    },
+    {
+      "seismic": "quiet",
+      "gauge_1": "detected",
+      "gauge_2": "quiet",
+      "fused_p": 0.81,
+      "live_groups": 2,
+      "supporting_groups": 1,
+      "tier_historical": "WARNING",
+      "tier_strict": "ADVISORY",
+      "differs": true
+    },
+    {
+      "seismic": "quiet",
+      "gauge_1": "detected",
+      "gauge_2": "detected",
+      "fused_p": 0.81,
+      "live_groups": 2,
+      "supporting_groups": 1,
+      "tier_historical": "WARNING",
+      "tier_strict": "ADVISORY",
+      "differs": true
+    }
+  ],
+  "monotonicity_violations": {
+    "historical": [
+      {
+        "seismic": "absent",
+        "gauge_1": "absent",
+        "gauge_2": "detected",
+        "tier_before": "ADVISORY",
+        "tier_after_adding_quiet_channel": "WARNING"
+      },
+      {
+        "seismic": "absent",
+        "gauge_1": "dead",
+        "gauge_2": "detected",
+        "tier_before": "ADVISORY",
+        "tier_after_adding_quiet_channel": "WARNING"
+      },
+      {
+        "seismic": "absent",
+        "gauge_1": "quiet",
+        "gauge_2": "detected",
+        "tier_before": "ADVISORY",
+        "tier_after_adding_quiet_channel": "WARNING"
+      },
+      {
+        "seismic": "absent",
+        "gauge_1": "detected",
+        "gauge_2": "absent",
+        "tier_before": "ADVISORY",
+        "tier_after_adding_quiet_channel": "WARNING"
+      },
+      {
+        "seismic": "absent",
+        "gauge_1": "detected",
+        "gauge_2": "dead",
+        "tier_before": "ADVISORY",
+        "tier_after_adding_quiet_channel": "WARNING"
+      },
+      {
+        "seismic": "absent",
+        "gauge_1": "detected",
+        "gauge_2": "quiet",
+        "tier_before": "ADVISORY",
+        "tier_after_adding_quiet_channel": "WARNING"
+      },
+      {
+        "seismic": "absent",
+        "gauge_1": "detected",
+        "gauge_2": "detected",
+        "tier_before": "ADVISORY",
+        "tier_after_adding_quiet_channel": "WARNING"
+      },
+      {
+        "seismic": "dead",
+        "gauge_1": "absent",
+        "gauge_2": "detected",
+        "tier_before": "ADVISORY",
+        "tier_after_adding_quiet_channel": "WARNING"
+      },
+      {
+        "seismic": "dead",
+        "gauge_1": "dead",
+        "gauge_2": "detected",
+        "tier_before": "ADVISORY",
+        "tier_after_adding_quiet_channel": "WARNING"
+      },
+      {
+        "seismic": "dead",
+        "gauge_1": "quiet",
+        "gauge_2": "detected",
+        "tier_before": "ADVISORY",
+        "tier_after_adding_quiet_channel": "WARNING"
+      },
+      {
+        "seismic": "dead",
+        "gauge_1": "detected",
+        "gauge_2": "absent",
+        "tier_before": "ADVISORY",
+        "tier_after_adding_quiet_channel": "WARNING"
+      },
+      {
+        "seismic": "dead",
+        "gauge_1": "detected",
+        "gauge_2": "dead",
+        "tier_before": "ADVISORY",
+        "tier_after_adding_quiet_channel": "WARNING"
+      },
+      {
+        "seismic": "dead",
+        "gauge_1": "detected",
+        "gauge_2": "quiet",
+        "tier_before": "ADVISORY",
+        "tier_after_adding_quiet_channel": "WARNING"
+      },
+      {
+        "seismic": "dead",
+        "gauge_1": "detected",
+        "gauge_2": "detected",
+        "tier_before": "ADVISORY",
+        "tier_after_adding_quiet_channel": "WARNING"
+      }
+    ],
+    "strict": []
+  },
+  "scenarios": [
+    {
+      "scenario": "2026 Bhote Koshi cascade",
+      "tier_historical": "WARNING",
+      "supporting_groups_historical": 2,
+      "live_groups": 2,
+      "fused_p": 0.92,
+      "tier_strict": "WARNING",
+      "supporting_groups_strict": 2,
+      "differs": false
+    },
+    {
+      "scenario": "Regional earthquake with surge",
+      "tier_historical": "WARNING",
+      "supporting_groups_historical": 1,
+      "live_groups": 2,
+      "fused_p": 0.81,
+      "tier_strict": "ADVISORY",
+      "supporting_groups_strict": 1,
+      "differs": true
+    },
+    {
+      "scenario": "Distant earthquake",
+      "tier_historical": "NONE",
+      "supporting_groups_historical": 0,
+      "live_groups": 1,
+      "fused_p": 0.05,
+      "tier_strict": "NONE",
+      "supporting_groups_strict": 0,
+      "differs": false
+    },
+    {
+      "scenario": "Gauge unavailable",
+      "tier_historical": "NONE",
+      "supporting_groups_historical": 0,
+      "live_groups": 1,
+      "fused_p": 0.05,
+      "tier_strict": "NONE",
+      "supporting_groups_strict": 0,
+      "differs": false
+    },
+    {
+      "scenario": "Background conditions",
+      "tier_historical": "NONE",
+      "supporting_groups_historical": 0,
+      "live_groups": 2,
+      "fused_p": 0.098,
+      "tier_strict": "NONE",
+      "supporting_groups_strict": 0,
+      "differs": false
+    },
+    {
+      "scenario": "Increased processing latency",
+      "tier_historical": "WARNING",
+      "supporting_groups_historical": 2,
+      "live_groups": 2,
+      "fused_p": 0.92,
+      "tier_strict": "WARNING",
+      "supporting_groups_strict": 2,
+      "differs": false
+    }
+  ],
+  "all_states": [
+    {
+      "seismic": "absent",
+      "gauge_1": "absent",
+      "gauge_2": "absent",
+      "fused_p": 0.0,
+      "live_groups": 0,
+      "supporting_groups": 0,
+      "tier_historical": "NONE",
+      "tier_strict": "NONE",
+      "differs": false
+    },
+    {
+      "seismic": "absent",
+      "gauge_1": "absent",
+      "gauge_2": "dead",
+      "fused_p": 0.0,
+      "live_groups": 0,
+      "supporting_groups": 0,
+      "tier_historical": "NONE",
+      "tier_strict": "NONE",
+      "differs": false
+    },
+    {
+      "seismic": "absent",
+      "gauge_1": "absent",
+      "gauge_2": "quiet",
+      "fused_p": 0.05,
+      "live_groups": 1,
+      "supporting_groups": 0,
+      "tier_historical": "NONE",
+      "tier_strict": "NONE",
+      "differs": false
+    },
+    {
+      "seismic": "absent",
+      "gauge_1": "absent",
+      "gauge_2": "detected",
+      "fused_p": 0.8,
+      "live_groups": 1,
+      "supporting_groups": 1,
+      "tier_historical": "ADVISORY",
+      "tier_strict": "ADVISORY",
+      "differs": false
+    },
+    {
+      "seismic": "absent",
+      "gauge_1": "dead",
+      "gauge_2": "absent",
+      "fused_p": 0.0,
+      "live_groups": 0,
+      "supporting_groups": 0,
+      "tier_historical": "NONE",
+      "tier_strict": "NONE",
+      "differs": false
+    },
+    {
+      "seismic": "absent",
+      "gauge_1": "dead",
+      "gauge_2": "dead",
+      "fused_p": 0.0,
+      "live_groups": 0,
+      "supporting_groups": 0,
+      "tier_historical": "NONE",
+      "tier_strict": "NONE",
+      "differs": false
+    },
+    {
+      "seismic": "absent",
+      "gauge_1": "dead",
+      "gauge_2": "quiet",
+      "fused_p": 0.05,
+      "live_groups": 1,
+      "supporting_groups": 0,
+      "tier_historical": "NONE",
+      "tier_strict": "NONE",
+      "differs": false
+    },
+    {
+      "seismic": "absent",
+      "gauge_1": "dead",
+      "gauge_2": "detected",
+      "fused_p": 0.8,
+      "live_groups": 1,
+      "supporting_groups": 1,
+      "tier_historical": "ADVISORY",
+      "tier_strict": "ADVISORY",
+      "differs": false
+    },
+    {
+      "seismic": "absent",
+      "gauge_1": "quiet",
+      "gauge_2": "absent",
+      "fused_p": 0.05,
+      "live_groups": 1,
+      "supporting_groups": 0,
+      "tier_historical": "NONE",
+      "tier_strict": "NONE",
+      "differs": false
+    },
+    {
+      "seismic": "absent",
+      "gauge_1": "quiet",
+      "gauge_2": "dead",
+      "fused_p": 0.05,
+      "live_groups": 1,
+      "supporting_groups": 0,
+      "tier_historical": "NONE",
+      "tier_strict": "NONE",
+      "differs": false
+    },
+    {
+      "seismic": "absent",
+      "gauge_1": "quiet",
+      "gauge_2": "quiet",
+      "fused_p": 0.05,
+      "live_groups": 1,
+      "supporting_groups": 0,
+      "tier_historical": "NONE",
+      "tier_strict": "NONE",
+      "differs": false
+    },
+    {
+      "seismic": "absent",
+      "gauge_1": "quiet",
+      "gauge_2": "detected",
+      "fused_p": 0.8,
+      "live_groups": 1,
+      "supporting_groups": 1,
+      "tier_historical": "ADVISORY",
+      "tier_strict": "ADVISORY",
+      "differs": false
+    },
+    {
+      "seismic": "absent",
+      "gauge_1": "detected",
+      "gauge_2": "absent",
+      "fused_p": 0.8,
+      "live_groups": 1,
+      "supporting_groups": 1,
+      "tier_historical": "ADVISORY",
+      "tier_strict": "ADVISORY",
+      "differs": false
+    },
+    {
+      "seismic": "absent",
+      "gauge_1": "detected",
+      "gauge_2": "dead",
+      "fused_p": 0.8,
+      "live_groups": 1,
+      "supporting_groups": 1,
+      "tier_historical": "ADVISORY",
+      "tier_strict": "ADVISORY",
+      "differs": false
+    },
+    {
+      "seismic": "absent",
+      "gauge_1": "detected",
+      "gauge_2": "quiet",
+      "fused_p": 0.8,
+      "live_groups": 1,
+      "supporting_groups": 1,
+      "tier_historical": "ADVISORY",
+      "tier_strict": "ADVISORY",
+      "differs": false
+    },
+    {
+      "seismic": "absent",
+      "gauge_1": "detected",
+      "gauge_2": "detected",
+      "fused_p": 0.8,
+      "live_groups": 1,
+      "supporting_groups": 1,
+      "tier_historical": "ADVISORY",
+      "tier_strict": "ADVISORY",
+      "differs": false
+    },
+    {
+      "seismic": "dead",
+      "gauge_1": "absent",
+      "gauge_2": "absent",
+      "fused_p": 0.0,
+      "live_groups": 0,
+      "supporting_groups": 0,
+      "tier_historical": "NONE",
+      "tier_strict": "NONE",
+      "differs": false
+    },
+    {
+      "seismic": "dead",
+      "gauge_1": "absent",
+      "gauge_2": "dead",
+      "fused_p": 0.0,
+      "live_groups": 0,
+      "supporting_groups": 0,
+      "tier_historical": "NONE",
+      "tier_strict": "NONE",
+      "differs": false
+    },
+    {
+      "seismic": "dead",
+      "gauge_1": "absent",
+      "gauge_2": "quiet",
+      "fused_p": 0.05,
+      "live_groups": 1,
+      "supporting_groups": 0,
+      "tier_historical": "NONE",
+      "tier_strict": "NONE",
+      "differs": false
+    },
+    {
+      "seismic": "dead",
+      "gauge_1": "absent",
+      "gauge_2": "detected",
+      "fused_p": 0.8,
+      "live_groups": 1,
+      "supporting_groups": 1,
+      "tier_historical": "ADVISORY",
+      "tier_strict": "ADVISORY",
+      "differs": false
+    },
+    {
+      "seismic": "dead",
+      "gauge_1": "dead",
+      "gauge_2": "absent",
+      "fused_p": 0.0,
+      "live_groups": 0,
+      "supporting_groups": 0,
+      "tier_historical": "NONE",
+      "tier_strict": "NONE",
+      "differs": false
+    },
+    {
+      "seismic": "dead",
+      "gauge_1": "dead",
+      "gauge_2": "dead",
+      "fused_p": 0.0,
+      "live_groups": 0,
+      "supporting_groups": 0,
+      "tier_historical": "NONE",
+      "tier_strict": "NONE",
+      "differs": false
+    },
+    {
+      "seismic": "dead",
+      "gauge_1": "dead",
+      "gauge_2": "quiet",
+      "fused_p": 0.05,
+      "live_groups": 1,
+      "supporting_groups": 0,
+      "tier_historical": "NONE",
+      "tier_strict": "NONE",
+      "differs": false
+    },
+    {
+      "seismic": "dead",
+      "gauge_1": "dead",
+      "gauge_2": "detected",
+      "fused_p": 0.8,
+      "live_groups": 1,
+      "supporting_groups": 1,
+      "tier_historical": "ADVISORY",
+      "tier_strict": "ADVISORY",
+      "differs": false
+    },
+    {
+      "seismic": "dead",
+      "gauge_1": "quiet",
+      "gauge_2": "absent",
+      "fused_p": 0.05,
+      "live_groups": 1,
+      "supporting_groups": 0,
+      "tier_historical": "NONE",
+      "tier_strict": "NONE",
+      "differs": false
+    },
+    {
+      "seismic": "dead",
+      "gauge_1": "quiet",
+      "gauge_2": "dead",
+      "fused_p": 0.05,
+      "live_groups": 1,
+      "supporting_groups": 0,
+      "tier_historical": "NONE",
+      "tier_strict": "NONE",
+      "differs": false
+    },
+    {
+      "seismic": "dead",
+      "gauge_1": "quiet",
+      "gauge_2": "quiet",
+      "fused_p": 0.05,
+      "live_groups": 1,
+      "supporting_groups": 0,
+      "tier_historical": "NONE",
+      "tier_strict": "NONE",
+      "differs": false
+    },
+    {
+      "seismic": "dead",
+      "gauge_1": "quiet",
+      "gauge_2": "detected",
+      "fused_p": 0.8,
+      "live_groups": 1,
+      "supporting_groups": 1,
+      "tier_historical": "ADVISORY",
+      "tier_strict": "ADVISORY",
+      "differs": false
+    },
+    {
+      "seismic": "dead",
+      "gauge_1": "detected",
+      "gauge_2": "absent",
+      "fused_p": 0.8,
+      "live_groups": 1,
+      "supporting_groups": 1,
+      "tier_historical": "ADVISORY",
+      "tier_strict": "ADVISORY",
+      "differs": false
+    },
+    {
+      "seismic": "dead",
+      "gauge_1": "detected",
+      "gauge_2": "dead",
+      "fused_p": 0.8,
+      "live_groups": 1,
+      "supporting_groups": 1,
+      "tier_historical": "ADVISORY",
+      "tier_strict": "ADVISORY",
+      "differs": false
+    },
+    {
+      "seismic": "dead",
+      "gauge_1": "detected",
+      "gauge_2": "quiet",
+      "fused_p": 0.8,
+      "live_groups": 1,
+      "supporting_groups": 1,
+      "tier_historical": "ADVISORY",
+      "tier_strict": "ADVISORY",
+      "differs": false
+    },
+    {
+      "seismic": "dead",
+      "gauge_1": "detected",
+      "gauge_2": "detected",
+      "fused_p": 0.8,
+      "live_groups": 1,
+      "supporting_groups": 1,
+      "tier_historical": "ADVISORY",
+      "tier_strict": "ADVISORY",
+      "differs": false
+    },
+    {
+      "seismic": "quiet",
+      "gauge_1": "absent",
+      "gauge_2": "absent",
+      "fused_p": 0.05,
+      "live_groups": 1,
+      "supporting_groups": 0,
+      "tier_historical": "NONE",
+      "tier_strict": "NONE",
+      "differs": false
+    },
+    {
+      "seismic": "quiet",
+      "gauge_1": "absent",
+      "gauge_2": "dead",
+      "fused_p": 0.05,
+      "live_groups": 1,
+      "supporting_groups": 0,
+      "tier_historical": "NONE",
+      "tier_strict": "NONE",
+      "differs": false
+    },
+    {
+      "seismic": "quiet",
+      "gauge_1": "absent",
+      "gauge_2": "quiet",
+      "fused_p": 0.098,
+      "live_groups": 2,
+      "supporting_groups": 0,
+      "tier_historical": "NONE",
+      "tier_strict": "NONE",
+      "differs": false
+    },
+    {
+      "seismic": "quiet",
+      "gauge_1": "absent",
+      "gauge_2": "detected",
+      "fused_p": 0.81,
+      "live_groups": 2,
+      "supporting_groups": 1,
+      "tier_historical": "WARNING",
+      "tier_strict": "ADVISORY",
+      "differs": true
+    },
+    {
+      "seismic": "quiet",
+      "gauge_1": "dead",
+      "gauge_2": "absent",
+      "fused_p": 0.05,
+      "live_groups": 1,
+      "supporting_groups": 0,
+      "tier_historical": "NONE",
+      "tier_strict": "NONE",
+      "differs": false
+    },
+    {
+      "seismic": "quiet",
+      "gauge_1": "dead",
+      "gauge_2": "dead",
+      "fused_p": 0.05,
+      "live_groups": 1,
+      "supporting_groups": 0,
+      "tier_historical": "NONE",
+      "tier_strict": "NONE",
+      "differs": false
+    },
+    {
+      "seismic": "quiet",
+      "gauge_1": "dead",
+      "gauge_2": "quiet",
+      "fused_p": 0.098,
+      "live_groups": 2,
+      "supporting_groups": 0,
+      "tier_historical": "NONE",
+      "tier_strict": "NONE",
+      "differs": false
+    },
+    {
+      "seismic": "quiet",
+      "gauge_1": "dead",
+      "gauge_2": "detected",
+      "fused_p": 0.81,
+      "live_groups": 2,
+      "supporting_groups": 1,
+      "tier_historical": "WARNING",
+      "tier_strict": "ADVISORY",
+      "differs": true
+    },
+    {
+      "seismic": "quiet",
+      "gauge_1": "quiet",
+      "gauge_2": "absent",
+      "fused_p": 0.098,
+      "live_groups": 2,
+      "supporting_groups": 0,
+      "tier_historical": "NONE",
+      "tier_strict": "NONE",
+      "differs": false
+    },
+    {
+      "seismic": "quiet",
+      "gauge_1": "quiet",
+      "gauge_2": "dead",
+      "fused_p": 0.098,
+      "live_groups": 2,
+      "supporting_groups": 0,
+      "tier_historical": "NONE",
+      "tier_strict": "NONE",
+      "differs": false
+    },
+    {
+      "seismic": "quiet",
+      "gauge_1": "quiet",
+      "gauge_2": "quiet",
+      "fused_p": 0.098,
+      "live_groups": 2,
+      "supporting_groups": 0,
+      "tier_historical": "NONE",
+      "tier_strict": "NONE",
+      "differs": false
+    },
+    {
+      "seismic": "quiet",
+      "gauge_1": "quiet",
+      "gauge_2": "detected",
+      "fused_p": 0.81,
+      "live_groups": 2,
+      "supporting_groups": 1,
+      "tier_historical": "WARNING",
+      "tier_strict": "ADVISORY",
+      "differs": true
+    },
+    {
+      "seismic": "quiet",
+      "gauge_1": "detected",
+      "gauge_2": "absent",
+      "fused_p": 0.81,
+      "live_groups": 2,
+      "supporting_groups": 1,
+      "tier_historical": "WARNING",
+      "tier_strict": "ADVISORY",
+      "differs": true
+    },
+    {
+      "seismic": "quiet",
+      "gauge_1": "detected",
+      "gauge_2": "dead",
+      "fused_p": 0.81,
+      "live_groups": 2,
+      "supporting_groups": 1,
+      "tier_historical": "WARNING",
+      "tier_strict": "ADVISORY",
+      "differs": true
+    },
+    {
+      "seismic": "quiet",
+      "gauge_1": "detected",
+      "gauge_2": "quiet",
+      "fused_p": 0.81,
+      "live_groups": 2,
+      "supporting_groups": 1,
+      "tier_historical": "WARNING",
+      "tier_strict": "ADVISORY",
+      "differs": true
+    },
+    {
+      "seismic": "quiet",
+      "gauge_1": "detected",
+      "gauge_2": "detected",
+      "fused_p": 0.81,
+      "live_groups": 2,
+      "supporting_groups": 1,
+      "tier_historical": "WARNING",
+      "tier_strict": "ADVISORY",
+      "differs": true
+    },
+    {
+      "seismic": "detected",
+      "gauge_1": "absent",
+      "gauge_2": "absent",
+      "fused_p": 0.6,
+      "live_groups": 1,
+      "supporting_groups": 1,
+      "tier_historical": "ADVISORY",
+      "tier_strict": "ADVISORY",
+      "differs": false
+    },
+    {
+      "seismic": "detected",
+      "gauge_1": "absent",
+      "gauge_2": "dead",
+      "fused_p": 0.6,
+      "live_groups": 1,
+      "supporting_groups": 1,
+      "tier_historical": "ADVISORY",
+      "tier_strict": "ADVISORY",
+      "differs": false
+    },
+    {
+      "seismic": "detected",
+      "gauge_1": "absent",
+      "gauge_2": "quiet",
+      "fused_p": 0.62,
+      "live_groups": 2,
+      "supporting_groups": 1,
+      "tier_historical": "ADVISORY",
+      "tier_strict": "ADVISORY",
+      "differs": false
+    },
+    {
+      "seismic": "detected",
+      "gauge_1": "absent",
+      "gauge_2": "detected",
+      "fused_p": 0.92,
+      "live_groups": 2,
+      "supporting_groups": 2,
+      "tier_historical": "WARNING",
+      "tier_strict": "WARNING",
+      "differs": false
+    },
+    {
+      "seismic": "detected",
+      "gauge_1": "dead",
+      "gauge_2": "absent",
+      "fused_p": 0.6,
+      "live_groups": 1,
+      "supporting_groups": 1,
+      "tier_historical": "ADVISORY",
+      "tier_strict": "ADVISORY",
+      "differs": false
+    },
+    {
+      "seismic": "detected",
+      "gauge_1": "dead",
+      "gauge_2": "dead",
+      "fused_p": 0.6,
+      "live_groups": 1,
+      "supporting_groups": 1,
+      "tier_historical": "ADVISORY",
+      "tier_strict": "ADVISORY",
+      "differs": false
+    },
+    {
+      "seismic": "detected",
+      "gauge_1": "dead",
+      "gauge_2": "quiet",
+      "fused_p": 0.62,
+      "live_groups": 2,
+      "supporting_groups": 1,
+      "tier_historical": "ADVISORY",
+      "tier_strict": "ADVISORY",
+      "differs": false
+    },
+    {
+      "seismic": "detected",
+      "gauge_1": "dead",
+      "gauge_2": "detected",
+      "fused_p": 0.92,
+      "live_groups": 2,
+      "supporting_groups": 2,
+      "tier_historical": "WARNING",
+      "tier_strict": "WARNING",
+      "differs": false
+    },
+    {
+      "seismic": "detected",
+      "gauge_1": "quiet",
+      "gauge_2": "absent",
+      "fused_p": 0.62,
+      "live_groups": 2,
+      "supporting_groups": 1,
+      "tier_historical": "ADVISORY",
+      "tier_strict": "ADVISORY",
+      "differs": false
+    },
+    {
+      "seismic": "detected",
+      "gauge_1": "quiet",
+      "gauge_2": "dead",
+      "fused_p": 0.62,
+      "live_groups": 2,
+      "supporting_groups": 1,
+      "tier_historical": "ADVISORY",
+      "tier_strict": "ADVISORY",
+      "differs": false
+    },
+    {
+      "seismic": "detected",
+      "gauge_1": "quiet",
+      "gauge_2": "quiet",
+      "fused_p": 0.62,
+      "live_groups": 2,
+      "supporting_groups": 1,
+      "tier_historical": "ADVISORY",
+      "tier_strict": "ADVISORY",
+      "differs": false
+    },
+    {
+      "seismic": "detected",
+      "gauge_1": "quiet",
+      "gauge_2": "detected",
+      "fused_p": 0.92,
+      "live_groups": 2,
+      "supporting_groups": 2,
+      "tier_historical": "WARNING",
+      "tier_strict": "WARNING",
+      "differs": false
+    },
+    {
+      "seismic": "detected",
+      "gauge_1": "detected",
+      "gauge_2": "absent",
+      "fused_p": 0.92,
+      "live_groups": 2,
+      "supporting_groups": 2,
+      "tier_historical": "WARNING",
+      "tier_strict": "WARNING",
+      "differs": false
+    },
+    {
+      "seismic": "detected",
+      "gauge_1": "detected",
+      "gauge_2": "dead",
+      "fused_p": 0.92,
+      "live_groups": 2,
+      "supporting_groups": 2,
+      "tier_historical": "WARNING",
+      "tier_strict": "WARNING",
+      "differs": false
+    },
+    {
+      "seismic": "detected",
+      "gauge_1": "detected",
+      "gauge_2": "quiet",
+      "fused_p": 0.92,
+      "live_groups": 2,
+      "supporting_groups": 2,
+      "tier_historical": "WARNING",
+      "tier_strict": "WARNING",
+      "differs": false
+    },
+    {
+      "seismic": "detected",
+      "gauge_1": "detected",
+      "gauge_2": "detected",
+      "fused_p": 0.92,
+      "live_groups": 2,
+      "supporting_groups": 2,
+      "tier_historical": "WARNING",
+      "tier_strict": "WARNING",
+      "differs": false
+    }
+  ]
+}
