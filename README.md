@@ -54,6 +54,8 @@ We compared the last radar pass before 26 August 2026 with the first pass after 
 
 A stricter test asks whether the change sits in the same pixels on every track, after each track's own normal change is removed. For 2026 it finds a patch of 0.41 square kilometres where at least two of the three tracks agree, which is 5.5 times the size of the same test run on the weeks before the event. No older event passes this test, and Thame comes closest at 2.4 times.
 
+We then ran the same test on earlier weeks when nothing happened, and on the second radar channel. With all three tracks the 2026 patch is the largest of every earlier window we could compare fairly, and both radar channels find it within about 100 metres of each other. The honest limit is that only three such earlier windows exist, and on two tracks alone the event does not stand out. So it is a strong hint, not proof.
+
 This is the first confirmation of the 2026 source that does not come from the seismic station. The same method did not cleanly confirm any of the older events in the catalogue. Spring snowmelt and peak monsoon produce so much natural change that those events are lost in it, so the positive class is still one event. The full record is in `experiments/exp012_satellite_confirmation`, and the dashboard shows it in its own panel below the evidence.
 
 ## What is honest about this
