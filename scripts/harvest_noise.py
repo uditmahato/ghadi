@@ -17,8 +17,15 @@ holding a real earthquake is a mislabelled positive, and it inflates the apparen
 alarm rate while teaching the model that events are non-events. The exclusions are
 reported, because how many there are is itself informative about the region's rate.
 
-    python scripts/harvest_noise.py --per-cell 4
+    python scripts/harvest_noise.py --per-cell 3
     python scripts/harvest_noise.py --report
+    python scripts/harvest_noise.py --station IO.EVN
+
+**One corpus per station.** A false-alarm rate is per station (exp007), so each station
+gets its own manifest and its own coverage map; NK.KKN keeps the original filenames.
+Every trigger in a usable window also records its decision-segment features (the 120 s
+after the trigger onset), because that is what an operational detector sees at the
+moment it must decide (exp005), and the rate should be measurable on that basis.
 """
 
 from __future__ import annotations
@@ -37,14 +44,39 @@ import numpy as np
 REPO_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO_ROOT / "src"))
 
-from ghadi.config import PRIMARY_STATION, SOURCE_ZONE_LAT, SOURCE_ZONE_LON  # noqa: E402
+from ghadi.config import (  # noqa: E402
+    DEFAULT,
+    SOURCE_ZONE_LAT,
+    SOURCE_ZONE_LON,
+    STATION_SITES,
+    StationSite,
+)
 from ghadi.detect import sta_lta  # noqa: E402
 from ghadi.fdsn import CachedWaveformClient, WaveformRequest  # noqa: E402
 from ghadi.features import extract, preprocess  # noqa: E402
 from ghadi.teleseism import Origin, overlaps_window  # noqa: E402
 
-MANIFEST = REPO_ROOT / "data" / "corpus" / "noise.json"
-AVAILABILITY = REPO_ROOT / "data" / "corpus" / "availability.json"
+CORPUS = REPO_ROOT / "data" / "corpus"
+# Triggers per window whose decision-segment features are recorded. A noise window with
+# more than this many triggers is already pathological, and the cap keeps a corrupt
+# waveform from producing thousands of feature extractions.
+MAX_SEGMENT_TRIGGERS = 20
+
+
+def _suffix(site: StationSite) -> str:
+    if site.site.network == "NK" and site.site.station == "KKN":
+        return ""
+    return f"_{site.site.network}_{site.site.station}"
+
+
+def manifest_path(site: StationSite) -> Path:
+    """NK.KKN keeps the original filename; other stations get a suffixed one."""
+    return CORPUS / f"noise{_suffix(site)}.json"
+
+
+def availability_path(site: StationSite) -> Path:
+    return CORPUS / f"availability{_suffix(site)}.json"
+
 
 # Sampling period. Ends before the 2026 cascade so the target cannot leak into the
 # negative class. The start is early enough to span whole seasons, but which months
@@ -64,7 +96,6 @@ EVENT_GUARD_S = 3600.0
 
 EXCLUSION_CATALOGUE = REPO_ROOT / "data" / "corpus" / "exclusion_catalogue.json"
 GLOBAL_CATALOGUE = REPO_ROOT / "data" / "corpus" / "global_catalogue.json"
-STATION_LAT, STATION_LON = 27.800, 85.279
 
 
 def _query_usgs(min_magnitude: float, max_radius_deg: float, attempts: int = 5) -> list[datetime]:
@@ -145,19 +176,20 @@ def catalogued_events(min_magnitude: float, max_radius_deg: float) -> list[datet
     return origins
 
 
-def available_months() -> set[str] | None:
+def available_months(site: StationSite) -> set[str] | None:
     """Months the coverage probe found data in, as ``YYYY-MM``.
 
     Returns None when no probe has been run, in which case every month is attempted
     and the failures are recorded rather than avoided.
     """
-    if not AVAILABILITY.exists():
+    path = availability_path(site)
+    if not path.exists():
         return None
-    probe = json.loads(AVAILABILITY.read_text(encoding="utf-8"))
+    probe = json.loads(path.read_text(encoding="utf-8"))
     return {row["month"] for row in probe["months"] if row["present"]}
 
 
-def candidate_windows(per_cell: int, seed: int) -> list[datetime]:
+def candidate_windows(per_cell: int, seed: int, site: StationSite) -> list[datetime]:
     """Sample window starts stratified over (month, hour-of-day) cells.
 
     Months the coverage probe found empty are skipped. Sampling them would not make
@@ -167,7 +199,7 @@ def candidate_windows(per_cell: int, seed: int) -> list[datetime]:
     """
     rng = np.random.default_rng(seed)
     starts: list[datetime] = []
-    usable = available_months()
+    usable = available_months(site)
 
     month = datetime(PERIOD_START.year, PERIOD_START.month, 1, tzinfo=UTC)
     while month < PERIOD_END:
@@ -212,7 +244,10 @@ def load_global_origins() -> list[Origin]:
 
 
 def contaminated(
-    start: datetime, events: list[datetime], global_origins: list[Origin]
+    start: datetime,
+    events: list[datetime],
+    global_origins: list[Origin],
+    site: StationSite,
 ) -> tuple[str, str] | None:
     """Return ``(kind, reason)`` if this window is not noise, else None.
 
@@ -229,7 +264,7 @@ def contaminated(
             return "excluded_regional_event", f"regional event at {origin.isoformat()}"
 
     for origin in global_origins:
-        if overlaps_window(origin, STATION_LAT, STATION_LON, start, end):
+        if overlaps_window(origin, site.latitude, site.longitude, start, end):
             return (
                 "excluded_teleseism",
                 f"M{origin.magnitude:.1f} {origin.time_utc.isoformat()} ({origin.place})".strip(),
@@ -237,7 +272,7 @@ def contaminated(
     return None
 
 
-def process(start: datetime, client: CachedWaveformClient) -> dict[str, Any]:
+def process(start: datetime, client: CachedWaveformClient, site: StationSite) -> dict[str, Any]:
     end = start + timedelta(seconds=WINDOW_S)
     row: dict[str, Any] = {
         "window_start_utc": start.isoformat(),
@@ -248,10 +283,10 @@ def process(start: datetime, client: CachedWaveformClient) -> dict[str, Any]:
 
     result = client.get_waveforms(
         WaveformRequest(
-            PRIMARY_STATION.network,
-            PRIMARY_STATION.station,
-            PRIMARY_STATION.location,
-            PRIMARY_STATION.channel,
+            site.site.network,
+            site.site.station,
+            site.site.location,
+            site.site.channel,
             start,
             end,
         )
@@ -267,6 +302,24 @@ def process(start: datetime, client: CachedWaveformClient) -> dict[str, Any]:
         proc = preprocess(np.asarray(trace.data, dtype=float), sr)
         detection = sta_lta(proc, sr, preprocessed=True)
         features = extract(proc, sr, preprocessed=True)
+        segments = []
+        for trig in detection.triggers[:MAX_SEGMENT_TRIGGERS]:
+            seg = extract(
+                proc,
+                sr,
+                preprocessed=True,
+                onset_s=trig.on_s,
+                segment_s=DEFAULT.seismic.decision_segment_s,
+            )
+            d = seg.as_dict()
+            segments.append(
+                {
+                    "on_s": round(trig.on_s, 2),
+                    "spectral_ratio_low_high": d.get("spectral_ratio_low_high"),
+                    "spectral_centroid_hz": d.get("spectral_centroid_hz"),
+                    "signal_present": seg.signal_present,
+                }
+            )
     except Exception as exc:
         row["status"] = "processing_failed"
         row["reason"] = f"{type(exc).__name__}: {exc}"
@@ -277,12 +330,17 @@ def process(start: datetime, client: CachedWaveformClient) -> dict[str, Any]:
     row["max_sta_lta"] = detection.max_ratio
     row["signal_present"] = features.signal_present
     row["features"] = features.as_dict()
+    row["trigger_segments"] = segments
     row["status"] = "ok"
     return row
 
 
 def harvest(
-    per_cell: int, seed: int, min_magnitude: float, max_radius_deg: float
+    per_cell: int,
+    seed: int,
+    min_magnitude: float,
+    max_radius_deg: float,
+    site: StationSite,
 ) -> dict[str, Any]:
     print(
         f"Fetching catalogue to exclude contaminated windows (M>={min_magnitude}) ...", flush=True
@@ -295,7 +353,7 @@ def harvest(
         flush=True,
     )
 
-    starts = candidate_windows(per_cell, seed)
+    starts = candidate_windows(per_cell, seed, site)
     print(
         f"{len(starts)} candidate windows over {len(HOURS_UTC)} hour cells x 12 months\n",
         flush=True,
@@ -304,7 +362,7 @@ def harvest(
     client = CachedWaveformClient()
     rows = []
     for i, start in enumerate(starts, start=1):
-        verdict = contaminated(start, events, global_origins)
+        verdict = contaminated(start, events, global_origins, site)
         if verdict is not None:
             status, reason = verdict
             rows.append(
@@ -317,14 +375,16 @@ def harvest(
                 }
             )
             continue
-        rows.append(process(start, client))
+        rows.append(process(start, client, site))
         if i % 10 == 0:
             ok = sum(1 for r in rows if r["status"] == "ok")
             print(f"  [{i}/{len(starts)}] {ok} usable so far", flush=True)
 
     return {
         "created_utc": datetime.now(UTC).isoformat(),
-        "station": PRIMARY_STATION.nslc,
+        "station": site.nslc,
+        "station_lat_lon": [site.latitude, site.longitude],
+        "decision_segment_s": DEFAULT.seismic.decision_segment_s,
         "label": "noise",
         "period": {"start": PERIOD_START.isoformat(), "end": PERIOD_END.isoformat()},
         "stratification": {"hours_utc": list(HOURS_UTC), "per_cell": per_cell, "seed": seed},
@@ -368,24 +428,32 @@ def report(manifest: dict[str, Any]) -> None:
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--per-cell", type=int, default=4, help="windows per month-hour cell")
+    parser.add_argument("--per-cell", type=int, default=3, help="windows per month-hour cell")
     parser.add_argument("--seed", type=int, default=0)
     parser.add_argument("--min-magnitude", type=float, default=3.5)
     parser.add_argument("--max-radius-deg", type=float, default=6.0)
     parser.add_argument("--report", action="store_true")
+    parser.add_argument(
+        "--station",
+        default="NK.KKN",
+        choices=sorted(STATION_SITES),
+        help="which station's noise corpus to harvest (default NK.KKN)",
+    )
     args = parser.parse_args(argv)
+    site = STATION_SITES[args.station]
+    manifest_file = manifest_path(site)
 
     if args.report:
-        if not MANIFEST.exists():
-            print(f"No manifest at {MANIFEST}. Run without --report first.")
+        if not manifest_file.exists():
+            print(f"No manifest at {manifest_file}. Run without --report first.")
             return 1
-        report(json.loads(MANIFEST.read_text(encoding="utf-8")))
+        report(json.loads(manifest_file.read_text(encoding="utf-8")))
         return 0
 
-    manifest = harvest(args.per_cell, args.seed, args.min_magnitude, args.max_radius_deg)
-    MANIFEST.parent.mkdir(parents=True, exist_ok=True)
-    MANIFEST.write_text(json.dumps(manifest, indent=2), encoding="utf-8")
-    print(f"\nWrote {MANIFEST}")
+    manifest = harvest(args.per_cell, args.seed, args.min_magnitude, args.max_radius_deg, site)
+    manifest_file.parent.mkdir(parents=True, exist_ok=True)
+    manifest_file.write_text(json.dumps(manifest, indent=2), encoding="utf-8")
+    print(f"\nWrote {manifest_file}")
     report(manifest)
     return 0
 

@@ -72,6 +72,7 @@ Hard limits, and they matter:
 
 * There is only one confirmed event to learn from (n = 1). The confidence value is an assumed setting, not a tested probability.
 * About 17 in every 100 real earthquakes look like the target on the two features, so the false alarm rate is still several times higher than the goal.
+* On quiet days with no earthquakes the detector still raises false alarms. Measured on the short piece of signal it really decides on, Kakani gives about 14 a month and the Everest station about 89 a month. The goal is 1. Near Everest many of these may be real ice or rock falls that never became floods.
 * The river gauge data needs an agreement with Nepal's hydrology office that is not yet in place, so the gauge data here is made up for testing.
 * The live feed is not connected. This is a research tool, not a working warning system.
 
