@@ -455,3 +455,79 @@ def align_arrays(
         out.append(r.array[ro : ro + nrows, co : co + ncols])
     common = (px, 0.0, x0, 0.0, -px, top)
     return out, common
+
+
+@dataclass(frozen=True)
+class CycleWindow:
+    """One test window on one track: an after pass, the pass before it, and a control.
+
+    ``lag`` 0 is the window that straddles the event. ``lag`` k is the same test moved k
+    acquisition cycles earlier, so it lies wholly before the event and serves as a draw
+    from the no-event (null) distribution on the same ground and the same geometry.
+    """
+
+    lag: int
+    control_before: SceneMeta
+    before: SceneMeta
+    after: SceneMeta
+
+
+def cycle_windows(
+    scenes: list[SceneMeta],
+    event_utc: datetime,
+    max_lag: int,
+    max_gap_days: float = 30.0,
+    min_gap_days: float = 0.0,
+) -> dict[tuple[int, str | None], list[CycleWindow]]:
+    """Consecutive-cycle windows per track, for an event and for earlier null windows.
+
+    For each track the passes are ordered in time, one per pass. The event window uses
+    the last pass before the event, the first pass after it, and the pass before that
+    for its control. Each earlier lag shifts all three back one cycle. A lag is emitted
+    only if every one of its two gaps is at most ``max_gap_days``; the sequence stops at
+    the first lag that fails, so a missing acquisition never silently doubles a window.
+    Only tracks with a relative orbit number are used.
+
+    ``min_gap_days`` handles a different problem: when a second satellite shares a track,
+    passes can arrive 7 days apart instead of 12. A window shorter than its neighbours
+    has less time for natural change and is not comparable with them. Such a lag is
+    skipped (not a stop), so later lags with the regular cadence are still used.
+    """
+    if event_utc.tzinfo is None:
+        raise ValueError("event time must be timezone-aware UTC")
+    if max_lag < 0:
+        raise ValueError("max_lag must be non-negative")
+
+    groups: dict[tuple[int, str | None], dict[str, SceneMeta]] = {}
+    for s in scenes:
+        if s.relative_orbit is None:
+            continue
+        per_day = groups.setdefault((s.relative_orbit, s.orbit_state), {})
+        per_day.setdefault(s.when.date().isoformat(), s)  # one per pass
+
+    out: dict[tuple[int, str | None], list[CycleWindow]] = {}
+    for track, per_day in groups.items():
+        ordered = sorted(per_day.values(), key=lambda s: s.when)
+        before = [s for s in ordered if s.when < event_utc]
+        after = [s for s in ordered if s.when >= event_utc]
+        if not after or len(before) < 2:
+            continue
+        seq = [*before, after[0]]
+        n = len(seq) - 1
+        windows: list[CycleWindow] = []
+        for lag in range(max_lag + 1):
+            a, b, c = n - lag, n - lag - 1, n - lag - 2
+            if c < 0:
+                break
+            gaps = (
+                (seq[a].when - seq[b].when).total_seconds() / 86400.0,
+                (seq[b].when - seq[c].when).total_seconds() / 86400.0,
+            )
+            if max(gaps) > max_gap_days:
+                break
+            if min(gaps) < min_gap_days:
+                continue
+            windows.append(CycleWindow(lag, seq[c], seq[b], seq[a]))
+        if windows:
+            out[track] = windows
+    return out
