@@ -336,11 +336,12 @@ class FusionConfig:
     # probable. It sits between every quiet operating point (0.05) and every detected one
     # (0.60, 0.80), so it separates "reporting and detecting" from "reporting, quiet".
     support_p: float = 0.50
-    # Issue #26. The WARNING gate needs min_groups_for_warning groups. When False (the
-    # historical rule) any live group counts, so one real detection plus a second sensor
-    # that is merely online and quiet reaches WARNING. When True only supporting groups
-    # count: WARNING needs independent sources that each detected something.
-    warning_requires_supporting_groups: bool = False
+    # Issue #26. The WARNING gate needs min_groups_for_warning groups. When True (the
+    # default since exp017) only supporting groups count: WARNING needs independent
+    # sources that each detected something. When False (the historical rule) any live
+    # group counts, so one real detection plus a second sensor that is merely online and
+    # quiet reaches WARNING, and switching on a quiet sensor can raise the tier.
+    warning_requires_supporting_groups: bool = True
 
 
 # --- CAP ----------------------------------------------------------------------------

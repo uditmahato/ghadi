@@ -50,7 +50,7 @@ from ghadi.service import WindowObservation, process_window  # noqa: E402
 from ghadi.teleseism import Origin  # noqa: E402
 
 RULES = {
-    "historical": DEFAULT.fusion,
+    "historical": replace(DEFAULT.fusion, warning_requires_supporting_groups=False),
     "strict": replace(DEFAULT.fusion, warning_requires_supporting_groups=True),
 }
 ORDER = {Tier.NONE: 0, Tier.WATCH: 1, Tier.ADVISORY: 2, Tier.WARNING: 3}

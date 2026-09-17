@@ -44,6 +44,8 @@ In 2026 four of five gauges were destroyed by the water. A dead gauge is not tre
 
 Each preset runs under its own inputs, so you can see the outcomes side by side.
 
+A Warning needs two separate sources that each detected something. A sensor that is switched on but quiet does not count. So in the regional earthquake case, where only the gauge sees a surge, the result is an Advisory and not a Warning. We chose this rule after testing both, because under the old rule switching on a quiet sensor could raise the alert.
+
 ![Scenario comparison](docs/images/compare.png)
 
 ### Independent confirmation from radar imagery

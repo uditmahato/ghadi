@@ -92,5 +92,10 @@ Adopt the strict rule. It removes the only case where a sensor reporting nothing
 the alert level, it leaves every case where two sources detect untouched, and the price
 is one downgrade from WARNING to ADVISORY that is still an alert. The choice of default
 is the project owner's; the rule is implemented behind
-`FusionConfig.warning_requires_supporting_groups` and currently defaults to the
-historical behaviour.
+`FusionConfig.warning_requires_supporting_groups`.
+
+## Decision
+
+On 2026-09-17 the project owner chose the strict rule, and it is now the default. The
+historical rule stays available by setting the flag to False, and its behaviour is still
+pinned by a test.

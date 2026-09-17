@@ -7,8 +7,8 @@ from dataclasses import replace
 from ghadi.config import DEFAULT
 from ghadi.fusion import Channel, Tier, fuse
 
-HISTORICAL = DEFAULT.fusion
-STRICT = replace(DEFAULT.fusion, warning_requires_supporting_groups=True)
+HISTORICAL = replace(DEFAULT.fusion, warning_requires_supporting_groups=False)
+STRICT = DEFAULT.fusion
 
 
 def gauge_surge() -> Channel:
@@ -23,12 +23,13 @@ def seismic_detected() -> Channel:
     return Channel("seismic", DEFAULT.fusion.seismic_detected_p, independence_group="seismic")
 
 
-def test_historical_rule_is_still_the_default() -> None:
-    assert DEFAULT.fusion.warning_requires_supporting_groups is False
+def test_strict_rule_is_the_default() -> None:
+    """Chosen by the project owner after exp017."""
+    assert DEFAULT.fusion.warning_requires_supporting_groups is True
 
 
 def test_historical_rule_lets_a_quiet_second_sensor_raise_the_tier() -> None:
-    """The behaviour #26 describes, pinned so it cannot change silently."""
+    """The behaviour #26 describes, kept behind the flag and pinned."""
     alone = fuse([gauge_surge()], HISTORICAL)
     with_quiet = fuse([gauge_surge(), seismic_quiet()], HISTORICAL)
     assert alone.tier is Tier.ADVISORY

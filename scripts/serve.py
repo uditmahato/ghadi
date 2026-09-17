@@ -499,7 +499,7 @@ def _confidence(o) -> str:  # type: ignore[no-untyped-def]
     gate = (
         "only groups that detected something count toward the warning gate"
         if strict
-        else "any live group counts toward the warning gate, including a quiet one (issue #26)"
+        else "any live group counts toward the warning gate, including a quiet one"
     )
     width = min(100, p * 100)
     thr_x = WARNING_P * 100
@@ -702,7 +702,8 @@ def _details(inp: Inputs, o, ran: bool) -> str:  # type: ignore[no-untyped-def]
         "explains the onset is set aside. The gauge fires when rate of rise exceeds "
         f"{RATE_THRESHOLD:.2f} m/min. Available channels are combined by noisy-OR across "
         f"independent sources; a Warning requires a fused score of at least {WARNING_P:.2f} with "
-        f"at least {MIN_GROUPS} independent groups.</p></div></details>"
+        f"at least {MIN_GROUPS} independent groups that each detected something. A sensor that "
+        "is online but quiet does not count toward that.</p></div></details>"
         "<details class='d' id='references'><summary>Data sources and provenance</summary>"
         "<div class='body'><ul>"
         "<li>Seismic: open FDSN broadband stations (NK.KKN, IO.EVN). In this simulation the "
