@@ -78,7 +78,7 @@ checkbox as unchecked, so those scenarios silently ran with the seismic station
 switched off. "Distant earthquake" therefore showed the station as unavailable because
 it was off, not because the teleseism was set aside, and "Gauge unavailable" had no live
 sensor at all. The presets are fixed, the scenario table above is from the corrected
-run, and the README screenshots taken from the old presets are regenerated.
+run, and the README screenshots taken from the old presets were regenerated on 2026-09-17.
 
 ## What this does not change
 

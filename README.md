@@ -30,13 +30,13 @@ The picture above shows the main case. The inputs from the 2026 event produce a 
 
 ### A distant earthquake is set aside
 
-A far away earthquake can look like a slow local source, because the signal loses its high notes over a long distance. GHADI checks a global earthquake list and sets those cases aside. Here the seismic channel is marked unavailable and there is no alert.
+A far away earthquake can look like a slow local source, because the signal loses its high notes over a long distance. GHADI checks a global earthquake list and sets those cases aside. Here the seismic station is online, but its signal is set aside as a distant earthquake. It gives no support, and there is no alert.
 
 ![No alert from a distant earthquake](docs/images/result_no_alert.png)
 
 ### A gauge that stops reporting
 
-In 2026 four of five gauges were destroyed by the water. A dead gauge is not treated as a calm river. If a gauge stops before it reports a rise, its channel is marked unavailable, not safe.
+In 2026 four of five gauges were destroyed by the water. A dead gauge is not treated as a calm river. If a gauge stops before it reports a rise, its channel is marked unavailable, not safe. In this picture the seismic station is online and quiet, the gauge is marked unavailable, and there is no alert.
 
 ![The gauge stops reporting](docs/images/result_gauge_unavailable.png)
 
