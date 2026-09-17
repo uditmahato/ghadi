@@ -56,6 +56,8 @@ A stricter test asks whether the change sits in the same pixels on every track, 
 
 We then ran the same test on earlier weeks when nothing happened, and on the second radar channel. With all three tracks the 2026 patch is the largest of every earlier window we could compare fairly, and both radar channels find it within about 100 metres of each other. The honest limit is that only three such earlier windows exist, and on two tracks alone the event does not stand out. So it is a strong hint, not proof.
 
+To get more fair comparisons we took the same late August weeks from 2022 to 2025. That gives 13 windows with all three tracks. The 2026 patch is still the largest, about 10 times the biggest of them, and it leads in the second radar channel too. With 13 windows the best possible rank is about 1 in 14, and 2026 reaches it. On two tracks alone it still does not stand out, because a spot near the river changed in late August of both 2022 and 2023. So the result needs all three tracks to agree.
+
 This is the first confirmation of the 2026 source that does not come from the seismic station. The same method did not cleanly confirm any of the older events in the catalogue. Spring snowmelt and peak monsoon produce so much natural change that those events are lost in it, so the positive class is still one event. The full record is in `experiments/exp012_satellite_confirmation`, and the dashboard shows it in its own panel below the evidence.
 
 ## What is honest about this
