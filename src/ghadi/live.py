@@ -37,7 +37,7 @@ from .service import (
     HealthMonitor,
     ServiceOutcome,
     WindowObservation,
-    run_over,
+    run_over_each,
 )
 from .stream import PacketSource, StreamAssembler, StreamWindow
 from .teleseism import Origin
@@ -86,6 +86,9 @@ class FeedStats:
     stale_windows: int = 0
     late_packets: int = 0
     delays_s: list[float] = field(default_factory=list)
+    # Seconds from the picked onset to the moment the decision could be made: the end
+    # of the window that held the full decision segment, plus the feed delay.
+    decision_latencies_s: list[float] = field(default_factory=list)
 
     def observe(self, window: StreamWindow, *, usable: bool, triggered: bool) -> None:
         self.windows += 1
@@ -96,10 +99,21 @@ class FeedStats:
         if math.isfinite(window.max_delay_s):
             self.delays_s.append(window.max_delay_s)
 
+    def note_decision(self, window: StreamWindow, detected_utc: datetime) -> None:
+        delay = window.max_delay_s if math.isfinite(window.max_delay_s) else 0.0
+        self.decision_latencies_s.append(
+            (window.end_utc - detected_utc).total_seconds() + max(delay, 0.0)
+        )
+
     def percentile(self, q: float) -> float:
         if not self.delays_s:
             return float("nan")
         return float(np.percentile(np.asarray(self.delays_s, dtype=float), q))
+
+    def decision_percentile(self, q: float) -> float:
+        if not self.decision_latencies_s:
+            return float("nan")
+        return float(np.percentile(np.asarray(self.decision_latencies_s, dtype=float), q))
 
     def as_dict(self) -> dict[str, float | int]:
         return {
@@ -111,6 +125,10 @@ class FeedStats:
             "delay_p50_s": round(self.percentile(50), 2),
             "delay_p95_s": round(self.percentile(95), 2),
             "delay_max_s": round(max(self.delays_s), 2) if self.delays_s else float("nan"),
+            "decision_latency_p50_s": round(self.decision_percentile(50), 1),
+            "decision_latency_max_s": round(max(self.decision_latencies_s), 1)
+            if self.decision_latencies_s
+            else float("nan"),
         }
 
 
@@ -160,7 +178,13 @@ def observation_from_window(
         return WindowVerdict(window, None, "no_trigger", stale)
 
     chosen: tuple[float, Features] | None = None
+    window_len_s = window.data.size / window.sampling_rate
     for trigger in sorted(detection.triggers, key=lambda t: t.on_s):
+        if trigger.on_s + cfg.seismic.decision_segment_s > window_len_s:
+            # The whole decision segment must be inside the window, or the features are
+            # computed on a shorter piece than every threshold was set on. A later,
+            # overlapping window will hold the full segment.
+            continue
         try:
             segment = extract(
                 proc,
@@ -287,6 +311,8 @@ def observations_from_source(
             decided_until = obs.detected_utc + timedelta(seconds=cfg.seismic.decision_segment_s)
         if stats is not None:
             stats.observe(window, usable=verdict.reason != "unusable", triggered=obs is not None)
+            if obs is not None:
+                stats.note_decision(window, obs.detected_utc)
             if verdict.stale:
                 stats.stale_windows += 1
         if on_verdict is not None:
@@ -309,6 +335,9 @@ def run_shadow(
     audit_log: AuditLog | None = None,
     health: HealthMonitor | None = None,
     warning_latency_s: float | None = None,
+    station_lat: float | None = None,
+    station_lon: float | None = None,
+    on_outcome: Callable[[ServiceOutcome], None] | None = None,
 ) -> list[ServiceOutcome]:
     """Drive the live feed through the tested pipeline, in shadow mode only.
 
@@ -331,7 +360,11 @@ def run_shadow(
         stats=stats,
         on_verdict=on_verdict,
     )
-    return run_over(
+    extra: dict[str, float] = {}
+    if station_lat is not None and station_lon is not None:
+        extra = {"station_lat": station_lat, "station_lon": station_lon}
+    outcomes: list[ServiceOutcome] = []
+    for outcome in run_over_each(
         observations,
         reach=reach,
         model_version=model_version,
@@ -339,4 +372,9 @@ def run_shadow(
         health=health,
         warning_latency_s=warning_latency_s,
         config=config,
-    )
+        **extra,
+    ):
+        outcomes.append(outcome)
+        if on_outcome is not None:
+            on_outcome(outcome)
+    return outcomes

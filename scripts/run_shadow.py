@@ -1,21 +1,26 @@
-"""Run GHADI in shadow mode: decisions are recorded, nothing is sent (issue #30).
+"""Run GHADI in shadow mode: decisions are recorded, nothing is sent (issues #30, #34).
 
 Two feeds, one loop:
 
     # Replay a past window through the real time path, from the local cache
     GHADI_OFFLINE=1 python scripts/run_shadow.py replay \
-        --start 2026-08-26T02:45:00Z --minutes 20
+        --start 2026-08-26T02:42:10Z --minutes 45
 
-    # Connect to a live SeedLink server and run until stopped
-    python scripts/run_shadow.py live --hours 24 --audit data/shadow/audit.jsonl
+    # Connect to a live SeedLink server and run for a day
+    python scripts/run_shadow.py live --hours 24
 
-Shadow is tier T0 in the handoff: the system decides, the decision goes into the
-hash chained audit log, and nothing leaves the machine. There is no flag that turns
-this into alerting, because no delivery path exists yet (issue #36).
+    # Run as a service, from a settings file, until stopped
+    python scripts/run_shadow.py live --settings deploy/ghadi.toml --hours 0
 
-The live run is also the latency measurement the project is gated on (issue #8): each
-window reports the worst packet delay that built it, and the summary prints the
-distribution.
+Shadow is tier T0 in the handoff: the system decides, the decision goes into the hash
+chained audit log, and nothing leaves the machine. Every alert the system would have
+raised is *staged* for a person; ``scripts/outbox.py`` is where that person approves or
+rejects it (issue #36). Nothing in this process delivers anything.
+
+While it runs the service writes ``status.json`` in the state directory after every
+window, and answers ``GET /health`` on the configured port. The live run is also the
+latency measurement the project is gated on (issue #8): each window reports the worst
+packet delay that built it, and the summary prints the distribution.
 """
 
 from __future__ import annotations
@@ -23,27 +28,27 @@ from __future__ import annotations
 import argparse
 import json
 import sys
+import threading
 from datetime import UTC, datetime, timedelta
 from pathlib import Path
+from typing import Any
 
 import numpy as np
 
 REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO / "src"))
 
-from ghadi.config import KAKANI, STATION_SITES  # noqa: E402
+from ghadi.config import STATION_SITES  # noqa: E402
+from ghadi.delivery import FileSink, Outbox  # noqa: E402
 from ghadi.fdsn import CachedWaveformClient, WaveformRequest  # noqa: E402
+from ghadi.health import HealthServer  # noqa: E402
 from ghadi.live import FeedStats, LiveConfig, WindowVerdict, run_shadow  # noqa: E402
-from ghadi.service import AuditLog, HealthMonitor, ServiceOutcome  # noqa: E402
-from ghadi.sources import (  # noqa: E402
-    DEFAULT_SEEDLINK_SERVER,
-    ReplaySource,
-    SeedLinkSource,
-    packets_from_trace,
-)
+from ghadi.service import AuditLog, HealthMonitor, ServiceOutcome, verify_chain  # noqa: E402
+from ghadi.settings import SiteSettings, load_settings  # noqa: E402
+from ghadi.sources import ReplaySource, SeedLinkSource, packets_from_trace  # noqa: E402
 from ghadi.stream import Packet  # noqa: E402
 
-REACH = "TRISHULI-R07"
+RECENT = 20
 
 
 def parse_utc(text: str) -> datetime:
@@ -68,22 +73,118 @@ def cached_packets(
     sr = float(trace.stats.sampling_rate)
     data = np.asarray(trace.data, dtype=float)
     first = trace.stats.starttime.datetime.replace(tzinfo=UTC)
-    return (
-        packets_from_trace(
-            data, sr, first, station=station_key, packet_s=packet_s, delay_s=delay_s
-        ),
-        sr,
+    packets = packets_from_trace(
+        data, sr, first, station=station_key, packet_s=packet_s, delay_s=delay_s
     )
+    return packets, sr
 
 
-def report(verdict: WindowVerdict) -> None:
-    window = verdict.window
-    flag = " STALE" if verdict.stale else ""
-    print(
-        f"  {window.start_utc.isoformat()} {verdict.reason:<18} "
-        f"usable {window.usable_fraction:5.1%} delay {window.max_delay_s:6.1f}s{flag}",
-        flush=True,
-    )
+class ShadowState:
+    """Everything the status file and the health endpoint report."""
+
+    def __init__(
+        self,
+        settings: SiteSettings,
+        mode: str,
+        stats: FeedStats,
+        health: HealthMonitor,
+        source: SeedLinkSource | None,
+        outbox: Outbox,
+        quiet: bool,
+    ) -> None:
+        self.settings = settings
+        self.mode = mode
+        self.stats = stats
+        self.health = health
+        self.source = source
+        self.outbox = outbox
+        self.quiet = quiet
+        self.started_utc = datetime.now(tz=UTC)
+        self.last_window_utc: datetime | None = None
+        self.last_feed_utc: datetime | None = None
+        self.recent: list[dict[str, Any]] = []
+        self.lock = threading.Lock()
+
+    def on_verdict(self, verdict: WindowVerdict) -> None:
+        window = verdict.window
+        with self.lock:
+            self.last_window_utc = window.end_utc
+            self.last_feed_utc = datetime.now(tz=UTC)
+        if not self.quiet:
+            flag = " STALE" if verdict.stale else ""
+            print(
+                f"  {window.start_utc.isoformat()} {verdict.reason:<18} "
+                f"usable {window.usable_fraction:5.1%} delay {window.max_delay_s:6.1f}s{flag}",
+                flush=True,
+            )
+        self.write_status()
+
+    def on_outcome(self, outcome: ServiceOutcome) -> None:
+        staged = self.outbox.stage(outcome)
+        entry = {
+            "detected_utc": outcome.audit.payload["detected_utc"],
+            "tier": outcome.decision.tier.value,
+            "probability": round(outcome.decision.probability, 3),
+            "rationale": outcome.decision.rationale,
+            "suppressed": outcome.suppression.suppressed,
+            "staged_id": staged.staged_id if staged else None,
+        }
+        with self.lock:
+            self.recent.append(entry)
+            del self.recent[:-RECENT]
+        print(
+            f"  decision {entry['detected_utc']} {entry['tier']} p={entry['probability']:.2f}"
+            + (f"  staged for a person as {staged.staged_id}" if staged else ""),
+            flush=True,
+        )
+        self.write_status()
+
+    def snapshot(self) -> dict[str, Any]:
+        now = datetime.now(tz=UTC)
+        with self.lock:
+            last_feed = self.last_feed_utc
+            recent = list(self.recent)
+            last_window = self.last_window_utc
+        feed_age_s = (now - last_feed).total_seconds() if last_feed else None
+        chain_ok = verify_chain(self.settings.audit_path)
+        stale = self.mode == "live" and feed_age_s is not None and feed_age_s > 600.0
+        never = (
+            self.mode == "live"
+            and last_feed is None
+            and ((now - self.started_utc).total_seconds() > 600.0)
+        )
+        return {
+            "ok": chain_ok and not stale and not never,
+            "mode": self.mode,
+            "shadow": True,
+            "station": self.settings.station_key,
+            "server": self.settings.server if self.mode == "live" else None,
+            "reach": self.settings.reach,
+            "started_utc": self.started_utc.isoformat(),
+            "updated_utc": now.isoformat(),
+            "last_window_end_utc": last_window.isoformat() if last_window else None,
+            "seconds_since_last_window": round(feed_age_s, 1) if feed_age_s else None,
+            "feed": self.stats.as_dict(),
+            "reconnections": self.source.reconnections if self.source else 0,
+            "dropped_packets": self.source.dropped_packets if self.source else 0,
+            "decisions": {
+                "windows_seen": self.health.windows_seen,
+                "alerts_staged": self.health.alerts_raised,
+                "suppressed": self.health.suppressed,
+                "last_detected_utc": self.health.last_detected_utc,
+                "blind": self.health.blind,
+            },
+            "audit_chain_ok": chain_ok,
+            "staged_waiting_for_a_person": len(self.outbox.pending()),
+            "recent_decisions": recent,
+        }
+
+    def write_status(self) -> None:
+        path = self.settings.status_path
+        path.parent.mkdir(parents=True, exist_ok=True)
+        tmp = path.with_suffix(".json.tmp")
+        tmp.write_text(json.dumps(self.snapshot(), indent=2, default=str), encoding="utf-8")
+        tmp.replace(path)
 
 
 def summarise(outcomes: list[ServiceOutcome], stats: FeedStats, health: HealthMonitor) -> None:
@@ -96,9 +197,9 @@ def summarise(outcomes: list[ServiceOutcome], stats: FeedStats, health: HealthMo
             f"  {outcome.audit.payload['detected_utc']} {tier:<8} "
             f"p={outcome.decision.probability:.2f} {outcome.decision.rationale[:90]}"
         )
-    print(f"alerts      : {health.alerts_raised} (shadow mode: none were sent)")
+    print(f"alerts      : {health.alerts_raised} staged for a person; none sent (shadow mode)")
     print(f"suppressed  : {health.suppressed}")
-    if stats.windows and stats.delays_s:
+    if stats.delays_s:
         p95 = stats.percentile(95)
         verdict = "within" if p95 <= 120.0 else "above"
         print(f"latency p95 : {p95:.1f}s, {verdict} the 120 s viability threshold (issue #8)")
@@ -111,9 +212,10 @@ def main(argv: list[str] | None = None) -> int:
     sub = parser.add_subparsers(dest="mode", required=True)
 
     common = argparse.ArgumentParser(add_help=False)
-    common.add_argument("--audit", type=Path, default=None, help="audit log path (JSON lines)")
-    common.add_argument("--station", default=KAKANI.key, choices=sorted(STATION_SITES))
-    common.add_argument("--quiet", action="store_true", help="only print the summary")
+    common.add_argument("--settings", type=Path, default=None, help="site settings TOML")
+    common.add_argument("--station", default=None, choices=sorted(STATION_SITES))
+    common.add_argument("--state-dir", type=Path, default=None, help="overrides the settings")
+    common.add_argument("--quiet", action="store_true", help="only print decisions and summary")
 
     rep = sub.add_parser("replay", parents=[common], help="replay a cached archive window")
     rep.add_argument("--start", required=True, type=parse_utc, help="window start, UTC")
@@ -123,56 +225,101 @@ def main(argv: list[str] | None = None) -> int:
     rep.add_argument("--speed", type=float, default=0.0, help="0 is as fast as possible")
 
     live = sub.add_parser("live", parents=[common], help="connect to a SeedLink server")
-    live.add_argument("--server", default=DEFAULT_SEEDLINK_SERVER)
-    live.add_argument("--hours", type=float, default=1.0)
+    live.add_argument("--server", default=None, help="overrides the settings")
+    live.add_argument("--hours", type=float, default=1.0, help="0 runs until stopped")
 
     args = parser.parse_args(argv)
+    settings = load_settings(args.settings)
+    if args.station:
+        settings = _replace(settings, station_key=args.station)
+    if args.state_dir:
+        settings = _replace(settings, state_dir=args.state_dir.resolve())
+    if args.mode == "live" and args.server:
+        settings = _replace(settings, server=args.server)
+    if args.mode == "replay":
+        # A replay must never mix its records into a live deployment's state.
+        settings = _replace(settings, state_dir=settings.state_dir / "replay")
+
+    settings.state_dir.mkdir(parents=True, exist_ok=True)
     stats = FeedStats()
     health = HealthMonitor()
-    audit = AuditLog(args.audit) if args.audit else None
-    if args.audit:
-        args.audit.parent.mkdir(parents=True, exist_ok=True)
+    audit = AuditLog(settings.audit_path)
+    outbox = Outbox(
+        settings.delivery_log_path,
+        [FileSink(settings.outbox_dir)],
+        staging_dir=settings.staging_dir,
+    )
+    live_cfg = LiveConfig(
+        station=settings.station_key,
+        window_s=settings.window_s,
+        hop_s=settings.hop_s,
+        max_gap_fraction=settings.max_gap_fraction,
+        stale_feed_s=settings.stale_feed_s,
+    )
 
+    source: ReplaySource | SeedLinkSource
+    seedlink: SeedLinkSource | None = None
     if args.mode == "replay":
         packets, sr = cached_packets(
-            args.station, args.start, args.minutes, args.packet_s, args.delay_s
+            settings.station_key, args.start, args.minutes, args.packet_s, args.delay_s
         )
-        print(f"replaying {len(packets)} packets from {args.station} at {sr:g} Hz")
-        source: ReplaySource | SeedLinkSource = ReplaySource(packets, speed=args.speed)
-        cfg = LiveConfig(station=args.station, sampling_rate=sr)
+        print(f"replaying {len(packets)} packets from {settings.station_key} at {sr:g} Hz")
+        source = ReplaySource(packets, speed=args.speed)
+        live_cfg = LiveConfig(**{**live_cfg.__dict__, "sampling_rate": sr})
     else:
-        site = STATION_SITES[args.station]
-        source = SeedLinkSource(station=site.site, server=args.server, key=args.station)
-        cfg = LiveConfig(station=args.station)  # rate comes from the first packet
-        print(f"connecting to {args.server} for {args.station}; stop with Ctrl-C")
-        _stop_after(source, args.hours)
+        site = STATION_SITES[settings.station_key]
+        seedlink = SeedLinkSource(
+            station=site.site, server=settings.server, key=settings.station_key
+        )
+        source = seedlink
+        print(f"connecting to {settings.server} for {settings.station_key}; stop with Ctrl-C")
+        if args.hours > 0:
+            threading.Timer(args.hours * 3600.0, seedlink.stop).start()
+
+    state = ShadowState(settings, args.mode, stats, health, seedlink, outbox, args.quiet)
+    health_server = HealthServer(
+        settings.health_port,
+        state.snapshot,
+        enabled=args.mode == "live" and settings.health_port > 0,
+    )
+    health_server.start()
+    if health_server.running:
+        print(f"health      : {health_server.url}")
+    state.write_status()
 
     try:
         outcomes = run_shadow(
             source,
-            reach=REACH,
+            reach=settings.reach,
             model_version="shadow",
-            live=cfg,
+            live=live_cfg,
             stats=stats,
             audit_log=audit,
             health=health,
-            on_verdict=None if args.quiet else report,
+            on_verdict=state.on_verdict,
+            on_outcome=state.on_outcome,
+            station_lat=STATION_SITES[settings.station_key].latitude,
+            station_lon=STATION_SITES[settings.station_key].longitude,
         )
     except KeyboardInterrupt:
         print("\nstopped by operator")
         outcomes = []
+    finally:
+        state.write_status()
+        health_server.stop()
 
     summarise(outcomes, stats, health)
-    if audit is not None:
-        print(f"audit       : {args.audit}")
+    print(f"audit       : {settings.audit_path}")
+    print(f"status      : {settings.status_path}")
+    if outbox.pending():
+        print(f"waiting     : {len(outbox.pending())} staged alert(s); see scripts/outbox.py list")
     return 0
 
 
-def _stop_after(source: SeedLinkSource, hours: float) -> None:
-    """Ask a live feed to stop after a fixed run, so a timed run ends by itself."""
-    import threading
+def _replace(settings: SiteSettings, **changes: Any) -> SiteSettings:
+    from dataclasses import replace
 
-    threading.Timer(hours * 3600.0, source.stop).start()
+    return replace(settings, **changes)
 
 
 if __name__ == "__main__":

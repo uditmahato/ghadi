@@ -27,7 +27,7 @@ from __future__ import annotations
 
 import hashlib
 import json
-from collections.abc import Iterable, Sequence
+from collections.abc import Iterable, Iterator, Sequence
 from dataclasses import dataclass
 from datetime import datetime
 from pathlib import Path
@@ -371,7 +371,34 @@ def run_over(
     source, or a list. Chaining is maintained across the run, so the audit log stays
     verifiable whether it is a replay or a month of real windows.
     """
-    outcomes: list[ServiceOutcome] = []
+    return list(
+        run_over_each(
+            observations,
+            reach=reach,
+            model_version=model_version,
+            audit_log=audit_log,
+            health=health,
+            station_lat=station_lat,
+            station_lon=station_lon,
+            warning_latency_s=warning_latency_s,
+            config=config,
+        )
+    )
+
+
+def run_over_each(
+    observations: Iterable[WindowObservation],
+    reach: str,
+    model_version: str,
+    *,
+    audit_log: AuditLog | None = None,
+    health: HealthMonitor | None = None,
+    station_lat: float = PRIMARY_STATION_LAT,
+    station_lon: float = PRIMARY_STATION_LON,
+    warning_latency_s: float | None = None,
+    config: GhadiConfig | None = None,
+) -> Iterator[ServiceOutcome]:
+    """``run_over`` as a generator, so a live loop can act on each decision as it lands."""
     head = audit_log.head_hash if audit_log is not None else ""
     for obs in observations:
         outcome = process_window(
@@ -389,8 +416,7 @@ def run_over(
         head = outcome.audit.record_hash
         if health is not None:
             health.observe(outcome)
-        outcomes.append(outcome)
-    return outcomes
+        yield outcome
 
 
 def run_forever(

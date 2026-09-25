@@ -55,7 +55,7 @@ def test_seismic_and_gauge_together_reach_a_warning_with_lead_times() -> None:
     outcome = process_window(_obs(gauge=_gauge()), reach=REACH, model_version=MODEL)
     assert outcome.decision.tier.value == "WARNING"
     assert outcome.alert_xml is not None
-    assert "37 minutes of warning" in outcome.alert_xml  # Bidur at the 60 s default
+    assert "35 minutes of warning" in outcome.alert_xml  # Bidur at the 160 s default
     assert outcome.lead_times_min is not None
 
 
@@ -169,6 +169,15 @@ def test_health_monitor_counts_and_flags_blindness() -> None:
     assert health2.alerts_raised == 1
 
 
-def test_run_forever_is_honestly_unimplemented() -> None:
-    with pytest.raises(NotImplementedError, match="seven-day SeedLink latency run"):
+def test_run_forever_refuses_anything_but_shadow_mode(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setenv("GHADI_OFFLINE", "1")
+    with pytest.raises(ValueError, match="shadow only"):
+        run_forever(shadow=False)
+
+
+def test_run_forever_never_touches_the_network_when_offline(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.setenv("GHADI_OFFLINE", "1")
+    with pytest.raises(RuntimeError, match="GHADI_OFFLINE"):
         run_forever()

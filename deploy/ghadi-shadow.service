@@ -1,0 +1,33 @@
+# systemd unit for GHADI in shadow mode. Decisions are recorded, nothing is sent.
+#
+#   sudo cp deploy/ghadi-shadow.service /etc/systemd/system/
+#   sudo cp deploy/ghadi.toml /etc/ghadi/ghadi.toml
+#   sudo systemctl daemon-reload
+#   sudo systemctl enable --now ghadi-shadow
+#
+# The unit runs the container built from the Dockerfile. Replace the ExecStart line with
+# the plain python command from docs/RUNBOOK.md to run without a container.
+
+[Unit]
+Description=GHADI seismic mass movement detection, shadow mode
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=10
+# The process needs the state directory and the settings file, and nothing else.
+ExecStartPre=/usr/bin/mkdir -p /var/lib/ghadi
+ExecStart=/usr/bin/docker run --rm --name ghadi-shadow \
+    --network host \
+    -v /var/lib/ghadi:/var/lib/ghadi \
+    -v /etc/ghadi/ghadi.toml:/etc/ghadi/ghadi.toml:ro \
+    ghadi:latest live --settings /etc/ghadi/ghadi.toml --hours 0
+ExecStop=/usr/bin/docker stop -t 30 ghadi-shadow
+# A stopped feed is not a crash. The loop reconnects on its own; systemd only restarts
+# the process if it exits.
+TimeoutStopSec=45
+
+[Install]
+WantedBy=multi-user.target
