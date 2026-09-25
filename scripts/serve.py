@@ -17,6 +17,7 @@ from __future__ import annotations
 import html
 import io
 import json
+import os
 import sys
 import urllib.parse
 from dataclasses import asdict, dataclass
@@ -35,6 +36,9 @@ from ghadi.service import GaugeObservation, WindowObservation, process_window  #
 from ghadi.teleseism import Origin  # noqa: E402
 
 PORT = 8770
+# Where the shadow service keeps its state (scripts/run_shadow.py). The status page
+# reads it; it never writes it.
+SHADOW_STATE_DIR = Path(os.environ.get("GHADI_STATE_DIR", REPO / "data" / "shadow"))
 EVENT_TIME = datetime(2026, 8, 26, 2, 52, 24, tzinfo=UTC)
 CASCADE = (4.9188, 1.8852)
 MAX_LEAD_MIN = 40.0
@@ -284,7 +288,7 @@ def _validate(q: dict[str, str]) -> tuple[Inputs | None, dict[str, str]]:
 
     lf_hf = num("lf_hf", CASCADE[0], 0.0, 1000.0)
     centroid = num("centroid", CASCADE[1], 0.0, 25.0, allow_lo_eq=False)
-    latency = num("latency", 60.0, 0.0, 100000.0)
+    latency = num("latency", DEFAULT.travel.warning_latency_s, 0.0, 100000.0)
     gauge = q.get("gauge", "surge")
     if gauge not in GAUGE_LABEL:
         errors["gauge"] = "Unknown gauge condition."
@@ -818,8 +822,8 @@ def _header() -> str:
         "<header class='top'><div class='wrap'><div class='row'>"
         "<div class='brand'><strong>GHADI</strong>"
         "<span>Multi-sensor hazard detection research</span></div>"
-        "<nav><a href='/'>Simulation</a><a href='#methodology'>Methodology</a>"
-        "<a href='#references'>References</a>"
+        "<nav><a href='/'>Simulation</a><a href='/shadow'>Shadow service</a>"
+        "<a href='#methodology'>Methodology</a><a href='#references'>References</a>"
         "<span class='chip-badge'>Research prototype</span></nav>"
         "</div></div></header>"
     )
@@ -1114,11 +1118,154 @@ def _export(q: dict[str, str]) -> tuple[bytes, str, str]:
     return json.dumps(payload, indent=2).encode("utf-8"), "application/json", "ghadi_result.json"
 
 
+def _shadow_status() -> dict[str, object] | None:
+    path = SHADOW_STATE_DIR / "status.json"
+    if not path.exists():
+        return None
+    try:
+        loaded = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return None
+    return loaded if isinstance(loaded, dict) else None
+
+
+def _shadow_recent_audit(limit: int = 30) -> list[dict[str, object]]:
+    path = SHADOW_STATE_DIR / "audit.jsonl"
+    if not path.exists():
+        return []
+    rows: list[dict[str, object]] = []
+    for line in path.read_text(encoding="utf-8").splitlines():
+        if line.strip():
+            try:
+                rows.append(json.loads(line)["payload"])
+            except (ValueError, KeyError, TypeError):
+                continue
+    return rows[-limit:][::-1]
+
+
+def _kv(label: str, value: object) -> str:
+    return (
+        f"<div class='kvrow'><span>{html.escape(label)}</span>"
+        f"<span class='tnum'>{html.escape(str(value))}</span></div>"
+    )
+
+
+def _shadow_page() -> str:
+    status = _shadow_status()
+    body = [
+        "<div class='notice'><b>Shadow service.</b> This page reads what the shadow "
+        "service has recorded. In shadow mode the system decides, records, and sends "
+        "nothing. An alert it would have raised waits for a named person in the outbox.</div>"
+    ]
+    if status is None:
+        body.append(
+            "<div class='panel'><h2 class='sec'>Not running here</h2>"
+            "<p class='lede'>No status file was found in "
+            f"<code>{html.escape(str(SHADOW_STATE_DIR))}</code>. Start the service with "
+            "<code>python scripts/run_shadow.py live</code>, or point this dashboard at a "
+            "state directory with the GHADI_STATE_DIR environment variable.</p></div>"
+        )
+        return _shell_titled("".join(body), "Shadow service", "Nothing is recorded yet.")
+
+    ok = bool(status.get("ok"))
+    feed = status.get("feed") if isinstance(status.get("feed"), dict) else {}
+    dec = status.get("decisions") if isinstance(status.get("decisions"), dict) else {}
+    colour = STATE["NONE"] if ok else STATE["WARNING"]
+    head = (
+        f"<div class='outcome' style='border-color:{colour['bd']};background:{colour['bg']}'>"
+        "<div class='tag'>Service state</div>"
+        f"<div class='verdict' style='color:{colour['c']}'>"
+        f"{'Healthy' if ok else 'Needs attention'}</div>"
+        f"<p class='lede'>Mode: {html.escape(str(status.get('mode')))}. Station "
+        f"{html.escape(str(status.get('station')))}, reach "
+        f"{html.escape(str(status.get('reach')))}. "
+        f"Updated {html.escape(str(status.get('updated_utc')))}.</p></div>"
+    )
+    feed_panel = (
+        "<div class='panel'><h2 class='sec'>Feed</h2>"
+        + _kv("Server", status.get("server") or "replay")
+        + _kv("Last window ended", status.get("last_window_end_utc"))
+        + _kv("Seconds since last window", status.get("seconds_since_last_window"))
+        + _kv("Windows", feed.get("windows"))
+        + _kv("Windows mostly gaps", feed.get("unusable_windows"))
+        + _kv("Windows with a trigger", feed.get("triggered_windows"))
+        + _kv("Late packets", feed.get("late_packets"))
+        + _kv("Reconnections", status.get("reconnections"))
+        + _kv("Delay p50 (s)", feed.get("delay_p50_s"))
+        + _kv("Delay p95 (s)", feed.get("delay_p95_s"))
+        + _kv("Delay max (s)", feed.get("delay_max_s"))
+        + "<p class='lede' style='margin-top:10px'>Delay is the age of the newest sample "
+        "when its packet arrived. Above 120 s the feed is too slow to warn with.</p></div>"
+    )
+    dec_panel = (
+        "<div class='panel'><h2 class='sec'>Decisions</h2>"
+        + _kv("Windows decided", dec.get("windows_seen"))
+        + _kv("Alerts staged for a person", dec.get("alerts_staged"))
+        + _kv("Set aside as distant earthquakes", dec.get("suppressed"))
+        + _kv("Last detection", dec.get("last_detected_utc"))
+        + _kv("Audit chain intact", status.get("audit_chain_ok"))
+        + _kv("Waiting for a person", status.get("staged_waiting_for_a_person"))
+        + "<p class='lede' style='margin-top:10px'>Approve or reject waiting alerts with "
+        "<code>python scripts/outbox.py list</code>. Nothing on this page sends anything.</p>"
+        "</div>"
+    )
+    rows = []
+    for r in _shadow_recent_audit():
+        d = r.get("decision") if isinstance(r.get("decision"), dict) else {}
+        s = r.get("seismic") if isinstance(r.get("seismic"), dict) else {}
+        tier = str(d.get("tier", "NONE"))
+        st = STATE.get(tier, STATE["NONE"])
+        rows.append(
+            f"<tr><td {_TD}>{html.escape(str(r.get('detected_utc')))}</td>"
+            f"<td {_TD}><b style='color:{st['c']}'>{html.escape(st['label'])}</b></td>"
+            f"<td {_TD} class='tnum'>{float(d.get('probability', 0.0)):.2f}</td>"
+            f"<td {_TD}>{'yes' if s.get('mass_movement_like') else 'no'}</td>"
+            f"<td {_TD}>{'yes' if s.get('suppressed') else 'no'}</td>"
+            f"<td {_TD}>{html.escape(str(d.get('rationale', '')))[:120]}</td></tr>"
+        )
+    table = (
+        "<div class='panel'><h2 class='sec'>Recent decisions</h2>"
+        "<p class='lede'>The newest first, from the audit log.</p>"
+        "<table style='width:100%;border-collapse:collapse;font-size:.9rem'><thead><tr>"
+        f"<th {_TD}>Detected</th><th {_TD}>Outcome</th><th {_TD}>Score</th>"
+        f"<th {_TD}>Mass movement like</th><th {_TD}>Set aside</th><th {_TD}>Why</th>"
+        "</tr></thead><tbody>"
+        + ("".join(rows) or f"<tr><td {_TD} colspan='6'>No decisions yet.</td></tr>")
+        + "</tbody></table></div>"
+    )
+    body.append(head)
+    body.append("<div class='grid2'>" + feed_panel + dec_panel + "</div>")
+    body.append(table)
+    return _shell_titled("".join(body), "Shadow service", "What the live loop has recorded.")
+
+
+def _shell_titled(body: str, title: str, lede: str) -> str:
+    return (
+        "<!doctype html><html lang='en'><head><meta charset='utf-8'>"
+        "<meta name='viewport' content='width=device-width,initial-scale=1'>"
+        "<meta http-equiv='refresh' content='30'>"
+        f"<title>GHADI {html.escape(title)}</title><style>"
+        + CSS
+        + ".grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}"
+        "@media(max-width:900px){.grid2{grid-template-columns:1fr}}"
+        "</style></head><body>"
+        + _header()
+        + "<main class='wrap'>"
+        + f"<div class='title'><h1>{html.escape(title)}</h1><p>{html.escape(lede)}</p></div>"
+        + body
+        + "</main><footer><div class='wrap'>GHADI research prototype. Shadow mode: decisions "
+        "are recorded and nothing is sent. Alert payloads remain status=Test, "
+        "scope=Restricted.</div></footer></body></html>"
+    )
+
+
 class Handler(BaseHTTPRequestHandler):
     def do_GET(self) -> None:
         parsed = urllib.parse.urlparse(self.path)
         q = {k: v[0] for k, v in urllib.parse.parse_qs(parsed.query).items()}
-        if parsed.path == "/compare":
+        if parsed.path == "/shadow":
+            self._send(_shadow_page().encode("utf-8"), "text/html; charset=utf-8")
+        elif parsed.path == "/compare":
             self._send(_compare_page().encode("utf-8"), "text/html; charset=utf-8")
         elif parsed.path == "/export":
             body, ctype, fname = _export(q)
