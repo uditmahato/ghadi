@@ -75,6 +75,11 @@ class StationSite:
     def nslc(self) -> str:
         return self.site.nslc
 
+    @property
+    def key(self) -> str:
+        """The "NET.STA" name the live loop and the corpora use for this station."""
+        return f"{self.site.network}.{self.site.station}"
+
 
 # Kakani: nearest to the 2026 source (55.9 km) and the real-time feed, but the
 # shallower archive.

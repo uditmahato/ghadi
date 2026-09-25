@@ -393,16 +393,49 @@ def run_over(
     return outcomes
 
 
-def run_forever() -> None:
-    """Run the real-time loop against the live SeedLink feed.
+def run_forever(
+    *,
+    reach: str = "TRISHULI-R07",
+    model_version: str = "shadow",
+    server: str | None = None,
+    audit_path: str | Path | None = None,
+    shadow: bool = True,
+    config: GhadiConfig | None = None,
+) -> None:
+    """Run the real-time loop against the live SeedLink feed, in shadow mode.
 
-    Not implemented, and not faked. The live feed is the project's open go/no-go: the
-    seven-day real-time latency run (issue 0.1) has not been done, so there is no basis
-    to present this loop as operational. Wire a SeedLink source into ``run_over`` once
-    that run exists; the orchestration it drives is complete and tested today.
+    Shadow means the system decides, the decision is recorded, and nothing leaves the
+    machine (handoff tier T0). Two things this does **not** claim:
+
+    * that real time operation is viable. The seven day latency run (issue #8) is still
+      open. Running this loop is what measures it: every window carries the worst packet
+      delay that built it, and the feed statistics are printed when the loop ends.
+    * that an alert can reach anyone. There is no delivery path in the codebase, by
+      design, until issue #36 builds one with a human gate in front of it.
+
+    Args:
+        shadow: must stay True. It exists so that the refusal is explicit and testable,
+            not so that it can be switched off.
     """
-    raise NotImplementedError(
-        "The live real-time loop is blocked on the seven-day SeedLink latency run "
-        "(issue 0.1). The orchestration is complete and exercised offline by run_over(); "
-        "feed a live SeedLink source into run_over to go operational."
-    )
+    from .live import FeedStats, LiveConfig, run_shadow
+    from .sources import DEFAULT_SEEDLINK_SERVER, SeedLinkSource
+
+    source = SeedLinkSource(server=server or DEFAULT_SEEDLINK_SERVER)
+    stats = FeedStats()
+    log = AuditLog(Path(audit_path)) if audit_path is not None else None
+    health = HealthMonitor()
+    try:
+        run_shadow(
+            source,
+            reach=reach,
+            model_version=model_version,
+            shadow=shadow,
+            live=LiveConfig(station=source.station_key),
+            config=config,
+            stats=stats,
+            audit_log=log,
+            health=health,
+        )
+    finally:
+        print(f"feed: {stats.as_dict()}", flush=True)
+        print(f"reconnections: {source.reconnections}", flush=True)
