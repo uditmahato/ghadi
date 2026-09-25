@@ -26,7 +26,7 @@ Then open http://localhost:8770 in your browser.
 
 ![The GHADI research dashboard](docs/images/hero_warning.png)
 
-The picture above shows the main case. The inputs from the 2026 event produce a **Warning**. Two independent sources agree, the seismic station and the Timure gauge, the fused score is 0.92, and the estimated warning time is about 3 minutes for Timure, 10 minutes for Syabrubesi, and 37 minutes for Bidur. Below the result you can see the evidence, the warning times on a shared scale, and the full method.
+The picture above shows the main case. The inputs from the 2026 event produce a **Warning**. Two independent sources agree, the seismic station and the Timure gauge, the fused score is 0.92, and the estimated warning time is about 1 and a half minutes for Timure, 8 minutes for Syabrubesi, and 35 minutes for Bidur. These use the decision time the live path measured, about 160 seconds from the slope failing to a decision. Below the result you can see the evidence, the warning times on a shared scale, and the full method.
 
 ### A distant earthquake is set aside
 
@@ -47,6 +47,26 @@ Each preset runs under its own inputs, so you can see the outcomes side by side.
 A Warning needs two separate sources that each detected something. A sensor that is switched on but quiet does not count. So in the regional earthquake case, where only the gauge sees a surge, the result is an Advisory and not a Warning. We chose this rule after testing both, because under the old rule switching on a quiet sensor could raise the alert.
 
 ![Scenario comparison](docs/images/compare.png)
+
+### The shadow service
+
+The same detector can now run on a live feed. In shadow mode it decides on every window, writes each decision to a log whose lines are chained by hash, and sends nothing. Every alert it would have raised waits for a named person, who approves or rejects it by name. The page below reads what the service has recorded. Here it shows the 2026 event replayed through the live path: one Advisory, staged for a person, from the seismic station alone.
+
+![The shadow service page](docs/images/shadow_service.png)
+
+To try it on your own machine, replay the 2026 event from the local cache:
+
+```bash
+python scripts/run_shadow.py replay --start 2026-08-26T02:42:10Z --minutes 45
+```
+
+Then see what is waiting for a person:
+
+```bash
+python scripts/outbox.py list
+```
+
+For a real feed, `docs/RUNBOOK.md` explains how to run it for a season and what each failure looks like.
 
 ### Independent confirmation from radar imagery
 
@@ -80,7 +100,9 @@ Hard limits, and they matter:
 * About 17 in every 100 real earthquakes look like the target on the two features, so the false alarm rate is still several times higher than the goal.
 * On quiet days with no earthquakes the detector still raises false alarms. Measured on the short piece of signal it really decides on, Kakani gives about 14 a month and the Everest station about 89 a month. The goal is 1. Near Everest many of these may be real ice or rock falls that never became floods.
 * The river gauge data needs an agreement with Nepal's hydrology office that is not yet in place, so the gauge data here is made up for testing.
-* The live feed is not connected. This is a research tool, not a working warning system.
+* The live feed can be connected, but only in shadow mode. Nothing leaves the machine without a named person approving it. This is a research tool, not a working warning system.
+* The time from a slope failing to a decision is about two and a half minutes, not the one minute the earlier lead times assumed. The decision needs two minutes of signal after the onset by design. So the nearest village, Timure, gets about one and a half minutes of warning, not three.
+* Requiring both stations to see the same event at a fitting time cuts the false alarms a great deal, from about 89 to about 3 a month at Everest and from 14 to none at Kakani, but the second station was missing for a third of the cases. The gauge is still the only truly independent source, and it needs the data agreement.
 
 Nothing here proves the core idea wrong. It does mean the real question, can these events be told apart at a rate people can trust, is still open.
 
@@ -95,6 +117,11 @@ Every part of the chain exists and is tested. In plain words:
 * **classify**: decide whether the seismic signal looks like a slope failure, using two simple measures against fixed thresholds.
 * **hydro**: find a fast rise in a river gauge.
 * **dhm**: clean raw gauge data into the tidy form the detector needs, and decide whether the sensor is still alive.
+* **stream** and **sources**: turn a live packet feed, or a replayed one, into analysis windows, with gaps, delay, and late packets measured rather than hidden.
+* **live**: run the detector on each window and hand the result to the service. Shadow mode only.
+* **associate**: check whether two stations could be seeing one source, and where it could be.
+* **delivery**: stage an alert for a person, record their approval, and only then deliver it to a file or an agreed endpoint. There is no public sink.
+* **settings** and **health**: site settings from a file, and a health check for whoever runs it.
 * **teleseism**: recognise a distant earthquake and set it aside.
 * **fusion**: combine the sources into one tiered decision.
 * **travel**: turn a detection into minutes of warning for each village.

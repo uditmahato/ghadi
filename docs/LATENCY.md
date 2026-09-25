@@ -89,3 +89,17 @@ The probe flushes every row to disk as it arrives, which is why 3.4 hours of dat
 survived the process being killed. Keep that property: a long collection that loses its
 data on an unclean exit is worse than no collection, because it costs the same time and
 yields nothing.
+
+## Update, 2026-09-25
+
+The log now holds 3,596 packets over about 7 hours across 2 and 3 September 2026. The
+distribution did not move: median 15.7 s, p95 22.8 s, maximum 27.1 s. This is still far
+short of the seven day run issue #8 asks for. The shadow service (`scripts/run_shadow.py
+live`) now measures the same quantity for every window it decides on, so a seven day
+shadow run is the seven day latency run.
+
+exp020 measured a different and larger number: the time from a trigger onset to a
+decision on the live path, about 156 s in the median and up to 186 s. That is the
+decision segment (120 s), the feed delay, and the wait for the window that holds the
+whole segment to close. The 60 s warning latency in the configuration predates the live
+path and understates it.

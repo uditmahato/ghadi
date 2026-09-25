@@ -238,9 +238,12 @@ class TravelConfig:
     # Time from initiation to an issued alert, everything except the water's own travel:
     # seismic wave to station, detection, fusion, CAP emission, dissemination hand-off.
     # It is SUBTRACTED from the surge arrival time to get the lead time actually
-    # delivered. The default sits inside the 180 s end-to-end budget (HANDOFF), with a
-    # measured detection floor of median ~16 s SeedLink latency (docs/LATENCY.md).
-    warning_latency_s: float = 60.0
+    # delivered. exp020 measured the live path at about 156 s from onset to decision
+    # (median), with a floor near 126 s: the 120 s decision segment, the feed delay
+    # (median 16 s on SeedLink, docs/LATENCY.md), and the wait for the window holding
+    # the whole segment to close. The earlier default of 60 s predated the live path
+    # and understated this by about a minute and a half.
+    warning_latency_s: float = 160.0
     # A settlement's arrival time is honestly known only for the calibrated source. If a
     # candidate source sits further than this from the reach's calibrated source, the
     # observed anchors no longer apply and the estimate must be flagged as extrapolation.
