@@ -145,6 +145,7 @@ def channel_from_seismic(
     name: str = "seismic",
     independence_group: str = "upstream_seismic",
     config: FusionConfig | None = None,
+    corroborated: bool = False,
 ) -> Channel:
     """Turn a seismic mass-movement classification into a fusion channel.
 
@@ -166,6 +167,17 @@ def channel_from_seismic(
     config = config or DEFAULT.fusion
 
     if classification.mass_movement_like:
+        if corroborated:
+            return Channel(
+                name=name,
+                probability=config.seismic_corroborated_p,
+                independence_group=independence_group,
+                alive=True,
+                detail=(
+                    "mass-movement-like, and a second station saw the onset at a fitting "
+                    f"time ({classification.reason})"
+                ),
+            )
         return Channel(
             name=name,
             probability=config.seismic_detected_p,

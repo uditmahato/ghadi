@@ -4,6 +4,10 @@
 [station]
 key = "NK.KKN"
 server = "rtserve.iris.washington.edu:18000"
+# Stream the horizontal components too, for the H/V rule.
+horizontals = true
+# A second station whose triggers corroborate the first. Leave empty for none.
+partner = "IO.EVN"
 
 [reach]
 id = "TRISHULI-R07"

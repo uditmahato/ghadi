@@ -27,6 +27,8 @@ DEFAULT_SETTINGS_TOML = """\
 [station]
 key = "NK.KKN"                     # one of the stations in ghadi.config.STATION_SITES
 server = "rtserve.iris.washington.edu:18000"
+horizontals = true                 # also stream the N and E components (issue #37)
+partner = "IO.EVN"                 # a second station whose triggers corroborate (#31), or ""
 
 [reach]
 id = "TRISHULI-R07"
@@ -56,6 +58,8 @@ class SiteSettings:
     hop_s: float = 60.0
     max_gap_fraction: float = 0.40
     stale_feed_s: float = 120.0
+    horizontals: bool = True
+    partner_key: str | None = None
     source_path: Path | None = field(default=None, compare=False)
 
     @property
@@ -89,6 +93,11 @@ def parse_settings(text: str, *, source: Path | None = None) -> SiteSettings:
     key = str(_get(station, "key", "NK.KKN"))
     if key not in STATION_SITES:
         raise ValueError(f"unknown station {key!r}; known: {sorted(STATION_SITES)}")
+    partner = str(_get(station, "partner", "")).strip() or None
+    if partner is not None and partner not in STATION_SITES:
+        raise ValueError(f"unknown partner station {partner!r}; known: {sorted(STATION_SITES)}")
+    if partner == key:
+        raise ValueError("the partner station must be a different station")
     feed = raw.get("feed", {})
     window_s = float(_get(feed, "window_s", 240.0))
     hop_s = float(_get(feed, "hop_s", 60.0))
@@ -112,6 +121,8 @@ def parse_settings(text: str, *, source: Path | None = None) -> SiteSettings:
     return SiteSettings(
         station_key=key,
         server=str(_get(station, "server", "rtserve.iris.washington.edu:18000")),
+        horizontals=bool(_get(station, "horizontals", True)),
+        partner_key=partner,
         reach=str(_get(raw.get("reach", {}), "id", "TRISHULI-R07")),
         state_dir=state_dir,
         health_port=port,

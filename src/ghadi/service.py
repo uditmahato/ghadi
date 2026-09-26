@@ -77,6 +77,11 @@ class WindowObservation:
     gauge: GaugeObservation | None = None
     origins: tuple[Origin, ...] = ()  # rolling global M>=5.5 catalogue for suppression
     event_id: str = "GHADI-EVENT"
+    # Horizontal to vertical energy over the decision segment, when the horizontals
+    # were available (issue #37). None means the H/V rule cannot be applied.
+    segment_hv: float | None = None
+    # A second station saw this onset at a time fitting a source in the region (#31).
+    seismic_corroborated: bool = False
 
 
 @dataclass(frozen=True)
@@ -115,7 +120,10 @@ def process_window(
     cfg = config or DEFAULT
 
     classification = classify_segment(
-        obs.segment_lf_hf, obs.segment_centroid_hz, config=cfg.classify
+        obs.segment_lf_hf,
+        obs.segment_centroid_hz,
+        config=cfg.classify,
+        segment_hv=obs.segment_hv,
     )
     suppression = explain(obs.detected_utc, obs.origins, station_lat, station_lon)
 
@@ -136,7 +144,10 @@ def process_window(
     else:
         channels.append(
             channel_from_seismic(
-                classification, sensor_alive=obs.seismic_sensor_alive, config=cfg.fusion
+                classification,
+                sensor_alive=obs.seismic_sensor_alive,
+                config=cfg.fusion,
+                corroborated=obs.seismic_corroborated,
             )
         )
 
@@ -239,6 +250,8 @@ class AuditRecord:
             "seismic": {
                 "segment_lf_hf": obs.segment_lf_hf,
                 "segment_centroid_hz": obs.segment_centroid_hz,
+                "segment_hv": obs.segment_hv,
+                "corroborated": obs.seismic_corroborated,
                 "mass_movement_like": classification_like,
                 "sensor_alive": obs.seismic_sensor_alive,
                 "suppressed": suppression.suppressed,

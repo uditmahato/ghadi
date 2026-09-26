@@ -49,17 +49,25 @@ class SeismicClassification:
     centroid_threshold_hz: float
     earthquake_overlap: float  # measured false-positive context at this operating point
     reason: str
+    segment_hv: float | None = None  # horizontal to vertical energy over the segment
+    hv_threshold: float | None = None  # None when the rule is off
 
 
 def classify_segment(
     segment_lf_hf: float,
     segment_centroid_hz: float,
     config: ClassifyConfig | None = None,
+    segment_hv: float | None = None,
 ) -> SeismicClassification:
     """Apply the decision rule to one window's decision-segment spectral features.
 
     A feature that is NaN (the signal-presence gate returned no measurement) fails the
     rule: absence of a measurable low-frequency extended source is not evidence of one.
+
+    ``segment_hv`` is the horizontal to vertical energy ratio over the same segment. It
+    is tested only when the configuration turns the rule on, and only when a value
+    exists: a station with no horizontals cannot fail a rule it cannot measure, and the
+    reason says the rule was not applied.
     """
     cfg = config or DEFAULT.classify
     lf_ok = math.isfinite(segment_lf_hf) and segment_lf_hf >= cfg.cascade_segment_lf_hf
@@ -67,7 +75,15 @@ def classify_segment(
         math.isfinite(segment_centroid_hz)
         and segment_centroid_hz <= cfg.cascade_segment_centroid_hz
     )
-    like = lf_ok and centroid_ok
+    hv_applies = (
+        cfg.segment_hv_min is not None and segment_hv is not None and math.isfinite(segment_hv)
+    )
+    hv_ok = not hv_applies or (
+        segment_hv is not None
+        and cfg.segment_hv_min is not None
+        and segment_hv >= cfg.segment_hv_min
+    )
+    like = lf_ok and centroid_ok and hv_ok
 
     if like:
         reason = (
@@ -76,6 +92,10 @@ def classify_segment(
             f"{cfg.earthquake_overlap * 100:.1f}% of real earthquakes also meet both "
             f"(magnitude-dependent); a lower bound fitted to n=1, not a probability"
         )
+        if hv_applies:
+            reason += f"; H/V {segment_hv:.2f} >= {cfg.segment_hv_min:.2f}"
+        elif cfg.segment_hv_min is not None:
+            reason += "; H/V rule not applied, no horizontals"
     else:
         failed = []
         if not lf_ok:
@@ -84,6 +104,8 @@ def classify_segment(
             failed.append(
                 f"centroid {segment_centroid_hz:.2f} > {cfg.cascade_segment_centroid_hz:.2f} Hz"
             )
+        if not hv_ok and segment_hv is not None and cfg.segment_hv_min is not None:
+            failed.append(f"H/V {segment_hv:.2f} < {cfg.segment_hv_min:.2f}")
         reason = "not mass-movement-like: " + "; ".join(failed)
 
     return SeismicClassification(
@@ -94,4 +116,6 @@ def classify_segment(
         centroid_threshold_hz=cfg.cascade_segment_centroid_hz,
         earthquake_overlap=cfg.earthquake_overlap,
         reason=reason,
+        segment_hv=segment_hv,
+        hv_threshold=cfg.segment_hv_min,
     )

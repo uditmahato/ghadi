@@ -208,17 +208,30 @@ class ClassifyConfig:
     a LOWER BOUND on separability, not an estimate (exp003, issue 3.5).
     """
 
-    # exp005, cascade over the 120 s decision segment. A window is mass-movement-like
-    # when its low/high spectral ratio is at least this AND its centroid is at most the
-    # value below — a slow, low-frequency extended source.
-    cascade_segment_lf_hf: float = 4.9188
-    cascade_segment_centroid_hz: float = 1.8852
-    # Measured earthquake overlap AT this operating point: 11 of 64 real earthquakes meet
-    # BOTH thresholds on the 120 s segment (exp005). This is the honest false-positive
-    # context and travels with every classification. Quote 17.2%, never "clean" (exp003).
-    # It is magnitude-dependent — against magnitude-matched events it falls to ~1 in 25
-    # (exp003) — because the features correlate with size; a call must say so.
-    earthquake_overlap: float = 11.0 / 64.0
+    # The 2026 cascade over the 120 s decision segment gave LF/HF 4.9188 and a centroid
+    # of 1.8852 Hz (exp005). A window is mass-movement-like when its low/high spectral
+    # ratio is at least the first value AND its centroid is at most the second: a slow,
+    # low-frequency extended source. The thresholds below are those values with a 20%
+    # margin (exp022): a threshold set exactly at the one event's value has no margin,
+    # and exp020 showed the live path missing the event by a rounding step. The margin
+    # is a choice, not a measurement of how real events spread; exp022 priced it.
+    cascade_segment_lf_hf: float = 4.9188 * 0.8
+    cascade_segment_centroid_hz: float = 1.8852 * 1.2
+    # Measured earthquake overlap AT this operating point: 14 of 64 real earthquakes meet
+    # BOTH thresholds on the 120 s segment (exp022, 11 of 64 at zero margin in exp005).
+    # This is the honest false-positive context and travels with every classification.
+    # Quote 21.9%, never "clean" (exp003). It is magnitude-dependent, because the
+    # features correlate with size; a call must say so.
+    earthquake_overlap: float = 14.0 / 64.0
+    # Third criterion, issue #37 and exp021: the share of energy on the horizontal
+    # channels over the decision segment. A shallow surface source seen at tens of
+    # kilometres arrives mostly as surface waves, which move the ground sideways. None
+    # disables the rule, which is the default until a margin is chosen from exp022. A
+    # segment with no horizontals available passes this rule, and the classification
+    # says so, because an absent measurement is not evidence against a mass movement.
+    # The 2026 cascade gave 2.3248 at NK.KKN; this is that value with the same 20%
+    # margin (exp022).
+    segment_hv_min: float | None = 2.3248 * 0.8
 
 
 # --- hydrology ----------------------------------------------------------------------
@@ -340,6 +353,12 @@ class FusionConfig:
     # value — the seismic channel alone is weaker corroboration than a gauge surge.
     seismic_detected_p: float = 0.60
     seismic_quiet_p: float = 0.05
+    # A mass movement like segment whose onset a second station also saw, at a time
+    # that fits a source in the region (exp019). Two seismometers share a failure mode,
+    # so this raises the one seismic channel and never becomes a second group. Assumed,
+    # like every operating point here; kept below warning_p so agreement alone cannot
+    # reach WARNING.
+    seismic_corroborated_p: float = 0.70
     # A live group *supports* the outcome when its strongest channel is at least this
     # probable. It sits between every quiet operating point (0.05) and every detected one
     # (0.60, 0.80), so it separates "reporting and detecting" from "reporting, quiet".

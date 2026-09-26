@@ -89,6 +89,9 @@ class StreamWindow:
     gap_fraction: float  # share of samples no packet supplied, filled with zeros
     n_packets: int
     max_delay_s: float  # worst packet delay that contributed to this window
+    # True where a sample was invented by the gap fill. The detector uses it to ignore
+    # triggers that sit on the edge of a filled gap, which are edges, not arrivals.
+    filled: np.ndarray | None = None
 
     @property
     def usable_fraction(self) -> float:
@@ -132,6 +135,10 @@ class WindowAssembler:
     _emitted: set[int] = field(default_factory=set, init=False, repr=False)
     rejected_packets: int = field(default=0, init=False)
     late_packets: int = field(default=0, init=False)
+    # The newest packet's delay. A window is only considered overdue once the feed's
+    # own delay has passed, or a slow feed would have every window closed before its
+    # data arrived.
+    last_delay_s: float = field(default=0.0, init=False)
 
     def __post_init__(self) -> None:
         if self.window_s <= 0:
@@ -174,6 +181,7 @@ class WindowAssembler:
         data = np.asarray(packet.data, dtype=float)
         if data.size == 0:
             return []
+        self.last_delay_s = max(packet.delay_s, 0.0)
 
         times = packet.start_utc.timestamp() + np.arange(data.size) / self.sampling_rate
         # Every window whose span touches this packet.
@@ -210,13 +218,15 @@ class WindowAssembler:
         return [self._emit(i) for i in done]
 
     def flush(self, now_utc: datetime) -> list[StreamWindow]:
-        """Emit every window whose end plus the grace period is in the past.
+        """Emit every window that is overdue by the feed's own delay plus the grace.
 
         This is what covers a feed that goes quiet: without it, the last window before
         an outage would sit in the buffer forever and the outage would look like
-        silence rather than a gap.
+        silence rather than a gap. The feed's delay is subtracted first, so a feed that
+        runs minutes behind is judged against when its data can arrive, not against
+        another feed's clock.
         """
-        cutoff = now_utc.timestamp() - self.grace_s
+        cutoff = now_utc.timestamp() - self.grace_s - self.last_delay_s
         done = sorted(k for k in self._pending if self._window_end_s(k) <= cutoff)
         return [self._emit(i) for i in done]
 
@@ -226,7 +236,8 @@ class WindowAssembler:
         # Forget emitted indices far behind the newest one; the set must not grow forever.
         floor_index = index - 4 * math.ceil(self.window_s / self.hop) - 8
         self._emitted = {i for i in self._emitted if i >= floor_index}
-        missing = int(np.count_nonzero(np.isnan(pending.data)))
+        filled = np.isnan(pending.data)
+        missing = int(np.count_nonzero(filled))
         data = np.nan_to_num(pending.data, nan=0.0)
         start = self._window_start(index)
         return StreamWindow(
@@ -238,6 +249,7 @@ class WindowAssembler:
             gap_fraction=missing / self.samples_per_window,
             n_packets=pending.n_packets,
             max_delay_s=pending.max_delay_s if pending.n_packets else float("nan"),
+            filled=filled if missing else None,
         )
 
 
@@ -246,18 +258,21 @@ class StreamAssembler:
     """One assembler per station, so several stations can share a feed."""
 
     window_s: float
-    sampling_rate: float
+    # None lets each station take its rate from its first packet. Two stations on one
+    # feed need not share a rate, and a rate forced on the wrong station would reject
+    # every packet it sends.
+    sampling_rate: float | None = None
     hop_s: float | None = None
     grace_s: float = 5.0
     _by_station: dict[str, WindowAssembler] = field(default_factory=dict, init=False, repr=False)
 
-    def _for(self, station: str) -> WindowAssembler:
+    def _for(self, station: str, rate: float) -> WindowAssembler:
         assembler = self._by_station.get(station)
         if assembler is None:
             assembler = WindowAssembler(
                 station=station,
                 window_s=self.window_s,
-                sampling_rate=self.sampling_rate,
+                sampling_rate=self.sampling_rate or rate,
                 hop_s=self.hop_s,
                 grace_s=self.grace_s,
             )
@@ -265,7 +280,7 @@ class StreamAssembler:
         return assembler
 
     def push(self, packet: Packet) -> list[StreamWindow]:
-        return self._for(packet.station).push(packet)
+        return self._for(packet.station, packet.sampling_rate).push(packet)
 
     def flush(self, now_utc: datetime) -> list[StreamWindow]:
         out: list[StreamWindow] = []

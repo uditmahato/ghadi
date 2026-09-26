@@ -38,11 +38,18 @@ import numpy as np
 REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO / "src"))
 
-from ghadi.config import STATION_SITES  # noqa: E402
+from ghadi.config import STATION_SITES, Station  # noqa: E402
 from ghadi.delivery import FileSink, Outbox  # noqa: E402
 from ghadi.fdsn import CachedWaveformClient, WaveformRequest  # noqa: E402
 from ghadi.health import HealthServer  # noqa: E402
-from ghadi.live import FeedStats, LiveConfig, WindowVerdict, run_shadow  # noqa: E402
+from ghadi.live import (  # noqa: E402
+    FeedStats,
+    LiveConfig,
+    PartnerConfig,
+    WindowVerdict,
+    horizontal_key,
+    run_shadow,
+)
 from ghadi.service import AuditLog, HealthMonitor, ServiceOutcome, verify_chain  # noqa: E402
 from ghadi.settings import SiteSettings, load_settings  # noqa: E402
 from ghadi.sources import ReplaySource, SeedLinkSource, packets_from_trace  # noqa: E402
@@ -56,26 +63,73 @@ def parse_utc(text: str) -> datetime:
 
 
 def cached_packets(
-    station_key: str, start: datetime, minutes: float, packet_s: float, delay_s: float
+    station_key: str,
+    start: datetime,
+    minutes: float,
+    packet_s: float,
+    delay_s: float,
+    *,
+    component: str = "Z",
+    key: str | None = None,
+    required: bool = True,
 ) -> tuple[list[Packet], float]:
     """Cut a cached archive window into packets, as a feed would have delivered it."""
     site = STATION_SITES[station_key]
     client = CachedWaveformClient()
     end = start + timedelta(minutes=minutes)
+    channel = site.site.channel[:2] + component
     result = client.get_waveforms(
         WaveformRequest(
-            site.site.network, site.site.station, site.site.location, site.site.channel, start, end
+            site.site.network, site.site.station, site.site.location, channel, start, end
         )
     )
     if not result.ok:
+        if not required:
+            return [], 0.0
         raise SystemExit(f"no waveform for {station_key} at {start.isoformat()}: {result.error}")
     trace = result.stream.merge(fill_value="interpolate")[0]
     sr = float(trace.stats.sampling_rate)
     data = np.asarray(trace.data, dtype=float)
     first = trace.stats.starttime.datetime.replace(tzinfo=UTC)
     packets = packets_from_trace(
-        data, sr, first, station=station_key, packet_s=packet_s, delay_s=delay_s
+        data, sr, first, station=key or station_key, packet_s=packet_s, delay_s=delay_s
     )
+    return packets, sr
+
+
+def replay_packets(settings: SiteSettings, args: argparse.Namespace) -> tuple[list[Packet], float]:
+    """Primary vertical, its horizontals if asked, and the partner, merged by arrival."""
+    packets, sr = cached_packets(
+        settings.station_key, args.start, args.minutes, args.packet_s, args.delay_s
+    )
+    if settings.horizontals:
+        for comp in ("N", "E"):
+            extra, _ = cached_packets(
+                settings.station_key,
+                args.start,
+                args.minutes,
+                args.packet_s,
+                args.delay_s,
+                component=comp,
+                key=horizontal_key(settings.station_key, comp),
+                required=False,
+            )
+            if not extra:
+                print(f"no {comp} component in the cache for this window; H/V rule off")
+            packets += extra
+    if settings.partner_key:
+        extra, _ = cached_packets(
+            settings.partner_key,
+            args.start,
+            args.minutes,
+            args.packet_s,
+            args.delay_s,
+            required=False,
+        )
+        if not extra:
+            print(f"no partner waveform ({settings.partner_key}) in the cache; no corroboration")
+        packets += extra
+    packets.sort(key=lambda p: p.received_utc)
     return packets, sr
 
 
@@ -249,27 +303,52 @@ def main(argv: list[str] | None = None) -> int:
         [FileSink(settings.outbox_dir)],
         staging_dir=settings.staging_dir,
     )
+    partner_cfg: PartnerConfig | None = None
+    if settings.partner_key:
+        partner_site = STATION_SITES[settings.partner_key]
+        partner_cfg = PartnerConfig(
+            settings.partner_key, partner_site.latitude, partner_site.longitude
+        )
     live_cfg = LiveConfig(
         station=settings.station_key,
         window_s=settings.window_s,
         hop_s=settings.hop_s,
         max_gap_fraction=settings.max_gap_fraction,
         stale_feed_s=settings.stale_feed_s,
+        horizontals=settings.horizontals,
+        partner=partner_cfg,
     )
 
     source: ReplaySource | SeedLinkSource
     seedlink: SeedLinkSource | None = None
     if args.mode == "replay":
-        packets, sr = cached_packets(
-            settings.station_key, args.start, args.minutes, args.packet_s, args.delay_s
-        )
+        packets, sr = replay_packets(settings, args)
         print(f"replaying {len(packets)} packets from {settings.station_key} at {sr:g} Hz")
         source = ReplaySource(packets, speed=args.speed)
         live_cfg = LiveConfig(**{**live_cfg.__dict__, "sampling_rate": sr})
     else:
         site = STATION_SITES[settings.station_key]
+        extra_streams: list[tuple[Station, str]] = []
+        if settings.horizontals:
+            for comp in ("N", "E"):
+                extra_streams.append(
+                    (
+                        Station(
+                            site.site.network,
+                            site.site.station,
+                            site.site.location,
+                            site.site.channel[:2] + comp,
+                        ),
+                        horizontal_key(settings.station_key, comp),
+                    )
+                )
+        if settings.partner_key:
+            extra_streams.append((STATION_SITES[settings.partner_key].site, settings.partner_key))
         seedlink = SeedLinkSource(
-            station=site.site, server=settings.server, key=settings.station_key
+            station=site.site,
+            server=settings.server,
+            key=settings.station_key,
+            extra_streams=tuple(extra_streams),
         )
         source = seedlink
         print(f"connecting to {settings.server} for {settings.station_key}; stop with Ctrl-C")

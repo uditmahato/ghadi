@@ -101,6 +101,9 @@ class SeedLinkSource:
     station: Station = PRIMARY_STATION
     server: str = DEFAULT_SEEDLINK_SERVER
     key: str | None = None  # defaults to "NET.STA"
+    # Further streams on the same connection, each with the packet key it travels
+    # under: a station's horizontals (see ghadi.live.horizontal_key) or a partner station.
+    extra_streams: tuple[tuple[Station, str], ...] = ()
     connect_timeout_s: float = 60.0
     max_backoff_s: float = 60.0
     queue_size: int = 1000
@@ -155,12 +158,20 @@ class SeedLinkSource:
         from obspy.clients.seedlink.easyseedlink import EasySeedLinkClient
 
         source = self
+        keys = {
+            (self.station.network, self.station.station, self.station.channel): self.station_key
+        }
+        for station, key in self.extra_streams:
+            keys[(station.network, station.station, station.channel)] = key
 
         class _Client(EasySeedLinkClient):
             def on_data(self, trace: Any) -> None:
                 stats = trace.stats
+                key = keys.get((stats.network, stats.station, stats.channel))
+                if key is None:
+                    return
                 packet = Packet(
-                    station=source.station_key,
+                    station=key,
                     start_utc=stats.starttime.datetime.replace(tzinfo=UTC),
                     sampling_rate=float(stats.sampling_rate),
                     data=np.asarray(trace.data, dtype=float),
@@ -181,6 +192,8 @@ class SeedLinkSource:
         client.conn.timeout = self.connect_timeout_s
         client.connect()
         client.select_stream(self.station.network, self.station.station, self.station.channel)
+        for station, _key in self.extra_streams:
+            client.select_stream(station.network, station.station, station.channel)
         try:
             client.run()
         except KeyboardInterrupt:
