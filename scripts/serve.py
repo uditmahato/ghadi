@@ -17,6 +17,7 @@ from __future__ import annotations
 import html
 import io
 import json
+import os
 import sys
 import urllib.parse
 from dataclasses import asdict, dataclass
@@ -35,6 +36,9 @@ from ghadi.service import GaugeObservation, WindowObservation, process_window  #
 from ghadi.teleseism import Origin  # noqa: E402
 
 PORT = 8770
+# Where the shadow service keeps its state (scripts/run_shadow.py). The status page
+# reads it; it never writes it.
+SHADOW_STATE_DIR = Path(os.environ.get("GHADI_STATE_DIR", REPO / "data" / "shadow"))
 EVENT_TIME = datetime(2026, 8, 26, 2, 52, 24, tzinfo=UTC)
 CASCADE = (4.9188, 1.8852)
 MAX_LEAD_MIN = 40.0
@@ -83,22 +87,22 @@ PRESETS = [
     ),
     (
         "Distant earthquake",
-        "lf_hf=4.9188&centroid=1.8852&gauge=none&teleseism=on",
+        "lf_hf=4.9188&centroid=1.8852&gauge=none&station=on&teleseism=on",
         "A teleseism the catalogue explains and sets aside",
     ),
     (
         "Gauge unavailable",
-        "lf_hf=1.66&centroid=3.04&gauge=dead",
+        "lf_hf=1.66&centroid=3.04&gauge=dead&station=on",
         "Downstream sensor stops reporting mid-event",
     ),
     (
         "Background conditions",
-        "lf_hf=1.66&centroid=3.04&gauge=quiet",
+        "lf_hf=1.66&centroid=3.04&gauge=quiet&station=on",
         "Quiet seismic and river; no event",
     ),
     (
         "Increased processing latency",
-        "lf_hf=4.9188&centroid=1.8852&gauge=surge&latency=600",
+        "lf_hf=4.9188&centroid=1.8852&gauge=surge&station=on&latency=600",
         "A slow pipeline erodes the lead time",
     ),
 ]
@@ -284,7 +288,7 @@ def _validate(q: dict[str, str]) -> tuple[Inputs | None, dict[str, str]]:
 
     lf_hf = num("lf_hf", CASCADE[0], 0.0, 1000.0)
     centroid = num("centroid", CASCADE[1], 0.0, 25.0, allow_lo_eq=False)
-    latency = num("latency", 60.0, 0.0, 100000.0)
+    latency = num("latency", DEFAULT.travel.warning_latency_s, 0.0, 100000.0)
     gauge = q.get("gauge", "surge")
     if gauge not in GAUGE_LABEL:
         errors["gauge"] = "Unknown gauge condition."
@@ -493,7 +497,14 @@ def _outcome_panel(o) -> str:  # type: ignore[no-untyped-def]
 
 def _confidence(o) -> str:  # type: ignore[no-untyped-def]
     p = o.decision.probability
-    groups = o.decision.independent_groups
+    live = o.decision.independent_groups
+    supporting = o.decision.supporting_groups
+    strict = DEFAULT.fusion.warning_requires_supporting_groups
+    gate = (
+        "only groups that detected something count toward the warning gate"
+        if strict
+        else "any live group counts toward the warning gate, including a quiet one"
+    )
     width = min(100, p * 100)
     thr_x = WARNING_P * 100
     return (
@@ -505,12 +516,16 @@ def _confidence(o) -> str:  # type: ignore[no-untyped-def]
         "<span>1.00</span></div>"
         f"<div class='kvrow'><span>Configured warning threshold</span>"
         f"<span class='tnum'>{WARNING_P:.2f}</span></div>"
-        f"<div class='kvrow'><span>Supporting evidence groups</span>"
-        f"<span class='tnum'>{groups} of {MIN_GROUPS} required</span></div>"
+        f"<div class='kvrow'><span>Live evidence groups</span>"
+        f"<span class='tnum'>{live}</span></div>"
+        f"<div class='kvrow'><span>Groups that detected something</span>"
+        f"<span class='tnum'>{supporting}</span></div>"
+        f"<div class='kvrow'><span>Groups required for a warning</span>"
+        f"<span class='tnum'>{MIN_GROUPS}</span></div>"
         "<p class='lede' style='margin-top:12px'>Combined across independent evidence sources "
         "(noisy-OR). Calibration: not calibrated. The operating points are assumed, based on a "
-        "single confirmed event (n=1), so this is a decision score, not a validated probability."
-        "</p></div>"
+        "single confirmed event (n=1), so this is a decision score, not a validated probability. "
+        f"Gate rule in force: {html.escape(gate)}.</p></div>"
     )
 
 
@@ -518,7 +533,7 @@ def _channels(o) -> str:  # type: ignore[no-untyped-def]
     rows = ""
     for ch in o.channels:
         name = CHANNEL_LABEL.get(ch.name, ch.name)
-        supports = ch.probability >= 0.5 and ch.alive
+        supports = ch.probability >= DEFAULT.fusion.support_p and ch.alive
         if not ch.alive:
             dot, tag, tcls = "#A52828", "Unavailable", "off"
         elif supports:
@@ -691,7 +706,8 @@ def _details(inp: Inputs, o, ran: bool) -> str:  # type: ignore[no-untyped-def]
         "explains the onset is set aside. The gauge fires when rate of rise exceeds "
         f"{RATE_THRESHOLD:.2f} m/min. Available channels are combined by noisy-OR across "
         f"independent sources; a Warning requires a fused score of at least {WARNING_P:.2f} with "
-        f"at least {MIN_GROUPS} independent groups.</p></div></details>"
+        f"at least {MIN_GROUPS} independent groups that each detected something. A sensor that "
+        "is online but quiet does not count toward that.</p></div></details>"
         "<details class='d' id='references'><summary>Data sources and provenance</summary>"
         "<div class='body'><ul>"
         "<li>Seismic: open FDSN broadband stations (NK.KKN, IO.EVN). In this simulation the "
@@ -806,8 +822,8 @@ def _header() -> str:
         "<header class='top'><div class='wrap'><div class='row'>"
         "<div class='brand'><strong>GHADI</strong>"
         "<span>Multi-sensor hazard detection research</span></div>"
-        "<nav><a href='/'>Simulation</a><a href='#methodology'>Methodology</a>"
-        "<a href='#references'>References</a>"
+        "<nav><a href='/'>Simulation</a><a href='/shadow'>Shadow service</a>"
+        "<a href='#methodology'>Methodology</a><a href='#references'>References</a>"
         "<span class='chip-badge'>Research prototype</span></nav>"
         "</div></div></header>"
     )
@@ -851,6 +867,103 @@ if(f&&s){f.addEventListener('input',function(){s.hidden=false;});}})();
 """
 
 
+EXP012_RESULTS = REPO / "experiments" / "exp012_satellite_confirmation" / "results.json"
+_TD = "style='border-bottom:1px solid #DCE3EB;padding:8px 6px;vertical-align:top'"
+
+
+def _satellite_section() -> str:
+    """Independent radar confirmation of the 2026 source, read from exp012's record.
+
+    Shown after the fact and independent of the scenario above: imagery bounds where and
+    roughly when the ground changed, and adds no warning time.
+    """
+    head = (
+        "<div class='panel section' id='satellite'>"
+        "<h2 class='sec'>Independent radar confirmation of the 2026 source</h2>"
+        "<p class='lede'>After the fact, from free Sentinel-1 radar (experiment 012). Each "
+        "row is one satellite track: the last pass before 26 Aug 2026 compared with the "
+        "first pass after it, then judged against a pre-event control pair on the same "
+        "track. This is observed satellite data, not part of the simulation above, and it "
+        "adds no warning time.</p>"
+    )
+    if not EXP012_RESULTS.exists():
+        return head + (
+            "<p class='lede'>No satellite record yet. Run "
+            "<code>experiments/exp012_satellite_confirmation/run.py</code>.</p></div>"
+        )
+    try:
+        data = json.loads(EXP012_RESULTS.read_text(encoding="utf-8"))
+        rec = next(e for e in data["events"] if str(e["event_id"]).startswith("NPL-2026-08-26"))
+    except Exception:
+        return head + "<p class='lede'>The satellite record could not be read.</p></div>"
+    if rec.get("status") != "analysed":
+        why = html.escape(str(rec.get("reason", "not analysed")))
+        return head + f"<p class='lede'>{why}</p></div>"
+
+    rows = ""
+    for p in rec.get("pairs", []):
+        if "error" in p:
+            rows += (
+                f"<tr><td {_TD}>{p['before']['orbit']}</td><td {_TD} colspan='6'>"
+                f"{html.escape(str(p['error']))}</td></tr>"
+            )
+            continue
+        ctrl = p.get("control") or {}
+        cmp = p.get("control_comparison") or {}
+        verdict = str(cmp.get("verdict", "n/a"))
+        cls = {"above_background": "obs", "inconclusive": "syn"}.get(verdict, "")
+        ratio = cmp.get("ratio")
+        ratio_s = f"{ratio:.1f}x" if isinstance(ratio, int | float) else "n/a"
+        rows += (
+            f"<tr><td {_TD}>{p['before']['orbit']}</td>"
+            f"<td {_TD} class='tnum'>{p['before']['date']} to {p['after']['date']}</td>"
+            f"<td {_TD} class='tnum'>{p.get('largest_blob_km2', 'n/a')}</td>"
+            f"<td {_TD} class='tnum'>{ctrl.get('largest_blob_km2', 'n/a')}</td>"
+            f"<td {_TD} class='tnum'>{ratio_s}</td>"
+            f"<td {_TD} class='tnum'>{p.get('blob_distance_from_source_km', 'n/a')}</td>"
+            f"<td {_TD} class='{cls}'><b>{html.escape(verdict.replace('_', ' '))}</b></td></tr>"
+        )
+    header = (
+        f"<tr><td {_TD}><b>Track</b></td><td {_TD}><b>Before to after</b></td>"
+        f"<td {_TD}><b>Event patch (km2)</b></td><td {_TD}><b>Control patch (km2)</b></td>"
+        f"<td {_TD}><b>Ratio</b></td><td {_TD}><b>Distance from source (km)</b></td>"
+        f"<td {_TD}><b>Against control</b></td></tr>"
+    )
+    table = (
+        "<div style='overflow-x:auto'><table style='border-collapse:collapse;width:100%;"
+        f"font-size:.9rem'>{header}{rows}</table></div>"
+    )
+    note = (
+        "<p class='lede' style='margin-top:10px'>Above background means the event pair's "
+        "largest changed patch is at least "
+        f"{DEFAULT.eo.control_min_ratio:g} times the control's; that ratio was fixed before "
+        f"the 2026 pairs were seen. Region: {rec.get('roi_half_km', 'n/a')} km half width "
+        "around the catalogued source, which itself carries about 8 km of uncertainty. "
+        "Radar only; optical scenes around the event were cloud covered. The imagery bounds "
+        "the event to the 12 days between passes; the minute comes from the seismic onset.</p>"
+    )
+    pix = ""
+    exp013 = REPO / "experiments" / "exp013_cross_track_excess" / "results.json"
+    if exp013.exists():
+        try:
+            d13 = json.loads(exp013.read_text(encoding="utf-8"))
+            r13 = next(e for e in d13["events"] if str(e["event_id"]).startswith("NPL-2026-08-26"))
+            if r13.get("status") == "analysed":
+                ew, nw = r13["event_window"], r13["null_window"]
+                pix = (
+                    "<p class='lede'>A stricter pixel level test (experiment 013) asks whether "
+                    "the change sits in the same pixels on at least two tracks, after each "
+                    f"track's own normal change is removed: a {ew['largest_patch_km2']} km2 patch "
+                    f"in the event window against {nw['largest_patch_km2']} km2 for the same test "
+                    f"on the weeks before the event, {r13.get('event_over_null_ratio', 'n/a')} "
+                    f"times larger, {ew.get('distance_from_source_km', 'n/a')} km from the "
+                    "catalogued point.</p>"
+                )
+        except Exception:
+            pix = ""
+    return head + table + note + pix + "</div>"
+
+
 def _page(q: dict[str, str]) -> str:
     ran = any(k in q for k in PARAM_KEYS)
     inp, errors = _validate(q)
@@ -867,8 +980,10 @@ def _page(q: dict[str, str]) -> str:
             )
         )
         default_inp = inp or Inputs(*CASCADE, "surge", True, False, 60.0)
-        body = f"<div class='workspace'><div>{left}</div><div>{right}</div></div>" + _details(
-            default_inp, None, ran=False
+        body = (
+            f"<div class='workspace'><div>{left}</div><div>{right}</div></div>"
+            + _satellite_section()
+            + _details(default_inp, None, ran=False)
         )
         return _shell(body, ran=False)
 
@@ -899,7 +1014,14 @@ def _page(q: dict[str, str]) -> str:
         f"<a class='btn' href='/export?{_qs(inp)}&amp;format=csv'>Export warning times (CSV)</a>"
         "<a class='btn' href='/compare'>Compare scenarios</a></div></div>"
     )
-    body = workspace + _warning_chart(o) + evidence + exports + _details(inp, o, ran=True)
+    body = (
+        workspace
+        + _warning_chart(o)
+        + evidence
+        + _satellite_section()
+        + exports
+        + _details(inp, o, ran=True)
+    )
     return _shell(body, ran=True)
 
 
@@ -996,11 +1118,154 @@ def _export(q: dict[str, str]) -> tuple[bytes, str, str]:
     return json.dumps(payload, indent=2).encode("utf-8"), "application/json", "ghadi_result.json"
 
 
+def _shadow_status() -> dict[str, object] | None:
+    path = SHADOW_STATE_DIR / "status.json"
+    if not path.exists():
+        return None
+    try:
+        loaded = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return None
+    return loaded if isinstance(loaded, dict) else None
+
+
+def _shadow_recent_audit(limit: int = 30) -> list[dict[str, object]]:
+    path = SHADOW_STATE_DIR / "audit.jsonl"
+    if not path.exists():
+        return []
+    rows: list[dict[str, object]] = []
+    for line in path.read_text(encoding="utf-8").splitlines():
+        if line.strip():
+            try:
+                rows.append(json.loads(line)["payload"])
+            except (ValueError, KeyError, TypeError):
+                continue
+    return rows[-limit:][::-1]
+
+
+def _kv(label: str, value: object) -> str:
+    return (
+        f"<div class='kvrow'><span>{html.escape(label)}</span>"
+        f"<span class='tnum'>{html.escape(str(value))}</span></div>"
+    )
+
+
+def _shadow_page() -> str:
+    status = _shadow_status()
+    body = [
+        "<div class='notice'><b>Shadow service.</b> This page reads what the shadow "
+        "service has recorded. In shadow mode the system decides, records, and sends "
+        "nothing. An alert it would have raised waits for a named person in the outbox.</div>"
+    ]
+    if status is None:
+        body.append(
+            "<div class='panel'><h2 class='sec'>Not running here</h2>"
+            "<p class='lede'>No status file was found in "
+            f"<code>{html.escape(str(SHADOW_STATE_DIR))}</code>. Start the service with "
+            "<code>python scripts/run_shadow.py live</code>, or point this dashboard at a "
+            "state directory with the GHADI_STATE_DIR environment variable.</p></div>"
+        )
+        return _shell_titled("".join(body), "Shadow service", "Nothing is recorded yet.")
+
+    ok = bool(status.get("ok"))
+    feed = status.get("feed") if isinstance(status.get("feed"), dict) else {}
+    dec = status.get("decisions") if isinstance(status.get("decisions"), dict) else {}
+    colour = STATE["NONE"] if ok else STATE["WARNING"]
+    head = (
+        f"<div class='outcome' style='border-color:{colour['bd']};background:{colour['bg']}'>"
+        "<div class='tag'>Service state</div>"
+        f"<div class='verdict' style='color:{colour['c']}'>"
+        f"{'Healthy' if ok else 'Needs attention'}</div>"
+        f"<p class='lede'>Mode: {html.escape(str(status.get('mode')))}. Station "
+        f"{html.escape(str(status.get('station')))}, reach "
+        f"{html.escape(str(status.get('reach')))}. "
+        f"Updated {html.escape(str(status.get('updated_utc')))}.</p></div>"
+    )
+    feed_panel = (
+        "<div class='panel'><h2 class='sec'>Feed</h2>"
+        + _kv("Server", status.get("server") or "replay")
+        + _kv("Last window ended", status.get("last_window_end_utc"))
+        + _kv("Seconds since last window", status.get("seconds_since_last_window"))
+        + _kv("Windows", feed.get("windows"))
+        + _kv("Windows mostly gaps", feed.get("unusable_windows"))
+        + _kv("Windows with a trigger", feed.get("triggered_windows"))
+        + _kv("Late packets", feed.get("late_packets"))
+        + _kv("Reconnections", status.get("reconnections"))
+        + _kv("Delay p50 (s)", feed.get("delay_p50_s"))
+        + _kv("Delay p95 (s)", feed.get("delay_p95_s"))
+        + _kv("Delay max (s)", feed.get("delay_max_s"))
+        + "<p class='lede' style='margin-top:10px'>Delay is the age of the newest sample "
+        "when its packet arrived. Above 120 s the feed is too slow to warn with.</p></div>"
+    )
+    dec_panel = (
+        "<div class='panel'><h2 class='sec'>Decisions</h2>"
+        + _kv("Windows decided", dec.get("windows_seen"))
+        + _kv("Alerts staged for a person", dec.get("alerts_staged"))
+        + _kv("Set aside as distant earthquakes", dec.get("suppressed"))
+        + _kv("Last detection", dec.get("last_detected_utc"))
+        + _kv("Audit chain intact", status.get("audit_chain_ok"))
+        + _kv("Waiting for a person", status.get("staged_waiting_for_a_person"))
+        + "<p class='lede' style='margin-top:10px'>Approve or reject waiting alerts with "
+        "<code>python scripts/outbox.py list</code>. Nothing on this page sends anything.</p>"
+        "</div>"
+    )
+    rows = []
+    for r in _shadow_recent_audit():
+        d = r.get("decision") if isinstance(r.get("decision"), dict) else {}
+        s = r.get("seismic") if isinstance(r.get("seismic"), dict) else {}
+        tier = str(d.get("tier", "NONE"))
+        st = STATE.get(tier, STATE["NONE"])
+        rows.append(
+            f"<tr><td {_TD}>{html.escape(str(r.get('detected_utc')))}</td>"
+            f"<td {_TD}><b style='color:{st['c']}'>{html.escape(st['label'])}</b></td>"
+            f"<td {_TD} class='tnum'>{float(d.get('probability', 0.0)):.2f}</td>"
+            f"<td {_TD}>{'yes' if s.get('mass_movement_like') else 'no'}</td>"
+            f"<td {_TD}>{'yes' if s.get('suppressed') else 'no'}</td>"
+            f"<td {_TD}>{html.escape(str(d.get('rationale', '')))[:120]}</td></tr>"
+        )
+    table = (
+        "<div class='panel'><h2 class='sec'>Recent decisions</h2>"
+        "<p class='lede'>The newest first, from the audit log.</p>"
+        "<table style='width:100%;border-collapse:collapse;font-size:.9rem'><thead><tr>"
+        f"<th {_TD}>Detected</th><th {_TD}>Outcome</th><th {_TD}>Score</th>"
+        f"<th {_TD}>Mass movement like</th><th {_TD}>Set aside</th><th {_TD}>Why</th>"
+        "</tr></thead><tbody>"
+        + ("".join(rows) or f"<tr><td {_TD} colspan='6'>No decisions yet.</td></tr>")
+        + "</tbody></table></div>"
+    )
+    body.append(head)
+    body.append("<div class='grid2'>" + feed_panel + dec_panel + "</div>")
+    body.append(table)
+    return _shell_titled("".join(body), "Shadow service", "What the live loop has recorded.")
+
+
+def _shell_titled(body: str, title: str, lede: str) -> str:
+    return (
+        "<!doctype html><html lang='en'><head><meta charset='utf-8'>"
+        "<meta name='viewport' content='width=device-width,initial-scale=1'>"
+        "<meta http-equiv='refresh' content='30'>"
+        f"<title>GHADI {html.escape(title)}</title><style>"
+        + CSS
+        + ".grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}"
+        "@media(max-width:900px){.grid2{grid-template-columns:1fr}}"
+        "</style></head><body>"
+        + _header()
+        + "<main class='wrap'>"
+        + f"<div class='title'><h1>{html.escape(title)}</h1><p>{html.escape(lede)}</p></div>"
+        + body
+        + "</main><footer><div class='wrap'>GHADI research prototype. Shadow mode: decisions "
+        "are recorded and nothing is sent. Alert payloads remain status=Test, "
+        "scope=Restricted.</div></footer></body></html>"
+    )
+
+
 class Handler(BaseHTTPRequestHandler):
     def do_GET(self) -> None:
         parsed = urllib.parse.urlparse(self.path)
         q = {k: v[0] for k, v in urllib.parse.parse_qs(parsed.query).items()}
-        if parsed.path == "/compare":
+        if parsed.path == "/shadow":
+            self._send(_shadow_page().encode("utf-8"), "text/html; charset=utf-8")
+        elif parsed.path == "/compare":
             self._send(_compare_page().encode("utf-8"), "text/html; charset=utf-8")
         elif parsed.path == "/export":
             body, ctype, fname = _export(q)

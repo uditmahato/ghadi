@@ -1,0 +1,349 @@
+{
+  "experiment": "exp013_cross_track_excess",
+  "source": "exp012 cached regions",
+  "min_tracks": 2,
+  "sar_change_db": 3.0,
+  "speckle_filter_px": 3,
+  "events": [
+    {
+      "event_id": "NPL-2014-08-02-JURE-001",
+      "catalogued_location": {
+        "lat": 27.771,
+        "lon": 85.878
+      },
+      "location_uncertainty_km": 3.0,
+      "status": "no_scene",
+      "reason": "predates the Sentinel-1 archive (October 2014)"
+    },
+    {
+      "event_id": "NPL-2015-04-25-LANGTANG-001",
+      "catalogued_location": {
+        "lat": 28.21,
+        "lon": 85.52
+      },
+      "location_uncertainty_km": 5.0,
+      "status": "analysed",
+      "n_tracks": 3,
+      "grid_shape": [
+        1009,
+        1014
+      ],
+      "per_track": [
+        {
+          "orbit": 121,
+          "event_change_km2": 8.796,
+          "control_change_km2": 10.096
+        },
+        {
+          "orbit": 19,
+          "event_change_km2": 40.936,
+          "control_change_km2": 24.329
+        },
+        {
+          "orbit": 85,
+          "event_change_km2": 51.321,
+          "control_change_km2": 57.863
+        }
+      ],
+      "event_window": {
+        "largest_patch_km2": 0.03,
+        "area_km2_by_agreement": {
+          "2": 6.445,
+          "3": 0.215
+        },
+        "per_track_excess_km2": [
+          3.372,
+          29.507,
+          17.484
+        ],
+        "largest_patch_centroid": {
+          "lat": 28.1777,
+          "lon": 85.4865
+        },
+        "distance_from_source_km": 4.87
+      },
+      "null_window": {
+        "largest_patch_km2": 0.067,
+        "area_km2_by_agreement": {
+          "2": 4.504,
+          "3": 0.124
+        },
+        "per_track_excess_km2": [
+          4.671,
+          12.9,
+          24.026
+        ],
+        "largest_patch_centroid": {
+          "lat": 28.1774,
+          "lon": 85.4754
+        },
+        "distance_from_source_km": 5.68
+      },
+      "event_over_null_ratio": 0.45
+    },
+    {
+      "event_id": "NPL-2021-06-15-MELAMCHI-001",
+      "catalogued_location": {
+        "lat": 28.1,
+        "lon": 85.55
+      },
+      "location_uncertainty_km": 15.0,
+      "status": "analysed",
+      "n_tracks": 3,
+      "grid_shape": [
+        3025,
+        3040
+      ],
+      "per_track": [
+        {
+          "orbit": 85,
+          "event_change_km2": 107.955,
+          "control_change_km2": 128.999
+        },
+        {
+          "orbit": 121,
+          "event_change_km2": 96.045,
+          "control_change_km2": 216.775
+        },
+        {
+          "orbit": 19,
+          "event_change_km2": 191.224,
+          "control_change_km2": 223.568
+        }
+      ],
+      "event_window": {
+        "largest_patch_km2": 0.045,
+        "area_km2_by_agreement": {
+          "2": 18.444,
+          "3": 0.638
+        },
+        "per_track_excess_km2": [
+          78.696,
+          56.055,
+          98.563
+        ],
+        "largest_patch_centroid": {
+          "lat": 28.1777,
+          "lon": 85.4881
+        },
+        "distance_from_source_km": 10.56
+      },
+      "null_window": {
+        "largest_patch_km2": 0.88,
+        "area_km2_by_agreement": {
+          "2": 63.001,
+          "3": 4.999
+        },
+        "per_track_excess_km2": [
+          99.74,
+          176.786,
+          130.907
+        ],
+        "largest_patch_centroid": {
+          "lat": 28.1477,
+          "lon": 85.6303
+        },
+        "distance_from_source_km": 9.5
+      },
+      "event_over_null_ratio": 0.05
+    },
+    {
+      "event_id": "NPL-2024-08-16-THAME-001",
+      "catalogued_location": {
+        "lat": 27.87,
+        "lon": 86.62
+      },
+      "location_uncertainty_km": 6.0,
+      "status": "analysed",
+      "n_tracks": 3,
+      "grid_shape": [
+        1199,
+        1205
+      ],
+      "per_track": [
+        {
+          "orbit": 85,
+          "event_change_km2": 9.729,
+          "control_change_km2": 7.573
+        },
+        {
+          "orbit": 121,
+          "event_change_km2": 7.146,
+          "control_change_km2": 7.819
+        },
+        {
+          "orbit": 12,
+          "event_change_km2": 13.011,
+          "control_change_km2": 13.804
+        }
+      ],
+      "event_window": {
+        "largest_patch_km2": 0.051,
+        "area_km2_by_agreement": {
+          "2": 1.316,
+          "3": 0.061
+        },
+        "per_track_excess_km2": [
+          8.586,
+          5.58,
+          8.795
+        ],
+        "largest_patch_centroid": {
+          "lat": 27.8584,
+          "lon": 86.5631
+        },
+        "distance_from_source_km": 5.74
+      },
+      "null_window": {
+        "largest_patch_km2": 0.021,
+        "area_km2_by_agreement": {
+          "2": 1.364,
+          "3": 0.041
+        },
+        "per_track_excess_km2": [
+          6.429,
+          6.253,
+          9.589
+        ],
+        "largest_patch_centroid": {
+          "lat": 27.9126,
+          "lon": 86.5624
+        },
+        "distance_from_source_km": 7.38
+      },
+      "event_over_null_ratio": 2.36
+    },
+    {
+      "event_id": "NPL-2025-07-08-RASUWAGADHI-001",
+      "catalogued_location": {
+        "lat": 28.3,
+        "lon": 85.55
+      },
+      "location_uncertainty_km": 12.0,
+      "status": "analysed",
+      "n_tracks": 3,
+      "grid_shape": [
+        2420,
+        2433
+      ],
+      "per_track": [
+        {
+          "orbit": 85,
+          "event_change_km2": 48.596,
+          "control_change_km2": 67.101
+        },
+        {
+          "orbit": 19,
+          "event_change_km2": 46.524,
+          "control_change_km2": 49.325
+        },
+        {
+          "orbit": 121,
+          "event_change_km2": 51.139,
+          "control_change_km2": 157.446
+        }
+      ],
+      "event_window": {
+        "largest_patch_km2": 0.027,
+        "area_km2_by_agreement": {
+          "2": 6.767,
+          "3": 0.208
+        },
+        "per_track_excess_km2": [
+          35.294,
+          34.922,
+          31.288
+        ],
+        "largest_patch_centroid": {
+          "lat": 28.2539,
+          "lon": 85.5092
+        },
+        "distance_from_source_km": 6.5
+      },
+      "null_window": {
+        "largest_patch_km2": 0.18,
+        "area_km2_by_agreement": {
+          "2": 22.791,
+          "3": 0.853
+        },
+        "per_track_excess_km2": [
+          53.799,
+          37.723,
+          137.595
+        ],
+        "largest_patch_centroid": {
+          "lat": 28.2797,
+          "lon": 85.6548
+        },
+        "distance_from_source_km": 10.51
+      },
+      "event_over_null_ratio": 0.15
+    },
+    {
+      "event_id": "NPL-2026-08-26-BHOTEKOSHI-001",
+      "catalogued_location": {
+        "lat": 28.255,
+        "lon": 85.52
+      },
+      "location_uncertainty_km": 8.0,
+      "status": "analysed",
+      "n_tracks": 3,
+      "grid_shape": [
+        1614,
+        1622
+      ],
+      "per_track": [
+        {
+          "orbit": 19,
+          "event_change_km2": 19.654,
+          "control_change_km2": 20.442
+        },
+        {
+          "orbit": 85,
+          "event_change_km2": 19.731,
+          "control_change_km2": 18.288
+        },
+        {
+          "orbit": 121,
+          "event_change_km2": 20.103,
+          "control_change_km2": 17.16
+        }
+      ],
+      "event_window": {
+        "largest_patch_km2": 0.413,
+        "area_km2_by_agreement": {
+          "2": 4.561,
+          "3": 0.534
+        },
+        "per_track_excess_km2": [
+          15.266,
+          15.867,
+          15.694
+        ],
+        "largest_patch_centroid": {
+          "lat": 28.3048,
+          "lon": 85.503
+        },
+        "distance_from_source_km": 5.78
+      },
+      "null_window": {
+        "largest_patch_km2": 0.075,
+        "area_km2_by_agreement": {
+          "2": 2.633,
+          "3": 0.081
+        },
+        "per_track_excess_km2": [
+          16.054,
+          14.424,
+          12.751
+        ],
+        "largest_patch_centroid": {
+          "lat": 28.2586,
+          "lon": 85.5021
+        },
+        "distance_from_source_km": 1.8
+      },
+      "event_over_null_ratio": 5.48
+    }
+  ]
+}

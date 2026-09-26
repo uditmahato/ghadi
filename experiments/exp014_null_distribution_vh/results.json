@@ -1,0 +1,1168 @@
+{
+  "experiment": "exp014_null_distribution_vh",
+  "event_utc": "2026-08-26T02:52:10+00:00",
+  "roi_half_km": 8.0,
+  "max_lag": 12,
+  "min_gap_days": 11.0,
+  "max_gap_days": 13.0,
+  "search_before_days": 170,
+  "min_tracks": 2,
+  "sar_change_db": 3.0,
+  "speckle_filter_px": 3,
+  "scenes_found": 41,
+  "windows": {
+    "19_descending": [
+      {
+        "lag": 0,
+        "control_before": {
+          "item_id": "S1D_IW_GRDH_1SDV_20260812T001844_20260812T001909_004085_007738_rtc",
+          "date": "2026-08-12",
+          "orbit": 19
+        },
+        "before": {
+          "item_id": "S1D_IW_GRDH_1SDV_20260824T001844_20260824T001909_004260_007D5D_rtc",
+          "date": "2026-08-24",
+          "orbit": 19
+        },
+        "after": {
+          "item_id": "S1D_IW_GRDH_1SDV_20260905T001844_20260905T001909_004435_00837B_rtc",
+          "date": "2026-09-05",
+          "orbit": 19
+        }
+      },
+      {
+        "lag": 1,
+        "control_before": {
+          "item_id": "S1D_IW_GRDH_1SDV_20260731T001843_20260731T001908_003910_007127_rtc",
+          "date": "2026-07-31",
+          "orbit": 19
+        },
+        "before": {
+          "item_id": "S1D_IW_GRDH_1SDV_20260812T001844_20260812T001909_004085_007738_rtc",
+          "date": "2026-08-12",
+          "orbit": 19
+        },
+        "after": {
+          "item_id": "S1D_IW_GRDH_1SDV_20260824T001844_20260824T001909_004260_007D5D_rtc",
+          "date": "2026-08-24",
+          "orbit": 19
+        }
+      },
+      {
+        "lag": 2,
+        "control_before": {
+          "item_id": "S1D_IW_GRDH_1SDV_20260719T001842_20260719T001907_003735_006B26_rtc",
+          "date": "2026-07-19",
+          "orbit": 19
+        },
+        "before": {
+          "item_id": "S1D_IW_GRDH_1SDV_20260731T001843_20260731T001908_003910_007127_rtc",
+          "date": "2026-07-31",
+          "orbit": 19
+        },
+        "after": {
+          "item_id": "S1D_IW_GRDH_1SDV_20260812T001844_20260812T001909_004085_007738_rtc",
+          "date": "2026-08-12",
+          "orbit": 19
+        }
+      },
+      {
+        "lag": 3,
+        "control_before": {
+          "item_id": "S1D_IW_GRDH_1SDV_20260707T001841_20260707T001906_003560_006530_rtc",
+          "date": "2026-07-07",
+          "orbit": 19
+        },
+        "before": {
+          "item_id": "S1D_IW_GRDH_1SDV_20260719T001842_20260719T001907_003735_006B26_rtc",
+          "date": "2026-07-19",
+          "orbit": 19
+        },
+        "after": {
+          "item_id": "S1D_IW_GRDH_1SDV_20260731T001843_20260731T001908_003910_007127_rtc",
+          "date": "2026-07-31",
+          "orbit": 19
+        }
+      },
+      {
+        "lag": 4,
+        "control_before": {
+          "item_id": "S1D_IW_GRDH_1SDV_20260625T001841_20260625T001906_003385_005F45_rtc",
+          "date": "2026-06-25",
+          "orbit": 19
+        },
+        "before": {
+          "item_id": "S1D_IW_GRDH_1SDV_20260707T001841_20260707T001906_003560_006530_rtc",
+          "date": "2026-07-07",
+          "orbit": 19
+        },
+        "after": {
+          "item_id": "S1D_IW_GRDH_1SDV_20260719T001842_20260719T001907_003735_006B26_rtc",
+          "date": "2026-07-19",
+          "orbit": 19
+        }
+      }
+    ],
+    "85_ascending": [
+      {
+        "lag": 0,
+        "control_before": {
+          "item_id": "S1D_IW_GRDH_1SDV_20260804T122140_20260804T122205_003976_00737A_rtc",
+          "date": "2026-08-04",
+          "orbit": 85
+        },
+        "before": {
+          "item_id": "S1D_IW_GRDH_1SDV_20260816T122141_20260816T122206_004151_007980_rtc",
+          "date": "2026-08-16",
+          "orbit": 85
+        },
+        "after": {
+          "item_id": "S1D_IW_GRDH_1SDV_20260828T122141_20260828T122206_004326_007FA4_rtc",
+          "date": "2026-08-28",
+          "orbit": 85
+        }
+      },
+      {
+        "lag": 1,
+        "control_before": {
+          "item_id": "S1D_IW_GRDH_1SDV_20260723T122140_20260723T122205_003801_006D5D_rtc",
+          "date": "2026-07-23",
+          "orbit": 85
+        },
+        "before": {
+          "item_id": "S1D_IW_GRDH_1SDV_20260804T122140_20260804T122205_003976_00737A_rtc",
+          "date": "2026-08-04",
+          "orbit": 85
+        },
+        "after": {
+          "item_id": "S1D_IW_GRDH_1SDV_20260816T122141_20260816T122206_004151_007980_rtc",
+          "date": "2026-08-16",
+          "orbit": 85
+        }
+      },
+      {
+        "lag": 2,
+        "control_before": {
+          "item_id": "S1D_IW_GRDH_1SDV_20260711T122139_20260711T122204_003626_00675A_rtc",
+          "date": "2026-07-11",
+          "orbit": 85
+        },
+        "before": {
+          "item_id": "S1D_IW_GRDH_1SDV_20260723T122140_20260723T122205_003801_006D5D_rtc",
+          "date": "2026-07-23",
+          "orbit": 85
+        },
+        "after": {
+          "item_id": "S1D_IW_GRDH_1SDV_20260804T122140_20260804T122205_003976_00737A_rtc",
+          "date": "2026-08-04",
+          "orbit": 85
+        }
+      },
+      {
+        "lag": 3,
+        "control_before": {
+          "item_id": "S1D_IW_GRDH_1SDV_20260629T122138_20260629T122203_003451_006174_rtc",
+          "date": "2026-06-29",
+          "orbit": 85
+        },
+        "before": {
+          "item_id": "S1D_IW_GRDH_1SDV_20260711T122139_20260711T122204_003626_00675A_rtc",
+          "date": "2026-07-11",
+          "orbit": 85
+        },
+        "after": {
+          "item_id": "S1D_IW_GRDH_1SDV_20260723T122140_20260723T122205_003801_006D5D_rtc",
+          "date": "2026-07-23",
+          "orbit": 85
+        }
+      },
+      {
+        "lag": 6,
+        "control_before": {
+          "item_id": "S1A_IW_GRDH_1SDV_20260529T122220_20260529T122245_064732_0827C0_rtc",
+          "date": "2026-05-29",
+          "orbit": 85
+        },
+        "before": {
+          "item_id": "S1A_IW_GRDH_1SDV_20260610T122219_20260610T122244_064907_082DE1_rtc",
+          "date": "2026-06-10",
+          "orbit": 85
+        },
+        "after": {
+          "item_id": "S1A_IW_GRDH_1SDV_20260622T122218_20260622T122243_065082_083408_rtc",
+          "date": "2026-06-22",
+          "orbit": 85
+        }
+      },
+      {
+        "lag": 7,
+        "control_before": {
+          "item_id": "S1A_IW_GRDH_1SDV_20260517T122220_20260517T122245_064557_08219F_rtc",
+          "date": "2026-05-17",
+          "orbit": 85
+        },
+        "before": {
+          "item_id": "S1A_IW_GRDH_1SDV_20260529T122220_20260529T122245_064732_0827C0_rtc",
+          "date": "2026-05-29",
+          "orbit": 85
+        },
+        "after": {
+          "item_id": "S1A_IW_GRDH_1SDV_20260610T122219_20260610T122244_064907_082DE1_rtc",
+          "date": "2026-06-10",
+          "orbit": 85
+        }
+      },
+      {
+        "lag": 8,
+        "control_before": {
+          "item_id": "S1A_IW_GRDH_1SDV_20260505T122221_20260505T122246_064382_081B72_rtc",
+          "date": "2026-05-05",
+          "orbit": 85
+        },
+        "before": {
+          "item_id": "S1A_IW_GRDH_1SDV_20260517T122220_20260517T122245_064557_08219F_rtc",
+          "date": "2026-05-17",
+          "orbit": 85
+        },
+        "after": {
+          "item_id": "S1A_IW_GRDH_1SDV_20260529T122220_20260529T122245_064732_0827C0_rtc",
+          "date": "2026-05-29",
+          "orbit": 85
+        }
+      },
+      {
+        "lag": 9,
+        "control_before": {
+          "item_id": "S1A_IW_GRDH_1SDV_20260423T122219_20260423T122244_064207_0814F9_rtc",
+          "date": "2026-04-23",
+          "orbit": 85
+        },
+        "before": {
+          "item_id": "S1A_IW_GRDH_1SDV_20260505T122221_20260505T122246_064382_081B72_rtc",
+          "date": "2026-05-05",
+          "orbit": 85
+        },
+        "after": {
+          "item_id": "S1A_IW_GRDH_1SDV_20260517T122220_20260517T122245_064557_08219F_rtc",
+          "date": "2026-05-17",
+          "orbit": 85
+        }
+      }
+    ],
+    "121_descending": [
+      {
+        "lag": 0,
+        "control_before": {
+          "item_id": "S1D_IW_GRDH_1SDV_20260807T001036_20260807T001101_004012_0074B7_rtc",
+          "date": "2026-08-07",
+          "orbit": 121
+        },
+        "before": {
+          "item_id": "S1D_IW_GRDH_1SDV_20260819T001036_20260819T001101_004187_007ABD_rtc",
+          "date": "2026-08-19",
+          "orbit": 121
+        },
+        "after": {
+          "item_id": "S1D_IW_GRDH_1SDV_20260831T001037_20260831T001102_004362_0080EC_rtc",
+          "date": "2026-08-31",
+          "orbit": 121
+        }
+      },
+      {
+        "lag": 1,
+        "control_before": {
+          "item_id": "S1D_IW_GRDH_1SDV_20260726T001036_20260726T001101_003837_006EA0_rtc",
+          "date": "2026-07-26",
+          "orbit": 121
+        },
+        "before": {
+          "item_id": "S1D_IW_GRDH_1SDV_20260807T001036_20260807T001101_004012_0074B7_rtc",
+          "date": "2026-08-07",
+          "orbit": 121
+        },
+        "after": {
+          "item_id": "S1D_IW_GRDH_1SDV_20260819T001036_20260819T001101_004187_007ABD_rtc",
+          "date": "2026-08-19",
+          "orbit": 121
+        }
+      },
+      {
+        "lag": 2,
+        "control_before": {
+          "item_id": "S1D_IW_GRDH_1SDV_20260714T001035_20260714T001100_003662_00689F_rtc",
+          "date": "2026-07-14",
+          "orbit": 121
+        },
+        "before": {
+          "item_id": "S1D_IW_GRDH_1SDV_20260726T001036_20260726T001101_003837_006EA0_rtc",
+          "date": "2026-07-26",
+          "orbit": 121
+        },
+        "after": {
+          "item_id": "S1D_IW_GRDH_1SDV_20260807T001036_20260807T001101_004012_0074B7_rtc",
+          "date": "2026-08-07",
+          "orbit": 121
+        }
+      },
+      {
+        "lag": 3,
+        "control_before": {
+          "item_id": "S1D_IW_GRDH_1SDV_20260702T001034_20260702T001059_003487_0062AB_rtc",
+          "date": "2026-07-02",
+          "orbit": 121
+        },
+        "before": {
+          "item_id": "S1D_IW_GRDH_1SDV_20260714T001035_20260714T001100_003662_00689F_rtc",
+          "date": "2026-07-14",
+          "orbit": 121
+        },
+        "after": {
+          "item_id": "S1D_IW_GRDH_1SDV_20260726T001036_20260726T001101_003837_006EA0_rtc",
+          "date": "2026-07-26",
+          "orbit": 121
+        }
+      },
+      {
+        "lag": 6,
+        "control_before": {
+          "item_id": "S1A_IW_GRDH_1SDV_20260601T001115_20260601T001140_064768_08290F_rtc",
+          "date": "2026-06-01",
+          "orbit": 121
+        },
+        "before": {
+          "item_id": "S1A_IW_GRDH_1SDV_20260613T001115_20260613T001140_064943_082F29_rtc",
+          "date": "2026-06-13",
+          "orbit": 121
+        },
+        "after": {
+          "item_id": "S1A_IW_GRDH_1SDV_20260625T001114_20260625T001139_065118_083552_rtc",
+          "date": "2026-06-25",
+          "orbit": 121
+        }
+      },
+      {
+        "lag": 7,
+        "control_before": {
+          "item_id": "S1A_IW_GRDH_1SDV_20260520T001116_20260520T001141_064593_0822ED_rtc",
+          "date": "2026-05-20",
+          "orbit": 121
+        },
+        "before": {
+          "item_id": "S1A_IW_GRDH_1SDV_20260601T001115_20260601T001140_064768_08290F_rtc",
+          "date": "2026-06-01",
+          "orbit": 121
+        },
+        "after": {
+          "item_id": "S1A_IW_GRDH_1SDV_20260613T001115_20260613T001140_064943_082F29_rtc",
+          "date": "2026-06-13",
+          "orbit": 121
+        }
+      },
+      {
+        "lag": 8,
+        "control_before": {
+          "item_id": "S1A_IW_GRDH_1SDV_20260508T001116_20260508T001141_064418_081CD6_rtc",
+          "date": "2026-05-08",
+          "orbit": 121
+        },
+        "before": {
+          "item_id": "S1A_IW_GRDH_1SDV_20260520T001116_20260520T001141_064593_0822ED_rtc",
+          "date": "2026-05-20",
+          "orbit": 121
+        },
+        "after": {
+          "item_id": "S1A_IW_GRDH_1SDV_20260601T001115_20260601T001140_064768_08290F_rtc",
+          "date": "2026-06-01",
+          "orbit": 121
+        }
+      },
+      {
+        "lag": 9,
+        "control_before": {
+          "item_id": "S1A_IW_GRDH_1SDV_20260426T001117_20260426T001142_064243_081658_rtc",
+          "date": "2026-04-26",
+          "orbit": 121
+        },
+        "before": {
+          "item_id": "S1A_IW_GRDH_1SDV_20260508T001116_20260508T001141_064418_081CD6_rtc",
+          "date": "2026-05-08",
+          "orbit": 121
+        },
+        "after": {
+          "item_id": "S1A_IW_GRDH_1SDV_20260520T001116_20260520T001141_064593_0822ED_rtc",
+          "date": "2026-05-20",
+          "orbit": 121
+        }
+      },
+      {
+        "lag": 10,
+        "control_before": {
+          "item_id": "S1A_IW_GRDH_1SDV_20260414T001117_20260414T001142_064068_080FCF_rtc",
+          "date": "2026-04-14",
+          "orbit": 121
+        },
+        "before": {
+          "item_id": "S1A_IW_GRDH_1SDV_20260426T001117_20260426T001142_064243_081658_rtc",
+          "date": "2026-04-26",
+          "orbit": 121
+        },
+        "after": {
+          "item_id": "S1A_IW_GRDH_1SDV_20260508T001116_20260508T001141_064418_081CD6_rtc",
+          "date": "2026-05-08",
+          "orbit": 121
+        }
+      }
+    ]
+  },
+  "polarisations": {
+    "vv": {
+      "failures": [],
+      "grid_shape": [
+        1614,
+        1622
+      ],
+      "event_tracks": [
+        19,
+        85,
+        121
+      ],
+      "event_by_track_set": {
+        "19+85": {
+          "largest_patch_km2": 0.0633,
+          "area_km2_by_agreement": {
+            "2": 1.807
+          },
+          "per_track_excess_km2": [
+            15.266,
+            15.867
+          ],
+          "largest_patch_centroid": {
+            "lat": 28.3083,
+            "lon": 85.4998
+          },
+          "distance_from_source_km": 6.25
+        },
+        "19+121": {
+          "largest_patch_km2": 0.1768,
+          "area_km2_by_agreement": {
+            "2": 2.058
+          },
+          "per_track_excess_km2": [
+            15.266,
+            15.694
+          ],
+          "largest_patch_centroid": {
+            "lat": 28.2873,
+            "lon": 85.5276
+          },
+          "distance_from_source_km": 3.67
+        },
+        "85+121": {
+          "largest_patch_km2": 0.0846,
+          "area_km2_by_agreement": {
+            "2": 1.764
+          },
+          "per_track_excess_km2": [
+            15.867,
+            15.694
+          ],
+          "largest_patch_centroid": {
+            "lat": 28.2862,
+            "lon": 85.5186
+          },
+          "distance_from_source_km": 3.47
+        },
+        "19+85+121": {
+          "largest_patch_km2": 0.413,
+          "area_km2_by_agreement": {
+            "2": 4.561,
+            "3": 0.534
+          },
+          "per_track_excess_km2": [
+            15.266,
+            15.867,
+            15.694
+          ],
+          "largest_patch_centroid": {
+            "lat": 28.3048,
+            "lon": 85.503
+          },
+          "distance_from_source_km": 5.78
+        }
+      },
+      "groups": [
+        {
+          "tracks": [
+            19,
+            85,
+            121
+          ],
+          "nulls": [
+            {
+              "lag": 1,
+              "after_dates": [
+                "2026-08-24",
+                "2026-08-16",
+                "2026-08-19"
+              ],
+              "largest_patch_km2": 0.0278,
+              "area_km2_by_agreement": {
+                "2": 2.648,
+                "3": 0.062
+              },
+              "per_track_excess_km2": [
+                16.58,
+                14.498,
+                12.753
+              ],
+              "largest_patch_centroid": {
+                "lat": 28.2587,
+                "lon": 85.5028
+              },
+              "distance_from_source_km": 1.73
+            },
+            {
+              "lag": 2,
+              "after_dates": [
+                "2026-08-12",
+                "2026-08-04",
+                "2026-08-07"
+              ],
+              "largest_patch_km2": 0.0099,
+              "area_km2_by_agreement": {
+                "2": 2.29,
+                "3": 0.059
+              },
+              "per_track_excess_km2": [
+                12.021,
+                12.663,
+                14.53
+              ],
+              "largest_patch_centroid": {
+                "lat": 28.2835,
+                "lon": 85.5346
+              },
+              "distance_from_source_km": 3.48
+            },
+            {
+              "lag": 3,
+              "after_dates": [
+                "2026-07-31",
+                "2026-07-23",
+                "2026-07-26"
+              ],
+              "largest_patch_km2": 0.0114,
+              "area_km2_by_agreement": {
+                "2": 3.327,
+                "3": 0.1
+              },
+              "per_track_excess_km2": [
+                16.131,
+                15.071,
+                16.964
+              ],
+              "largest_patch_centroid": {
+                "lat": 28.2383,
+                "lon": 85.4679
+              },
+              "distance_from_source_km": 5.43
+            }
+          ],
+          "event": {
+            "largest_patch_km2": 0.413,
+            "area_km2_by_agreement": {
+              "2": 4.561,
+              "3": 0.534
+            },
+            "per_track_excess_km2": [
+              15.266,
+              15.867,
+              15.694
+            ],
+            "largest_patch_centroid": {
+              "lat": 28.3048,
+              "lon": 85.503
+            },
+            "distance_from_source_km": 5.78
+          },
+          "summary": {
+            "event_largest_km2": 0.413,
+            "null_largest_km2": [
+              0.0278,
+              0.0099,
+              0.0114
+            ],
+            "n_null": 3,
+            "null_max_km2": 0.0278,
+            "null_median_km2": 0.0114,
+            "event_over_null_max": 14.86,
+            "null_windows_at_or_above_event": 0,
+            "empirical_p": 0.25
+          }
+        },
+        {
+          "tracks": [
+            85,
+            121
+          ],
+          "nulls": [
+            {
+              "lag": 6,
+              "after_dates": [
+                "2026-06-22",
+                "2026-06-25"
+              ],
+              "largest_patch_km2": 0.056,
+              "area_km2_by_agreement": {
+                "2": 1.744
+              },
+              "per_track_excess_km2": [
+                19.257,
+                16.221
+              ],
+              "largest_patch_centroid": {
+                "lat": 28.2706,
+                "lon": 85.5284
+              },
+              "distance_from_source_km": 1.92
+            },
+            {
+              "lag": 7,
+              "after_dates": [
+                "2026-06-10",
+                "2026-06-13"
+              ],
+              "largest_patch_km2": 0.1535,
+              "area_km2_by_agreement": {
+                "2": 2.885
+              },
+              "per_track_excess_km2": [
+                23.931,
+                20.333
+              ],
+              "largest_patch_centroid": {
+                "lat": 28.2546,
+                "lon": 85.5741
+              },
+              "distance_from_source_km": 5.3
+            },
+            {
+              "lag": 8,
+              "after_dates": [
+                "2026-05-29",
+                "2026-06-01"
+              ],
+              "largest_patch_km2": 0.023,
+              "area_km2_by_agreement": {
+                "2": 2.221
+              },
+              "per_track_excess_km2": [
+                24.468,
+                18.637
+              ],
+              "largest_patch_centroid": {
+                "lat": 28.2323,
+                "lon": 85.4443
+              },
+              "distance_from_source_km": 7.83
+            },
+            {
+              "lag": 9,
+              "after_dates": [
+                "2026-05-17",
+                "2026-05-20"
+              ],
+              "largest_patch_km2": 0.0883,
+              "area_km2_by_agreement": {
+                "2": 2.803
+              },
+              "per_track_excess_km2": [
+                20.975,
+                25.302
+              ],
+              "largest_patch_centroid": {
+                "lat": 28.2769,
+                "lon": 85.5389
+              },
+              "distance_from_source_km": 3.06
+            }
+          ],
+          "event": {
+            "largest_patch_km2": 0.0846,
+            "area_km2_by_agreement": {
+              "2": 1.764
+            },
+            "per_track_excess_km2": [
+              15.867,
+              15.694
+            ],
+            "largest_patch_centroid": {
+              "lat": 28.2862,
+              "lon": 85.5186
+            },
+            "distance_from_source_km": 3.47
+          },
+          "summary": {
+            "event_largest_km2": 0.0846,
+            "null_largest_km2": [
+              0.056,
+              0.1535,
+              0.023,
+              0.0883
+            ],
+            "n_null": 4,
+            "null_max_km2": 0.1535,
+            "null_median_km2": 0.0722,
+            "event_over_null_max": 0.55,
+            "null_windows_at_or_above_event": 2,
+            "empirical_p": 0.6
+          }
+        }
+      ]
+    },
+    "vh": {
+      "failures": [],
+      "grid_shape": [
+        1614,
+        1622
+      ],
+      "event_tracks": [
+        19,
+        85,
+        121
+      ],
+      "event_by_track_set": {
+        "19+85": {
+          "largest_patch_km2": 0.0311,
+          "area_km2_by_agreement": {
+            "2": 1.473
+          },
+          "per_track_excess_km2": [
+            16.112,
+            17.709
+          ],
+          "largest_patch_centroid": {
+            "lat": 28.2875,
+            "lon": 85.5293
+          },
+          "distance_from_source_km": 3.73
+        },
+        "19+121": {
+          "largest_patch_km2": 0.0191,
+          "area_km2_by_agreement": {
+            "2": 1.695
+          },
+          "per_track_excess_km2": [
+            16.112,
+            17.39
+          ],
+          "largest_patch_centroid": {
+            "lat": 28.3195,
+            "lon": 85.4876
+          },
+          "distance_from_source_km": 7.85
+        },
+        "85+121": {
+          "largest_patch_km2": 0.0345,
+          "area_km2_by_agreement": {
+            "2": 1.482
+          },
+          "per_track_excess_km2": [
+            17.709,
+            17.39
+          ],
+          "largest_patch_centroid": {
+            "lat": 28.2864,
+            "lon": 85.5188
+          },
+          "distance_from_source_km": 3.49
+        },
+        "19+85+121": {
+          "largest_patch_km2": 0.1151,
+          "area_km2_by_agreement": {
+            "2": 4.11,
+            "3": 0.27
+          },
+          "per_track_excess_km2": [
+            16.112,
+            17.709,
+            17.39
+          ],
+          "largest_patch_centroid": {
+            "lat": 28.3038,
+            "lon": 85.5032
+          },
+          "distance_from_source_km": 5.67
+        }
+      },
+      "groups": [
+        {
+          "tracks": [
+            19,
+            85,
+            121
+          ],
+          "nulls": [
+            {
+              "lag": 1,
+              "after_dates": [
+                "2026-08-24",
+                "2026-08-16",
+                "2026-08-19"
+              ],
+              "largest_patch_km2": 0.0257,
+              "area_km2_by_agreement": {
+                "2": 4.126,
+                "3": 0.135
+              },
+              "per_track_excess_km2": [
+                17.591,
+                24.279,
+                14.47
+              ],
+              "largest_patch_centroid": {
+                "lat": 28.2529,
+                "lon": 85.5092
+              },
+              "distance_from_source_km": 1.08
+            },
+            {
+              "lag": 2,
+              "after_dates": [
+                "2026-08-12",
+                "2026-08-04",
+                "2026-08-07"
+              ],
+              "largest_patch_km2": 0.0122,
+              "area_km2_by_agreement": {
+                "2": 3.739,
+                "3": 0.111
+              },
+              "per_track_excess_km2": [
+                15.613,
+                21.818,
+                15.575
+              ],
+              "largest_patch_centroid": {
+                "lat": 28.2701,
+                "lon": 85.5628
+              },
+              "distance_from_source_km": 4.52
+            },
+            {
+              "lag": 3,
+              "after_dates": [
+                "2026-07-31",
+                "2026-07-23",
+                "2026-07-26"
+              ],
+              "largest_patch_km2": 0.0091,
+              "area_km2_by_agreement": {
+                "2": 3.231,
+                "3": 0.079
+              },
+              "per_track_excess_km2": [
+                17.06,
+                16.355,
+                17.806
+              ],
+              "largest_patch_centroid": {
+                "lat": 28.2497,
+                "lon": 85.4989
+              },
+              "distance_from_source_km": 2.15
+            }
+          ],
+          "event": {
+            "largest_patch_km2": 0.1151,
+            "area_km2_by_agreement": {
+              "2": 4.11,
+              "3": 0.27
+            },
+            "per_track_excess_km2": [
+              16.112,
+              17.709,
+              17.39
+            ],
+            "largest_patch_centroid": {
+              "lat": 28.3038,
+              "lon": 85.5032
+            },
+            "distance_from_source_km": 5.67
+          },
+          "summary": {
+            "event_largest_km2": 0.1151,
+            "null_largest_km2": [
+              0.0257,
+              0.0122,
+              0.0091
+            ],
+            "n_null": 3,
+            "null_max_km2": 0.0257,
+            "null_median_km2": 0.0122,
+            "event_over_null_max": 4.48,
+            "null_windows_at_or_above_event": 0,
+            "empirical_p": 0.25
+          }
+        },
+        {
+          "tracks": [
+            85,
+            121
+          ],
+          "nulls": [
+            {
+              "lag": 6,
+              "after_dates": [
+                "2026-06-22",
+                "2026-06-25"
+              ],
+              "largest_patch_km2": 0.0688,
+              "area_km2_by_agreement": {
+                "2": 2.074
+              },
+              "per_track_excess_km2": [
+                24.178,
+                18.008
+              ],
+              "largest_patch_centroid": {
+                "lat": 28.2712,
+                "lon": 85.5313
+              },
+              "distance_from_source_km": 2.11
+            },
+            {
+              "lag": 7,
+              "after_dates": [
+                "2026-06-10",
+                "2026-06-13"
+              ],
+              "largest_patch_km2": 0.1039,
+              "area_km2_by_agreement": {
+                "2": 3.119
+              },
+              "per_track_excess_km2": [
+                28.136,
+                21.367
+              ],
+              "largest_patch_centroid": {
+                "lat": 28.2546,
+                "lon": 85.574
+              },
+              "distance_from_source_km": 5.29
+            },
+            {
+              "lag": 8,
+              "after_dates": [
+                "2026-05-29",
+                "2026-06-01"
+              ],
+              "largest_patch_km2": 0.0155,
+              "area_km2_by_agreement": {
+                "2": 1.934
+              },
+              "per_track_excess_km2": [
+                25.356,
+                18.758
+              ],
+              "largest_patch_centroid": {
+                "lat": 28.2314,
+                "lon": 85.4727
+              },
+              "distance_from_source_km": 5.32
+            },
+            {
+              "lag": 9,
+              "after_dates": [
+                "2026-05-17",
+                "2026-05-20"
+              ],
+              "largest_patch_km2": 0.093,
+              "area_km2_by_agreement": {
+                "2": 2.833
+              },
+              "per_track_excess_km2": [
+                23.538,
+                26.726
+              ],
+              "largest_patch_centroid": {
+                "lat": 28.2769,
+                "lon": 85.5396
+              },
+              "distance_from_source_km": 3.1
+            }
+          ],
+          "event": {
+            "largest_patch_km2": 0.0345,
+            "area_km2_by_agreement": {
+              "2": 1.482
+            },
+            "per_track_excess_km2": [
+              17.709,
+              17.39
+            ],
+            "largest_patch_centroid": {
+              "lat": 28.2864,
+              "lon": 85.5188
+            },
+            "distance_from_source_km": 3.49
+          },
+          "summary": {
+            "event_largest_km2": 0.0345,
+            "null_largest_km2": [
+              0.0688,
+              0.1039,
+              0.0155,
+              0.093
+            ],
+            "n_null": 4,
+            "null_max_km2": 0.1039,
+            "null_median_km2": 0.0809,
+            "event_over_null_max": 0.33,
+            "null_windows_at_or_above_event": 3,
+            "empirical_p": 0.8
+          }
+        }
+      ]
+    }
+  },
+  "vv_vh_agreement": [
+    {
+      "lag": 0,
+      "role": "event",
+      "tracks": [
+        19,
+        85
+      ],
+      "vv_km2": 1.807,
+      "vh_km2": 1.473,
+      "shared_km2": 0.233,
+      "jaccard": 0.0765
+    },
+    {
+      "lag": 0,
+      "role": "event",
+      "tracks": [
+        19,
+        85,
+        121
+      ],
+      "vv_km2": 4.561,
+      "vh_km2": 4.11,
+      "shared_km2": 0.75,
+      "jaccard": 0.0947
+    },
+    {
+      "lag": 0,
+      "role": "event",
+      "tracks": [
+        19,
+        121
+      ],
+      "vv_km2": 2.058,
+      "vh_km2": 1.695,
+      "shared_km2": 0.229,
+      "jaccard": 0.0648
+    },
+    {
+      "lag": 0,
+      "role": "event",
+      "tracks": [
+        85,
+        121
+      ],
+      "vv_km2": 1.764,
+      "vh_km2": 1.482,
+      "shared_km2": 0.232,
+      "jaccard": 0.077
+    },
+    {
+      "lag": 1,
+      "role": "null",
+      "tracks": [
+        19,
+        85,
+        121
+      ],
+      "vv_km2": 2.648,
+      "vh_km2": 4.126,
+      "shared_km2": 0.133,
+      "jaccard": 0.02
+    },
+    {
+      "lag": 2,
+      "role": "null",
+      "tracks": [
+        19,
+        85,
+        121
+      ],
+      "vv_km2": 2.29,
+      "vh_km2": 3.739,
+      "shared_km2": 0.074,
+      "jaccard": 0.0125
+    },
+    {
+      "lag": 3,
+      "role": "null",
+      "tracks": [
+        19,
+        85,
+        121
+      ],
+      "vv_km2": 3.327,
+      "vh_km2": 3.231,
+      "shared_km2": 0.099,
+      "jaccard": 0.0152
+    },
+    {
+      "lag": 6,
+      "role": "null",
+      "tracks": [
+        85,
+        121
+      ],
+      "vv_km2": 1.744,
+      "vh_km2": 2.074,
+      "shared_km2": 0.232,
+      "jaccard": 0.0647
+    },
+    {
+      "lag": 7,
+      "role": "null",
+      "tracks": [
+        85,
+        121
+      ],
+      "vv_km2": 2.885,
+      "vh_km2": 3.119,
+      "shared_km2": 0.488,
+      "jaccard": 0.0884
+    },
+    {
+      "lag": 8,
+      "role": "null",
+      "tracks": [
+        85,
+        121
+      ],
+      "vv_km2": 2.221,
+      "vh_km2": 1.934,
+      "shared_km2": 0.143,
+      "jaccard": 0.0357
+    },
+    {
+      "lag": 9,
+      "role": "null",
+      "tracks": [
+        85,
+        121
+      ],
+      "vv_km2": 2.803,
+      "vh_km2": 2.834,
+      "shared_km2": 0.362,
+      "jaccard": 0.0686
+    }
+  ],
+  "status": "analysed"
+}

@@ -60,6 +60,9 @@ class Decision:
     independent_groups: int
     rationale: str
     degraded: bool
+    # Live groups whose strongest channel is at least FusionConfig.support_p: the groups
+    # that actually detected something, as opposed to merely reporting.
+    supporting_groups: int = 0
     config: FusionConfig = field(default_factory=lambda: DEFAULT.fusion)
 
     @property
@@ -142,6 +145,7 @@ def channel_from_seismic(
     name: str = "seismic",
     independence_group: str = "upstream_seismic",
     config: FusionConfig | None = None,
+    corroborated: bool = False,
 ) -> Channel:
     """Turn a seismic mass-movement classification into a fusion channel.
 
@@ -163,6 +167,17 @@ def channel_from_seismic(
     config = config or DEFAULT.fusion
 
     if classification.mass_movement_like:
+        if corroborated:
+            return Channel(
+                name=name,
+                probability=config.seismic_corroborated_p,
+                independence_group=independence_group,
+                alive=True,
+                detail=(
+                    "mass-movement-like, and a second station saw the onset at a fitting "
+                    f"time ({classification.reason})"
+                ),
+            )
         return Channel(
             name=name,
             probability=config.seismic_detected_p,
@@ -232,19 +247,22 @@ def fuse(channels: list[Channel], config: FusionConfig | None = None) -> Decisio
     representatives = list(strongest.values())
     probability = _noisy_or([c.probability for c in representatives])
     n_groups = len(representatives)
+    n_supporting = sum(c.probability >= config.support_p for c in representatives)
+    counted = n_supporting if config.warning_requires_supporting_groups else n_groups
+    kind = "supporting" if config.warning_requires_supporting_groups else "independent"
 
-    if probability >= config.warning_p and n_groups >= config.min_groups_for_warning:
+    if probability >= config.warning_p and counted >= config.min_groups_for_warning:
         tier = Tier.WARNING
         why = (
-            f"p={probability:.2f} >= {config.warning_p:.2f} with {n_groups} independent "
+            f"p={probability:.2f} >= {config.warning_p:.2f} with {counted} {kind} "
             f"groups (>= {config.min_groups_for_warning} required)"
         )
     elif probability >= config.advisory_p:
         tier = Tier.ADVISORY
         why = f"p={probability:.2f} >= {config.advisory_p:.2f}"
-        if n_groups < config.min_groups_for_warning:
+        if counted < config.min_groups_for_warning:
             why += (
-                f"; held below WARNING, only {n_groups} independent group(s), "
+                f"; held below WARNING, only {counted} {kind} group(s), "
                 "corroboration requirement not met"
             )
     elif probability >= config.watch_p:
@@ -262,5 +280,6 @@ def fuse(channels: list[Channel], config: FusionConfig | None = None) -> Decisio
         independent_groups=n_groups,
         rationale=why,
         degraded=bool(dead),
+        supporting_groups=n_supporting,
         config=config,
     )

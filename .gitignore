@@ -24,3 +24,6 @@ Thumbs.db
 
 # demo_pipeline.py output
 scratch_audit.jsonl
+
+# Shadow service state (audit log, status, staged alerts)
+data/shadow/

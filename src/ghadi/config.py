@@ -75,6 +75,11 @@ class StationSite:
     def nslc(self) -> str:
         return self.site.nslc
 
+    @property
+    def key(self) -> str:
+        """The "NET.STA" name the live loop and the corpora use for this station."""
+        return f"{self.site.network}.{self.site.station}"
+
 
 # Kakani: nearest to the 2026 source (55.9 km) and the real-time feed, but the
 # shallower archive.
@@ -203,17 +208,30 @@ class ClassifyConfig:
     a LOWER BOUND on separability, not an estimate (exp003, issue 3.5).
     """
 
-    # exp005, cascade over the 120 s decision segment. A window is mass-movement-like
-    # when its low/high spectral ratio is at least this AND its centroid is at most the
-    # value below — a slow, low-frequency extended source.
-    cascade_segment_lf_hf: float = 4.9188
-    cascade_segment_centroid_hz: float = 1.8852
-    # Measured earthquake overlap AT this operating point: 11 of 64 real earthquakes meet
-    # BOTH thresholds on the 120 s segment (exp005). This is the honest false-positive
-    # context and travels with every classification. Quote 17.2%, never "clean" (exp003).
-    # It is magnitude-dependent — against magnitude-matched events it falls to ~1 in 25
-    # (exp003) — because the features correlate with size; a call must say so.
-    earthquake_overlap: float = 11.0 / 64.0
+    # The 2026 cascade over the 120 s decision segment gave LF/HF 4.9188 and a centroid
+    # of 1.8852 Hz (exp005). A window is mass-movement-like when its low/high spectral
+    # ratio is at least the first value AND its centroid is at most the second: a slow,
+    # low-frequency extended source. The thresholds below are those values with a 20%
+    # margin (exp022): a threshold set exactly at the one event's value has no margin,
+    # and exp020 showed the live path missing the event by a rounding step. The margin
+    # is a choice, not a measurement of how real events spread; exp022 priced it.
+    cascade_segment_lf_hf: float = 4.9188 * 0.8
+    cascade_segment_centroid_hz: float = 1.8852 * 1.2
+    # Measured earthquake overlap AT this operating point: 14 of 64 real earthquakes meet
+    # BOTH thresholds on the 120 s segment (exp022, 11 of 64 at zero margin in exp005).
+    # This is the honest false-positive context and travels with every classification.
+    # Quote 21.9%, never "clean" (exp003). It is magnitude-dependent, because the
+    # features correlate with size; a call must say so.
+    earthquake_overlap: float = 14.0 / 64.0
+    # Third criterion, issue #37 and exp021: the share of energy on the horizontal
+    # channels over the decision segment. A shallow surface source seen at tens of
+    # kilometres arrives mostly as surface waves, which move the ground sideways. None
+    # disables the rule, which is the default until a margin is chosen from exp022. A
+    # segment with no horizontals available passes this rule, and the classification
+    # says so, because an absent measurement is not evidence against a mass movement.
+    # The 2026 cascade gave 2.3248 at NK.KKN; this is that value with the same 20%
+    # margin (exp022).
+    segment_hv_min: float | None = 2.3248 * 0.8
 
 
 # --- hydrology ----------------------------------------------------------------------
@@ -233,9 +251,12 @@ class TravelConfig:
     # Time from initiation to an issued alert, everything except the water's own travel:
     # seismic wave to station, detection, fusion, CAP emission, dissemination hand-off.
     # It is SUBTRACTED from the surge arrival time to get the lead time actually
-    # delivered. The default sits inside the 180 s end-to-end budget (HANDOFF), with a
-    # measured detection floor of median ~16 s SeedLink latency (docs/LATENCY.md).
-    warning_latency_s: float = 60.0
+    # delivered. exp020 measured the live path at about 156 s from onset to decision
+    # (median), with a floor near 126 s: the 120 s decision segment, the feed delay
+    # (median 16 s on SeedLink, docs/LATENCY.md), and the wait for the window holding
+    # the whole segment to close. The earlier default of 60 s predated the live path
+    # and understated this by about a minute and a half.
+    warning_latency_s: float = 160.0
     # A settlement's arrival time is honestly known only for the calibrated source. If a
     # candidate source sits further than this from the reach's calibrated source, the
     # observed anchors no longer apply and the estimate must be flagged as extrapolation.
@@ -273,6 +294,41 @@ class DhmConfig:
     max_plausible_stage_m: float = 100.0
 
 
+# --- satellite change detection (analysis path only) --------------------------------
+@dataclass(frozen=True)
+class EoConfig:
+    """Parameters for before/after satellite change detection (``ghadi.eo``).
+
+    These confirm and find events after the fact. They are never on the warning path:
+    revisit is days and monsoon cloud hides the ground, so imagery adds no lead time.
+    """
+
+    # Half-width of the square region of interest around a source zone. The 2026 source
+    # carries ~8 km location uncertainty, so 5 km each side covers it with margin.
+    roi_half_km: float = 5.0
+    # Sentinel-1 RTC and the Sentinel-2 10 m bands share this ground sampling.
+    pixel_size_m: float = 10.0
+    # Radar: backscatter change, in dB, that counts as changed ground. 3 dB is a factor
+    # of two in power, well above filtered speckle and typical of fresh debris or water.
+    sar_change_db: float = 3.0
+    # Median filter width (pixels) applied to the log-ratio to tame speckle.
+    speckle_filter_px: int = 3
+    # Optical: NDVI drop that counts as vegetation lost. 0.2 is a clear, coarse change.
+    ndvi_drop: float = 0.20
+    # Below this usable fraction the verdict is "inconclusive", never "no change". This
+    # is the rule that stops a cloud-covered scene from being read as a quiet one.
+    min_valid_fraction: float = 0.60
+    # Smallest connected changed patch that counts. 0.02 km2 is ~200 pixels at 10 m,
+    # enough to reject speckle blobs but far smaller than any dam-forming failure.
+    min_blob_km2: float = 0.02
+    # A changed patch only counts as an event if it is at least this many times the
+    # largest patch in a pre-event control pair on the same track. Snowmelt, glacier
+    # motion, and river change produce large seasonal "change" on these slopes, so a
+    # raw threshold alone confirms nothing. Fixed at 2.0 in exp012 before the 2026 pair
+    # was inspected, so it could not be tuned to the answer.
+    control_min_ratio: float = 2.0
+
+
 # --- fusion -------------------------------------------------------------------------
 @dataclass(frozen=True)
 class FusionConfig:
@@ -297,6 +353,22 @@ class FusionConfig:
     # value — the seismic channel alone is weaker corroboration than a gauge surge.
     seismic_detected_p: float = 0.60
     seismic_quiet_p: float = 0.05
+    # A mass movement like segment whose onset a second station also saw, at a time
+    # that fits a source in the region (exp019). Two seismometers share a failure mode,
+    # so this raises the one seismic channel and never becomes a second group. Assumed,
+    # like every operating point here; kept below warning_p so agreement alone cannot
+    # reach WARNING.
+    seismic_corroborated_p: float = 0.70
+    # A live group *supports* the outcome when its strongest channel is at least this
+    # probable. It sits between every quiet operating point (0.05) and every detected one
+    # (0.60, 0.80), so it separates "reporting and detecting" from "reporting, quiet".
+    support_p: float = 0.50
+    # Issue #26. The WARNING gate needs min_groups_for_warning groups. When True (the
+    # default since exp017) only supporting groups count: WARNING needs independent
+    # sources that each detected something. When False (the historical rule) any live
+    # group counts, so one real detection plus a second sensor that is merely online and
+    # quiet reaches WARNING, and switching on a quiet sensor can raise the tier.
+    warning_requires_supporting_groups: bool = True
 
 
 # --- CAP ----------------------------------------------------------------------------
@@ -318,6 +390,7 @@ class GhadiConfig:
     hydro: HydroConfig = field(default_factory=HydroConfig)
     travel: TravelConfig = field(default_factory=TravelConfig)
     dhm: DhmConfig = field(default_factory=DhmConfig)
+    eo: EoConfig = field(default_factory=EoConfig)
     fusion: FusionConfig = field(default_factory=FusionConfig)
     cap: CapConfig = field(default_factory=CapConfig)
 

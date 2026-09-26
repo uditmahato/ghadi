@@ -1,0 +1,28 @@
+# GHADI site settings for a shadow deployment. Copy this file next to the service and
+# point the service at it. Everything here is about this machine, not the science.
+
+[station]
+key = "NK.KKN"
+server = "rtserve.iris.washington.edu:18000"
+# Stream the horizontal components too, for the H/V rule.
+horizontals = true
+# A second station whose triggers corroborate the first. Leave empty for none.
+partner = "IO.EVN"
+
+[reach]
+id = "TRISHULI-R07"
+
+[paths]
+# Audit log, status file, delivery log, and staged alerts live here. Relative paths are
+# resolved from the directory this file is in.
+state_dir = "/var/lib/ghadi"
+
+[health]
+# GET http://127.0.0.1:8771/health answers with JSON. Set to 0 to disable.
+port = 8771
+
+[feed]
+window_s = 240.0
+hop_s = 60.0
+max_gap_fraction = 0.40
+stale_feed_s = 120.0

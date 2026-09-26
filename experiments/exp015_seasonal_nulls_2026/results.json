@@ -1,0 +1,1632 @@
+{
+  "experiment": "exp015_seasonal_nulls_2026",
+  "event_utc": "2026-08-26T02:52:10+00:00",
+  "source": {
+    "lat": 28.255,
+    "lon": 85.52
+  },
+  "roi_half_km": 8.0,
+  "years_back": 4,
+  "max_lag": 3,
+  "min_gap_days": 11.0,
+  "max_gap_days": 13.0,
+  "sar_change_db": 3.0,
+  "speckle_filter_px": 3,
+  "windows": {
+    "years": {
+      "2026": {
+        "anchor_utc": "2026-08-26T02:52:10+00:00",
+        "passes": 23,
+        "tracks_by_lag": {
+          "0": [
+            19,
+            85,
+            121
+          ],
+          "1": [
+            19,
+            85,
+            121
+          ],
+          "2": [
+            19,
+            85,
+            121
+          ],
+          "3": [
+            19,
+            85,
+            121
+          ]
+        }
+      },
+      "2025": {
+        "anchor_utc": "2025-08-26T02:52:10+00:00",
+        "passes": 21,
+        "tracks_by_lag": {
+          "0": [
+            19,
+            85,
+            121
+          ],
+          "1": [
+            19,
+            85,
+            121
+          ],
+          "2": [
+            19,
+            85,
+            121
+          ],
+          "3": [
+            19,
+            85
+          ]
+        }
+      },
+      "2024": {
+        "anchor_utc": "2024-08-26T02:52:10+00:00",
+        "passes": 21,
+        "tracks_by_lag": {
+          "0": [
+            19,
+            85,
+            121
+          ],
+          "1": [
+            19,
+            85,
+            121
+          ],
+          "2": [
+            19,
+            85,
+            121
+          ],
+          "3": [
+            85,
+            121
+          ]
+        }
+      },
+      "2023": {
+        "anchor_utc": "2023-08-26T02:52:10+00:00",
+        "passes": 20,
+        "tracks_by_lag": {
+          "0": [
+            19,
+            85
+          ],
+          "1": [
+            19,
+            85
+          ],
+          "2": [
+            19,
+            85
+          ],
+          "3": [
+            85
+          ]
+        }
+      },
+      "2022": {
+        "anchor_utc": "2022-08-26T02:52:10+00:00",
+        "passes": 22,
+        "tracks_by_lag": {
+          "0": [
+            19,
+            85,
+            121
+          ],
+          "1": [
+            19,
+            85,
+            121
+          ],
+          "2": [
+            19,
+            85,
+            121
+          ],
+          "3": [
+            19,
+            85,
+            121
+          ]
+        }
+      }
+    }
+  },
+  "null_labels": [
+    "2026 lag 1",
+    "2026 lag 2",
+    "2026 lag 3",
+    "2025 lag 0",
+    "2025 lag 1",
+    "2025 lag 2",
+    "2025 lag 3",
+    "2024 lag 0",
+    "2024 lag 1",
+    "2024 lag 2",
+    "2024 lag 3",
+    "2023 lag 0",
+    "2023 lag 1",
+    "2023 lag 2",
+    "2023 lag 3",
+    "2022 lag 0",
+    "2022 lag 1",
+    "2022 lag 2",
+    "2022 lag 3"
+  ],
+  "polarisations": {
+    "vv": {
+      "failures": [],
+      "groups": [
+        {
+          "tracks": [
+            19,
+            85,
+            121
+          ],
+          "nulls": [
+            {
+              "label": "2026 lag 1",
+              "after_dates": [
+                "2026-08-24",
+                "2026-08-16",
+                "2026-08-19"
+              ],
+              "largest_patch_km2": 0.0278,
+              "area_km2_by_agreement": {
+                "2": 2.648,
+                "3": 0.062
+              },
+              "per_track_excess_km2": [
+                16.58,
+                14.498,
+                12.753
+              ],
+              "largest_patch_centroid": {
+                "lat": 28.2587,
+                "lon": 85.5028
+              },
+              "distance_from_source_km": 1.73
+            },
+            {
+              "label": "2026 lag 2",
+              "after_dates": [
+                "2026-08-12",
+                "2026-08-04",
+                "2026-08-07"
+              ],
+              "largest_patch_km2": 0.0099,
+              "area_km2_by_agreement": {
+                "2": 2.29,
+                "3": 0.059
+              },
+              "per_track_excess_km2": [
+                12.021,
+                12.663,
+                14.53
+              ],
+              "largest_patch_centroid": {
+                "lat": 28.2835,
+                "lon": 85.5346
+              },
+              "distance_from_source_km": 3.48
+            },
+            {
+              "label": "2026 lag 3",
+              "after_dates": [
+                "2026-07-31",
+                "2026-07-23",
+                "2026-07-26"
+              ],
+              "largest_patch_km2": 0.0114,
+              "area_km2_by_agreement": {
+                "2": 3.327,
+                "3": 0.1
+              },
+              "per_track_excess_km2": [
+                16.131,
+                15.071,
+                16.964
+              ],
+              "largest_patch_centroid": {
+                "lat": 28.2383,
+                "lon": 85.4679
+              },
+              "distance_from_source_km": 5.43
+            },
+            {
+              "label": "2025 lag 0",
+              "after_dates": [
+                "2025-09-03",
+                "2025-08-26",
+                "2025-08-29"
+              ],
+              "largest_patch_km2": 0.0395,
+              "area_km2_by_agreement": {
+                "2": 3.87,
+                "3": 0.121
+              },
+              "per_track_excess_km2": [
+                25.974,
+                13.442,
+                14.326
+              ],
+              "largest_patch_centroid": {
+                "lat": 28.2551,
+                "lon": 85.4603
+              },
+              "distance_from_source_km": 5.85
+            },
+            {
+              "label": "2025 lag 1",
+              "after_dates": [
+                "2025-08-22",
+                "2025-08-14",
+                "2025-08-17"
+              ],
+              "largest_patch_km2": 0.0027,
+              "area_km2_by_agreement": {
+                "2": 2.648,
+                "3": 0.059
+              },
+              "per_track_excess_km2": [
+                8.777,
+                14.968,
+                22.042
+              ],
+              "largest_patch_centroid": {
+                "lat": 28.2567,
+                "lon": 85.5759
+              },
+              "distance_from_source_km": 5.48
+            },
+            {
+              "label": "2025 lag 2",
+              "after_dates": [
+                "2025-08-10",
+                "2025-08-02",
+                "2025-08-05"
+              ],
+              "largest_patch_km2": 0.0296,
+              "area_km2_by_agreement": {
+                "2": 16.378,
+                "3": 0.554
+              },
+              "per_track_excess_km2": [
+                24.206,
+                13.595,
+                113.418
+              ],
+              "largest_patch_centroid": {
+                "lat": 28.2548,
+                "lon": 85.5165
+              },
+              "distance_from_source_km": 0.34
+            },
+            {
+              "label": "2024 lag 0",
+              "after_dates": [
+                "2024-08-27",
+                "2024-08-31",
+                "2024-09-03"
+              ],
+              "largest_patch_km2": 0.0226,
+              "area_km2_by_agreement": {
+                "2": 4.34,
+                "3": 0.147
+              },
+              "per_track_excess_km2": [
+                19.193,
+                24.126,
+                13.525
+              ],
+              "largest_patch_centroid": {
+                "lat": 28.2544,
+                "lon": 85.4617
+              },
+              "distance_from_source_km": 5.71
+            },
+            {
+              "label": "2024 lag 1",
+              "after_dates": [
+                "2024-08-15",
+                "2024-08-19",
+                "2024-08-22"
+              ],
+              "largest_patch_km2": 0.0334,
+              "area_km2_by_agreement": {
+                "2": 3.215,
+                "3": 0.088
+              },
+              "per_track_excess_km2": [
+                19.016,
+                15.955,
+                14.509
+              ],
+              "largest_patch_centroid": {
+                "lat": 28.2586,
+                "lon": 85.5029
+              },
+              "distance_from_source_km": 1.72
+            },
+            {
+              "label": "2024 lag 2",
+              "after_dates": [
+                "2024-08-03",
+                "2024-08-07",
+                "2024-08-10"
+              ],
+              "largest_patch_km2": 0.0048,
+              "area_km2_by_agreement": {
+                "2": 2.557,
+                "3": 0.058
+              },
+              "per_track_excess_km2": [
+                15.647,
+                16.634,
+                11.56
+              ],
+              "largest_patch_centroid": {
+                "lat": 28.2505,
+                "lon": 85.5785
+              },
+              "distance_from_source_km": 5.75
+            },
+            {
+              "label": "2022 lag 0",
+              "after_dates": [
+                "2022-09-07",
+                "2022-08-30",
+                "2022-09-02"
+              ],
+              "largest_patch_km2": 0.0122,
+              "area_km2_by_agreement": {
+                "2": 3.048,
+                "3": 0.081
+              },
+              "per_track_excess_km2": [
+                17.205,
+                19.477,
+                12.731
+              ],
+              "largest_patch_centroid": {
+                "lat": 28.2534,
+                "lon": 85.4904
+              },
+              "distance_from_source_km": 2.91
+            },
+            {
+              "label": "2022 lag 1",
+              "after_dates": [
+                "2022-08-26",
+                "2022-08-18",
+                "2022-08-21"
+              ],
+              "largest_patch_km2": 0.0184,
+              "area_km2_by_agreement": {
+                "2": 5.371,
+                "3": 0.166
+              },
+              "per_track_excess_km2": [
+                38.248,
+                17.633,
+                14.049
+              ],
+              "largest_patch_centroid": {
+                "lat": 28.2701,
+                "lon": 85.5321
+              },
+              "distance_from_source_km": 2.06
+            },
+            {
+              "label": "2022 lag 2",
+              "after_dates": [
+                "2022-08-14",
+                "2022-08-06",
+                "2022-08-09"
+              ],
+              "largest_patch_km2": 0.0035,
+              "area_km2_by_agreement": {
+                "2": 0.789,
+                "3": 0.001
+              },
+              "per_track_excess_km2": [
+                9.26,
+                16.892,
+                0.322
+              ],
+              "largest_patch_centroid": {
+                "lat": 28.2655,
+                "lon": 85.5453
+              },
+              "distance_from_source_km": 2.73
+            },
+            {
+              "label": "2022 lag 3",
+              "after_dates": [
+                "2022-08-02",
+                "2022-07-25",
+                "2022-07-28"
+              ],
+              "largest_patch_km2": 0.0034,
+              "area_km2_by_agreement": {
+                "2": 1.057,
+                "3": 0.007
+              },
+              "per_track_excess_km2": [
+                10.762,
+                14.9,
+                4.633
+              ],
+              "largest_patch_centroid": {
+                "lat": 28.3267,
+                "lon": 85.5451
+              },
+              "distance_from_source_km": 8.35
+            }
+          ],
+          "event": {
+            "largest_patch_km2": 0.413,
+            "area_km2_by_agreement": {
+              "2": 4.561,
+              "3": 0.534
+            },
+            "per_track_excess_km2": [
+              15.266,
+              15.867,
+              15.694
+            ],
+            "largest_patch_centroid": {
+              "lat": 28.3048,
+              "lon": 85.503
+            },
+            "distance_from_source_km": 5.78
+          },
+          "summary": {
+            "event_largest_km2": 0.413,
+            "null_largest_km2": [
+              0.0278,
+              0.0099,
+              0.0114,
+              0.0395,
+              0.0027,
+              0.0296,
+              0.0226,
+              0.0334,
+              0.0048,
+              0.0122,
+              0.0184,
+              0.0035,
+              0.0034
+            ],
+            "n_null": 13,
+            "null_max_km2": 0.0395,
+            "null_median_km2": 0.0122,
+            "event_over_null_max": 10.46,
+            "null_windows_at_or_above_event": 0,
+            "empirical_p": 0.071,
+            "p_floor": 0.071
+          }
+        },
+        {
+          "tracks": [
+            19,
+            85
+          ],
+          "nulls": [
+            {
+              "label": "2025 lag 3",
+              "after_dates": [
+                "2025-07-29",
+                "2025-07-21"
+              ],
+              "largest_patch_km2": 0.0152,
+              "area_km2_by_agreement": {
+                "2": 7.201
+              },
+              "per_track_excess_km2": [
+                85.157,
+                24.082
+              ],
+              "largest_patch_centroid": {
+                "lat": 28.2588,
+                "lon": 85.5213
+              },
+              "distance_from_source_km": 0.44
+            },
+            {
+              "label": "2023 lag 0",
+              "after_dates": [
+                "2023-09-02",
+                "2023-09-06"
+              ],
+              "largest_patch_km2": 0.1471,
+              "area_km2_by_agreement": {
+                "2": 4.709
+              },
+              "per_track_excess_km2": [
+                34.203,
+                33.906
+              ],
+              "largest_patch_centroid": {
+                "lat": 28.2717,
+                "lon": 85.5338
+              },
+              "distance_from_source_km": 2.29
+            },
+            {
+              "label": "2023 lag 1",
+              "after_dates": [
+                "2023-08-21",
+                "2023-08-25"
+              ],
+              "largest_patch_km2": 0.0018,
+              "area_km2_by_agreement": {
+                "2": 0.876
+              },
+              "per_track_excess_km2": [
+                13.441,
+                17.327
+              ],
+              "largest_patch_centroid": {
+                "lat": 28.28,
+                "lon": 85.5453
+              },
+              "distance_from_source_km": 3.73
+            },
+            {
+              "label": "2023 lag 2",
+              "after_dates": [
+                "2023-08-09",
+                "2023-08-13"
+              ],
+              "largest_patch_km2": 0.0385,
+              "area_km2_by_agreement": {
+                "2": 1.645
+              },
+              "per_track_excess_km2": [
+                20.227,
+                18.517
+              ],
+              "largest_patch_centroid": {
+                "lat": 28.259,
+                "lon": 85.4999
+              },
+              "distance_from_source_km": 2.02
+            }
+          ],
+          "event": {
+            "largest_patch_km2": 0.0633,
+            "area_km2_by_agreement": {
+              "2": 1.807
+            },
+            "per_track_excess_km2": [
+              15.266,
+              15.867
+            ],
+            "largest_patch_centroid": {
+              "lat": 28.3083,
+              "lon": 85.4998
+            },
+            "distance_from_source_km": 6.25
+          },
+          "summary": {
+            "event_largest_km2": 0.0633,
+            "null_largest_km2": [
+              0.0152,
+              0.1471,
+              0.0018,
+              0.0385
+            ],
+            "n_null": 4,
+            "null_max_km2": 0.1471,
+            "null_median_km2": 0.0268,
+            "event_over_null_max": 0.43,
+            "null_windows_at_or_above_event": 1,
+            "empirical_p": 0.4,
+            "p_floor": 0.2
+          }
+        },
+        {
+          "tracks": [
+            85,
+            121
+          ],
+          "nulls": [
+            {
+              "label": "2024 lag 3",
+              "after_dates": [
+                "2024-07-26",
+                "2024-07-29"
+              ],
+              "largest_patch_km2": 0.0045,
+              "area_km2_by_agreement": {
+                "2": 0.561
+              },
+              "per_track_excess_km2": [
+                15.334,
+                8.12
+              ],
+              "largest_patch_centroid": {
+                "lat": 28.2585,
+                "lon": 85.5063
+              },
+              "distance_from_source_km": 1.4
+            }
+          ],
+          "event": {
+            "largest_patch_km2": 0.0846,
+            "area_km2_by_agreement": {
+              "2": 1.764
+            },
+            "per_track_excess_km2": [
+              15.867,
+              15.694
+            ],
+            "largest_patch_centroid": {
+              "lat": 28.2862,
+              "lon": 85.5186
+            },
+            "distance_from_source_km": 3.47
+          },
+          "summary": {
+            "event_largest_km2": 0.0846,
+            "null_largest_km2": [
+              0.0045
+            ],
+            "n_null": 1,
+            "null_max_km2": 0.0045,
+            "null_median_km2": 0.0045,
+            "event_over_null_max": 18.8,
+            "null_windows_at_or_above_event": 0,
+            "empirical_p": 0.5,
+            "p_floor": 0.5
+          }
+        }
+      ],
+      "grid_shape": [
+        1614,
+        1622
+      ],
+      "event_tracks": [
+        19,
+        85,
+        121
+      ],
+      "event_by_track_set": {
+        "19+85": {
+          "largest_patch_km2": 0.0633,
+          "area_km2_by_agreement": {
+            "2": 1.807
+          },
+          "per_track_excess_km2": [
+            15.266,
+            15.867
+          ],
+          "largest_patch_centroid": {
+            "lat": 28.3083,
+            "lon": 85.4998
+          },
+          "distance_from_source_km": 6.25
+        },
+        "19+121": {
+          "largest_patch_km2": 0.1768,
+          "area_km2_by_agreement": {
+            "2": 2.058
+          },
+          "per_track_excess_km2": [
+            15.266,
+            15.694
+          ],
+          "largest_patch_centroid": {
+            "lat": 28.2873,
+            "lon": 85.5276
+          },
+          "distance_from_source_km": 3.67
+        },
+        "85+121": {
+          "largest_patch_km2": 0.0846,
+          "area_km2_by_agreement": {
+            "2": 1.764
+          },
+          "per_track_excess_km2": [
+            15.867,
+            15.694
+          ],
+          "largest_patch_centroid": {
+            "lat": 28.2862,
+            "lon": 85.5186
+          },
+          "distance_from_source_km": 3.47
+        },
+        "19+85+121": {
+          "largest_patch_km2": 0.413,
+          "area_km2_by_agreement": {
+            "2": 4.561,
+            "3": 0.534
+          },
+          "per_track_excess_km2": [
+            15.266,
+            15.867,
+            15.694
+          ],
+          "largest_patch_centroid": {
+            "lat": 28.3048,
+            "lon": 85.503
+          },
+          "distance_from_source_km": 5.78
+        }
+      },
+      "status": "analysed"
+    },
+    "vh": {
+      "failures": [],
+      "groups": [
+        {
+          "tracks": [
+            19,
+            85,
+            121
+          ],
+          "nulls": [
+            {
+              "label": "2026 lag 1",
+              "after_dates": [
+                "2026-08-24",
+                "2026-08-16",
+                "2026-08-19"
+              ],
+              "largest_patch_km2": 0.0257,
+              "area_km2_by_agreement": {
+                "2": 4.126,
+                "3": 0.135
+              },
+              "per_track_excess_km2": [
+                17.591,
+                24.279,
+                14.47
+              ],
+              "largest_patch_centroid": {
+                "lat": 28.2529,
+                "lon": 85.5092
+              },
+              "distance_from_source_km": 1.08
+            },
+            {
+              "label": "2026 lag 2",
+              "after_dates": [
+                "2026-08-12",
+                "2026-08-04",
+                "2026-08-07"
+              ],
+              "largest_patch_km2": 0.0122,
+              "area_km2_by_agreement": {
+                "2": 3.739,
+                "3": 0.111
+              },
+              "per_track_excess_km2": [
+                15.613,
+                21.818,
+                15.575
+              ],
+              "largest_patch_centroid": {
+                "lat": 28.2701,
+                "lon": 85.5628
+              },
+              "distance_from_source_km": 4.52
+            },
+            {
+              "label": "2026 lag 3",
+              "after_dates": [
+                "2026-07-31",
+                "2026-07-23",
+                "2026-07-26"
+              ],
+              "largest_patch_km2": 0.0091,
+              "area_km2_by_agreement": {
+                "2": 3.231,
+                "3": 0.079
+              },
+              "per_track_excess_km2": [
+                17.06,
+                16.355,
+                17.806
+              ],
+              "largest_patch_centroid": {
+                "lat": 28.2497,
+                "lon": 85.4989
+              },
+              "distance_from_source_km": 2.15
+            },
+            {
+              "label": "2025 lag 0",
+              "after_dates": [
+                "2025-09-03",
+                "2025-08-26",
+                "2025-08-29"
+              ],
+              "largest_patch_km2": 0.0067,
+              "area_km2_by_agreement": {
+                "2": 3.965,
+                "3": 0.108
+              },
+              "per_track_excess_km2": [
+                22.835,
+                18.816,
+                15.422
+              ],
+              "largest_patch_centroid": {
+                "lat": 28.2328,
+                "lon": 85.4717
+              },
+              "distance_from_source_km": 5.33
+            },
+            {
+              "label": "2025 lag 1",
+              "after_dates": [
+                "2025-08-22",
+                "2025-08-14",
+                "2025-08-17"
+              ],
+              "largest_patch_km2": 0.0039,
+              "area_km2_by_agreement": {
+                "2": 3.453,
+                "3": 0.073
+              },
+              "per_track_excess_km2": [
+                10.788,
+                19.014,
+                24.284
+              ],
+              "largest_patch_centroid": {
+                "lat": 28.2478,
+                "lon": 85.4814
+              },
+              "distance_from_source_km": 3.86
+            },
+            {
+              "label": "2025 lag 2",
+              "after_dates": [
+                "2025-08-10",
+                "2025-08-02",
+                "2025-08-05"
+              ],
+              "largest_patch_km2": 0.0176,
+              "area_km2_by_agreement": {
+                "2": 15.273,
+                "3": 0.547
+              },
+              "per_track_excess_km2": [
+                24.868,
+                16.042,
+                94.189
+              ],
+              "largest_patch_centroid": {
+                "lat": 28.2502,
+                "lon": 85.4942
+              },
+              "distance_from_source_km": 2.59
+            },
+            {
+              "label": "2024 lag 0",
+              "after_dates": [
+                "2024-08-27",
+                "2024-08-31",
+                "2024-09-03"
+              ],
+              "largest_patch_km2": 0.0179,
+              "area_km2_by_agreement": {
+                "2": 4.833,
+                "3": 0.167
+              },
+              "per_track_excess_km2": [
+                19.956,
+                27.909,
+                14.906
+              ],
+              "largest_patch_centroid": {
+                "lat": 28.2573,
+                "lon": 85.487
+              },
+              "distance_from_source_km": 3.24
+            },
+            {
+              "label": "2024 lag 1",
+              "after_dates": [
+                "2024-08-15",
+                "2024-08-19",
+                "2024-08-22"
+              ],
+              "largest_patch_km2": 0.0187,
+              "area_km2_by_agreement": {
+                "2": 3.857,
+                "3": 0.105
+              },
+              "per_track_excess_km2": [
+                19.15,
+                19.989,
+                16.446
+              ],
+              "largest_patch_centroid": {
+                "lat": 28.2587,
+                "lon": 85.5025
+              },
+              "distance_from_source_km": 1.76
+            },
+            {
+              "label": "2024 lag 2",
+              "after_dates": [
+                "2024-08-03",
+                "2024-08-07",
+                "2024-08-10"
+              ],
+              "largest_patch_km2": 0.0046,
+              "area_km2_by_agreement": {
+                "2": 3.41,
+                "3": 0.079
+              },
+              "per_track_excess_km2": [
+                18.954,
+                21.081,
+                13.643
+              ],
+              "largest_patch_centroid": {
+                "lat": 28.2503,
+                "lon": 85.5003
+              },
+              "distance_from_source_km": 2.0
+            },
+            {
+              "label": "2022 lag 0",
+              "after_dates": [
+                "2022-09-07",
+                "2022-08-30",
+                "2022-09-02"
+              ],
+              "largest_patch_km2": 0.0114,
+              "area_km2_by_agreement": {
+                "2": 3.581,
+                "3": 0.082
+              },
+              "per_track_excess_km2": [
+                18.255,
+                22.342,
+                14.464
+              ],
+              "largest_patch_centroid": {
+                "lat": 28.2534,
+                "lon": 85.4901
+              },
+              "distance_from_source_km": 2.93
+            },
+            {
+              "label": "2022 lag 1",
+              "after_dates": [
+                "2022-08-26",
+                "2022-08-18",
+                "2022-08-21"
+              ],
+              "largest_patch_km2": 0.045,
+              "area_km2_by_agreement": {
+                "2": 7.432,
+                "3": 0.247
+              },
+              "per_track_excess_km2": [
+                40.252,
+                21.161,
+                19.216
+              ],
+              "largest_patch_centroid": {
+                "lat": 28.2698,
+                "lon": 85.5308
+              },
+              "distance_from_source_km": 1.95
+            },
+            {
+              "label": "2022 lag 2",
+              "after_dates": [
+                "2022-08-14",
+                "2022-08-06",
+                "2022-08-09"
+              ],
+              "largest_patch_km2": 0.0037,
+              "area_km2_by_agreement": {
+                "2": 0.95,
+                "3": 0.001
+              },
+              "per_track_excess_km2": [
+                11.537,
+                20.241,
+                0.446
+              ],
+              "largest_patch_centroid": {
+                "lat": 28.2628,
+                "lon": 85.5224
+              },
+              "distance_from_source_km": 0.9
+            },
+            {
+              "label": "2022 lag 3",
+              "after_dates": [
+                "2022-08-02",
+                "2022-07-25",
+                "2022-07-28"
+              ],
+              "largest_patch_km2": 0.0041,
+              "area_km2_by_agreement": {
+                "2": 1.169,
+                "3": 0.011
+              },
+              "per_track_excess_km2": [
+                12.066,
+                17.481,
+                3.825
+              ],
+              "largest_patch_centroid": {
+                "lat": 28.3251,
+                "lon": 85.5084
+              },
+              "distance_from_source_km": 7.88
+            }
+          ],
+          "event": {
+            "largest_patch_km2": 0.1151,
+            "area_km2_by_agreement": {
+              "2": 4.11,
+              "3": 0.27
+            },
+            "per_track_excess_km2": [
+              16.112,
+              17.709,
+              17.39
+            ],
+            "largest_patch_centroid": {
+              "lat": 28.3038,
+              "lon": 85.5032
+            },
+            "distance_from_source_km": 5.67
+          },
+          "summary": {
+            "event_largest_km2": 0.1151,
+            "null_largest_km2": [
+              0.0257,
+              0.0122,
+              0.0091,
+              0.0067,
+              0.0039,
+              0.0176,
+              0.0179,
+              0.0187,
+              0.0046,
+              0.0114,
+              0.045,
+              0.0037,
+              0.0041
+            ],
+            "n_null": 13,
+            "null_max_km2": 0.045,
+            "null_median_km2": 0.0114,
+            "event_over_null_max": 2.56,
+            "null_windows_at_or_above_event": 0,
+            "empirical_p": 0.071,
+            "p_floor": 0.071
+          }
+        },
+        {
+          "tracks": [
+            19,
+            85
+          ],
+          "nulls": [
+            {
+              "label": "2025 lag 3",
+              "after_dates": [
+                "2025-07-29",
+                "2025-07-21"
+              ],
+              "largest_patch_km2": 0.0267,
+              "area_km2_by_agreement": {
+                "2": 7.825
+              },
+              "per_track_excess_km2": [
+                68.862,
+                32.626
+              ],
+              "largest_patch_centroid": {
+                "lat": 28.2584,
+                "lon": 85.5007
+              },
+              "distance_from_source_km": 1.93
+            },
+            {
+              "label": "2023 lag 0",
+              "after_dates": [
+                "2023-09-02",
+                "2023-09-06"
+              ],
+              "largest_patch_km2": 0.1891,
+              "area_km2_by_agreement": {
+                "2": 6.736
+              },
+              "per_track_excess_km2": [
+                37.579,
+                47.155
+              ],
+              "largest_patch_centroid": {
+                "lat": 28.2713,
+                "lon": 85.532
+              },
+              "distance_from_source_km": 2.16
+            },
+            {
+              "label": "2023 lag 1",
+              "after_dates": [
+                "2023-08-21",
+                "2023-08-25"
+              ],
+              "largest_patch_km2": 0.0034,
+              "area_km2_by_agreement": {
+                "2": 1.103
+              },
+              "per_track_excess_km2": [
+                15.843,
+                19.627
+              ],
+              "largest_patch_centroid": {
+                "lat": 28.2537,
+                "lon": 85.5954
+              },
+              "distance_from_source_km": 7.38
+            },
+            {
+              "label": "2023 lag 2",
+              "after_dates": [
+                "2023-08-09",
+                "2023-08-13"
+              ],
+              "largest_patch_km2": 0.0541,
+              "area_km2_by_agreement": {
+                "2": 1.897
+              },
+              "per_track_excess_km2": [
+                20.142,
+                24.393
+              ],
+              "largest_patch_centroid": {
+                "lat": 28.259,
+                "lon": 85.5012
+              },
+              "distance_from_source_km": 1.89
+            }
+          ],
+          "event": {
+            "largest_patch_km2": 0.0311,
+            "area_km2_by_agreement": {
+              "2": 1.473
+            },
+            "per_track_excess_km2": [
+              16.112,
+              17.709
+            ],
+            "largest_patch_centroid": {
+              "lat": 28.2875,
+              "lon": 85.5293
+            },
+            "distance_from_source_km": 3.73
+          },
+          "summary": {
+            "event_largest_km2": 0.0311,
+            "null_largest_km2": [
+              0.0267,
+              0.1891,
+              0.0034,
+              0.0541
+            ],
+            "n_null": 4,
+            "null_max_km2": 0.1891,
+            "null_median_km2": 0.0404,
+            "event_over_null_max": 0.16,
+            "null_windows_at_or_above_event": 2,
+            "empirical_p": 0.6,
+            "p_floor": 0.2
+          }
+        },
+        {
+          "tracks": [
+            85,
+            121
+          ],
+          "nulls": [
+            {
+              "label": "2024 lag 3",
+              "after_dates": [
+                "2024-07-26",
+                "2024-07-29"
+              ],
+              "largest_patch_km2": 0.0206,
+              "area_km2_by_agreement": {
+                "2": 0.754
+              },
+              "per_track_excess_km2": [
+                17.142,
+                10.252
+              ],
+              "largest_patch_centroid": {
+                "lat": 28.2592,
+                "lon": 85.5068
+              },
+              "distance_from_source_km": 1.37
+            }
+          ],
+          "event": {
+            "largest_patch_km2": 0.0345,
+            "area_km2_by_agreement": {
+              "2": 1.482
+            },
+            "per_track_excess_km2": [
+              17.709,
+              17.39
+            ],
+            "largest_patch_centroid": {
+              "lat": 28.2864,
+              "lon": 85.5188
+            },
+            "distance_from_source_km": 3.49
+          },
+          "summary": {
+            "event_largest_km2": 0.0345,
+            "null_largest_km2": [
+              0.0206
+            ],
+            "n_null": 1,
+            "null_max_km2": 0.0206,
+            "null_median_km2": 0.0206,
+            "event_over_null_max": 1.67,
+            "null_windows_at_or_above_event": 0,
+            "empirical_p": 0.5,
+            "p_floor": 0.5
+          }
+        }
+      ],
+      "grid_shape": [
+        1614,
+        1622
+      ],
+      "event_tracks": [
+        19,
+        85,
+        121
+      ],
+      "event_by_track_set": {
+        "19+85": {
+          "largest_patch_km2": 0.0311,
+          "area_km2_by_agreement": {
+            "2": 1.473
+          },
+          "per_track_excess_km2": [
+            16.112,
+            17.709
+          ],
+          "largest_patch_centroid": {
+            "lat": 28.2875,
+            "lon": 85.5293
+          },
+          "distance_from_source_km": 3.73
+        },
+        "19+121": {
+          "largest_patch_km2": 0.0191,
+          "area_km2_by_agreement": {
+            "2": 1.695
+          },
+          "per_track_excess_km2": [
+            16.112,
+            17.39
+          ],
+          "largest_patch_centroid": {
+            "lat": 28.3195,
+            "lon": 85.4876
+          },
+          "distance_from_source_km": 7.85
+        },
+        "85+121": {
+          "largest_patch_km2": 0.0345,
+          "area_km2_by_agreement": {
+            "2": 1.482
+          },
+          "per_track_excess_km2": [
+            17.709,
+            17.39
+          ],
+          "largest_patch_centroid": {
+            "lat": 28.2864,
+            "lon": 85.5188
+          },
+          "distance_from_source_km": 3.49
+        },
+        "19+85+121": {
+          "largest_patch_km2": 0.1151,
+          "area_km2_by_agreement": {
+            "2": 4.11,
+            "3": 0.27
+          },
+          "per_track_excess_km2": [
+            16.112,
+            17.709,
+            17.39
+          ],
+          "largest_patch_centroid": {
+            "lat": 28.3038,
+            "lon": 85.5032
+          },
+          "distance_from_source_km": 5.67
+        }
+      },
+      "status": "analysed"
+    }
+  },
+  "polarisation_agreement": [
+    {
+      "label": "2022 lag 0",
+      "tracks": [
+        19,
+        85,
+        121
+      ],
+      "vv_km2": 3.048,
+      "vh_km2": 3.581,
+      "shared_km2": 0.085,
+      "jaccard": 0.013
+    },
+    {
+      "label": "2022 lag 1",
+      "tracks": [
+        19,
+        85,
+        121
+      ],
+      "vv_km2": 5.371,
+      "vh_km2": 7.432,
+      "shared_km2": 0.347,
+      "jaccard": 0.0279
+    },
+    {
+      "label": "2022 lag 2",
+      "tracks": [
+        19,
+        85,
+        121
+      ],
+      "vv_km2": 0.789,
+      "vh_km2": 0.95,
+      "shared_km2": 0.016,
+      "jaccard": 0.0091
+    },
+    {
+      "label": "2022 lag 3",
+      "tracks": [
+        19,
+        85,
+        121
+      ],
+      "vv_km2": 1.057,
+      "vh_km2": 1.169,
+      "shared_km2": 0.035,
+      "jaccard": 0.0161
+    },
+    {
+      "label": "2023 lag 0",
+      "tracks": [
+        19,
+        85
+      ],
+      "vv_km2": 4.709,
+      "vh_km2": 6.736,
+      "shared_km2": 0.605,
+      "jaccard": 0.0558
+    },
+    {
+      "label": "2023 lag 1",
+      "tracks": [
+        19,
+        85
+      ],
+      "vv_km2": 0.877,
+      "vh_km2": 1.103,
+      "shared_km2": 0.009,
+      "jaccard": 0.0047
+    },
+    {
+      "label": "2023 lag 2",
+      "tracks": [
+        19,
+        85
+      ],
+      "vv_km2": 1.646,
+      "vh_km2": 1.897,
+      "shared_km2": 0.128,
+      "jaccard": 0.0373
+    },
+    {
+      "label": "2024 lag 0",
+      "tracks": [
+        19,
+        85,
+        121
+      ],
+      "vv_km2": 4.34,
+      "vh_km2": 4.833,
+      "shared_km2": 0.257,
+      "jaccard": 0.0288
+    },
+    {
+      "label": "2024 lag 1",
+      "tracks": [
+        19,
+        85,
+        121
+      ],
+      "vv_km2": 3.215,
+      "vh_km2": 3.857,
+      "shared_km2": 0.132,
+      "jaccard": 0.0191
+    },
+    {
+      "label": "2024 lag 2",
+      "tracks": [
+        19,
+        85,
+        121
+      ],
+      "vv_km2": 2.557,
+      "vh_km2": 3.41,
+      "shared_km2": 0.062,
+      "jaccard": 0.0106
+    },
+    {
+      "label": "2024 lag 3",
+      "tracks": [
+        85,
+        121
+      ],
+      "vv_km2": 0.561,
+      "vh_km2": 0.754,
+      "shared_km2": 0.029,
+      "jaccard": 0.0228
+    },
+    {
+      "label": "2025 lag 0",
+      "tracks": [
+        19,
+        85,
+        121
+      ],
+      "vv_km2": 3.87,
+      "vh_km2": 3.965,
+      "shared_km2": 0.2,
+      "jaccard": 0.0262
+    },
+    {
+      "label": "2025 lag 1",
+      "tracks": [
+        19,
+        85,
+        121
+      ],
+      "vv_km2": 2.648,
+      "vh_km2": 3.453,
+      "shared_km2": 0.072,
+      "jaccard": 0.012
+    },
+    {
+      "label": "2025 lag 2",
+      "tracks": [
+        19,
+        85,
+        121
+      ],
+      "vv_km2": 16.378,
+      "vh_km2": 15.273,
+      "shared_km2": 1.788,
+      "jaccard": 0.0599
+    },
+    {
+      "label": "2025 lag 3",
+      "tracks": [
+        19,
+        85
+      ],
+      "vv_km2": 7.201,
+      "vh_km2": 7.825,
+      "shared_km2": 0.568,
+      "jaccard": 0.0392
+    },
+    {
+      "label": "2026 lag 0",
+      "tracks": [
+        19,
+        85
+      ],
+      "vv_km2": 1.807,
+      "vh_km2": 1.473,
+      "shared_km2": 0.233,
+      "jaccard": 0.0765
+    },
+    {
+      "label": "2026 lag 0",
+      "tracks": [
+        19,
+        85,
+        121
+      ],
+      "vv_km2": 4.561,
+      "vh_km2": 4.11,
+      "shared_km2": 0.75,
+      "jaccard": 0.0947
+    },
+    {
+      "label": "2026 lag 0",
+      "tracks": [
+        19,
+        121
+      ],
+      "vv_km2": 2.058,
+      "vh_km2": 1.695,
+      "shared_km2": 0.229,
+      "jaccard": 0.0648
+    },
+    {
+      "label": "2026 lag 0",
+      "tracks": [
+        85,
+        121
+      ],
+      "vv_km2": 1.764,
+      "vh_km2": 1.482,
+      "shared_km2": 0.232,
+      "jaccard": 0.077
+    },
+    {
+      "label": "2026 lag 1",
+      "tracks": [
+        19,
+        85,
+        121
+      ],
+      "vv_km2": 2.648,
+      "vh_km2": 4.126,
+      "shared_km2": 0.133,
+      "jaccard": 0.02
+    },
+    {
+      "label": "2026 lag 2",
+      "tracks": [
+        19,
+        85,
+        121
+      ],
+      "vv_km2": 2.29,
+      "vh_km2": 3.739,
+      "shared_km2": 0.074,
+      "jaccard": 0.0125
+    },
+    {
+      "label": "2026 lag 3",
+      "tracks": [
+        19,
+        85,
+        121
+      ],
+      "vv_km2": 3.327,
+      "vh_km2": 3.231,
+      "shared_km2": 0.099,
+      "jaccard": 0.0152
+    }
+  ],
+  "status": "analysed"
+}

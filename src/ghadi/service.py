@@ -27,7 +27,7 @@ from __future__ import annotations
 
 import hashlib
 import json
-from collections.abc import Iterable, Sequence
+from collections.abc import Iterable, Iterator, Sequence
 from dataclasses import dataclass
 from datetime import datetime
 from pathlib import Path
@@ -77,6 +77,11 @@ class WindowObservation:
     gauge: GaugeObservation | None = None
     origins: tuple[Origin, ...] = ()  # rolling global M>=5.5 catalogue for suppression
     event_id: str = "GHADI-EVENT"
+    # Horizontal to vertical energy over the decision segment, when the horizontals
+    # were available (issue #37). None means the H/V rule cannot be applied.
+    segment_hv: float | None = None
+    # A second station saw this onset at a time fitting a source in the region (#31).
+    seismic_corroborated: bool = False
 
 
 @dataclass(frozen=True)
@@ -115,7 +120,10 @@ def process_window(
     cfg = config or DEFAULT
 
     classification = classify_segment(
-        obs.segment_lf_hf, obs.segment_centroid_hz, config=cfg.classify
+        obs.segment_lf_hf,
+        obs.segment_centroid_hz,
+        config=cfg.classify,
+        segment_hv=obs.segment_hv,
     )
     suppression = explain(obs.detected_utc, obs.origins, station_lat, station_lon)
 
@@ -136,7 +144,10 @@ def process_window(
     else:
         channels.append(
             channel_from_seismic(
-                classification, sensor_alive=obs.seismic_sensor_alive, config=cfg.fusion
+                classification,
+                sensor_alive=obs.seismic_sensor_alive,
+                config=cfg.fusion,
+                corroborated=obs.seismic_corroborated,
             )
         )
 
@@ -239,6 +250,8 @@ class AuditRecord:
             "seismic": {
                 "segment_lf_hf": obs.segment_lf_hf,
                 "segment_centroid_hz": obs.segment_centroid_hz,
+                "segment_hv": obs.segment_hv,
+                "corroborated": obs.seismic_corroborated,
                 "mass_movement_like": classification_like,
                 "sensor_alive": obs.seismic_sensor_alive,
                 "suppressed": suppression.suppressed,
@@ -371,7 +384,34 @@ def run_over(
     source, or a list. Chaining is maintained across the run, so the audit log stays
     verifiable whether it is a replay or a month of real windows.
     """
-    outcomes: list[ServiceOutcome] = []
+    return list(
+        run_over_each(
+            observations,
+            reach=reach,
+            model_version=model_version,
+            audit_log=audit_log,
+            health=health,
+            station_lat=station_lat,
+            station_lon=station_lon,
+            warning_latency_s=warning_latency_s,
+            config=config,
+        )
+    )
+
+
+def run_over_each(
+    observations: Iterable[WindowObservation],
+    reach: str,
+    model_version: str,
+    *,
+    audit_log: AuditLog | None = None,
+    health: HealthMonitor | None = None,
+    station_lat: float = PRIMARY_STATION_LAT,
+    station_lon: float = PRIMARY_STATION_LON,
+    warning_latency_s: float | None = None,
+    config: GhadiConfig | None = None,
+) -> Iterator[ServiceOutcome]:
+    """``run_over`` as a generator, so a live loop can act on each decision as it lands."""
     head = audit_log.head_hash if audit_log is not None else ""
     for obs in observations:
         outcome = process_window(
@@ -389,20 +429,52 @@ def run_over(
         head = outcome.audit.record_hash
         if health is not None:
             health.observe(outcome)
-        outcomes.append(outcome)
-    return outcomes
+        yield outcome
 
 
-def run_forever() -> None:
-    """Run the real-time loop against the live SeedLink feed.
+def run_forever(
+    *,
+    reach: str = "TRISHULI-R07",
+    model_version: str = "shadow",
+    server: str | None = None,
+    audit_path: str | Path | None = None,
+    shadow: bool = True,
+    config: GhadiConfig | None = None,
+) -> None:
+    """Run the real-time loop against the live SeedLink feed, in shadow mode.
 
-    Not implemented, and not faked. The live feed is the project's open go/no-go: the
-    seven-day real-time latency run (issue 0.1) has not been done, so there is no basis
-    to present this loop as operational. Wire a SeedLink source into ``run_over`` once
-    that run exists; the orchestration it drives is complete and tested today.
+    Shadow means the system decides, the decision is recorded, and nothing leaves the
+    machine (handoff tier T0). Two things this does **not** claim:
+
+    * that real time operation is viable. The seven day latency run (issue #8) is still
+      open. Running this loop is what measures it: every window carries the worst packet
+      delay that built it, and the feed statistics are printed when the loop ends.
+    * that an alert can reach anyone. There is no delivery path in the codebase, by
+      design, until issue #36 builds one with a human gate in front of it.
+
+    Args:
+        shadow: must stay True. It exists so that the refusal is explicit and testable,
+            not so that it can be switched off.
     """
-    raise NotImplementedError(
-        "The live real-time loop is blocked on the seven-day SeedLink latency run "
-        "(issue 0.1). The orchestration is complete and exercised offline by run_over(); "
-        "feed a live SeedLink source into run_over to go operational."
-    )
+    from .live import FeedStats, LiveConfig, run_shadow
+    from .sources import DEFAULT_SEEDLINK_SERVER, SeedLinkSource
+
+    source = SeedLinkSource(server=server or DEFAULT_SEEDLINK_SERVER)
+    stats = FeedStats()
+    log = AuditLog(Path(audit_path)) if audit_path is not None else None
+    health = HealthMonitor()
+    try:
+        run_shadow(
+            source,
+            reach=reach,
+            model_version=model_version,
+            shadow=shadow,
+            live=LiveConfig(station=source.station_key),
+            config=config,
+            stats=stats,
+            audit_log=log,
+            health=health,
+        )
+    finally:
+        print(f"feed: {stats.as_dict()}", flush=True)
+        print(f"reconnections: {source.reconnections}", flush=True)

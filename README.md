@@ -26,17 +26,17 @@ Then open http://localhost:8770 in your browser.
 
 ![The GHADI research dashboard](docs/images/hero_warning.png)
 
-The picture above shows the main case. The inputs from the 2026 event produce a **Warning**. Two independent sources agree, the seismic station and the Timure gauge, the fused score is 0.92, and the estimated warning time is about 3 minutes for Timure, 10 minutes for Syabrubesi, and 37 minutes for Bidur. Below the result you can see the evidence, the warning times on a shared scale, and the full method.
+The picture above shows the main case. The inputs from the 2026 event produce a **Warning**. Two independent sources agree, the seismic station and the Timure gauge, the fused score is 0.92, and the estimated warning time is about 1 and a half minutes for Timure, 8 minutes for Syabrubesi, and 35 minutes for Bidur. These use the decision time the live path measured, about 160 seconds from the slope failing to a decision. Below the result you can see the evidence, the warning times on a shared scale, and the full method.
 
 ### A distant earthquake is set aside
 
-A far away earthquake can look like a slow local source, because the signal loses its high notes over a long distance. GHADI checks a global earthquake list and sets those cases aside. Here the seismic channel is marked unavailable and there is no alert.
+A far away earthquake can look like a slow local source, because the signal loses its high notes over a long distance. GHADI checks a global earthquake list and sets those cases aside. Here the seismic station is online, but its signal is set aside as a distant earthquake. It gives no support, and there is no alert.
 
 ![No alert from a distant earthquake](docs/images/result_no_alert.png)
 
 ### A gauge that stops reporting
 
-In 2026 four of five gauges were destroyed by the water. A dead gauge is not treated as a calm river. If a gauge stops before it reports a rise, its channel is marked unavailable, not safe.
+In 2026 four of five gauges were destroyed by the water. A dead gauge is not treated as a calm river. If a gauge stops before it reports a rise, its channel is marked unavailable, not safe. In this picture the seismic station is online and quiet, the gauge is marked unavailable, and there is no alert.
 
 ![The gauge stops reporting](docs/images/result_gauge_unavailable.png)
 
@@ -44,7 +44,45 @@ In 2026 four of five gauges were destroyed by the water. A dead gauge is not tre
 
 Each preset runs under its own inputs, so you can see the outcomes side by side.
 
+A Warning needs two separate sources that each detected something. A sensor that is switched on but quiet does not count. So in the regional earthquake case, where only the gauge sees a surge, the result is an Advisory and not a Warning. We chose this rule after testing both, because under the old rule switching on a quiet sensor could raise the alert.
+
 ![Scenario comparison](docs/images/compare.png)
+
+### The shadow service
+
+The same detector can now run on a live feed. In shadow mode it decides on every window, writes each decision to a log whose lines are chained by hash, and sends nothing. Every alert it would have raised waits for a named person, who approves or rejects it by name. The page below reads what the service has recorded. Here it shows the 2026 event replayed through the live path: one Advisory, staged for a person. The Everest station saw the same onset at a fitting time, so the seismic channel is marked as corroborated, but without a gauge it stays an Advisory.
+
+![The shadow service page](docs/images/shadow_service.png)
+
+To try it on your own machine, replay the 2026 event from the local cache:
+
+```bash
+python scripts/run_shadow.py replay --start 2026-08-26T02:42:10Z --minutes 45
+```
+
+Then see what is waiting for a person:
+
+```bash
+python scripts/outbox.py list
+```
+
+For a real feed, `docs/RUNBOOK.md` explains how to run it for a season and what each failure looks like.
+
+### Independent confirmation from radar imagery
+
+Satellites cannot give warning time. A free radar satellite passes over a spot only every 12 days, and cloud hides the ground for weeks in the monsoon, so no orbit can see a slope fail and tell a village in minutes. But radar sees through cloud, and it can confirm, after the fact, where the ground changed.
+
+We compared the last radar pass before 26 August 2026 with the first pass after it, on each of the three satellite tracks that cover the source zone, and judged each one against a pair from before the event on the same track. On two of the three tracks the changed patch is 3.3 and 4.0 times larger than the normal change on that ground, above a floor of 2.0 that was fixed before we looked. The third track sits just under, at 1.85. All three tracks put their largest patch in the same small area, about 3 km across, 4 to 6 km north of the catalogued source point and inside its stated uncertainty.
+
+A stricter test asks whether the change sits in the same pixels on every track, after each track's own normal change is removed. For 2026 it finds a patch of 0.41 square kilometres where at least two of the three tracks agree, which is 5.5 times the size of the same test run on the weeks before the event. No older event passes this test, and Thame comes closest at 2.4 times.
+
+We then ran the same test on earlier weeks when nothing happened, and on the second radar channel. With all three tracks the 2026 patch is the largest of every earlier window we could compare fairly, and both radar channels find it within about 100 metres of each other. The honest limit is that only three such earlier windows exist, and on two tracks alone the event does not stand out. So it is a strong hint, not proof.
+
+To get more fair comparisons we took the same late August weeks from 2022 to 2025. That gives 13 windows with all three tracks. The 2026 patch is still the largest, about 10 times the biggest of them, and it leads in the second radar channel too. With 13 windows the best possible rank is about 1 in 14, and 2026 reaches it. On two tracks alone it still does not stand out, because a spot near the river changed in late August of both 2022 and 2023. So the result needs all three tracks to agree.
+
+We ran the same fair test on Thame, the 2024 glacial lake flood, which was the best older candidate. It does not pass. On all three tracks a monsoon window from 2022 has a bigger patch, and the spot that first made Thame look promising also changes in years when nothing happened. That does not mean the Thame flood did not happen. A flood that runs along an existing channel may change the radar picture much less than a slope collapse.
+
+This is the first confirmation of the 2026 source that does not come from the seismic station. The same method did not cleanly confirm any of the older events in the catalogue. Spring snowmelt and peak monsoon produce so much natural change that those events are lost in it, so the positive class is still one event. The full record is in `experiments/exp012_satellite_confirmation`, and the dashboard shows it in its own panel below the evidence.
 
 ## What is honest about this
 
@@ -59,9 +97,13 @@ Good signs:
 Hard limits, and they matter:
 
 * There is only one confirmed event to learn from (n = 1). The confidence value is an assumed setting, not a tested probability.
-* About 17 in every 100 real earthquakes look like the target on the two features, so the false alarm rate is still several times higher than the goal.
+* About 22 in every 100 real earthquakes look like the target on the two seismic features, now that the thresholds carry a 20 percent margin. A distant earthquake is set aside by the catalogue check, and a regional one still needs the other rules and the gauge to become a Warning.
+* On quiet days with no earthquakes the detector still raises false alarms. Measured on the short piece of signal it really decides on, Kakani gives about 14 a month and the Everest station about 89 a month. The goal is 1. Near Everest many of these may be real ice or rock falls that never became floods.
 * The river gauge data needs an agreement with Nepal's hydrology office that is not yet in place, so the gauge data here is made up for testing.
-* The live feed is not connected. This is a research tool, not a working warning system.
+* The live feed can be connected, but only in shadow mode. Nothing leaves the machine without a named person approving it. This is a research tool, not a working warning system.
+* The time from a slope failing to a decision is about two and a half minutes, not the one minute the earlier lead times assumed. The decision needs two minutes of signal after the onset by design. So the nearest village, Timure, gets about one and a half minutes of warning, not three.
+* Three rules together bring the false alarms close to the goal. The seismic shape test, a test of how much the ground moves sideways, and a second station seeing the same event at a fitting time give none a month at Kakani and about 6 a month at Everest, with the thresholds loosened by 20 percent so a real event a little different from 2026 is not missed. The second station was missing for up to a quarter of the cases, and a decision made without it falls back to the single station rate.
+* The gauge is still the only truly independent source, and it needs the data agreement.
 
 Nothing here proves the core idea wrong. It does mean the real question, can these events be told apart at a rate people can trust, is still open.
 
@@ -76,6 +118,12 @@ Every part of the chain exists and is tested. In plain words:
 * **classify**: decide whether the seismic signal looks like a slope failure, using two simple measures against fixed thresholds.
 * **hydro**: find a fast rise in a river gauge.
 * **dhm**: clean raw gauge data into the tidy form the detector needs, and decide whether the sensor is still alive.
+* **stream** and **sources**: turn a live packet feed, or a replayed one, into analysis windows, with gaps, delay, and late packets measured rather than hidden.
+* **live**: run the detector on each window and hand the result to the service. Shadow mode only.
+* **associate**: check whether two stations could be seeing one source, and where it could be.
+* **live** also joins the horizontal channels to the vertical for the sideways motion test, and keeps a partner station's triggers so a detection can be corroborated, or upgraded once when the partner reports late.
+* **delivery**: stage an alert for a person, record their approval, and only then deliver it to a file or an agreed endpoint. There is no public sink.
+* **settings** and **health**: site settings from a file, and a health check for whoever runs it.
 * **teleseism**: recognise a distant earthquake and set it aside.
 * **fusion**: combine the sources into one tiered decision.
 * **travel**: turn a detection into minutes of warning for each village.

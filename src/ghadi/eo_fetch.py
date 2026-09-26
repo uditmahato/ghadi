@@ -1,0 +1,533 @@
+"""Cached satellite scene access for ``ghadi.eo``.
+
+ANALYSIS PATH ONLY. This is the satellite counterpart of ``ghadi.fdsn`` and follows the
+same contracts:
+
+- Scenes come from the Microsoft Planetary Computer STAC catalogue (free, open
+  Copernicus data). Assets are cloud-optimised GeoTIFFs, so only the region of interest
+  is read over HTTP range requests; a whole scene is never downloaded.
+- Every search and every region read goes through a content-addressed cache under
+  ``data/cache/eo``. A second run is offline and byte-identical.
+- ``GHADI_OFFLINE=1`` forbids network access; a cache miss is then a failure *record*,
+  not an exception. One scene being unavailable never fails a batch.
+- The raster and catalogue libraries (``rasterio``, ``pystac_client``,
+  ``planetary_computer``) are imported lazily, inside the methods that need them, so
+  importing this module costs nothing and the ``eo`` extra is only required when a
+  fetch actually happens.
+
+Two pairing rules are enforced here because they are the most important things in
+radar change detection, and both were learned the hard way in exp012:
+
+1. A before scene and an after scene must share the same relative orbit and pass
+   direction. Comparing different tracks manufactures change from viewing angle alone.
+   ``same_track_pairs`` is the only way this module hands out pairs.
+2. One satellite pass is delivered as several frames, all with the same date and track.
+   Two frames of one pass are near-identical over their overlap, so pairing them as a
+   "control" shows almost no change and falsely inflates an event against it. A search
+   therefore keeps one frame per pass, the one that best covers the region, and a
+   control is always taken from the previous acquisition cycle, never the same date.
+"""
+
+from __future__ import annotations
+
+import hashlib
+import json
+from dataclasses import asdict, dataclass
+from datetime import UTC, datetime
+from pathlib import Path
+from typing import Any
+
+import numpy as np
+
+from .config import is_offline
+
+STAC_URL = "https://planetarycomputer.microsoft.com/api/stac/v1"
+SENTINEL1_RTC = "sentinel-1-rtc"  # radar backscatter, terrain corrected, 10 m
+SENTINEL2_L2A = "sentinel-2-l2a"  # optical surface reflectance, 10 m bands
+# Archive starts. An event before these dates has no scene, and that is a result to
+# report, not an error to hide.
+SENTINEL1_START = datetime(2014, 10, 1, tzinfo=UTC)
+SENTINEL2_START = datetime(2015, 7, 1, tzinfo=UTC)
+
+# Sentinel-2 scene classification (SCL) classes that mean the ground was visible.
+# 0 no data, 1 saturated, 2 dark, 3 cloud shadow, 4 vegetation, 5 bare, 6 water,
+# 7 unclassified, 8 cloud medium, 9 cloud high, 10 cirrus, 11 snow/ice.
+SCL_CLEAR = (4, 5, 6, 7)
+
+# Search-cache schema. Bumped when the cached record gains fields, so old entries are
+# refetched rather than silently read back without them.
+_SEARCH_SCHEMA = "v2"
+
+Bbox = tuple[float, float, float, float]  # WGS84 (west, south, east, north)
+
+
+def bbox_around(lat: float, lon: float, half_km: float) -> Bbox:
+    """A square WGS84 bounding box ``(west, south, east, north)`` around a point."""
+    dlat = half_km / 111.2
+    dlon = half_km / (111.2 * max(np.cos(np.radians(lat)), 1e-6))
+    return (lon - dlon, lat - dlat, lon + dlon, lat + dlat)
+
+
+def bbox_overlap_fraction(box: Bbox, target: Bbox) -> float:
+    """Fraction of ``target``'s area that ``box`` covers, in degree space. 0 if disjoint."""
+    w = max(0.0, min(box[2], target[2]) - max(box[0], target[0]))
+    h = max(0.0, min(box[3], target[3]) - max(box[1], target[1]))
+    area = max(0.0, (target[2] - target[0]) * (target[3] - target[1]))
+    return (w * h) / area if area > 0 else 0.0
+
+
+def default_cache_dir() -> Path:
+    return Path(__file__).resolve().parents[2] / "data" / "cache" / "eo"
+
+
+def sentinel2_clear_mask(scl: np.ndarray) -> np.ndarray:
+    """True where the scene classification says the ground was visible."""
+    return np.isin(np.asarray(scl), SCL_CLEAR)
+
+
+def sentinel2_reflectance(dn: np.ndarray) -> np.ndarray:
+    """Surface reflectance from L2A digital numbers (offset -1000, scale 1/10000)."""
+    return np.clip((np.asarray(dn, dtype=float) - 1000.0) / 10000.0, 0.0, None)
+
+
+@dataclass(frozen=True)
+class SceneMeta:
+    """What a search returns: enough to pair scenes and to fetch a region later."""
+
+    item_id: str
+    collection: str
+    datetime_utc: str  # ISO 8601
+    relative_orbit: int | None
+    orbit_state: str | None
+    cloud_cover: float | None
+    bbox: tuple[float, float, float, float] | None = None  # WGS84 footprint
+
+    @property
+    def when(self) -> datetime:
+        return datetime.fromisoformat(self.datetime_utc.replace("Z", "+00:00")).astimezone(UTC)
+
+    @property
+    def pass_key(self) -> tuple[int | None, str | None, str]:
+        """Frames from one satellite pass share track, direction, and calendar day."""
+        return (self.relative_orbit, self.orbit_state, self.when.date().isoformat())
+
+
+@dataclass
+class RoiResult:
+    """A region of interest read from one scene, or a failure record."""
+
+    scene: SceneMeta
+    asset: str
+    array: np.ndarray | None
+    transform: tuple[float, float, float, float, float, float] | None  # affine a..f
+    epsg: int | None
+    pixel_size_m: float | None
+    cache_hit: bool
+    error: str | None = None
+
+    @property
+    def ok(self) -> bool:
+        return self.error is None and self.array is not None
+
+    @property
+    def pixel_area_m2(self) -> float:
+        if self.pixel_size_m is None:
+            raise ValueError("no pixel size: the read failed")
+        return self.pixel_size_m * self.pixel_size_m
+
+
+def one_per_pass(scenes: list[SceneMeta], roi_bbox: Bbox | None) -> list[SceneMeta]:
+    """Keep one frame per satellite pass: the one that best covers the region.
+
+    Without footprints (old cache entries) the first frame of each pass is kept.
+    """
+    best: dict[tuple[int | None, str | None, str], tuple[float, SceneMeta]] = {}
+    for s in scenes:
+        cover = (
+            bbox_overlap_fraction(s.bbox, roi_bbox)
+            if (s.bbox is not None and roi_bbox is not None)
+            else 0.0
+        )
+        current = best.get(s.pass_key)
+        if current is None or cover > current[0]:
+            best[s.pass_key] = (cover, s)
+    return sorted((s for _, s in best.values()), key=lambda s: s.when)
+
+
+def previous_pass(scenes: list[SceneMeta], before: SceneMeta) -> SceneMeta | None:
+    """The previous acquisition cycle on the same track, never a frame of the same pass.
+
+    Among frames on that earlier date, the one whose footprint best matches ``before``
+    is chosen, so the control covers the same ground.
+    """
+    same_track = [
+        s
+        for s in scenes
+        if s.relative_orbit == before.relative_orbit
+        and s.orbit_state == before.orbit_state
+        and s.when.date() < before.when.date()
+    ]
+    if not same_track:
+        return None
+    latest_day = max(s.when.date() for s in same_track)
+    candidates = [s for s in same_track if s.when.date() == latest_day]
+    if before.bbox is None:
+        return candidates[0]
+    return max(
+        candidates,
+        key=lambda s: bbox_overlap_fraction(s.bbox, before.bbox) if s.bbox else 0.0,  # type: ignore[arg-type]
+    )
+
+
+def same_track_pairs(
+    scenes: list[SceneMeta], event_utc: datetime, max_gap_days: float = 30.0
+) -> list[tuple[SceneMeta, SceneMeta]]:
+    """The last pass before the event and the first after it, per relative orbit.
+
+    Only scenes on the same relative orbit and pass direction are ever paired. Pairs
+    are returned shortest gap first. A track with no scene on one side of the event
+    yields no pair, which the caller should report rather than fill in.
+    """
+    if event_utc.tzinfo is None:
+        raise ValueError("event time must be timezone-aware UTC")
+    groups: dict[tuple[int | None, str | None], list[SceneMeta]] = {}
+    for s in scenes:
+        groups.setdefault((s.relative_orbit, s.orbit_state), []).append(s)
+
+    pairs: list[tuple[SceneMeta, SceneMeta]] = []
+    for (orbit, _state), members in groups.items():
+        if orbit is None:
+            continue  # cannot assert same geometry without a track number
+        before = [s for s in members if s.when < event_utc]
+        after = [s for s in members if s.when >= event_utc]
+        if not before or not after:
+            continue
+        b = max(before, key=lambda s: s.when)
+        a = min(after, key=lambda s: s.when)
+        if (a.when - b.when).total_seconds() / 86400.0 <= max_gap_days:
+            pairs.append((b, a))
+    pairs.sort(key=lambda p: (p[1].when - p[0].when).total_seconds())
+    return pairs
+
+
+def _search_key(collection: str, bbox: tuple[float, ...], start: str, end: str) -> str:
+    raw = f"{collection}|{','.join(f'{v:.5f}' for v in bbox)}|{start}|{end}"
+    return hashlib.sha256(raw.encode()).hexdigest()
+
+
+def roi_cache_key(item_id: str, asset: str, bbox: tuple[float, ...]) -> str:
+    raw = f"{item_id}|{asset}|{','.join(f'{v:.5f}' for v in bbox)}"
+    return hashlib.sha256(raw.encode()).hexdigest()
+
+
+class CachedSceneClient:
+    """STAC search and windowed raster reads with a write-once cache."""
+
+    def __init__(self, cache_dir: Path | None = None, stac_url: str = STAC_URL) -> None:
+        self.cache_dir = cache_dir or default_cache_dir()
+        self.cache_dir.mkdir(parents=True, exist_ok=True)
+        self.stac_url = stac_url
+        self._catalog: Any | None = None
+
+    # -- catalogue ---------------------------------------------------------------
+    def _open_catalog(self) -> Any:
+        if self._catalog is None:
+            import planetary_computer
+            import pystac_client
+
+            self._catalog = pystac_client.Client.open(
+                self.stac_url, modifier=planetary_computer.sign_inplace
+            )
+        return self._catalog
+
+    def search(
+        self,
+        collection: str,
+        bbox: Bbox,
+        start: datetime,
+        end: datetime,
+        dedupe: bool = True,
+    ) -> tuple[list[SceneMeta], str | None]:
+        """Scenes touching ``bbox`` in ``[start, end]``. Cached; offline-safe.
+
+        With ``dedupe`` (the default) one frame is kept per satellite pass, the one that
+        best covers ``bbox``, so that callers can never pair two frames of one pass.
+        """
+        s = start.astimezone(UTC).isoformat(timespec="seconds")
+        e = end.astimezone(UTC).isoformat(timespec="seconds")
+        key = _search_key(collection, bbox, s, e)
+        path = self.cache_dir / f"search_{_SEARCH_SCHEMA}_{key}.json"
+        if path.exists():
+            data = json.loads(path.read_text(encoding="utf-8"))
+            cached = [SceneMeta(**d) for d in data]
+            return (one_per_pass(cached, bbox) if dedupe else cached), None
+        if is_offline():
+            return [], f"offline mode: search for {collection} not in cache"
+        try:
+            found = self._open_catalog().search(
+                collections=[collection], bbox=list(bbox), datetime=f"{s}/{e}", max_items=200
+            )
+            metas: list[SceneMeta] = []
+            for item in found.items():
+                p = item.properties
+                metas.append(
+                    SceneMeta(
+                        item_id=item.id,
+                        collection=collection,
+                        datetime_utc=str(p.get("datetime")),
+                        relative_orbit=p.get("sat:relative_orbit"),
+                        orbit_state=p.get("sat:orbit_state"),
+                        cloud_cover=p.get("eo:cloud_cover"),
+                        bbox=tuple(float(v) for v in item.bbox) if item.bbox else None,  # type: ignore[arg-type]
+                    )
+                )
+            metas.sort(key=lambda m: m.when)
+            tmp = path.with_suffix(".part")
+            tmp.write_text(json.dumps([asdict(m) for m in metas]), encoding="utf-8")
+            tmp.replace(path)
+            return (one_per_pass(metas, bbox) if dedupe else metas), None
+        except Exception as exc:
+            return [], f"{type(exc).__name__}: {exc}"
+
+    # -- rasters -----------------------------------------------------------------
+    def read_roi(self, scene: SceneMeta, asset: str, bbox: Bbox) -> RoiResult:
+        """Read one asset over ``bbox`` from one scene. Cached; offline-safe."""
+        path = self.cache_dir / f"roi_{roi_cache_key(scene.item_id, asset, bbox)}.npz"
+        if path.exists():
+            return self._read_cached(scene, asset, path)
+        if is_offline():
+            return RoiResult(
+                scene,
+                asset,
+                None,
+                None,
+                None,
+                None,
+                cache_hit=False,
+                error=f"offline mode: {scene.item_id}/{asset} not in cache",
+            )
+        return self._fetch_and_cache(scene, asset, bbox, path)
+
+    def _read_cached(self, scene: SceneMeta, asset: str, path: Path) -> RoiResult:
+        try:
+            with np.load(path) as z:
+                arr = z["array"]
+                t = [float(v) for v in z["transform"]]
+                epsg = int(z["epsg"])
+                px = float(z["pixel_size_m"])
+            tr = (t[0], t[1], t[2], t[3], t[4], t[5])
+            return RoiResult(scene, asset, arr, tr, epsg, px, cache_hit=True)
+        except Exception as exc:
+            return RoiResult(
+                scene,
+                asset,
+                None,
+                None,
+                None,
+                None,
+                cache_hit=True,
+                error=f"cache read failed for {path.name}: {exc}",
+            )
+
+    def _fetch_and_cache(
+        self, scene: SceneMeta, asset: str, bbox: tuple[float, ...], path: Path
+    ) -> RoiResult:
+        try:
+            import rasterio
+            from rasterio.warp import transform_bounds
+            from rasterio.windows import from_bounds
+
+            found = self._open_catalog().search(
+                collections=[scene.collection], ids=[scene.item_id], max_items=1
+            )
+            item = next(found.items())
+            href = item.assets[asset].href
+            with rasterio.open(href) as src:
+                wb = transform_bounds("EPSG:4326", src.crs, *bbox)
+                win = from_bounds(*wb, transform=src.transform)
+                arr = src.read(1, window=win).astype(np.float32)
+                if src.nodata is not None:
+                    arr = np.where(arr == src.nodata, np.nan, arr)
+                t = src.window_transform(win)
+                tr = (float(t.a), float(t.b), float(t.c), float(t.d), float(t.e), float(t.f))
+                epsg = int(src.crs.to_epsg() or 0)
+                px = float(abs(t.a))
+            tmp = path.with_suffix(".part.npz")
+            np.savez_compressed(
+                tmp,
+                array=arr,
+                transform=np.array(tr),
+                epsg=np.array(epsg),
+                pixel_size_m=np.array(px),
+            )
+            tmp.replace(path)
+            return RoiResult(scene, asset, arr, tr, epsg, px, cache_hit=False)
+        except Exception as exc:
+            return RoiResult(
+                scene,
+                asset,
+                None,
+                None,
+                None,
+                None,
+                cache_hit=False,
+                error=f"{type(exc).__name__}: {exc}",
+            )
+
+
+def rowcol_to_lonlat(roi: RoiResult, row: float, col: float) -> tuple[float, float]:
+    """Map a pixel position in a read region back to WGS84 ``(lon, lat)``."""
+    if roi.transform is None or roi.epsg is None:
+        raise ValueError("cannot geolocate a failed read")
+    from rasterio.warp import transform as warp_transform
+
+    a, b, c, d, e, f = roi.transform
+    x = c + a * (col + 0.5) + b * (row + 0.5)
+    y = f + d * (col + 0.5) + e * (row + 0.5)
+    xs, ys = warp_transform(f"EPSG:{roi.epsg}", "EPSG:4326", [x], [y])
+    return float(xs[0]), float(ys[0])
+
+
+def transform_rowcol_to_lonlat(
+    transform: tuple[float, float, float, float, float, float], epsg: int, row: float, col: float
+) -> tuple[float, float]:
+    """Map a pixel position on any grid with a known affine transform to ``(lon, lat)``."""
+    from rasterio.warp import transform as warp_transform
+
+    a, b, c, d, e, f = transform
+    x = c + a * (col + 0.5) + b * (row + 0.5)
+    y = f + d * (col + 0.5) + e * (row + 0.5)
+    xs, ys = warp_transform(f"EPSG:{epsg}", "EPSG:4326", [x], [y])
+    return float(xs[0]), float(ys[0])
+
+
+def align_arrays(
+    rois: list[RoiResult],
+) -> tuple[list[np.ndarray], tuple[float, float, float, float, float, float]]:
+    """Crop regions read from different scenes to their common pixel grid.
+
+    Scenes of one product family sit on one grid per UTM zone, so their windows differ by
+    whole pixels at most. Anything else (a different zone, a different pixel size, or a
+    sub-pixel offset) means the regions cannot be compared pixel by pixel, and this
+    raises rather than silently resampling. Returns the cropped arrays and the common
+    transform, so a pixel in the result can still be geolocated.
+    """
+    if not rois:
+        raise ValueError("no regions to align")
+    for r in rois:
+        if not r.ok or r.transform is None or r.array is None or r.pixel_size_m is None:
+            raise ValueError(f"cannot align a failed read: {r.scene.item_id}")
+    px = rois[0].pixel_size_m
+    epsg = rois[0].epsg
+    for r in rois:
+        if r.pixel_size_m != px or r.epsg != epsg:
+            raise ValueError("regions differ in pixel size or projection; cannot align")
+    assert px is not None
+    x0s: list[float] = []
+    x1s: list[float] = []
+    tops: list[float] = []
+    bots: list[float] = []
+    for r in rois:
+        assert r.transform is not None and r.array is not None
+        a, _b, c, _d, e, f = r.transform
+        if abs(abs(a) - px) > 1e-6 or abs(abs(e) - px) > 1e-6:
+            raise ValueError("non-square or mismatched pixel geometry; cannot align")
+        rows, cols = r.array.shape
+        x0s.append(c)
+        x1s.append(c + cols * px)
+        tops.append(f)
+        bots.append(f - rows * px)
+    x0, x1 = max(x0s), min(x1s)
+    top, bot = min(tops), max(bots)
+    ncols = round((x1 - x0) / px)
+    nrows = round((top - bot) / px)
+    if ncols <= 0 or nrows <= 0:
+        raise ValueError("regions do not overlap")
+    out: list[np.ndarray] = []
+    for r in rois:
+        assert r.transform is not None and r.array is not None
+        _a, _b, c, _d, _e, f = r.transform
+        col_off = (x0 - c) / px
+        row_off = (f - top) / px
+        if abs(col_off - round(col_off)) > 1e-3 or abs(row_off - round(row_off)) > 1e-3:
+            raise ValueError("regions are offset by a fraction of a pixel; cannot align")
+        co, ro = round(col_off), round(row_off)
+        out.append(r.array[ro : ro + nrows, co : co + ncols])
+    common = (px, 0.0, x0, 0.0, -px, top)
+    return out, common
+
+
+@dataclass(frozen=True)
+class CycleWindow:
+    """One test window on one track: an after pass, the pass before it, and a control.
+
+    ``lag`` 0 is the window that straddles the event. ``lag`` k is the same test moved k
+    acquisition cycles earlier, so it lies wholly before the event and serves as a draw
+    from the no-event (null) distribution on the same ground and the same geometry.
+    """
+
+    lag: int
+    control_before: SceneMeta
+    before: SceneMeta
+    after: SceneMeta
+
+
+def cycle_windows(
+    scenes: list[SceneMeta],
+    event_utc: datetime,
+    max_lag: int,
+    max_gap_days: float = 30.0,
+    min_gap_days: float = 0.0,
+) -> dict[tuple[int, str | None], list[CycleWindow]]:
+    """Consecutive-cycle windows per track, for an event and for earlier null windows.
+
+    For each track the passes are ordered in time, one per pass. The event window uses
+    the last pass before the event, the first pass after it, and the pass before that
+    for its control. Each earlier lag shifts all three back one cycle. A lag is emitted
+    only if every one of its two gaps is at most ``max_gap_days``; the sequence stops at
+    the first lag that fails, so a missing acquisition never silently doubles a window.
+    Only tracks with a relative orbit number are used.
+
+    ``min_gap_days`` handles a different problem: when a second satellite shares a track,
+    passes can arrive 7 days apart instead of 12. A window shorter than its neighbours
+    has less time for natural change and is not comparable with them. Such a lag is
+    skipped (not a stop), so later lags with the regular cadence are still used.
+    """
+    if event_utc.tzinfo is None:
+        raise ValueError("event time must be timezone-aware UTC")
+    if max_lag < 0:
+        raise ValueError("max_lag must be non-negative")
+
+    groups: dict[tuple[int, str | None], dict[str, SceneMeta]] = {}
+    for s in scenes:
+        if s.relative_orbit is None:
+            continue
+        per_day = groups.setdefault((s.relative_orbit, s.orbit_state), {})
+        per_day.setdefault(s.when.date().isoformat(), s)  # one per pass
+
+    out: dict[tuple[int, str | None], list[CycleWindow]] = {}
+    for track, per_day in groups.items():
+        ordered = sorted(per_day.values(), key=lambda s: s.when)
+        before = [s for s in ordered if s.when < event_utc]
+        after = [s for s in ordered if s.when >= event_utc]
+        if not after or len(before) < 2:
+            continue
+        seq = [*before, after[0]]
+        n = len(seq) - 1
+        windows: list[CycleWindow] = []
+        for lag in range(max_lag + 1):
+            a, b, c = n - lag, n - lag - 1, n - lag - 2
+            if c < 0:
+                break
+            gaps = (
+                (seq[a].when - seq[b].when).total_seconds() / 86400.0,
+                (seq[b].when - seq[c].when).total_seconds() / 86400.0,
+            )
+            if max(gaps) > max_gap_days:
+                break
+            if min(gaps) < min_gap_days:
+                continue
+            windows.append(CycleWindow(lag, seq[c], seq[b], seq[a]))
+        if windows:
+            out[track] = windows
+    return out

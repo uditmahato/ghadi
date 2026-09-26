@@ -50,12 +50,12 @@ def test_nan_feature_fails_the_rule() -> None:
 
 def test_reason_carries_the_overlap_and_the_lower_bound_caveat() -> None:
     c = classify_segment(CASCADE_LF_HF, CASCADE_CENTROID)
-    assert "17.2%" in c.reason
+    assert "21.9%" in c.reason
     assert "lower bound" in c.reason and "n=1" in c.reason
 
 
-def test_overlap_is_the_measured_11_of_64() -> None:
-    assert DEFAULT.classify.earthquake_overlap == pytest.approx(11.0 / 64.0)
+def test_overlap_is_the_measured_14_of_64() -> None:
+    assert DEFAULT.classify.earthquake_overlap == pytest.approx(14.0 / 64.0)
 
 
 def test_channel_from_a_positive_classification_is_alive_and_detected() -> None:
@@ -88,7 +88,7 @@ def test_positive_classification_stands_even_if_station_later_died() -> None:
 
 def test_seismic_is_weaker_corroboration_than_hydro_alone() -> None:
     # Same design intent as the config comment: the seismic channel on its own must not
-    # reach as high a fused probability as a gauge surge, given the 17.2% overlap.
+    # reach as high a fused probability as a gauge surge, given the 21.9% overlap.
     seismic = channel_from_seismic(classify_segment(CASCADE_LF_HF, CASCADE_CENTROID))
     hydro = channel_from_hydro(detect_anomaly(*synthetic_surge()))
     assert fuse([seismic]).probability < fuse([hydro]).probability

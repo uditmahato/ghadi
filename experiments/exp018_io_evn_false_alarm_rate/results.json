@@ -1,0 +1,565 @@
+{
+  "experiment": "exp018_io_evn_false_alarm_rate",
+  "stations": {
+    "IO.EVN": {
+      "station": "IO.EVN",
+      "thresholds": {
+        "lf_hf_min": 15.0726,
+        "centroid_hz_max": 1.5325,
+        "source": "exp010 segment"
+      },
+      "candidate_windows": 486,
+      "status_counts": {
+        "excluded_teleseism": 28,
+        "ok": 409,
+        "no_waveform": 39,
+        "excluded_regional_event": 10
+      },
+      "usable_windows": 409,
+      "hours": 238.6,
+      "station_months": 0.327,
+      "layers": {
+        "sta_lta_trigger": {
+          "windows": 372,
+          "per_station_month": 1139.09,
+          "ci95_per_station_month": [
+            1026.26,
+            1260.94
+          ]
+        },
+        "segment_spectral_criteria": {
+          "windows": 29,
+          "per_station_month": 88.8,
+          "ci95_per_station_month": [
+            59.47,
+            127.53
+          ]
+        }
+      },
+      "false_alarm_windows": [
+        {
+          "window_start_utc": "2024-01-10T04:00:00+00:00",
+          "passing_segments": [
+            {
+              "on_s": 540.8,
+              "spectral_ratio_low_high": 49.755731124682605,
+              "spectral_centroid_hz": 0.9173855912296498,
+              "signal_present": true
+            }
+          ]
+        },
+        {
+          "window_start_utc": "2024-03-24T12:00:00+00:00",
+          "passing_segments": [
+            {
+              "on_s": 194.65,
+              "spectral_ratio_low_high": 73.52874784816254,
+              "spectral_centroid_hz": 0.917876114130285,
+              "signal_present": true
+            }
+          ]
+        },
+        {
+          "window_start_utc": "2024-05-25T00:00:00+00:00",
+          "passing_segments": [
+            {
+              "on_s": 941.1,
+              "spectral_ratio_low_high": 46.92103088371339,
+              "spectral_centroid_hz": 0.9579035891825174,
+              "signal_present": true
+            },
+            {
+              "on_s": 951.95,
+              "spectral_ratio_low_high": 44.53633644568042,
+              "spectral_centroid_hz": 1.006276096464763,
+              "signal_present": true
+            },
+            {
+              "on_s": 1170.85,
+              "spectral_ratio_low_high": 45.040239509900616,
+              "spectral_centroid_hz": 0.8528137588078433,
+              "signal_present": true
+            },
+            {
+              "on_s": 1209.9,
+              "spectral_ratio_low_high": 71.21563018817552,
+              "spectral_centroid_hz": 0.7969361309375218,
+              "signal_present": true
+            }
+          ]
+        },
+        {
+          "window_start_utc": "2024-11-15T00:00:00+00:00",
+          "passing_segments": [
+            {
+              "on_s": 1395.7,
+              "spectral_ratio_low_high": 36.42688193053804,
+              "spectral_centroid_hz": 1.225163839631346,
+              "signal_present": true
+            }
+          ]
+        },
+        {
+          "window_start_utc": "2024-11-28T16:00:00+00:00",
+          "passing_segments": [
+            {
+              "on_s": 172.3,
+              "spectral_ratio_low_high": 27.841694684679798,
+              "spectral_centroid_hz": 0.825481461726941,
+              "signal_present": true
+            },
+            {
+              "on_s": 829.15,
+              "spectral_ratio_low_high": 16.59898713775492,
+              "spectral_centroid_hz": 0.9946315034746884,
+              "signal_present": true
+            },
+            {
+              "on_s": 1603.6,
+              "spectral_ratio_low_high": 22.436352240077746,
+              "spectral_centroid_hz": 0.8945969761290133,
+              "signal_present": true
+            }
+          ]
+        },
+        {
+          "window_start_utc": "2024-12-03T08:00:00+00:00",
+          "passing_segments": [
+            {
+              "on_s": 1292.6,
+              "spectral_ratio_low_high": 16.67797268797505,
+              "spectral_centroid_hz": 1.2771281049656873,
+              "signal_present": true
+            }
+          ]
+        },
+        {
+          "window_start_utc": "2024-12-04T08:00:00+00:00",
+          "passing_segments": [
+            {
+              "on_s": 115.4,
+              "spectral_ratio_low_high": 66.10263562380341,
+              "spectral_centroid_hz": 1.4925218877758162,
+              "signal_present": true
+            }
+          ]
+        },
+        {
+          "window_start_utc": "2024-12-29T00:00:00+00:00",
+          "passing_segments": [
+            {
+              "on_s": 198.8,
+              "spectral_ratio_low_high": 17.21391760876599,
+              "spectral_centroid_hz": 1.0092756204131486,
+              "signal_present": true
+            },
+            {
+              "on_s": 223.8,
+              "spectral_ratio_low_high": 19.680602894117584,
+              "spectral_centroid_hz": 0.9707300742906531,
+              "signal_present": true
+            },
+            {
+              "on_s": 566.75,
+              "spectral_ratio_low_high": 20.31508424420043,
+              "spectral_centroid_hz": 0.9448114644138864,
+              "signal_present": true
+            }
+          ]
+        },
+        {
+          "window_start_utc": "2025-01-31T12:00:00+00:00",
+          "passing_segments": [
+            {
+              "on_s": 891.85,
+              "spectral_ratio_low_high": 51.02711164114957,
+              "spectral_centroid_hz": 1.0603053786894767,
+              "signal_present": true
+            },
+            {
+              "on_s": 999.6,
+              "spectral_ratio_low_high": 199.47840089354798,
+              "spectral_centroid_hz": 0.8756971459611106,
+              "signal_present": true
+            }
+          ]
+        },
+        {
+          "window_start_utc": "2025-03-20T04:00:00+00:00",
+          "passing_segments": [
+            {
+              "on_s": 219.85,
+              "spectral_ratio_low_high": 142.23550447130208,
+              "spectral_centroid_hz": 0.8680880705465042,
+              "signal_present": true
+            }
+          ]
+        },
+        {
+          "window_start_utc": "2025-04-26T04:00:00+00:00",
+          "passing_segments": [
+            {
+              "on_s": 1467.9,
+              "spectral_ratio_low_high": 56.279187829070345,
+              "spectral_centroid_hz": 1.1603937657700136,
+              "signal_present": true
+            },
+            {
+              "on_s": 1594.55,
+              "spectral_ratio_low_high": 463.4778552098691,
+              "spectral_centroid_hz": 0.7532570084168159,
+              "signal_present": true
+            }
+          ]
+        },
+        {
+          "window_start_utc": "2025-05-02T16:00:00+00:00",
+          "passing_segments": [
+            {
+              "on_s": 150.9,
+              "spectral_ratio_low_high": 87.67229263846825,
+              "spectral_centroid_hz": 1.077739164593085,
+              "signal_present": true
+            }
+          ]
+        },
+        {
+          "window_start_utc": "2025-05-18T20:00:00+00:00",
+          "passing_segments": [
+            {
+              "on_s": 606.3,
+              "spectral_ratio_low_high": 35.23209017386417,
+              "spectral_centroid_hz": 1.357022558670643,
+              "signal_present": true
+            },
+            {
+              "on_s": 649.55,
+              "spectral_ratio_low_high": 16.86945979362605,
+              "spectral_centroid_hz": 1.259979729403392,
+              "signal_present": true
+            }
+          ]
+        },
+        {
+          "window_start_utc": "2025-06-18T16:00:00+00:00",
+          "passing_segments": [
+            {
+              "on_s": 1973.2,
+              "spectral_ratio_low_high": 25.3520926868032,
+              "spectral_centroid_hz": 1.3974345570534947,
+              "signal_present": true
+            },
+            {
+              "on_s": 2026.55,
+              "spectral_ratio_low_high": 133.3790765531211,
+              "spectral_centroid_hz": 1.281032941766829,
+              "signal_present": true
+            }
+          ]
+        },
+        {
+          "window_start_utc": "2025-06-25T04:00:00+00:00",
+          "passing_segments": [
+            {
+              "on_s": 693.8,
+              "spectral_ratio_low_high": 23.25373915761907,
+              "spectral_centroid_hz": 1.1787238330464815,
+              "signal_present": true
+            },
+            {
+              "on_s": 787.75,
+              "spectral_ratio_low_high": 23.335382627652983,
+              "spectral_centroid_hz": 1.1646375505466027,
+              "signal_present": true
+            }
+          ]
+        },
+        {
+          "window_start_utc": "2025-08-26T08:00:00+00:00",
+          "passing_segments": [
+            {
+              "on_s": 957.95,
+              "spectral_ratio_low_high": 19.271597385069747,
+              "spectral_centroid_hz": 1.2601800644566927,
+              "signal_present": true
+            }
+          ]
+        },
+        {
+          "window_start_utc": "2025-09-02T12:00:00+00:00",
+          "passing_segments": [
+            {
+              "on_s": 1991.25,
+              "spectral_ratio_low_high": 26.18086471380168,
+              "spectral_centroid_hz": 1.4578067778983403,
+              "signal_present": true
+            }
+          ]
+        },
+        {
+          "window_start_utc": "2025-10-06T16:00:00+00:00",
+          "passing_segments": [
+            {
+              "on_s": 1891.5,
+              "spectral_ratio_low_high": 16.62494504028654,
+              "spectral_centroid_hz": 1.0947773213733147,
+              "signal_present": true
+            }
+          ]
+        },
+        {
+          "window_start_utc": "2025-11-16T16:00:00+00:00",
+          "passing_segments": [
+            {
+              "on_s": 1540.75,
+              "spectral_ratio_low_high": 26.03195524626509,
+              "spectral_centroid_hz": 1.2439402988204724,
+              "signal_present": true
+            }
+          ]
+        },
+        {
+          "window_start_utc": "2025-11-29T20:00:00+00:00",
+          "passing_segments": [
+            {
+              "on_s": 503.7,
+              "spectral_ratio_low_high": 46.780090167874704,
+              "spectral_centroid_hz": 1.0266615320990755,
+              "signal_present": true
+            }
+          ]
+        },
+        {
+          "window_start_utc": "2025-12-06T12:00:00+00:00",
+          "passing_segments": [
+            {
+              "on_s": 930.4,
+              "spectral_ratio_low_high": 19.673708365694687,
+              "spectral_centroid_hz": 1.3471726398842232,
+              "signal_present": true
+            }
+          ]
+        },
+        {
+          "window_start_utc": "2025-12-18T20:00:00+00:00",
+          "passing_segments": [
+            {
+              "on_s": 1132.55,
+              "spectral_ratio_low_high": 15.163811483461313,
+              "spectral_centroid_hz": 1.0814899040389103,
+              "signal_present": true
+            }
+          ]
+        },
+        {
+          "window_start_utc": "2026-01-10T08:00:00+00:00",
+          "passing_segments": [
+            {
+              "on_s": 464.4,
+              "spectral_ratio_low_high": 166.58708403694914,
+              "spectral_centroid_hz": 1.0027629307942854,
+              "signal_present": true
+            }
+          ]
+        },
+        {
+          "window_start_utc": "2026-01-31T12:00:00+00:00",
+          "passing_segments": [
+            {
+              "on_s": 374.2,
+              "spectral_ratio_low_high": 129.69091431543652,
+              "spectral_centroid_hz": 0.7933293698766362,
+              "signal_present": true
+            }
+          ]
+        },
+        {
+          "window_start_utc": "2026-02-28T04:00:00+00:00",
+          "passing_segments": [
+            {
+              "on_s": 1407.1,
+              "spectral_ratio_low_high": 18.094392080291584,
+              "spectral_centroid_hz": 1.3878742106282709,
+              "signal_present": true
+            }
+          ]
+        },
+        {
+          "window_start_utc": "2026-03-13T20:00:00+00:00",
+          "passing_segments": [
+            {
+              "on_s": 239.05,
+              "spectral_ratio_low_high": 130.69906601669072,
+              "spectral_centroid_hz": 1.2988868494156471,
+              "signal_present": true
+            }
+          ]
+        },
+        {
+          "window_start_utc": "2026-04-15T04:00:00+00:00",
+          "passing_segments": [
+            {
+              "on_s": 380.95,
+              "spectral_ratio_low_high": 18.368761854174412,
+              "spectral_centroid_hz": 1.4527222439207568,
+              "signal_present": true
+            }
+          ]
+        },
+        {
+          "window_start_utc": "2026-04-18T04:00:00+00:00",
+          "passing_segments": [
+            {
+              "on_s": 1691.8,
+              "spectral_ratio_low_high": 54.21472001479249,
+              "spectral_centroid_hz": 0.9460808083739338,
+              "signal_present": true
+            }
+          ]
+        },
+        {
+          "window_start_utc": "2026-05-06T04:00:00+00:00",
+          "passing_segments": [
+            {
+              "on_s": 65.5,
+              "spectral_ratio_low_high": 74.3154062952711,
+              "spectral_centroid_hz": 1.2115958861820493,
+              "signal_present": true
+            }
+          ]
+        }
+      ],
+      "target_per_station_month": 1.0,
+      "corpus": {
+        "created_utc": "2026-09-17T08:31:38.182938+00:00",
+        "period": {
+          "start": "2024-01-01T00:00:00+00:00",
+          "end": "2026-08-01T00:00:00+00:00"
+        },
+        "stratification": {
+          "hours_utc": [
+            0,
+            4,
+            8,
+            12,
+            16,
+            20
+          ],
+          "per_cell": 3,
+          "seed": 0
+        },
+        "window_s": 2100.0
+      }
+    },
+    "NK.KKN": {
+      "station": "NK.KKN",
+      "thresholds": {
+        "lf_hf_min": 4.9188,
+        "centroid_hz_max": 1.8852,
+        "source": "exp005 segment"
+      },
+      "candidate_windows": 435,
+      "status_counts": {
+        "excluded_teleseism": 27,
+        "ok": 366,
+        "excluded_regional_event": 7,
+        "no_waveform": 35
+      },
+      "usable_windows": 366,
+      "hours": 213.5,
+      "station_months": 0.292,
+      "layers": {
+        "sta_lta_trigger": {
+          "windows": 108,
+          "per_station_month": 369.56,
+          "ci95_per_station_month": [
+            303.16,
+            446.18
+          ]
+        },
+        "segment_spectral_criteria": {
+          "windows": 4,
+          "per_station_month": 13.69,
+          "ci95_per_station_month": [
+            3.73,
+            35.04
+          ]
+        }
+      },
+      "false_alarm_windows": [
+        {
+          "window_start_utc": "2025-04-02T16:00:00+00:00",
+          "passing_segments": [
+            {
+              "on_s": 1857.0,
+              "spectral_ratio_low_high": 11.61164576110996,
+              "spectral_centroid_hz": 1.534109898994702,
+              "signal_present": true
+            }
+          ]
+        },
+        {
+          "window_start_utc": "2025-04-23T16:00:00+00:00",
+          "passing_segments": [
+            {
+              "on_s": 727.64,
+              "spectral_ratio_low_high": 56.053002646940776,
+              "spectral_centroid_hz": 1.0271316616332604,
+              "signal_present": true
+            },
+            {
+              "on_s": 876.84,
+              "spectral_ratio_low_high": 40.59356587766717,
+              "spectral_centroid_hz": 0.9123999771388208,
+              "signal_present": true
+            }
+          ]
+        },
+        {
+          "window_start_utc": "2025-05-01T16:00:00+00:00",
+          "passing_segments": [
+            {
+              "on_s": 1489.14,
+              "spectral_ratio_low_high": 40.2538989749455,
+              "spectral_centroid_hz": 1.3047293391074086,
+              "signal_present": true
+            },
+            {
+              "on_s": 1515.48,
+              "spectral_ratio_low_high": 25.657904090071426,
+              "spectral_centroid_hz": 1.3293256276273238,
+              "signal_present": true
+            }
+          ]
+        },
+        {
+          "window_start_utc": "2026-04-22T00:00:00+00:00",
+          "passing_segments": [
+            {
+              "on_s": 595.06,
+              "spectral_ratio_low_high": 27.873898305551656,
+              "spectral_centroid_hz": 1.532686679303709,
+              "signal_present": true
+            }
+          ]
+        }
+      ],
+      "target_per_station_month": 1.0,
+      "whole_window_continuity": {
+        "basis": "whole window, exp004/exp009 thresholds",
+        "thresholds": {
+          "lf_hf_min": 4.141,
+          "centroid_hz_max": 2.041,
+          "source": "exp002 whole window"
+        },
+        "windows": 2,
+        "per_station_month": 6.84,
+        "ci95_per_station_month": [
+          0.83,
+          24.72
+        ],
+        "recomputed_windows_with_different_whole_window_features": 0
+      }
+    }
+  }
+}

@@ -1,0 +1,352 @@
+"""Satellite change detection: confirm and find mass-movement events after the fact.
+
+ANALYSIS PATH ONLY (docs/ARCHITECTURE.md). Nothing here is on the warning path, and it
+never can be: free satellites revisit a spot every few days and the Himalaya sits under
+monsoon cloud for weeks, so no orbit can see a slope fail and tell a village in minutes.
+What imagery can do is answer two different questions, well:
+
+1. **Confirm.** Compare a scene from before an event with one from after. A fresh scar,
+   a debris dam, or a breach shows up as a patch of changed ground. That is how a
+   seismic detection is proven real after the fact.
+2. **Find.** Apply the same comparison around the coarse time and place of a candidate
+   historical event. A confirmed patch turns a news report into a labelled positive,
+   which is the only way the positive class grows beyond n=1 (issue #6).
+
+**What it can and cannot say.** Imagery gives the WHERE (a changed patch) and bounds the
+WHEN (between the two acquisition dates). It never gives the minute; the seismic onset
+does. Radar (Sentinel-1) is used first because it sees through cloud; optical
+(Sentinel-2) needs a clear view and is usually blocked in monsoon, and this module says
+so rather than reporting "no change" for a scene that was really "no view".
+
+This is the pure computation: co-registered arrays in, a :class:`ChangeResult` out, in
+numpy and scipy only. Fetching, projection, and caching live in ``ghadi.eo_fetch``, which
+imports its raster and catalogue libraries lazily so this module stays cheap to import.
+"""
+
+from __future__ import annotations
+
+from dataclasses import dataclass
+
+import numpy as np
+from scipy import ndimage
+
+from .config import DEFAULT, EoConfig
+
+
+@dataclass(frozen=True)
+class ChangeResult:
+    """Outcome of one before/after comparison over a region of interest."""
+
+    kind: str  # "sar" or "optical"
+    verdict: str  # "change_detected" | "no_change" | "inconclusive"
+    changed_fraction: float  # changed pixels as a fraction of USABLE pixels
+    changed_area_km2: float
+    valid_fraction: float  # usable pixels as a fraction of the whole region
+    n_blobs: int  # connected changed patches
+    largest_blob_km2: float
+    largest_blob_centroid_rc: tuple[float, float] | None  # (row, col); caller maps to lat/lon
+    decrease_fraction: float  # radar: backscatter fell; optical: vegetation lost
+    increase_fraction: float  # radar: backscatter rose; optical: vegetation gained
+    reason: str
+
+
+def sar_log_ratio_db(before: np.ndarray, after: np.ndarray, eps: float = 1e-6) -> np.ndarray:
+    """Backscatter change in decibels, ``10 log10(after / before)``, on linear power."""
+    b = np.maximum(np.asarray(before, dtype=float), eps)
+    a = np.maximum(np.asarray(after, dtype=float), eps)
+    return 10.0 * np.log10(a / b)
+
+
+def ndvi(red: np.ndarray, nir: np.ndarray, eps: float = 1e-6) -> np.ndarray:
+    """Normalised difference vegetation index from red and near-infrared reflectance."""
+    r = np.asarray(red, dtype=float)
+    n = np.asarray(nir, dtype=float)
+    return (n - r) / np.maximum(n + r, eps)
+
+
+def _check_shapes(before: np.ndarray, after: np.ndarray) -> None:
+    if before.shape != after.shape:
+        raise ValueError(
+            f"before and after must be co-registered arrays of equal shape; got "
+            f"{before.shape} and {after.shape}"
+        )
+    if before.ndim != 2:
+        raise ValueError("expected 2-D single-band arrays")
+
+
+def _blobs(mask: np.ndarray) -> tuple[int, np.ndarray, tuple[float, float] | None]:
+    labels, n = ndimage.label(mask)
+    if n == 0:
+        return 0, np.zeros(0), None
+    sizes = np.asarray(ndimage.sum(mask, labels, index=list(range(1, n + 1))), dtype=float)
+    k = int(np.argmax(sizes))
+    r, c = ndimage.center_of_mass(mask, labels, k + 1)
+    return int(n), sizes, (float(r), float(c))
+
+
+def _finish(
+    kind: str,
+    change: np.ndarray,
+    decrease: np.ndarray,
+    increase: np.ndarray,
+    valid: np.ndarray,
+    pixel_area_m2: float,
+    cfg: EoConfig,
+) -> ChangeResult:
+    n_total = int(valid.size)
+    n_valid = int(valid.sum())
+    valid_fraction = n_valid / n_total if n_total else 0.0
+    denom = max(n_valid, 1)
+
+    changed = change & valid
+    changed_fraction = float(changed.sum()) / denom
+    changed_area_km2 = float(changed.sum()) * pixel_area_m2 / 1e6
+    n_blobs, sizes, centroid = _blobs(changed)
+    largest_km2 = float(sizes.max()) * pixel_area_m2 / 1e6 if n_blobs else 0.0
+    dec_fraction = float((decrease & valid).sum()) / denom
+    inc_fraction = float((increase & valid).sum()) / denom
+
+    if valid_fraction < cfg.min_valid_fraction:
+        # The honest verdict. Cloud, shadow, or missing data hid the ground; a scene
+        # nobody could see must never be reported as a scene where nothing happened.
+        verdict = "inconclusive"
+        reason = (
+            f"only {valid_fraction:.0%} of the region is usable, below the "
+            f"{cfg.min_valid_fraction:.0%} floor; absence of usable pixels is not absence "
+            f"of change"
+        )
+    elif largest_km2 >= cfg.min_blob_km2:
+        verdict = "change_detected"
+        reason = (
+            f"largest connected changed patch {largest_km2:.3f} km2 (floor "
+            f"{cfg.min_blob_km2:g} km2); {changed_fraction:.1%} of usable pixels changed "
+            f"({dec_fraction:.1%} decrease, {inc_fraction:.1%} increase)"
+        )
+    else:
+        verdict = "no_change"
+        reason = (
+            f"largest connected changed patch {largest_km2:.3f} km2 is below the "
+            f"{cfg.min_blob_km2:g} km2 floor with {valid_fraction:.0%} of the region usable"
+        )
+
+    return ChangeResult(
+        kind=kind,
+        verdict=verdict,
+        changed_fraction=changed_fraction,
+        changed_area_km2=changed_area_km2,
+        valid_fraction=valid_fraction,
+        n_blobs=n_blobs,
+        largest_blob_km2=largest_km2,
+        largest_blob_centroid_rc=centroid,
+        decrease_fraction=dec_fraction,
+        increase_fraction=inc_fraction,
+        reason=reason,
+    )
+
+
+def detect_change_sar(
+    before_linear: np.ndarray,
+    after_linear: np.ndarray,
+    pixel_area_m2: float,
+    valid_mask: np.ndarray | None = None,
+    config: EoConfig | None = None,
+) -> ChangeResult:
+    """Radar change between two same-track scenes of linear-power backscatter.
+
+    The two scenes must share the same relative orbit and look geometry; comparing
+    different tracks manufactures change from viewing angle alone. That pairing is the
+    fetch layer's job and is asserted there, not here. A median filter tames speckle
+    before thresholding, so a single noisy pixel cannot become a "patch".
+    """
+    cfg = config or DEFAULT.eo
+    b = np.asarray(before_linear, dtype=float)
+    a = np.asarray(after_linear, dtype=float)
+    _check_shapes(b, a)
+
+    change, decrease, increase, valid = sar_change_masks(b, a, valid_mask, cfg)
+    return _finish("sar", change, decrease, increase, valid, pixel_area_m2, cfg)
+
+
+def detect_change_optical(
+    ndvi_before: np.ndarray,
+    ndvi_after: np.ndarray,
+    pixel_area_m2: float,
+    valid_mask: np.ndarray | None = None,
+    config: EoConfig | None = None,
+) -> ChangeResult:
+    """Vegetation change between two optical scenes, from NDVI before and after.
+
+    ``valid_mask`` should exclude cloud, cloud shadow, and snow (from the scene
+    classification layer). Without it, cloud reads as vegetation loss.
+    """
+    cfg = config or DEFAULT.eo
+    b = np.asarray(ndvi_before, dtype=float)
+    a = np.asarray(ndvi_after, dtype=float)
+    _check_shapes(b, a)
+
+    finite = np.isfinite(b) & np.isfinite(a)
+    valid = finite if valid_mask is None else (finite & np.asarray(valid_mask, dtype=bool))
+
+    drop = np.where(valid, b - a, 0.0)  # positive where vegetation was lost
+    loss = drop >= cfg.ndvi_drop
+    gain = drop <= -cfg.ndvi_drop
+    return _finish("optical", loss | gain, loss, gain, valid, pixel_area_m2, cfg)
+
+
+@dataclass(frozen=True)
+class ControlComparison:
+    """An event pair judged against a pre-event control pair on the same track."""
+
+    verdict: str  # "above_background" | "within_background" | "inconclusive"
+    event_largest_km2: float
+    control_largest_km2: float
+    ratio: float | None  # event / control largest patch; None when the control has none
+    min_ratio: float
+    reason: str
+
+
+def compare_to_control(
+    event_verdict: str,
+    event_largest_km2: float,
+    control_verdict: str,
+    control_largest_km2: float,
+    config: EoConfig | None = None,
+) -> ControlComparison:
+    """Does the event pair's change stand clear of the seasonal background?
+
+    The raw per-pair verdict says whether a changed patch exists. In high mountains a
+    patch exists in most 12-day pairs, event or not: snow melts, glaciers move, rivers
+    shift. This step keeps the raw verdict untouched and adds a second, labelled
+    judgement: the event pair's largest patch must be at least ``control_min_ratio``
+    times the largest patch in a control pair from before the event, on the same track.
+    If either pair could not be judged, neither can the comparison.
+    """
+    cfg = config or DEFAULT.eo
+    if event_verdict == "inconclusive" or control_verdict == "inconclusive":
+        return ControlComparison(
+            "inconclusive",
+            event_largest_km2,
+            control_largest_km2,
+            None,
+            cfg.control_min_ratio,
+            "one of the two pairs could not be judged, so neither can the comparison",
+        )
+    if event_verdict != "change_detected":
+        return ControlComparison(
+            "within_background",
+            event_largest_km2,
+            control_largest_km2,
+            None,
+            cfg.control_min_ratio,
+            "no changed patch in the event pair",
+        )
+    if control_largest_km2 <= 0:
+        return ControlComparison(
+            "above_background",
+            event_largest_km2,
+            control_largest_km2,
+            None,
+            cfg.control_min_ratio,
+            f"event patch {event_largest_km2:.3f} km2 with no patch at all in the control",
+        )
+    ratio = event_largest_km2 / control_largest_km2
+    if ratio >= cfg.control_min_ratio:
+        verdict = "above_background"
+        reason = (
+            f"event patch {event_largest_km2:.3f} km2 is {ratio:.1f}x the control's "
+            f"{control_largest_km2:.3f} km2 (floor {cfg.control_min_ratio:g}x)"
+        )
+    else:
+        verdict = "within_background"
+        reason = (
+            f"event patch {event_largest_km2:.3f} km2 is only {ratio:.1f}x the control's "
+            f"{control_largest_km2:.3f} km2 (floor {cfg.control_min_ratio:g}x); this is "
+            f"seasonal change, not a confirmation"
+        )
+    return ControlComparison(
+        verdict, event_largest_km2, control_largest_km2, ratio, cfg.control_min_ratio, reason
+    )
+
+
+def sar_change_masks(
+    before_linear: np.ndarray,
+    after_linear: np.ndarray,
+    valid_mask: np.ndarray | None = None,
+    config: EoConfig | None = None,
+) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
+    """Per-pixel radar change masks: ``(change, decrease, increase, valid)``.
+
+    The primitive behind :func:`detect_change_sar`, exposed so that masks from several
+    tracks over one common grid can be combined (see :func:`cross_track_excess`).
+    """
+    cfg = config or DEFAULT.eo
+    b = np.asarray(before_linear, dtype=float)
+    a = np.asarray(after_linear, dtype=float)
+    _check_shapes(b, a)
+
+    finite = np.isfinite(b) & np.isfinite(a) & (b > 0) & (a > 0)
+    valid = finite if valid_mask is None else (finite & np.asarray(valid_mask, dtype=bool))
+
+    ratio = sar_log_ratio_db(b, a)
+    ratio = np.where(valid, ratio, 0.0)  # neutralise unusable pixels before filtering
+    if cfg.speckle_filter_px > 1:
+        ratio = ndimage.median_filter(ratio, size=cfg.speckle_filter_px)
+
+    decrease = (ratio <= -cfg.sar_change_db) & valid
+    increase = (ratio >= cfg.sar_change_db) & valid
+    return decrease | increase, decrease, increase, valid
+
+
+@dataclass(frozen=True)
+class CrossTrackResult:
+    """Where several independent tracks agree that the ground changed."""
+
+    n_tracks: int
+    min_tracks: int
+    area_km2_by_agreement: dict[int, float]  # {k: km2 of pixels with >= k tracks agreeing}
+    largest_patch_km2: float  # largest connected patch with >= min_tracks agreeing
+    largest_patch_centroid_rc: tuple[float, float] | None
+    per_track_excess_km2: list[float]
+    reason: str
+
+
+def cross_track_excess(
+    event_changes: list[np.ndarray],
+    control_changes: list[np.ndarray],
+    valid_masks: list[np.ndarray],
+    pixel_area_m2: float,
+    min_tracks: int = 2,
+) -> CrossTrackResult:
+    """Pixels that changed in the event window, not in the control window, on >= k tracks.
+
+    Each track contributes an *excess* mask: changed in its event pair and not changed in
+    its own pre-event control pair. Summing excess masks over tracks gives, per pixel, the
+    number of independent viewing geometries that saw new change there. A single track can
+    be fooled by its own geometry, speckle, or a river shifting; two or three agreeing at
+    the same pixel cannot easily be. All arrays must share one pixel grid.
+    """
+    n = len(event_changes)
+    if not (n == len(control_changes) == len(valid_masks)) or n == 0:
+        raise ValueError("need one event mask, one control mask and one valid mask per track")
+    shape = event_changes[0].shape
+    for arr in (*event_changes, *control_changes, *valid_masks):
+        if arr.shape != shape:
+            raise ValueError("all masks must share one pixel grid; align them first")
+
+    agreement = np.zeros(shape, dtype=int)
+    per_track: list[float] = []
+    for e, c, v in zip(event_changes, control_changes, valid_masks, strict=True):
+        excess = e & ~c & v
+        agreement += excess.astype(int)
+        per_track.append(float(excess.sum()) * pixel_area_m2 / 1e6)
+
+    by_k = {
+        k: float((agreement >= k).sum()) * pixel_area_m2 / 1e6 for k in range(min_tracks, n + 1)
+    }
+    n_blobs, sizes, centroid = _blobs(agreement >= min_tracks)
+    largest = float(sizes.max()) * pixel_area_m2 / 1e6 if n_blobs else 0.0
+    reason = (
+        f"{n} tracks; largest patch with >= {min_tracks} agreeing {largest:.3f} km2; "
+        + ", ".join(f">={k}: {v:.3f} km2" for k, v in by_k.items())
+    )
+    return CrossTrackResult(n, min_tracks, by_k, largest, centroid, per_track, reason)

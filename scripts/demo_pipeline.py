@@ -4,7 +4,7 @@ Runs a 26-August-2026-like window through the whole orchestration — seismic
 classification, teleseism cross-check, gauge corroboration, fusion, lead time, CAP
 emission — and writes a hash-chained audit log, then verifies it. No network, no live
 feed: this is the software system running end to end, which is what M5 completes. The
-live SeedLink source (issue 0.1) is the one piece still outside.
+live path exists too: see scripts/run_shadow.py for the same chain driven by a feed.
 
     python scripts/demo_pipeline.py
 """
