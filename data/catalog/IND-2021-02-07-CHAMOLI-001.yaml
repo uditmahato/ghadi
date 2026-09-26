@@ -1,0 +1,33 @@
+# The 7 February 2021 Chamoli rock and ice avalanche, Uttarakhand, India. About
+# 27 million cubic metres of rock and glacier ice detached from Ronti Peak, fell about
+# 1,800 m, and the resulting debris flow destroyed two hydropower projects in the Rishi
+# Ganga and Dhauli Ganga valleys. Over 200 people died or went missing.
+#
+# It is outside every reach this project warns for. It is in the catalogue as a
+# candidate second positive for the SEISMIC detector only: a large, well recorded rock
+# and ice avalanche whose source physics is the kind the classifier was built on. The
+# origin time is from published seismic analyses of the detachment, which put it at
+# about 04:51 UTC (10:21 local). The stations here are far away (NK.KKN about 580 km,
+# IO.EVN about 730 km), so amplitude and high frequency content are not comparable
+# with the 2026 event and any use must say so.
+event_id: IND-2021-02-07-CHAMOLI-001
+origin_utc: 2021-02-07T04:51:00Z
+origin_uncertainty_s: 120
+time_source: seismic
+label: mass_movement
+lat: 30.375
+lon: 79.732
+location_uncertainty_km: 3.0
+hazard_subtype: rock_ice_avalanche_debris_flow
+river_system: "Ronti Gad -> Rishi Ganga -> Dhauli Ganga -> Alaknanda"
+deaths: 204
+deaths_status: ESTIMATE
+sources:
+  - https://www.science.org/doi/10.1126/science.abh4455
+  - https://en.wikipedia.org/wiki/2021_Uttarakhand_flood
+notes: >-
+  Outside the Nepal reaches. Candidate positive for the seismic classifier (issue #6),
+  not for lead time or fusion. Distances to the open stations are several hundred
+  kilometres, so only the spectral shape can be compared, and even that is affected by
+  attenuation over that path. Any detection here says the source type is visible at
+  range; a miss says nothing, because the detector was never meant for that range.

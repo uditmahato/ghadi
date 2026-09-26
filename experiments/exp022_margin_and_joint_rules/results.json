@@ -1,0 +1,2390 @@
+{
+  "experiment": "exp022_margin_and_joint_rules",
+  "margins": [
+    0.0,
+    0.1,
+    0.2,
+    0.3,
+    0.5
+  ],
+  "base_thresholds": {
+    "NK.KKN": {
+      "lf_hf": 4.9188,
+      "centroid_hz": 1.8852,
+      "hv_segment": 2.3248
+    },
+    "IO.EVN": {
+      "lf_hf": 15.0726,
+      "centroid_hz": 1.5325,
+      "hv_segment": 1.9805
+    }
+  },
+  "basin_box": [
+    27.95,
+    28.45,
+    85.2,
+    85.7
+  ],
+  "zone": [
+    28.255,
+    85.52,
+    8.0
+  ],
+  "stations": {
+    "IO.EVN": {
+      "station_months": 0.327,
+      "usable_windows": 409,
+      "candidate_windows": 66,
+      "by_margin": {
+        "0.0": {
+          "thresholds": {
+            "lf_hf_min": 15.0726,
+            "centroid_hz_max": 1.5325,
+            "hv_min": 1.9805
+          },
+          "spectral": {
+            "windows": 29,
+            "per_station_month": 88.8,
+            "ci95_per_station_month": [
+              59.47,
+              127.53
+            ]
+          },
+          "spectral_hv": {
+            "windows": 6,
+            "per_station_month": 18.37,
+            "ci95_per_station_month": [
+              6.74,
+              39.99
+            ]
+          },
+          "spectral_two_station_any": {
+            "windows": 7,
+            "per_station_month": 21.43,
+            "ci95_per_station_month": [
+              8.62,
+              44.16
+            ]
+          },
+          "spectral_two_station_basin": {
+            "windows": 3,
+            "per_station_month": 9.19,
+            "ci95_per_station_month": [
+              1.89,
+              26.85
+            ]
+          },
+          "spectral_hv_two_station_basin": {
+            "windows": 2,
+            "per_station_month": 6.12,
+            "ci95_per_station_month": [
+              0.74,
+              22.12
+            ]
+          },
+          "hv_unavailable_among_spectral": 0,
+          "other_unavailable_among_spectral": 11
+        },
+        "0.1": {
+          "thresholds": {
+            "lf_hf_min": 13.5653,
+            "centroid_hz_max": 1.6858,
+            "hv_min": 1.7824
+          },
+          "spectral": {
+            "windows": 33,
+            "per_station_month": 101.05,
+            "ci95_per_station_month": [
+              69.56,
+              141.91
+            ]
+          },
+          "spectral_hv": {
+            "windows": 9,
+            "per_station_month": 27.56,
+            "ci95_per_station_month": [
+              12.6,
+              52.31
+            ]
+          },
+          "spectral_two_station_any": {
+            "windows": 7,
+            "per_station_month": 21.43,
+            "ci95_per_station_month": [
+              8.62,
+              44.16
+            ]
+          },
+          "spectral_two_station_basin": {
+            "windows": 3,
+            "per_station_month": 9.19,
+            "ci95_per_station_month": [
+              1.89,
+              26.85
+            ]
+          },
+          "spectral_hv_two_station_basin": {
+            "windows": 2,
+            "per_station_month": 6.12,
+            "ci95_per_station_month": [
+              0.74,
+              22.12
+            ]
+          },
+          "hv_unavailable_among_spectral": 0,
+          "other_unavailable_among_spectral": 11
+        },
+        "0.2": {
+          "thresholds": {
+            "lf_hf_min": 12.0581,
+            "centroid_hz_max": 1.839,
+            "hv_min": 1.5844
+          },
+          "spectral": {
+            "windows": 36,
+            "per_station_month": 110.23,
+            "ci95_per_station_month": [
+              77.21,
+              152.61
+            ]
+          },
+          "spectral_hv": {
+            "windows": 13,
+            "per_station_month": 39.81,
+            "ci95_per_station_month": [
+              21.2,
+              68.07
+            ]
+          },
+          "spectral_two_station_any": {
+            "windows": 7,
+            "per_station_month": 21.43,
+            "ci95_per_station_month": [
+              8.62,
+              44.16
+            ]
+          },
+          "spectral_two_station_basin": {
+            "windows": 3,
+            "per_station_month": 9.19,
+            "ci95_per_station_month": [
+              1.89,
+              26.85
+            ]
+          },
+          "spectral_hv_two_station_basin": {
+            "windows": 2,
+            "per_station_month": 6.12,
+            "ci95_per_station_month": [
+              0.74,
+              22.12
+            ]
+          },
+          "hv_unavailable_among_spectral": 0,
+          "other_unavailable_among_spectral": 11
+        },
+        "0.3": {
+          "thresholds": {
+            "lf_hf_min": 10.5508,
+            "centroid_hz_max": 1.9923,
+            "hv_min": 1.3863
+          },
+          "spectral": {
+            "windows": 43,
+            "per_station_month": 131.67,
+            "ci95_per_station_month": [
+              95.29,
+              177.36
+            ]
+          },
+          "spectral_hv": {
+            "windows": 37,
+            "per_station_month": 113.3,
+            "ci95_per_station_month": [
+              79.77,
+              156.16
+            ]
+          },
+          "spectral_two_station_any": {
+            "windows": 7,
+            "per_station_month": 21.43,
+            "ci95_per_station_month": [
+              8.62,
+              44.16
+            ]
+          },
+          "spectral_two_station_basin": {
+            "windows": 3,
+            "per_station_month": 9.19,
+            "ci95_per_station_month": [
+              1.89,
+              26.85
+            ]
+          },
+          "spectral_hv_two_station_basin": {
+            "windows": 2,
+            "per_station_month": 6.12,
+            "ci95_per_station_month": [
+              0.74,
+              22.12
+            ]
+          },
+          "hv_unavailable_among_spectral": 0,
+          "other_unavailable_among_spectral": 13
+        },
+        "0.5": {
+          "thresholds": {
+            "lf_hf_min": 7.5363,
+            "centroid_hz_max": 2.2988,
+            "hv_min": 0.9902
+          },
+          "spectral": {
+            "windows": 66,
+            "per_station_month": 202.1,
+            "ci95_per_station_month": [
+              156.3,
+              257.12
+            ]
+          },
+          "spectral_hv": {
+            "windows": 64,
+            "per_station_month": 195.97,
+            "ci95_per_station_month": [
+              150.92,
+              250.25
+            ]
+          },
+          "spectral_two_station_any": {
+            "windows": 7,
+            "per_station_month": 21.43,
+            "ci95_per_station_month": [
+              8.62,
+              44.16
+            ]
+          },
+          "spectral_two_station_basin": {
+            "windows": 3,
+            "per_station_month": 9.19,
+            "ci95_per_station_month": [
+              1.89,
+              26.85
+            ]
+          },
+          "spectral_hv_two_station_basin": {
+            "windows": 3,
+            "per_station_month": 9.19,
+            "ci95_per_station_month": [
+              1.89,
+              26.85
+            ]
+          },
+          "hv_unavailable_among_spectral": 0,
+          "other_unavailable_among_spectral": 16
+        }
+      },
+      "windows": [
+        {
+          "window_start_utc": "2024-01-06T08:00:00+00:00",
+          "segments": [
+            {
+              "on_s": 707.35,
+              "lf_hf": 9.559357107563958,
+              "centroid_hz": 1.66499321558574,
+              "hv_segment": 2.6054,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            }
+          ],
+          "horizontals_available": true,
+          "other_station_available": true
+        },
+        {
+          "window_start_utc": "2024-01-10T04:00:00+00:00",
+          "segments": [
+            {
+              "on_s": 540.8,
+              "lf_hf": 49.755731124682605,
+              "centroid_hz": 0.9173855912296498,
+              "hv_segment": 1.4476,
+              "other_any_source": true,
+              "other_zone": false,
+              "other_basin_box": false
+            }
+          ],
+          "horizontals_available": true,
+          "other_station_available": true
+        },
+        {
+          "window_start_utc": "2024-01-17T20:00:00+00:00",
+          "segments": [
+            {
+              "on_s": 1245.1,
+              "lf_hf": 11.218712025137496,
+              "centroid_hz": 1.276396369970034,
+              "hv_segment": 1.6689,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            },
+            {
+              "on_s": 1367.25,
+              "lf_hf": 8.03676447816804,
+              "centroid_hz": 1.7531622679088856,
+              "hv_segment": 1.5933,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            }
+          ],
+          "horizontals_available": true,
+          "other_station_available": true
+        },
+        {
+          "window_start_utc": "2024-01-19T16:00:00+00:00",
+          "segments": [
+            {
+              "on_s": 320.6,
+              "lf_hf": 8.077148855971256,
+              "centroid_hz": 1.3175934379647898,
+              "hv_segment": 2.218,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            }
+          ],
+          "horizontals_available": true,
+          "other_station_available": true
+        },
+        {
+          "window_start_utc": "2024-01-31T16:00:00+00:00",
+          "segments": [
+            {
+              "on_s": 1321.9,
+              "lf_hf": 10.568700248023722,
+              "centroid_hz": 1.3402387565517717,
+              "hv_segment": 1.7051,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            }
+          ],
+          "horizontals_available": true,
+          "other_station_available": true
+        },
+        {
+          "window_start_utc": "2024-03-24T12:00:00+00:00",
+          "segments": [
+            {
+              "on_s": 194.65,
+              "lf_hf": 73.52874784816254,
+              "centroid_hz": 0.917876114130285,
+              "hv_segment": 1.5715,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            }
+          ],
+          "horizontals_available": true,
+          "other_station_available": true
+        },
+        {
+          "window_start_utc": "2024-03-27T08:00:00+00:00",
+          "segments": [
+            {
+              "on_s": 71.95,
+              "lf_hf": 8.913517560773075,
+              "centroid_hz": 1.440620777704471,
+              "hv_segment": 2.1683,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            }
+          ],
+          "horizontals_available": true,
+          "other_station_available": true
+        },
+        {
+          "window_start_utc": "2024-03-27T20:00:00+00:00",
+          "segments": [
+            {
+              "on_s": 1439.4,
+              "lf_hf": 9.737030323623621,
+              "centroid_hz": 1.3322346335111659,
+              "hv_segment": 1.6697,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            }
+          ],
+          "horizontals_available": true,
+          "other_station_available": true
+        },
+        {
+          "window_start_utc": "2024-05-22T04:00:00+00:00",
+          "segments": [
+            {
+              "on_s": 241.55,
+              "lf_hf": 8.206744964080746,
+              "centroid_hz": 1.6493547559760207,
+              "hv_segment": 1.7672,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            }
+          ],
+          "horizontals_available": true,
+          "other_station_available": true
+        },
+        {
+          "window_start_utc": "2024-05-23T16:00:00+00:00",
+          "segments": [
+            {
+              "on_s": 561.75,
+              "lf_hf": 24.09690954059195,
+              "centroid_hz": 1.699277894743397,
+              "hv_segment": 1.0468,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            },
+            {
+              "on_s": 888.0,
+              "lf_hf": 12.789851902348696,
+              "centroid_hz": 1.6399576783609993,
+              "hv_segment": 1.2659,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            }
+          ],
+          "horizontals_available": true,
+          "other_station_available": true
+        },
+        {
+          "window_start_utc": "2024-05-25T00:00:00+00:00",
+          "segments": [
+            {
+              "on_s": 941.1,
+              "lf_hf": 46.92103088371339,
+              "centroid_hz": 0.9579035891825174,
+              "hv_segment": 1.8938,
+              "other_any_source": true,
+              "other_zone": false,
+              "other_basin_box": false
+            },
+            {
+              "on_s": 951.95,
+              "lf_hf": 44.53633644568042,
+              "centroid_hz": 1.006276096464763,
+              "hv_segment": 1.9955,
+              "other_any_source": true,
+              "other_zone": true,
+              "other_basin_box": true
+            },
+            {
+              "on_s": 1170.85,
+              "lf_hf": 45.040239509900616,
+              "centroid_hz": 0.8528137588078433,
+              "hv_segment": 1.5436,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            },
+            {
+              "on_s": 1209.9,
+              "lf_hf": 71.21563018817552,
+              "centroid_hz": 0.7969361309375218,
+              "hv_segment": 1.6584,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            }
+          ],
+          "horizontals_available": true,
+          "other_station_available": true
+        },
+        {
+          "window_start_utc": "2024-08-30T20:00:00+00:00",
+          "segments": [
+            {
+              "on_s": 65.0,
+              "lf_hf": 12.704322984716901,
+              "centroid_hz": 1.5272576632992358,
+              "hv_segment": 2.1623,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            }
+          ],
+          "horizontals_available": true,
+          "other_station_available": true
+        },
+        {
+          "window_start_utc": "2024-10-14T08:00:00+00:00",
+          "segments": [
+            {
+              "on_s": 765.85,
+              "lf_hf": 8.284386608589308,
+              "centroid_hz": 1.601984246451169,
+              "hv_segment": 1.6963,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            },
+            {
+              "on_s": 2081.55,
+              "lf_hf": 8.923229030117566,
+              "centroid_hz": 1.8884778807009306,
+              "hv_segment": 1.8838,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            }
+          ],
+          "horizontals_available": true,
+          "other_station_available": true
+        },
+        {
+          "window_start_utc": "2024-11-04T20:00:00+00:00",
+          "segments": [
+            {
+              "on_s": 1041.35,
+              "lf_hf": 9.082439354851536,
+              "centroid_hz": 1.7841924853202005,
+              "hv_segment": 2.1785,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            }
+          ],
+          "horizontals_available": true,
+          "other_station_available": true
+        },
+        {
+          "window_start_utc": "2024-11-15T00:00:00+00:00",
+          "segments": [
+            {
+              "on_s": 1260.6,
+              "lf_hf": 9.766297920457413,
+              "centroid_hz": 1.5275054113340554,
+              "hv_segment": 2.3585,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            },
+            {
+              "on_s": 1395.7,
+              "lf_hf": 36.42688193053804,
+              "centroid_hz": 1.225163839631346,
+              "hv_segment": 1.4591,
+              "other_any_source": true,
+              "other_zone": false,
+              "other_basin_box": false
+            }
+          ],
+          "horizontals_available": true,
+          "other_station_available": true
+        },
+        {
+          "window_start_utc": "2024-11-28T16:00:00+00:00",
+          "segments": [
+            {
+              "on_s": 91.55,
+              "lf_hf": 10.033246593279928,
+              "centroid_hz": 1.142204606610812,
+              "hv_segment": 1.0617,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            },
+            {
+              "on_s": 172.3,
+              "lf_hf": 27.841694684679798,
+              "centroid_hz": 0.825481461726941,
+              "hv_segment": 1.054,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            },
+            {
+              "on_s": 714.3,
+              "lf_hf": 8.49832871893501,
+              "centroid_hz": 1.2812100822033048,
+              "hv_segment": 1.1646,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            },
+            {
+              "on_s": 829.15,
+              "lf_hf": 16.59898713775492,
+              "centroid_hz": 0.9946315034746884,
+              "hv_segment": 1.5207,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            },
+            {
+              "on_s": 1603.6,
+              "lf_hf": 22.436352240077746,
+              "centroid_hz": 0.8945969761290133,
+              "hv_segment": 1.0585,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            }
+          ],
+          "horizontals_available": true,
+          "other_station_available": false
+        },
+        {
+          "window_start_utc": "2024-12-01T04:00:00+00:00",
+          "segments": [
+            {
+              "on_s": 867.45,
+              "lf_hf": 9.882057211989487,
+              "centroid_hz": 1.2133647203633033,
+              "hv_segment": 0.9465,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            }
+          ],
+          "horizontals_available": true,
+          "other_station_available": true
+        },
+        {
+          "window_start_utc": "2024-12-03T08:00:00+00:00",
+          "segments": [
+            {
+              "on_s": 1078.85,
+              "lf_hf": 9.26723844115154,
+              "centroid_hz": 1.3387465158144072,
+              "hv_segment": 1.4474,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            },
+            {
+              "on_s": 1292.6,
+              "lf_hf": 16.67797268797505,
+              "centroid_hz": 1.2771281049656873,
+              "hv_segment": 2.0098,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            }
+          ],
+          "horizontals_available": true,
+          "other_station_available": true
+        },
+        {
+          "window_start_utc": "2024-12-04T08:00:00+00:00",
+          "segments": [
+            {
+              "on_s": 84.75,
+              "lf_hf": 22.45345993695284,
+              "centroid_hz": 1.5591424431073415,
+              "hv_segment": 0.013,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            },
+            {
+              "on_s": 115.4,
+              "lf_hf": 66.10263562380341,
+              "centroid_hz": 1.4925218877758162,
+              "hv_segment": 0.3565,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            },
+            {
+              "on_s": 1133.6,
+              "lf_hf": 10.925680593137404,
+              "centroid_hz": 1.5644763869407547,
+              "hv_segment": 1.5518,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            },
+            {
+              "on_s": 1233.15,
+              "lf_hf": 14.448833797556835,
+              "centroid_hz": 1.3942938010408756,
+              "hv_segment": 1.2097,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            }
+          ],
+          "horizontals_available": true,
+          "other_station_available": true
+        },
+        {
+          "window_start_utc": "2024-12-05T16:00:00+00:00",
+          "segments": [
+            {
+              "on_s": 599.25,
+              "lf_hf": 9.190233004796058,
+              "centroid_hz": 1.309290835828343,
+              "hv_segment": 0.7993,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            },
+            {
+              "on_s": 1151.8,
+              "lf_hf": 8.973751863713913,
+              "centroid_hz": 1.3318646463245796,
+              "hv_segment": 1.46,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            },
+            {
+              "on_s": 1298.25,
+              "lf_hf": 8.219295915487884,
+              "centroid_hz": 1.4314040729895146,
+              "hv_segment": 1.2364,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            },
+            {
+              "on_s": 1919.3,
+              "lf_hf": 9.845912081781377,
+              "centroid_hz": 1.2858008436750703,
+              "hv_segment": null,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            }
+          ],
+          "horizontals_available": true,
+          "other_station_available": true
+        },
+        {
+          "window_start_utc": "2024-12-12T20:00:00+00:00",
+          "segments": [
+            {
+              "on_s": 949.05,
+              "lf_hf": 8.316403642199342,
+              "centroid_hz": 1.4378126248639147,
+              "hv_segment": 0.0251,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            }
+          ],
+          "horizontals_available": true,
+          "other_station_available": true
+        },
+        {
+          "window_start_utc": "2024-12-17T16:00:00+00:00",
+          "segments": [
+            {
+              "on_s": 199.35,
+              "lf_hf": 8.333639971879208,
+              "centroid_hz": 1.2906941750468854,
+              "hv_segment": 2.1041,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            },
+            {
+              "on_s": 1000.65,
+              "lf_hf": 9.235167008832622,
+              "centroid_hz": 1.3390536353058633,
+              "hv_segment": 1.408,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            },
+            {
+              "on_s": 1789.35,
+              "lf_hf": 9.047045346446307,
+              "centroid_hz": 1.3177209919901154,
+              "hv_segment": null,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            }
+          ],
+          "horizontals_available": true,
+          "other_station_available": true
+        },
+        {
+          "window_start_utc": "2024-12-21T00:00:00+00:00",
+          "segments": [
+            {
+              "on_s": 1641.9,
+              "lf_hf": 13.030937102331785,
+              "centroid_hz": 1.0167023069891084,
+              "hv_segment": 2.6022,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            }
+          ],
+          "horizontals_available": true,
+          "other_station_available": true
+        },
+        {
+          "window_start_utc": "2024-12-26T12:00:00+00:00",
+          "segments": [
+            {
+              "on_s": 123.8,
+              "lf_hf": 9.282506417986404,
+              "centroid_hz": 1.2840541292479586,
+              "hv_segment": 1.4349,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            },
+            {
+              "on_s": 394.85,
+              "lf_hf": 9.992199556883865,
+              "centroid_hz": 1.2120714045324734,
+              "hv_segment": 1.859,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            }
+          ],
+          "horizontals_available": true,
+          "other_station_available": true
+        },
+        {
+          "window_start_utc": "2024-12-27T08:00:00+00:00",
+          "segments": [
+            {
+              "on_s": 580.3,
+              "lf_hf": 14.837710587915268,
+              "centroid_hz": 1.2278961598596927,
+              "hv_segment": 1.463,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            },
+            {
+              "on_s": 730.25,
+              "lf_hf": 7.602236743058359,
+              "centroid_hz": 1.4769718298456025,
+              "hv_segment": 1.4505,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            },
+            {
+              "on_s": 930.5,
+              "lf_hf": 9.5451373919666,
+              "centroid_hz": 1.2811412086242244,
+              "hv_segment": 1.2138,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            },
+            {
+              "on_s": 1879.7,
+              "lf_hf": 8.032810065287181,
+              "centroid_hz": 1.2614184633889167,
+              "hv_segment": null,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            }
+          ],
+          "horizontals_available": true,
+          "other_station_available": true
+        },
+        {
+          "window_start_utc": "2024-12-29T00:00:00+00:00",
+          "segments": [
+            {
+              "on_s": 198.8,
+              "lf_hf": 17.21391760876599,
+              "centroid_hz": 1.0092756204131486,
+              "hv_segment": 2.1175,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            },
+            {
+              "on_s": 223.8,
+              "lf_hf": 19.680602894117584,
+              "centroid_hz": 0.9707300742906531,
+              "hv_segment": 1.7402,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            },
+            {
+              "on_s": 566.75,
+              "lf_hf": 20.31508424420043,
+              "centroid_hz": 0.9448114644138864,
+              "hv_segment": 2.0875,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            },
+            {
+              "on_s": 588.1,
+              "lf_hf": 13.52611213377605,
+              "centroid_hz": 1.0661171917494745,
+              "hv_segment": 2.8766,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            },
+            {
+              "on_s": 717.35,
+              "lf_hf": 7.577121770020098,
+              "centroid_hz": 1.4442615714644196,
+              "hv_segment": 0.5863,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            },
+            {
+              "on_s": 1716.6,
+              "lf_hf": 12.230640517308794,
+              "centroid_hz": 1.1201769404473414,
+              "hv_segment": null,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            }
+          ],
+          "horizontals_available": true,
+          "other_station_available": false
+        },
+        {
+          "window_start_utc": "2025-01-31T12:00:00+00:00",
+          "segments": [
+            {
+              "on_s": 891.85,
+              "lf_hf": 51.02711164114957,
+              "centroid_hz": 1.0603053786894767,
+              "hv_segment": 1.2993,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            },
+            {
+              "on_s": 999.6,
+              "lf_hf": 199.47840089354798,
+              "centroid_hz": 0.8756971459611106,
+              "hv_segment": 1.4364,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            }
+          ],
+          "horizontals_available": true,
+          "other_station_available": true
+        },
+        {
+          "window_start_utc": "2025-03-20T04:00:00+00:00",
+          "segments": [
+            {
+              "on_s": 219.85,
+              "lf_hf": 142.23550447130208,
+              "centroid_hz": 0.8680880705465042,
+              "hv_segment": 1.3397,
+              "other_any_source": true,
+              "other_zone": true,
+              "other_basin_box": true
+            }
+          ],
+          "horizontals_available": true,
+          "other_station_available": true
+        },
+        {
+          "window_start_utc": "2025-03-23T12:00:00+00:00",
+          "segments": [
+            {
+              "on_s": 591.3,
+              "lf_hf": 13.625484407262851,
+              "centroid_hz": 1.4467620740552447,
+              "hv_segment": 1.4439,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            }
+          ],
+          "horizontals_available": true,
+          "other_station_available": true
+        },
+        {
+          "window_start_utc": "2025-04-08T20:00:00+00:00",
+          "segments": [
+            {
+              "on_s": 153.35,
+              "lf_hf": 8.563166209681663,
+              "centroid_hz": 1.312857397285473,
+              "hv_segment": 1.8502,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            }
+          ],
+          "horizontals_available": true,
+          "other_station_available": true
+        },
+        {
+          "window_start_utc": "2025-04-11T08:00:00+00:00",
+          "segments": [
+            {
+              "on_s": 925.05,
+              "lf_hf": 11.392137662859414,
+              "centroid_hz": 1.366986946138946,
+              "hv_segment": 2.0999,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            }
+          ],
+          "horizontals_available": true,
+          "other_station_available": true
+        },
+        {
+          "window_start_utc": "2025-04-26T04:00:00+00:00",
+          "segments": [
+            {
+              "on_s": 1467.9,
+              "lf_hf": 56.279187829070345,
+              "centroid_hz": 1.1603937657700136,
+              "hv_segment": 1.4569,
+              "other_any_source": true,
+              "other_zone": false,
+              "other_basin_box": false
+            },
+            {
+              "on_s": 1594.55,
+              "lf_hf": 463.4778552098691,
+              "centroid_hz": 0.7532570084168159,
+              "hv_segment": 1.8588,
+              "other_any_source": true,
+              "other_zone": false,
+              "other_basin_box": false
+            }
+          ],
+          "horizontals_available": true,
+          "other_station_available": true
+        },
+        {
+          "window_start_utc": "2025-05-02T16:00:00+00:00",
+          "segments": [
+            {
+              "on_s": 150.9,
+              "lf_hf": 87.67229263846825,
+              "centroid_hz": 1.077739164593085,
+              "hv_segment": 1.288,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            }
+          ],
+          "horizontals_available": true,
+          "other_station_available": false
+        },
+        {
+          "window_start_utc": "2025-05-09T08:00:00+00:00",
+          "segments": [
+            {
+              "on_s": 1104.95,
+              "lf_hf": 12.007478329048466,
+              "centroid_hz": 1.3341076094878568,
+              "hv_segment": 1.737,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            }
+          ],
+          "horizontals_available": true,
+          "other_station_available": true
+        },
+        {
+          "window_start_utc": "2025-05-09T20:00:00+00:00",
+          "segments": [
+            {
+              "on_s": 1315.65,
+              "lf_hf": 9.430685449938968,
+              "centroid_hz": 1.4750600318264162,
+              "hv_segment": 1.7457,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            }
+          ],
+          "horizontals_available": true,
+          "other_station_available": true
+        },
+        {
+          "window_start_utc": "2025-05-18T20:00:00+00:00",
+          "segments": [
+            {
+              "on_s": 606.3,
+              "lf_hf": 35.23209017386417,
+              "centroid_hz": 1.357022558670643,
+              "hv_segment": 1.1457,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            },
+            {
+              "on_s": 649.55,
+              "lf_hf": 16.86945979362605,
+              "centroid_hz": 1.259979729403392,
+              "hv_segment": 1.2051,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            }
+          ],
+          "horizontals_available": true,
+          "other_station_available": true
+        },
+        {
+          "window_start_utc": "2025-05-26T16:00:00+00:00",
+          "segments": [
+            {
+              "on_s": 473.8,
+              "lf_hf": 7.54615792941706,
+              "centroid_hz": 1.640889093708205,
+              "hv_segment": 1.7141,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            },
+            {
+              "on_s": 662.05,
+              "lf_hf": 9.497852507328215,
+              "centroid_hz": 1.2440102373023085,
+              "hv_segment": 2.1018,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            }
+          ],
+          "horizontals_available": true,
+          "other_station_available": false
+        },
+        {
+          "window_start_utc": "2025-05-27T12:00:00+00:00",
+          "segments": [
+            {
+              "on_s": 1934.95,
+              "lf_hf": 11.031617769287474,
+              "centroid_hz": 1.3378722755712147,
+              "hv_segment": 1.5855,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            }
+          ],
+          "horizontals_available": true,
+          "other_station_available": false
+        },
+        {
+          "window_start_utc": "2025-05-28T00:00:00+00:00",
+          "segments": [
+            {
+              "on_s": 1459.9,
+              "lf_hf": 11.332459553536152,
+              "centroid_hz": 1.0893341930526297,
+              "hv_segment": 1.4192,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            }
+          ],
+          "horizontals_available": true,
+          "other_station_available": false
+        },
+        {
+          "window_start_utc": "2025-06-18T16:00:00+00:00",
+          "segments": [
+            {
+              "on_s": 1973.2,
+              "lf_hf": 25.3520926868032,
+              "centroid_hz": 1.3974345570534947,
+              "hv_segment": 2.0869,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            },
+            {
+              "on_s": 2026.55,
+              "lf_hf": 133.3790765531211,
+              "centroid_hz": 1.281032941766829,
+              "hv_segment": 1.618,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            }
+          ],
+          "horizontals_available": true,
+          "other_station_available": true
+        },
+        {
+          "window_start_utc": "2025-06-25T04:00:00+00:00",
+          "segments": [
+            {
+              "on_s": 693.8,
+              "lf_hf": 23.25373915761907,
+              "centroid_hz": 1.1787238330464815,
+              "hv_segment": 1.6158,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            },
+            {
+              "on_s": 787.75,
+              "lf_hf": 23.335382627652983,
+              "centroid_hz": 1.1646375505466027,
+              "hv_segment": 1.7836,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            }
+          ],
+          "horizontals_available": true,
+          "other_station_available": true
+        },
+        {
+          "window_start_utc": "2025-08-26T08:00:00+00:00",
+          "segments": [
+            {
+              "on_s": 957.95,
+              "lf_hf": 19.271597385069747,
+              "centroid_hz": 1.2601800644566927,
+              "hv_segment": 1.442,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            }
+          ],
+          "horizontals_available": true,
+          "other_station_available": false
+        },
+        {
+          "window_start_utc": "2025-09-02T12:00:00+00:00",
+          "segments": [
+            {
+              "on_s": 1991.25,
+              "lf_hf": 26.18086471380168,
+              "centroid_hz": 1.4578067778983403,
+              "hv_segment": 1.5091,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            }
+          ],
+          "horizontals_available": true,
+          "other_station_available": false
+        },
+        {
+          "window_start_utc": "2025-09-13T16:00:00+00:00",
+          "segments": [
+            {
+              "on_s": 926.05,
+              "lf_hf": 10.242493599772759,
+              "centroid_hz": 1.6193973992764643,
+              "hv_segment": 1.4718,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            }
+          ],
+          "horizontals_available": true,
+          "other_station_available": false
+        },
+        {
+          "window_start_utc": "2025-10-06T16:00:00+00:00",
+          "segments": [
+            {
+              "on_s": 115.35,
+              "lf_hf": 8.10808377766919,
+              "centroid_hz": 1.3891685289688955,
+              "hv_segment": 1.4403,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            },
+            {
+              "on_s": 1891.5,
+              "lf_hf": 16.62494504028654,
+              "centroid_hz": 1.0947773213733147,
+              "hv_segment": 1.2292,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            }
+          ],
+          "horizontals_available": true,
+          "other_station_available": false
+        },
+        {
+          "window_start_utc": "2025-11-16T16:00:00+00:00",
+          "segments": [
+            {
+              "on_s": 1540.75,
+              "lf_hf": 26.03195524626509,
+              "centroid_hz": 1.2439402988204724,
+              "hv_segment": 1.5353,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            }
+          ],
+          "horizontals_available": true,
+          "other_station_available": false
+        },
+        {
+          "window_start_utc": "2025-11-25T12:00:00+00:00",
+          "segments": [
+            {
+              "on_s": 917.1,
+              "lf_hf": 8.887277013894025,
+              "centroid_hz": 1.4112630610323005,
+              "hv_segment": 1.903,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            }
+          ],
+          "horizontals_available": true,
+          "other_station_available": false
+        },
+        {
+          "window_start_utc": "2025-11-29T20:00:00+00:00",
+          "segments": [
+            {
+              "on_s": 503.7,
+              "lf_hf": 46.780090167874704,
+              "centroid_hz": 1.0266615320990755,
+              "hv_segment": 1.537,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            }
+          ],
+          "horizontals_available": true,
+          "other_station_available": false
+        },
+        {
+          "window_start_utc": "2025-12-06T12:00:00+00:00",
+          "segments": [
+            {
+              "on_s": 852.55,
+              "lf_hf": 8.952509327460065,
+              "centroid_hz": 1.6948672275708325,
+              "hv_segment": 1.7381,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            },
+            {
+              "on_s": 930.4,
+              "lf_hf": 19.673708365694687,
+              "centroid_hz": 1.3471726398842232,
+              "hv_segment": 1.9889,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            }
+          ],
+          "horizontals_available": true,
+          "other_station_available": false
+        },
+        {
+          "window_start_utc": "2025-12-18T20:00:00+00:00",
+          "segments": [
+            {
+              "on_s": 1132.55,
+              "lf_hf": 15.163811483461313,
+              "centroid_hz": 1.0814899040389103,
+              "hv_segment": 1.6342,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            }
+          ],
+          "horizontals_available": true,
+          "other_station_available": false
+        },
+        {
+          "window_start_utc": "2025-12-27T00:00:00+00:00",
+          "segments": [
+            {
+              "on_s": 194.95,
+              "lf_hf": 11.222215954628563,
+              "centroid_hz": 1.7279118085422938,
+              "hv_segment": 1.7624,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            }
+          ],
+          "horizontals_available": true,
+          "other_station_available": true
+        },
+        {
+          "window_start_utc": "2026-01-10T08:00:00+00:00",
+          "segments": [
+            {
+              "on_s": 464.4,
+              "lf_hf": 166.58708403694914,
+              "centroid_hz": 1.0027629307942854,
+              "hv_segment": 1.5588,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            }
+          ],
+          "horizontals_available": true,
+          "other_station_available": false
+        },
+        {
+          "window_start_utc": "2026-01-18T16:00:00+00:00",
+          "segments": [
+            {
+              "on_s": 1615.6,
+              "lf_hf": 8.715236004113574,
+              "centroid_hz": 1.3637436038273612,
+              "hv_segment": 1.8839,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            }
+          ],
+          "horizontals_available": true,
+          "other_station_available": true
+        },
+        {
+          "window_start_utc": "2026-01-31T12:00:00+00:00",
+          "segments": [
+            {
+              "on_s": 374.2,
+              "lf_hf": 129.69091431543652,
+              "centroid_hz": 0.7933293698766362,
+              "hv_segment": 1.4102,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            }
+          ],
+          "horizontals_available": true,
+          "other_station_available": true
+        },
+        {
+          "window_start_utc": "2026-02-19T16:00:00+00:00",
+          "segments": [
+            {
+              "on_s": 770.55,
+              "lf_hf": 13.724636239357473,
+              "centroid_hz": 1.1100971013458392,
+              "hv_segment": 2.2198,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            },
+            {
+              "on_s": 1721.45,
+              "lf_hf": 9.346484591997967,
+              "centroid_hz": 1.2378134255225293,
+              "hv_segment": 1.8634,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            }
+          ],
+          "horizontals_available": true,
+          "other_station_available": true
+        },
+        {
+          "window_start_utc": "2026-02-21T00:00:00+00:00",
+          "segments": [
+            {
+              "on_s": 1190.35,
+              "lf_hf": 9.748678256945396,
+              "centroid_hz": 1.2044891960820727,
+              "hv_segment": 1.7007,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            }
+          ],
+          "horizontals_available": true,
+          "other_station_available": true
+        },
+        {
+          "window_start_utc": "2026-02-25T20:00:00+00:00",
+          "segments": [
+            {
+              "on_s": 820.7,
+              "lf_hf": 24.358592935007813,
+              "centroid_hz": 1.6087838913833734,
+              "hv_segment": 1.2714,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            }
+          ],
+          "horizontals_available": true,
+          "other_station_available": true
+        },
+        {
+          "window_start_utc": "2026-02-27T20:00:00+00:00",
+          "segments": [
+            {
+              "on_s": 676.95,
+              "lf_hf": 9.268875616353423,
+              "centroid_hz": 1.3193723221647355,
+              "hv_segment": 1.5597,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            }
+          ],
+          "horizontals_available": true,
+          "other_station_available": true
+        },
+        {
+          "window_start_utc": "2026-02-28T04:00:00+00:00",
+          "segments": [
+            {
+              "on_s": 1407.1,
+              "lf_hf": 18.094392080291584,
+              "centroid_hz": 1.3878742106282709,
+              "hv_segment": 1.4951,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            }
+          ],
+          "horizontals_available": true,
+          "other_station_available": true
+        },
+        {
+          "window_start_utc": "2026-03-10T20:00:00+00:00",
+          "segments": [
+            {
+              "on_s": 1639.5,
+              "lf_hf": 9.22847065236782,
+              "centroid_hz": 1.5258163579276571,
+              "hv_segment": 1.5287,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            },
+            {
+              "on_s": 1679.7,
+              "lf_hf": 8.475866384013301,
+              "centroid_hz": 1.3929980514468823,
+              "hv_segment": 1.6757,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            }
+          ],
+          "horizontals_available": true,
+          "other_station_available": true
+        },
+        {
+          "window_start_utc": "2026-03-13T20:00:00+00:00",
+          "segments": [
+            {
+              "on_s": 239.05,
+              "lf_hf": 130.69906601669072,
+              "centroid_hz": 1.2988868494156471,
+              "hv_segment": 1.4994,
+              "other_any_source": true,
+              "other_zone": false,
+              "other_basin_box": false
+            }
+          ],
+          "horizontals_available": true,
+          "other_station_available": true
+        },
+        {
+          "window_start_utc": "2026-04-07T20:00:00+00:00",
+          "segments": [
+            {
+              "on_s": 858.6,
+              "lf_hf": 9.458570582349855,
+              "centroid_hz": 1.2578707707773875,
+              "hv_segment": 1.9191,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            }
+          ],
+          "horizontals_available": true,
+          "other_station_available": true
+        },
+        {
+          "window_start_utc": "2026-04-15T04:00:00+00:00",
+          "segments": [
+            {
+              "on_s": 380.95,
+              "lf_hf": 18.368761854174412,
+              "centroid_hz": 1.4527222439207568,
+              "hv_segment": 2.1217,
+              "other_any_source": true,
+              "other_zone": true,
+              "other_basin_box": true
+            }
+          ],
+          "horizontals_available": true,
+          "other_station_available": true
+        },
+        {
+          "window_start_utc": "2026-04-18T04:00:00+00:00",
+          "segments": [
+            {
+              "on_s": 1691.8,
+              "lf_hf": 54.21472001479249,
+              "centroid_hz": 0.9460808083739338,
+              "hv_segment": 1.6154,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            }
+          ],
+          "horizontals_available": true,
+          "other_station_available": true
+        },
+        {
+          "window_start_utc": "2026-04-28T12:00:00+00:00",
+          "segments": [
+            {
+              "on_s": 1893.55,
+              "lf_hf": 7.9961768811489105,
+              "centroid_hz": 1.2608148266601351,
+              "hv_segment": 1.713,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            }
+          ],
+          "horizontals_available": true,
+          "other_station_available": true
+        },
+        {
+          "window_start_utc": "2026-05-06T04:00:00+00:00",
+          "segments": [
+            {
+              "on_s": 65.5,
+              "lf_hf": 74.3154062952711,
+              "centroid_hz": 1.2115958861820493,
+              "hv_segment": 1.5575,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            }
+          ],
+          "horizontals_available": true,
+          "other_station_available": true
+        }
+      ]
+    },
+    "NK.KKN": {
+      "station_months": 0.292,
+      "usable_windows": 366,
+      "candidate_windows": 14,
+      "by_margin": {
+        "0.0": {
+          "thresholds": {
+            "lf_hf_min": 4.9188,
+            "centroid_hz_max": 1.8852,
+            "hv_min": 2.3248
+          },
+          "spectral": {
+            "windows": 4,
+            "per_station_month": 13.69,
+            "ci95_per_station_month": [
+              3.73,
+              35.04
+            ]
+          },
+          "spectral_hv": {
+            "windows": 0,
+            "per_station_month": 0.0,
+            "ci95_per_station_month": [
+              0.0,
+              12.62
+            ]
+          },
+          "spectral_two_station_any": {
+            "windows": 3,
+            "per_station_month": 10.27,
+            "ci95_per_station_month": [
+              2.12,
+              30.0
+            ]
+          },
+          "spectral_two_station_basin": {
+            "windows": 0,
+            "per_station_month": 0.0,
+            "ci95_per_station_month": [
+              0.0,
+              12.62
+            ]
+          },
+          "spectral_hv_two_station_basin": {
+            "windows": 0,
+            "per_station_month": 0.0,
+            "ci95_per_station_month": [
+              0.0,
+              12.62
+            ]
+          },
+          "hv_unavailable_among_spectral": 0,
+          "other_unavailable_among_spectral": 1
+        },
+        "0.1": {
+          "thresholds": {
+            "lf_hf_min": 4.4269,
+            "centroid_hz_max": 2.0737,
+            "hv_min": 2.0923
+          },
+          "spectral": {
+            "windows": 8,
+            "per_station_month": 27.37,
+            "ci95_per_station_month": [
+              11.82,
+              53.94
+            ]
+          },
+          "spectral_hv": {
+            "windows": 1,
+            "per_station_month": 3.42,
+            "ci95_per_station_month": [
+              0.09,
+              19.07
+            ]
+          },
+          "spectral_two_station_any": {
+            "windows": 4,
+            "per_station_month": 13.69,
+            "ci95_per_station_month": [
+              3.73,
+              35.04
+            ]
+          },
+          "spectral_two_station_basin": {
+            "windows": 0,
+            "per_station_month": 0.0,
+            "ci95_per_station_month": [
+              0.0,
+              12.62
+            ]
+          },
+          "spectral_hv_two_station_basin": {
+            "windows": 0,
+            "per_station_month": 0.0,
+            "ci95_per_station_month": [
+              0.0,
+              12.62
+            ]
+          },
+          "hv_unavailable_among_spectral": 0,
+          "other_unavailable_among_spectral": 3
+        },
+        "0.2": {
+          "thresholds": {
+            "lf_hf_min": 3.935,
+            "centroid_hz_max": 2.2622,
+            "hv_min": 1.8598
+          },
+          "spectral": {
+            "windows": 10,
+            "per_station_month": 34.22,
+            "ci95_per_station_month": [
+              16.41,
+              62.93
+            ]
+          },
+          "spectral_hv": {
+            "windows": 3,
+            "per_station_month": 10.27,
+            "ci95_per_station_month": [
+              2.12,
+              30.0
+            ]
+          },
+          "spectral_two_station_any": {
+            "windows": 5,
+            "per_station_month": 17.11,
+            "ci95_per_station_month": [
+              5.56,
+              39.93
+            ]
+          },
+          "spectral_two_station_basin": {
+            "windows": 1,
+            "per_station_month": 3.42,
+            "ci95_per_station_month": [
+              0.09,
+              19.07
+            ]
+          },
+          "spectral_hv_two_station_basin": {
+            "windows": 0,
+            "per_station_month": 0.0,
+            "ci95_per_station_month": [
+              0.0,
+              12.62
+            ]
+          },
+          "hv_unavailable_among_spectral": 0,
+          "other_unavailable_among_spectral": 3
+        },
+        "0.3": {
+          "thresholds": {
+            "lf_hf_min": 3.4432,
+            "centroid_hz_max": 2.4508,
+            "hv_min": 1.6274
+          },
+          "spectral": {
+            "windows": 13,
+            "per_station_month": 44.48,
+            "ci95_per_station_month": [
+              23.69,
+              76.07
+            ]
+          },
+          "spectral_hv": {
+            "windows": 6,
+            "per_station_month": 20.53,
+            "ci95_per_station_month": [
+              7.53,
+              44.69
+            ]
+          },
+          "spectral_two_station_any": {
+            "windows": 8,
+            "per_station_month": 27.37,
+            "ci95_per_station_month": [
+              11.82,
+              53.94
+            ]
+          },
+          "spectral_two_station_basin": {
+            "windows": 2,
+            "per_station_month": 6.84,
+            "ci95_per_station_month": [
+              0.83,
+              24.72
+            ]
+          },
+          "spectral_hv_two_station_basin": {
+            "windows": 1,
+            "per_station_month": 3.42,
+            "ci95_per_station_month": [
+              0.09,
+              19.07
+            ]
+          },
+          "hv_unavailable_among_spectral": 0,
+          "other_unavailable_among_spectral": 3
+        },
+        "0.5": {
+          "thresholds": {
+            "lf_hf_min": 2.4594,
+            "centroid_hz_max": 2.8278,
+            "hv_min": 1.1624
+          },
+          "spectral": {
+            "windows": 14,
+            "per_station_month": 47.91,
+            "ci95_per_station_month": [
+              26.19,
+              80.38
+            ]
+          },
+          "spectral_hv": {
+            "windows": 12,
+            "per_station_month": 41.06,
+            "ci95_per_station_month": [
+              21.22,
+              71.73
+            ]
+          },
+          "spectral_two_station_any": {
+            "windows": 8,
+            "per_station_month": 27.37,
+            "ci95_per_station_month": [
+              11.82,
+              53.94
+            ]
+          },
+          "spectral_two_station_basin": {
+            "windows": 2,
+            "per_station_month": 6.84,
+            "ci95_per_station_month": [
+              0.83,
+              24.72
+            ]
+          },
+          "spectral_hv_two_station_basin": {
+            "windows": 1,
+            "per_station_month": 3.42,
+            "ci95_per_station_month": [
+              0.09,
+              19.07
+            ]
+          },
+          "hv_unavailable_among_spectral": 0,
+          "other_unavailable_among_spectral": 4
+        }
+      },
+      "windows": [
+        {
+          "window_start_utc": "2024-02-06T16:00:00+00:00",
+          "segments": [
+            {
+              "on_s": 950.76,
+              "lf_hf": 6.731613283785083,
+              "centroid_hz": 1.9979082551241767,
+              "hv_segment": 1.8058,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            }
+          ],
+          "horizontals_available": true,
+          "other_station_available": false
+        },
+        {
+          "window_start_utc": "2024-06-19T04:00:00+00:00",
+          "segments": [
+            {
+              "on_s": 1260.42,
+              "lf_hf": 5.969267205884253,
+              "centroid_hz": 2.427383294310756,
+              "hv_segment": 1.7197,
+              "other_any_source": true,
+              "other_zone": true,
+              "other_basin_box": true
+            }
+          ],
+          "horizontals_available": true,
+          "other_station_available": true
+        },
+        {
+          "window_start_utc": "2024-09-29T04:00:00+00:00",
+          "segments": [
+            {
+              "on_s": 1876.36,
+              "lf_hf": 3.8342165492703337,
+              "centroid_hz": 2.5173207324939804,
+              "hv_segment": 2.5007,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            }
+          ],
+          "horizontals_available": true,
+          "other_station_available": false
+        },
+        {
+          "window_start_utc": "2024-11-26T08:00:00+00:00",
+          "segments": [
+            {
+              "on_s": 353.3,
+              "lf_hf": 4.950852857664208,
+              "centroid_hz": 2.1549550212702324,
+              "hv_segment": 2.0947,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            }
+          ],
+          "horizontals_available": true,
+          "other_station_available": true
+        },
+        {
+          "window_start_utc": "2025-03-21T08:00:00+00:00",
+          "segments": [
+            {
+              "on_s": 1965.18,
+              "lf_hf": 4.707208021009066,
+              "centroid_hz": 2.176916241533481,
+              "hv_segment": 109.5514,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            }
+          ],
+          "horizontals_available": true,
+          "other_station_available": true
+        },
+        {
+          "window_start_utc": "2025-04-02T16:00:00+00:00",
+          "segments": [
+            {
+              "on_s": 1857.0,
+              "lf_hf": 11.61164576110996,
+              "centroid_hz": 1.534109898994702,
+              "hv_segment": 1.3682,
+              "other_any_source": true,
+              "other_zone": false,
+              "other_basin_box": false
+            }
+          ],
+          "horizontals_available": true,
+          "other_station_available": true
+        },
+        {
+          "window_start_utc": "2025-04-23T16:00:00+00:00",
+          "segments": [
+            {
+              "on_s": 727.64,
+              "lf_hf": 56.053002646940776,
+              "centroid_hz": 1.0271316616332604,
+              "hv_segment": 0.9685,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            },
+            {
+              "on_s": 876.84,
+              "lf_hf": 40.59356587766717,
+              "centroid_hz": 0.9123999771388208,
+              "hv_segment": 1.5107,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            }
+          ],
+          "horizontals_available": true,
+          "other_station_available": false
+        },
+        {
+          "window_start_utc": "2025-05-01T16:00:00+00:00",
+          "segments": [
+            {
+              "on_s": 1489.14,
+              "lf_hf": 40.2538989749455,
+              "centroid_hz": 1.3047293391074086,
+              "hv_segment": 0.8834,
+              "other_any_source": true,
+              "other_zone": false,
+              "other_basin_box": false
+            },
+            {
+              "on_s": 1515.48,
+              "lf_hf": 25.657904090071426,
+              "centroid_hz": 1.3293256276273238,
+              "hv_segment": 0.9078,
+              "other_any_source": true,
+              "other_zone": false,
+              "other_basin_box": false
+            }
+          ],
+          "horizontals_available": true,
+          "other_station_available": true
+        },
+        {
+          "window_start_utc": "2025-07-12T20:00:00+00:00",
+          "segments": [
+            {
+              "on_s": 893.24,
+              "lf_hf": 4.657791398728265,
+              "centroid_hz": 2.1447436163096123,
+              "hv_segment": 1.2125,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            },
+            {
+              "on_s": 919.12,
+              "lf_hf": 4.606018261843679,
+              "centroid_hz": 2.1496051610183073,
+              "hv_segment": 0.6454,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            },
+            {
+              "on_s": 931.58,
+              "lf_hf": 4.5712327920753575,
+              "centroid_hz": 2.19029693625477,
+              "hv_segment": 0.6614,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            },
+            {
+              "on_s": 1266.68,
+              "lf_hf": 3.2152614484744477,
+              "centroid_hz": 2.4733715159511487,
+              "hv_segment": 1.0653,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            },
+            {
+              "on_s": 1273.44,
+              "lf_hf": 3.4559285029214037,
+              "centroid_hz": 2.4396876187096517,
+              "hv_segment": 1.119,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            },
+            {
+              "on_s": 1336.52,
+              "lf_hf": 4.616899809541259,
+              "centroid_hz": 2.143612167665711,
+              "hv_segment": 0.608,
+              "other_any_source": true,
+              "other_zone": true,
+              "other_basin_box": true
+            },
+            {
+              "on_s": 1702.62,
+              "lf_hf": 3.8806984694315982,
+              "centroid_hz": 2.2986770307715765,
+              "hv_segment": 1.0047,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            },
+            {
+              "on_s": 1851.66,
+              "lf_hf": 4.2560920913832225,
+              "centroid_hz": 2.2539317188151764,
+              "hv_segment": 0.5105,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            },
+            {
+              "on_s": 1933.04,
+              "lf_hf": 5.24765736008926,
+              "centroid_hz": 2.0330183662242014,
+              "hv_segment": 1.0313,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            }
+          ],
+          "horizontals_available": true,
+          "other_station_available": true
+        },
+        {
+          "window_start_utc": "2025-07-13T16:00:00+00:00",
+          "segments": [
+            {
+              "on_s": 1752.72,
+              "lf_hf": 2.906662330852397,
+              "centroid_hz": 2.483614872712724,
+              "hv_segment": 2.835,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            },
+            {
+              "on_s": 1853.82,
+              "lf_hf": 3.751080338372414,
+              "centroid_hz": 2.477701638512476,
+              "hv_segment": 1.8842,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            },
+            {
+              "on_s": 1965.28,
+              "lf_hf": 4.221818138385648,
+              "centroid_hz": 2.3268723947094347,
+              "hv_segment": 1.646,
+              "other_any_source": true,
+              "other_zone": false,
+              "other_basin_box": false
+            }
+          ],
+          "horizontals_available": true,
+          "other_station_available": true
+        },
+        {
+          "window_start_utc": "2025-07-14T20:00:00+00:00",
+          "segments": [
+            {
+              "on_s": 72.72,
+              "lf_hf": 4.086235975475575,
+              "centroid_hz": 2.185137814639208,
+              "hv_segment": 0.6044,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            },
+            {
+              "on_s": 290.36,
+              "lf_hf": 4.158482786834041,
+              "centroid_hz": 2.2584942411334947,
+              "hv_segment": 0.4875,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            },
+            {
+              "on_s": 371.74,
+              "lf_hf": 5.22898849099869,
+              "centroid_hz": 2.0342270460580956,
+              "hv_segment": 0.5112,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            },
+            {
+              "on_s": 521.6,
+              "lf_hf": 4.713894324346467,
+              "centroid_hz": 2.1208960096345324,
+              "hv_segment": 0.6955,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            },
+            {
+              "on_s": 644.8,
+              "lf_hf": 5.014304704964682,
+              "centroid_hz": 2.069928779502512,
+              "hv_segment": 1.5291,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            },
+            {
+              "on_s": 1079.96,
+              "lf_hf": 3.2772195366983476,
+              "centroid_hz": 2.6210373492954213,
+              "hv_segment": 3.0208,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            },
+            {
+              "on_s": 1194.3,
+              "lf_hf": 4.553856442143902,
+              "centroid_hz": 2.1307364044392916,
+              "hv_segment": 3.2893,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            },
+            {
+              "on_s": 1202.54,
+              "lf_hf": 4.2551047763058785,
+              "centroid_hz": 2.1873506201188024,
+              "hv_segment": 3.5449,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            },
+            {
+              "on_s": 1281.56,
+              "lf_hf": 5.289832592652949,
+              "centroid_hz": 1.9952407613684575,
+              "hv_segment": 2.2057,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            },
+            {
+              "on_s": 1290.86,
+              "lf_hf": 5.1995104362517965,
+              "centroid_hz": 2.0069200952634607,
+              "hv_segment": 2.326,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            },
+            {
+              "on_s": 1355.18,
+              "lf_hf": 4.760602008355074,
+              "centroid_hz": 2.044152270003451,
+              "hv_segment": 2.2337,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            },
+            {
+              "on_s": 1683.82,
+              "lf_hf": 4.837626168157083,
+              "centroid_hz": 2.1202720698811484,
+              "hv_segment": 2.1607,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            },
+            {
+              "on_s": 2097.8,
+              "lf_hf": 5.696846075069082,
+              "centroid_hz": 1.986092249750382,
+              "hv_segment": 0.5439,
+              "other_any_source": false,
+              "other_zone": false,
+              "other_basin_box": false
+            }
+          ],
+          "horizontals_available": true,
+          "other_station_available": false
+        },
+        {
+          "window_start_utc": "2026-04-22T00:00:00+00:00",
+          "segments": [
+            {
+              "on_s": 595.06,
+              "lf_hf": 27.873898305551656,
+              "centroid_hz": 1.532686679303709,
+              "hv_segment": 1.0094,
+              "other_any_source": true,
+              "other_zone": false,
+              "other_basin_box": false
+            }
+          ],
+          "horizontals_available": true,
+          "other_station_available": true
+        },
+        {
+          "window_start_utc": "2026-05-17T00:00:00+00:00",
+          "segments": [
+            {
+              "on_s": 973.56,
+              "lf_hf": 6.435458330774128,
+              "centroid_hz": 2.335282014458567,
+              "hv_segment": 1.2587,
+              "other_any_source": true,
+              "other_zone": false,
+              "other_basin_box": false
+            }
+          ],
+          "horizontals_available": true,
+          "other_station_available": true
+        },
+        {
+          "window_start_utc": "2026-05-29T16:00:00+00:00",
+          "segments": [
+            {
+              "on_s": 962.28,
+              "lf_hf": 6.048106090371532,
+              "centroid_hz": 2.0645576851349916,
+              "hv_segment": 1.3018,
+              "other_any_source": true,
+              "other_zone": false,
+              "other_basin_box": false
+            }
+          ],
+          "horizontals_available": true,
+          "other_station_available": true
+        }
+      ]
+    }
+  }
+}

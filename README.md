@@ -50,7 +50,7 @@ A Warning needs two separate sources that each detected something. A sensor that
 
 ### The shadow service
 
-The same detector can now run on a live feed. In shadow mode it decides on every window, writes each decision to a log whose lines are chained by hash, and sends nothing. Every alert it would have raised waits for a named person, who approves or rejects it by name. The page below reads what the service has recorded. Here it shows the 2026 event replayed through the live path: one Advisory, staged for a person, from the seismic station alone.
+The same detector can now run on a live feed. In shadow mode it decides on every window, writes each decision to a log whose lines are chained by hash, and sends nothing. Every alert it would have raised waits for a named person, who approves or rejects it by name. The page below reads what the service has recorded. Here it shows the 2026 event replayed through the live path: one Advisory, staged for a person. The Everest station saw the same onset at a fitting time, so the seismic channel is marked as corroborated, but without a gauge it stays an Advisory.
 
 ![The shadow service page](docs/images/shadow_service.png)
 
@@ -97,12 +97,13 @@ Good signs:
 Hard limits, and they matter:
 
 * There is only one confirmed event to learn from (n = 1). The confidence value is an assumed setting, not a tested probability.
-* About 17 in every 100 real earthquakes look like the target on the two features, so the false alarm rate is still several times higher than the goal.
+* About 22 in every 100 real earthquakes look like the target on the two seismic features, now that the thresholds carry a 20 percent margin. A distant earthquake is set aside by the catalogue check, and a regional one still needs the other rules and the gauge to become a Warning.
 * On quiet days with no earthquakes the detector still raises false alarms. Measured on the short piece of signal it really decides on, Kakani gives about 14 a month and the Everest station about 89 a month. The goal is 1. Near Everest many of these may be real ice or rock falls that never became floods.
 * The river gauge data needs an agreement with Nepal's hydrology office that is not yet in place, so the gauge data here is made up for testing.
 * The live feed can be connected, but only in shadow mode. Nothing leaves the machine without a named person approving it. This is a research tool, not a working warning system.
 * The time from a slope failing to a decision is about two and a half minutes, not the one minute the earlier lead times assumed. The decision needs two minutes of signal after the onset by design. So the nearest village, Timure, gets about one and a half minutes of warning, not three.
-* Requiring both stations to see the same event at a fitting time cuts the false alarms a great deal, from about 89 to about 3 a month at Everest and from 14 to none at Kakani, but the second station was missing for a third of the cases. The gauge is still the only truly independent source, and it needs the data agreement.
+* Three rules together bring the false alarms close to the goal. The seismic shape test, a test of how much the ground moves sideways, and a second station seeing the same event at a fitting time give none a month at Kakani and about 6 a month at Everest, with the thresholds loosened by 20 percent so a real event a little different from 2026 is not missed. The second station was missing for up to a quarter of the cases, and a decision made without it falls back to the single station rate.
+* The gauge is still the only truly independent source, and it needs the data agreement.
 
 Nothing here proves the core idea wrong. It does mean the real question, can these events be told apart at a rate people can trust, is still open.
 
@@ -120,6 +121,7 @@ Every part of the chain exists and is tested. In plain words:
 * **stream** and **sources**: turn a live packet feed, or a replayed one, into analysis windows, with gaps, delay, and late packets measured rather than hidden.
 * **live**: run the detector on each window and hand the result to the service. Shadow mode only.
 * **associate**: check whether two stations could be seeing one source, and where it could be.
+* **live** also joins the horizontal channels to the vertical for the sideways motion test, and keeps a partner station's triggers so a detection can be corroborated, or upgraded once when the partner reports late.
 * **delivery**: stage an alert for a person, record their approval, and only then deliver it to a file or an agreed endpoint. There is no public sink.
 * **settings** and **health**: site settings from a file, and a health check for whoever runs it.
 * **teleseism**: recognise a distant earthquake and set it aside.

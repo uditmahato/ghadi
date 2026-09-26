@@ -1,0 +1,73 @@
+{
+  "margins": [
+    0.0,
+    0.1,
+    0.2,
+    0.3,
+    0.5
+  ],
+  "stations": {
+    "NK.KKN": {
+      "usable": 64,
+      "of_rows": 64,
+      "by_margin": {
+        "0.0": {
+          "earthquakes_passing": 11,
+          "of": 64,
+          "share": 0.172
+        },
+        "0.1": {
+          "earthquakes_passing": 12,
+          "of": 64,
+          "share": 0.188
+        },
+        "0.2": {
+          "earthquakes_passing": 14,
+          "of": 64,
+          "share": 0.219
+        },
+        "0.3": {
+          "earthquakes_passing": 19,
+          "of": 64,
+          "share": 0.297
+        },
+        "0.5": {
+          "earthquakes_passing": 24,
+          "of": 64,
+          "share": 0.375
+        }
+      }
+    },
+    "IO.EVN": {
+      "usable": 132,
+      "of_rows": 132,
+      "by_margin": {
+        "0.0": {
+          "earthquakes_passing": 6,
+          "of": 132,
+          "share": 0.045
+        },
+        "0.1": {
+          "earthquakes_passing": 7,
+          "of": 132,
+          "share": 0.053
+        },
+        "0.2": {
+          "earthquakes_passing": 8,
+          "of": 132,
+          "share": 0.061
+        },
+        "0.3": {
+          "earthquakes_passing": 9,
+          "of": 132,
+          "share": 0.068
+        },
+        "0.5": {
+          "earthquakes_passing": 12,
+          "of": 132,
+          "share": 0.091
+        }
+      }
+    }
+  }
+}
