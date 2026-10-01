@@ -168,12 +168,37 @@ def overlaps_window(
     return opens <= window_end and closes >= window_start
 
 
+def magnitude_applies(
+    magnitude: float,
+    distance_deg: float,
+    min_magnitude: float = DEFAULT_MIN_MAGNITUDE,
+    near_min_magnitude: float | None = None,
+    near_deg: float = 60.0,
+) -> bool:
+    """Is an origin of this size, at this distance, large enough to consider?
+
+    One threshold for every distance is the rule exp006 measured. The optional second
+    threshold admits smaller earthquakes only when they are close: a smaller event
+    carries less energy and reaches a regional station with enough of it only from
+    nearer by (exp024).
+    """
+    if magnitude >= min_magnitude:
+        return True
+    return (
+        near_min_magnitude is not None
+        and magnitude >= near_min_magnitude
+        and (distance_deg <= near_deg)
+    )
+
+
 def explain(
     detection_utc: datetime,
     origins: list[Origin] | tuple[Origin, ...],
     station_lat: float,
     station_lon: float,
     min_magnitude: float = DEFAULT_MIN_MAGNITUDE,
+    near_min_magnitude: float | None = None,
+    near_deg: float = 60.0,
 ) -> Suppression:
     """Is this detection explained by a distant catalogued earthquake?
 
@@ -189,10 +214,12 @@ def explain(
     considered = 0
 
     for origin in origins:
-        if origin.magnitude < min_magnitude:
+        distance = epicentral_distance_deg(station_lat, station_lon, origin)
+        if not magnitude_applies(
+            origin.magnitude, distance, min_magnitude, near_min_magnitude, near_deg
+        ):
             continue
         considered += 1
-        distance = epicentral_distance_deg(station_lat, station_lon, origin)
         p_arrival = origin.time_utc + timedelta(seconds=p_travel_time_s(distance))
         surface_arrival = origin.time_utc + timedelta(seconds=surface_wave_travel_time_s(distance))
         extra = DIFFRACTED_EXTRA_S if distance > DIFFRACTED_BEYOND_DEG else 0.0

@@ -104,6 +104,7 @@ Hard limits, and they matter:
 * The time from a slope failing to a decision is about two and a half minutes, not the one minute the earlier lead times assumed. The decision needs two minutes of signal after the onset by design. So the nearest village, Timure, gets about one and a half minutes of warning, not three.
 * Three rules together bring the false alarms close to the goal. The seismic shape test, a test of how much the ground moves sideways, and a second station seeing the same event at a fitting time give none a month at Kakani and about 6 a month at Everest, with the thresholds loosened by 20 percent so a real event a little different from 2026 is not missed. The second station was missing for up to a quarter of the cases, and a decision made without it falls back to the single station rate.
 * The gauge is still the only truly independent source, and it needs the data agreement.
+* The first live run lasted 20 hours and raised one Advisory. It was a magnitude 5.2 earthquake near Yemen, 4,000 km away. The check that sets distant earthquakes aside existed, but the live loop had no earthquake list to check against. It has one now, refreshed every two minutes. Earthquake lists are published some minutes after the waves arrive, so the service also looks back at what it already decided and tells the person at the outbox when an alert has since been explained.
 
 Nothing here proves the core idea wrong. It does mean the real question, can these events be told apart at a rate people can trust, is still open.
 

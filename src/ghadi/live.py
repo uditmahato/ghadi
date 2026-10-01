@@ -62,6 +62,7 @@ from .teleseism import Origin
 __all__ = [
     "FeedStats",
     "LiveConfig",
+    "OriginsProvider",
     "PartnerConfig",
     "WindowVerdict",
     "horizontal_key",
@@ -325,6 +326,9 @@ def observation_from_window(
 
 
 OnVerdict = Callable[[WindowVerdict], None]
+# The global origins known at a given feed time. A live loop passes a rolling
+# catalogue; a replay passes whatever was, or could have been, known then.
+OriginsProvider = Callable[[datetime], tuple[Origin, ...]]
 
 
 @dataclass
@@ -427,6 +431,7 @@ def observations_from_source(
     on_verdict: OnVerdict | None = None,
     station_lat: float | None = None,
     station_lon: float | None = None,
+    origins_provider: OriginsProvider | None = None,
 ) -> Iterator[WindowObservation]:
     """Yield one observation per arrival.
 
@@ -458,9 +463,12 @@ def observations_from_source(
         window: StreamWindow, horizontals: tuple[np.ndarray, np.ndarray] | None
     ) -> Iterator[WindowObservation]:
         nonlocal decided_until
+        known = origins
+        if origins_provider is not None and tracker.latest is not None:
+            known = origins_provider(tracker.latest)
         verdict = observation_from_window(
             window,
-            origins=origins,
+            origins=known,
             live=lcfg,
             config=cfg,
             feed_time=tracker.latest,
@@ -561,6 +569,7 @@ def run_shadow(
     station_lat: float | None = None,
     station_lon: float | None = None,
     on_outcome: Callable[[ServiceOutcome], None] | None = None,
+    origins_provider: OriginsProvider | None = None,
 ) -> list[ServiceOutcome]:
     """Drive the live feed through the tested pipeline, in shadow mode only.
 
@@ -584,6 +593,7 @@ def run_shadow(
         on_verdict=on_verdict,
         station_lat=station_lat,
         station_lon=station_lon,
+        origins_provider=origins_provider,
     )
     extra: dict[str, float] = {}
     if station_lat is not None and station_lon is not None:

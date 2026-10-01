@@ -73,9 +73,12 @@ def main(argv: list[str] | None = None) -> int:
             pending = box.pending()
             if not pending:
                 print("nothing waiting")
+            explained = box.explanations()
             for s in pending:
                 print(f"{s.staged_id}  {s.tier:<8} staged {s.staged_utc.isoformat()}")
                 print(f"    {s.rationale[:110]}")
+                if s.staged_id in explained:
+                    print(f"    SINCE EXPLAINED: {explained[s.staged_id]}")
         elif args.command == "show":
             s = box.get(args.staged_id)
             print(f"{s.staged_id} {s.tier} event {s.event_id} staged {s.staged_utc.isoformat()}")

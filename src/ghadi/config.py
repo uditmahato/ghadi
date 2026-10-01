@@ -382,11 +382,33 @@ class CapConfig:
     default_language_ne: str = "ne-NP"
 
 
+# --- distant earthquake check ---------------------------------------------------------
+@dataclass(frozen=True)
+class SuppressionConfig:
+    """Which catalogued earthquakes can set the seismic channel aside.
+
+    ``min_magnitude`` applies at any distance and is the rule exp006 measured.
+    ``near_min_magnitude`` admits smaller earthquakes inside ``near_deg`` degrees; None
+    turns that off. exp024 priced both in time spent with the channel set aside.
+
+    The defaults are exp024's choice: M5.5 and above anywhere, and M5.0 and above within
+    80 degrees. That sets the seismic channel aside 7.2% of the time, against 3.7% for
+    M5.5 alone, and explains 10 of IO.EVN's 29 remaining false alarms and the one
+    Advisory the first live run staged (an M5.2 near Yemen at 36 degrees). M5.0 at any
+    distance explains 15 of 29 and costs 13.8% of the time, which was judged too much.
+    """
+
+    min_magnitude: float = 5.5
+    near_min_magnitude: float | None = 5.0
+    near_deg: float = 80.0
+
+
 # --- top level ----------------------------------------------------------------------
 @dataclass(frozen=True)
 class GhadiConfig:
     seismic: SeismicConfig = field(default_factory=SeismicConfig)
     classify: ClassifyConfig = field(default_factory=ClassifyConfig)
+    suppression: SuppressionConfig = field(default_factory=SuppressionConfig)
     hydro: HydroConfig = field(default_factory=HydroConfig)
     travel: TravelConfig = field(default_factory=TravelConfig)
     dhm: DhmConfig = field(default_factory=DhmConfig)

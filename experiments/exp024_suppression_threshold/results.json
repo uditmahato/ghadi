@@ -1,0 +1,111 @@
+{
+  "experiment": "exp024_suppression_threshold",
+  "period": [
+    "2024-01-01T00:00:00+00:00",
+    "2026-08-01T00:00:00+00:00"
+  ],
+  "origins_m45": 20621,
+  "near_deg": 60.0,
+  "stations": {
+    "NK.KKN": {
+      "A_m55_any": {
+        "origins_in_period": 1130,
+        "set_aside_fraction": 0.0371,
+        "false_alarm_segments_explained": 0,
+        "false_alarm_windows_explained": 0,
+        "of_false_alarm_windows": 4,
+        "live_case_2026_09_26_explained": false
+      },
+      "B_m50_any": {
+        "origins_in_period": 4783,
+        "set_aside_fraction": 0.1384,
+        "false_alarm_segments_explained": 3,
+        "false_alarm_windows_explained": 2,
+        "of_false_alarm_windows": 4,
+        "live_case_2026_09_26_explained": true
+      },
+      "C_m55_any_or_m50_within_60deg": {
+        "origins_in_period": 2874,
+        "set_aside_fraction": 0.0628,
+        "false_alarm_segments_explained": 1,
+        "false_alarm_windows_explained": 1,
+        "of_false_alarm_windows": 4,
+        "live_case_2026_09_26_explained": true
+      },
+      "C_within_40deg": {
+        "origins_in_period": 1596,
+        "set_aside_fraction": 0.042,
+        "false_alarm_segments_explained": 0,
+        "false_alarm_windows_explained": 0,
+        "of_false_alarm_windows": 4,
+        "live_case_2026_09_26_explained": true
+      },
+      "C_within_80deg": {
+        "origins_in_period": 3274,
+        "set_aside_fraction": 0.0726,
+        "false_alarm_segments_explained": 1,
+        "false_alarm_windows_explained": 1,
+        "of_false_alarm_windows": 4,
+        "live_case_2026_09_26_explained": true
+      },
+      "C_within_100deg": {
+        "origins_in_period": 3565,
+        "set_aside_fraction": 0.0814,
+        "false_alarm_segments_explained": 1,
+        "false_alarm_windows_explained": 1,
+        "of_false_alarm_windows": 4,
+        "live_case_2026_09_26_explained": true
+      }
+    },
+    "IO.EVN": {
+      "A_m55_any": {
+        "origins_in_period": 1130,
+        "set_aside_fraction": 0.0369,
+        "false_alarm_segments_explained": 0,
+        "false_alarm_windows_explained": 0,
+        "of_false_alarm_windows": 29,
+        "live_case_2026_09_26_explained": null
+      },
+      "B_m50_any": {
+        "origins_in_period": 4783,
+        "set_aside_fraction": 0.1377,
+        "false_alarm_segments_explained": 18,
+        "false_alarm_windows_explained": 15,
+        "of_false_alarm_windows": 29,
+        "live_case_2026_09_26_explained": null
+      },
+      "C_m55_any_or_m50_within_60deg": {
+        "origins_in_period": 2890,
+        "set_aside_fraction": 0.0625,
+        "false_alarm_segments_explained": 9,
+        "false_alarm_windows_explained": 7,
+        "of_false_alarm_windows": 29,
+        "live_case_2026_09_26_explained": null
+      },
+      "C_within_40deg": {
+        "origins_in_period": 1612,
+        "set_aside_fraction": 0.042,
+        "false_alarm_segments_explained": 4,
+        "false_alarm_windows_explained": 3,
+        "of_false_alarm_windows": 29,
+        "live_case_2026_09_26_explained": null
+      },
+      "C_within_80deg": {
+        "origins_in_period": 3288,
+        "set_aside_fraction": 0.0723,
+        "false_alarm_segments_explained": 12,
+        "false_alarm_windows_explained": 10,
+        "of_false_alarm_windows": 29,
+        "live_case_2026_09_26_explained": null
+      },
+      "C_within_100deg": {
+        "origins_in_period": 3564,
+        "set_aside_fraction": 0.0806,
+        "false_alarm_segments_explained": 14,
+        "false_alarm_windows_explained": 11,
+        "of_false_alarm_windows": 29,
+        "live_case_2026_09_26_explained": null
+      }
+    }
+  }
+}

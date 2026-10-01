@@ -42,13 +42,14 @@ State goes to `data/shadow`.
    minutes since start.
 2. Look at `feed.delay_p95_s` in the same reply. Above 120 the feed is too slow to act
    on, and the project's own rule says it must be re-scoped, not worked around.
-3. Look at `staged_waiting_for_a_person`. If it is above zero, a decision is waiting:
+3. Look at `catalogue` in the same reply. `failures` climbing with `last_error` set means the earthquake list cannot be fetched. The service keeps the origins it already holds and keeps deciding, but a distant earthquake may then be staged as an alert.
+4. Look at `staged_waiting_for_a_person`. If it is above zero, a decision is waiting:
 
 ```bash
 python scripts/outbox.py --settings deploy/ghadi.toml list
 ```
 
-4. Once a week, check the chains:
+5. Once a week, check the chains:
 
 ```bash
 python -c "from ghadi.service import verify_chain; print(verify_chain('data/shadow/audit.jsonl'))"
@@ -60,7 +61,7 @@ python scripts/outbox.py --settings deploy/ghadi.toml verify
 
 ## When a decision is waiting
 
-Read it in full before doing anything:
+Read it in full before doing anything. If the list shows SINCE EXPLAINED beside it, a distant earthquake published after the decision accounts for it, and the usual answer is to reject it with that reason:
 
 ```bash
 python scripts/outbox.py --settings deploy/ghadi.toml show <staged id>

@@ -125,7 +125,15 @@ def process_window(
         config=cfg.classify,
         segment_hv=obs.segment_hv,
     )
-    suppression = explain(obs.detected_utc, obs.origins, station_lat, station_lon)
+    suppression = explain(
+        obs.detected_utc,
+        obs.origins,
+        station_lat,
+        station_lon,
+        min_magnitude=cfg.suppression.min_magnitude,
+        near_min_magnitude=cfg.suppression.near_min_magnitude,
+        near_deg=cfg.suppression.near_deg,
+    )
 
     channels: list[Channel] = []
     # A low-frequency window explained by a distant earthquake is not evidence of a local

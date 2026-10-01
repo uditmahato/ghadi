@@ -288,6 +288,20 @@ class Outbox:
                 out.append(staged)
         return out
 
+    def explain(self, staged_id: str, reason: str) -> None:
+        """Record that a staged alert has since been explained, for the person deciding.
+
+        The global catalogue publishes an earthquake minutes after its waves arrive, so
+        an alert can be staged before the earthquake that caused it is known. The alert
+        stays staged: only a person closes it. The explanation is put in front of them.
+        """
+        staged = self.get(staged_id)
+        self.log.append("explained", {"staged_id": staged.staged_id, "reason": reason})
+
+    def explanations(self) -> dict[str, str]:
+        """The latest explanation recorded for each staged alert."""
+        return {e["staged_id"]: e["reason"] for e in self.log.entries() if e["kind"] == "explained"}
+
     def get(self, staged_id: str) -> StagedAlert:
         path = self.staging_dir / f"{staged_id}.json"
         if not path.exists():
