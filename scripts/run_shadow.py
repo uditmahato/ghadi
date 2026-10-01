@@ -264,6 +264,8 @@ class ShadowState:
             "seconds_since_last_window": round(feed_age_s, 1) if feed_age_s else None,
             "feed": self.stats.as_dict(),
             "reconnections": self.source.reconnections if self.source else 0,
+            "silent_sessions": self.source.silent_sessions if self.source else 0,
+            "packets_received": self.source.packets_received if self.source else 0,
             "dropped_packets": self.source.dropped_packets if self.source else 0,
             "decisions": {
                 "windows_seen": self.health.windows_seen,
@@ -428,6 +430,15 @@ def main(argv: list[str] | None = None) -> int:
     if health_server.running:
         print(f"health      : {health_server.url}")
     state.write_status()
+    # The status file is otherwise written only when a window arrives, so a silent feed
+    # would leave it frozen and looking healthy. Keep it current through an outage.
+    stop_ticker = threading.Event()
+
+    def tick() -> None:
+        while not stop_ticker.wait(30.0):
+            state.write_status()
+
+    threading.Thread(target=tick, name="ghadi-status", daemon=True).start()
 
     try:
         outcomes = run_shadow(
@@ -448,6 +459,7 @@ def main(argv: list[str] | None = None) -> int:
         print("\nstopped by operator")
         outcomes = []
     finally:
+        stop_ticker.set()
         state.write_status()
         health_server.stop()
 

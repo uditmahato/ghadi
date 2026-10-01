@@ -83,6 +83,7 @@ the record too.
 | You see | It means | Do |
 |---|---|---|
 | `ok: false`, `seconds_since_last_window` large | The feed stopped or the server dropped us | Nothing at first. The loop reconnects with a growing wait. If it stays down for an hour, check the server name in the settings and whether the machine has network |
+| `silent_sessions` climbing, `packets_received` not moving | The server answers but this station sends nothing | The station's live feed is down. Other stations on the same server may be fine. Nothing to fix here: the service waits longer between tries, up to a minute, and resumes when data returns. Note the outage; time without data is time the system saw nothing |
 | `reconnections` climbing every few minutes | The server keeps closing the connection | Report it. The public server may be rate limiting; do not add a second connection |
 | `feed.unusable_windows` climbing | Packets arrive with gaps | The station side, not ours. Note it in the log; the detector refuses windows that are mostly gaps rather than deciding on them |
 | `audit_chain_ok: false` | A line in the audit log was altered or lost | Stop the service. Keep the file. This is the one thing that must be looked into before restarting |
