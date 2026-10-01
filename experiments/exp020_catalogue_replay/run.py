@@ -149,7 +149,7 @@ def replay_station(
 def main() -> int:
     client = CachedWaveformClient()
     origins = load_origins()
-    events = load_catalog()
+    events = load_catalog(include_out_of_reach=False)
     results: dict[str, Any] = {
         "experiment": "exp020_catalogue_replay",
         "feed_delay_s": FEED_DELAY_S,

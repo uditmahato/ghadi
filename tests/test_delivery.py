@@ -179,3 +179,13 @@ def test_no_public_sink_exists_in_the_module() -> None:
     names = {name.lower() for name, _ in inspect.getmembers(delivery, inspect.isclass)}
     for banned in ("sms", "broadcast", "public", "cellbroadcast", "twilio"):
         assert not any(banned in n for n in names), names
+
+
+def test_an_explanation_is_attached_and_the_alert_stays_staged(tmp_path: Path) -> None:
+    box = outbox(tmp_path)
+    staged = box.stage(warning_outcome())
+    assert staged is not None
+    box.explain(staged.staged_id, "M5.2 at 36 deg: detection falls in its P-to-surface window")
+    assert "M5.2" in box.explanations()[staged.staged_id]
+    assert [s.staged_id for s in box.pending()] == [staged.staged_id], "only a person closes it"
+    assert verify_delivery_chain(tmp_path / "delivery.jsonl")

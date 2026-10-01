@@ -21,32 +21,27 @@
           "feed": {
             "windows": 90,
             "unusable_windows": 2,
-            "triggered_windows": 4,
+            "triggered_windows": 3,
             "stale_windows": 0,
             "late_packets": 0,
+            "corroborated": 0,
+            "upgrades": 0,
+            "horizontals_missing": 0,
             "delay_p50_s": 6.0,
             "delay_p95_s": 6.0,
             "delay_max_s": 6.0,
-            "decision_latency_p50_s": 148.6,
-            "decision_latency_max_s": 181.0
+            "decision_latency_p50_s": 139.5,
+            "decision_latency_max_s": 157.6
           },
           "windows_by_reason": {
             "already_decided": 2,
+            "gap_edge": 1,
             "no_trigger": 75,
-            "ok": 4,
+            "ok": 3,
             "segment_too_short": 7,
             "unusable": 2
           },
           "decisions": [
-            {
-              "detected_utc": "2014-08-01T20:00:05+00:00",
-              "tier": "NONE",
-              "probability": 0.05,
-              "mass_movement_like": false,
-              "suppressed": false,
-              "suppression_reason": null,
-              "lead_times_min": null
-            },
             {
               "detected_utc": "2014-08-01T20:29:46.500000+00:00",
               "tier": "NONE",
@@ -96,32 +91,27 @@
           "feed": {
             "windows": 40,
             "unusable_windows": 2,
-            "triggered_windows": 6,
+            "triggered_windows": 5,
             "stale_windows": 0,
             "late_packets": 0,
+            "corroborated": 0,
+            "upgrades": 0,
+            "horizontals_missing": 0,
             "delay_p50_s": 6.0,
             "delay_p95_s": 6.0,
             "delay_max_s": 6.0,
-            "decision_latency_p50_s": 165.8,
-            "decision_latency_max_s": 181.0
+            "decision_latency_p50_s": 162.9,
+            "decision_latency_max_s": 179.0
           },
           "windows_by_reason": {
             "already_decided": 2,
+            "gap_edge": 1,
             "no_trigger": 21,
-            "ok": 6,
+            "ok": 5,
             "segment_too_short": 9,
             "unusable": 2
           },
           "decisions": [
-            {
-              "detected_utc": "2015-04-25T05:53:05+00:00",
-              "tier": "NONE",
-              "probability": 0.05,
-              "mass_movement_like": false,
-              "suppressed": false,
-              "suppression_reason": null,
-              "lead_times_min": null
-            },
             {
               "detected_utc": "2015-04-25T05:58:17.400000+00:00",
               "tier": "NONE",
@@ -185,31 +175,26 @@
           "feed": {
             "windows": 390,
             "unusable_windows": 2,
-            "triggered_windows": 10,
+            "triggered_windows": 9,
             "stale_windows": 0,
             "late_packets": 0,
+            "corroborated": 0,
+            "upgrades": 0,
+            "horizontals_missing": 0,
             "delay_p50_s": 6.0,
             "delay_p95_s": 6.0,
             "delay_max_s": 6.0,
-            "decision_latency_p50_s": 161.7,
-            "decision_latency_max_s": 181.0
+            "decision_latency_p50_s": 158.9,
+            "decision_latency_max_s": 172.8
           },
           "windows_by_reason": {
+            "gap_edge": 1,
             "no_trigger": 361,
-            "ok": 10,
+            "ok": 9,
             "segment_too_short": 17,
             "unusable": 2
           },
           "decisions": [
-            {
-              "detected_utc": "2021-06-15T06:15:05+00:00",
-              "tier": "NONE",
-              "probability": 0.05,
-              "mass_movement_like": false,
-              "suppressed": false,
-              "suppression_reason": null,
-              "lead_times_min": null
-            },
             {
               "detected_utc": "2021-06-15T07:08:14.320000+00:00",
               "tier": "NONE",
@@ -299,32 +284,27 @@
           "feed": {
             "windows": 390,
             "unusable_windows": 2,
-            "triggered_windows": 42,
+            "triggered_windows": 41,
             "stale_windows": 0,
             "late_packets": 0,
+            "corroborated": 0,
+            "upgrades": 0,
+            "horizontals_missing": 0,
             "delay_p50_s": 6.0,
             "delay_p95_s": 6.0,
             "delay_max_s": 6.0,
-            "decision_latency_p50_s": 156.3,
-            "decision_latency_max_s": 181.0
+            "decision_latency_p50_s": 155.7,
+            "decision_latency_max_s": 179.8
           },
           "windows_by_reason": {
             "already_decided": 13,
+            "gap_edge": 1,
             "no_trigger": 253,
-            "ok": 42,
+            "ok": 41,
             "segment_too_short": 80,
             "unusable": 2
           },
           "decisions": [
-            {
-              "detected_utc": "2021-06-15T06:15:05+00:00",
-              "tier": "NONE",
-              "probability": 0.05,
-              "mass_movement_like": false,
-              "suppressed": false,
-              "suppression_reason": null,
-              "lead_times_min": null
-            },
             {
               "detected_utc": "2021-06-15T06:39:22.450000+00:00",
               "tier": "NONE",
@@ -712,32 +692,25 @@
           "feed": {
             "windows": 210,
             "unusable_windows": 2,
-            "triggered_windows": 1,
+            "triggered_windows": 0,
             "stale_windows": 0,
             "late_packets": 0,
+            "corroborated": 0,
+            "upgrades": 0,
+            "horizontals_missing": 0,
             "delay_p50_s": 6.0,
             "delay_p95_s": 6.0,
             "delay_max_s": 6.0,
-            "decision_latency_p50_s": 181.0,
-            "decision_latency_max_s": 181.0
+            "decision_latency_p50_s": NaN,
+            "decision_latency_max_s": NaN
           },
           "windows_by_reason": {
+            "gap_edge": 1,
             "no_trigger": 205,
-            "ok": 1,
             "segment_too_short": 2,
             "unusable": 2
           },
-          "decisions": [
-            {
-              "detected_utc": "2024-08-16T06:15:05+00:00",
-              "tier": "NONE",
-              "probability": 0.05,
-              "mass_movement_like": false,
-              "suppressed": false,
-              "suppression_reason": null,
-              "lead_times_min": null
-            }
-          ]
+          "decisions": []
         },
         "IO.EVN": {
           "status": "ok",
@@ -745,32 +718,27 @@
           "feed": {
             "windows": 210,
             "unusable_windows": 2,
-            "triggered_windows": 12,
+            "triggered_windows": 11,
             "stale_windows": 0,
             "late_packets": 0,
+            "corroborated": 0,
+            "upgrades": 0,
+            "horizontals_missing": 0,
             "delay_p50_s": 6.0,
             "delay_p95_s": 6.0,
             "delay_max_s": 6.0,
-            "decision_latency_p50_s": 154.6,
+            "decision_latency_p50_s": 152.9,
             "decision_latency_max_s": 181.0
           },
           "windows_by_reason": {
             "already_decided": 1,
+            "gap_edge": 1,
             "no_trigger": 174,
-            "ok": 12,
+            "ok": 11,
             "segment_too_short": 21,
             "unusable": 2
           },
           "decisions": [
-            {
-              "detected_utc": "2024-08-16T06:15:05+00:00",
-              "tier": "NONE",
-              "probability": 0.05,
-              "mass_movement_like": false,
-              "suppressed": false,
-              "suppression_reason": null,
-              "lead_times_min": null
-            },
             {
               "detected_utc": "2024-08-16T06:34:33.050000+00:00",
               "tier": "NONE",
@@ -888,32 +856,27 @@
           "feed": {
             "windows": 150,
             "unusable_windows": 2,
-            "triggered_windows": 3,
+            "triggered_windows": 2,
             "stale_windows": 0,
             "late_packets": 0,
+            "corroborated": 0,
+            "upgrades": 0,
+            "horizontals_missing": 0,
             "delay_p50_s": 6.0,
             "delay_p95_s": 6.0,
             "delay_max_s": 6.0,
-            "decision_latency_p50_s": 181.0,
+            "decision_latency_p50_s": 160.2,
             "decision_latency_max_s": 181.0
           },
           "windows_by_reason": {
             "already_decided": 1,
+            "gap_edge": 1,
             "no_trigger": 140,
-            "ok": 3,
+            "ok": 2,
             "segment_too_short": 4,
             "unusable": 2
           },
           "decisions": [
-            {
-              "detected_utc": "2025-07-08T01:45:05+00:00",
-              "tier": "NONE",
-              "probability": 0.05,
-              "mass_movement_like": false,
-              "suppressed": false,
-              "suppression_reason": null,
-              "lead_times_min": null
-            },
             {
               "detected_utc": "2025-07-08T03:54:05+00:00",
               "tier": "NONE",
@@ -940,32 +903,27 @@
           "feed": {
             "windows": 150,
             "unusable_windows": 2,
-            "triggered_windows": 11,
+            "triggered_windows": 10,
             "stale_windows": 0,
             "late_packets": 0,
+            "corroborated": 0,
+            "upgrades": 0,
+            "horizontals_missing": 0,
             "delay_p50_s": 6.0,
             "delay_p95_s": 6.0,
             "delay_max_s": 6.0,
-            "decision_latency_p50_s": 146.3,
-            "decision_latency_max_s": 181.0
+            "decision_latency_p50_s": 145.6,
+            "decision_latency_max_s": 173.9
           },
           "windows_by_reason": {
             "already_decided": 1,
+            "gap_edge": 1,
             "no_trigger": 115,
-            "ok": 11,
+            "ok": 10,
             "segment_too_short": 21,
             "unusable": 2
           },
           "decisions": [
-            {
-              "detected_utc": "2025-07-08T01:45:05+00:00",
-              "tier": "NONE",
-              "probability": 0.05,
-              "mass_movement_like": false,
-              "suppressed": false,
-              "suppression_reason": null,
-              "lead_times_min": null
-            },
             {
               "detected_utc": "2025-07-08T01:48:17.500000+00:00",
               "tier": "NONE",
@@ -1077,6 +1035,9 @@
             "triggered_windows": 1,
             "stale_windows": 1,
             "late_packets": 0,
+            "corroborated": 0,
+            "upgrades": 0,
+            "horizontals_missing": 0,
             "delay_p50_s": 6.0,
             "delay_p95_s": 6.0,
             "delay_max_s": 6.0,
@@ -1099,9 +1060,9 @@
               "suppressed": false,
               "suppression_reason": null,
               "lead_times_min": {
-                "Timure": 3.0,
-                "Syabrubesi": 10.0,
-                "Bidur": 37.0
+                "Timure": 1.3333333333333335,
+                "Syabrubesi": 8.333333333333334,
+                "Bidur": 35.333333333333336
               }
             }
           ]
@@ -1115,6 +1076,9 @@
             "triggered_windows": 2,
             "stale_windows": 1,
             "late_packets": 0,
+            "corroborated": 0,
+            "upgrades": 0,
+            "horizontals_missing": 0,
             "delay_p50_s": 6.0,
             "delay_p95_s": 6.0,
             "delay_max_s": 6.0,
@@ -1146,9 +1110,9 @@
               "suppressed": false,
               "suppression_reason": null,
               "lead_times_min": {
-                "Timure": 3.0,
-                "Syabrubesi": 10.0,
-                "Bidur": 37.0
+                "Timure": 1.3333333333333335,
+                "Syabrubesi": 8.333333333333334,
+                "Bidur": 35.333333333333336
               }
             }
           ]

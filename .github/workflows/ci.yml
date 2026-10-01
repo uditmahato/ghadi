@@ -38,3 +38,7 @@ jobs:
 
       - name: Tests (network-free)
         run: uv run pytest
+
+      # The experiments that need no waveform or imagery cache must regenerate exactly.
+      - name: Reproduce the data-free experiments
+        run: uv run python scripts/reproduce.py --only exp011 exp017 exp024 exp027

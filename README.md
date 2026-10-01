@@ -84,6 +84,28 @@ We ran the same fair test on Thame, the 2024 glacial lake flood, which was the b
 
 This is the first confirmation of the 2026 source that does not come from the seismic station. The same method did not cleanly confirm any of the older events in the catalogue. Spring snowmelt and peak monsoon produce so much natural change that those events are lost in it, so the positive class is still one event. The full record is in `experiments/exp012_satellite_confirmation`, and the dashboard shows it in its own panel below the evidence.
 
+## What it would catch, and what each rule adds
+
+Two measurements sit behind every claim about the detector.
+
+The first asks how small an event it would still catch. The 2026 signal was scaled down and added to 120 real recordings of ordinary noise, then put through the same decision the live service makes. An event shaped like 2026 is caught half the time at about one fortieth of its size, and nine times in ten at about one tenth. The thresholds carry a 20 percent margin, and without it almost nothing is caught, which is why the margin is there.
+
+![How small an event is still caught](docs/figures/fig02_detection_curve.png)
+
+The second asks what each rule adds. Starting from the raw trigger, each rule is added in turn on the same recordings. The second station does most of the work. The orange bar is the honest number: what you get when the second station has no data and the system falls back on the other rules.
+
+![Each rule added in turn](docs/figures/fig03_ablation.png)
+
+Every experiment can be rebuilt from the saved data with one command, and every figure is drawn from a saved result:
+
+```bash
+python scripts/reproduce.py
+```
+
+```bash
+python scripts/make_figures.py
+```
+
 ## What is honest about this
 
 Please read this before you trust any number.
@@ -104,6 +126,9 @@ Hard limits, and they matter:
 * The time from a slope failing to a decision is about two and a half minutes, not the one minute the earlier lead times assumed. The decision needs two minutes of signal after the onset by design. So the nearest village, Timure, gets about one and a half minutes of warning, not three.
 * Three rules together bring the false alarms close to the goal. The seismic shape test, a test of how much the ground moves sideways, and a second station seeing the same event at a fitting time give none a month at Kakani and about 6 a month at Everest, with the thresholds loosened by 20 percent so a real event a little different from 2026 is not missed. The second station was missing for up to a quarter of the cases, and a decision made without it falls back to the single station rate.
 * The gauge is still the only truly independent source, and it needs the data agreement.
+* There is no third station. Of 33 open stations within 300 km, 31 were a temporary network that closed in 2016. The two in use are the only two, and on the day we checked neither was sending live data.
+* A lower frequency band can see this kind of event from much further away. A large avalanche 610 km off, invisible in the band the detector uses, shows faintly below 0.5 Hz. That band also sees every distant earthquake, so it is a lead to follow, not a feature yet.
+* The first live run lasted 20 hours and raised one Advisory. It was a magnitude 5.2 earthquake near Yemen, 4,000 km away. The check that sets distant earthquakes aside existed, but the live loop had no earthquake list to check against. It has one now, refreshed every two minutes. Earthquake lists are published some minutes after the waves arrive, so the service also looks back at what it already decided and tells the person at the outbox when an alert has since been explained.
 
 Nothing here proves the core idea wrong. It does mean the real question, can these events be told apart at a rate people can trust, is still open.
 
@@ -121,6 +146,7 @@ Every part of the chain exists and is tested. In plain words:
 * **stream** and **sources**: turn a live packet feed, or a replayed one, into analysis windows, with gaps, delay, and late packets measured rather than hidden.
 * **live**: run the detector on each window and hand the result to the service. Shadow mode only.
 * **associate**: check whether two stations could be seeing one source, and where it could be.
+* **basin**: the outline of the ground that drains to the villages being warned, worked out from an open elevation model. The location check asks whether a source could lie inside it.
 * **live** also joins the horizontal channels to the vertical for the sideways motion test, and keeps a partner station's triggers so a detection can be corroborated, or upgraded once when the partner reports late.
 * **delivery**: stage an alert for a person, record their approval, and only then deliver it to a file or an agreed endpoint. There is no public sink.
 * **settings** and **health**: site settings from a file, and a health check for whoever runs it.

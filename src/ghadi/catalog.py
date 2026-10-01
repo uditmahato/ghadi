@@ -151,10 +151,20 @@ def default_catalog_dir() -> Path:
     return Path(__file__).resolve().parents[2] / "data" / "catalog"
 
 
-def load_catalog(directory: Path | None = None) -> list[CatalogEvent]:
-    """Load every entry in the catalogue directory, sorted by origin time."""
+def load_catalog(
+    directory: Path | None = None, include_out_of_reach: bool = True
+) -> list[CatalogEvent]:
+    """Load every entry in the catalogue directory, sorted by origin time.
+
+    An entry marked ``in_reach: false`` is an event outside every river reach the
+    system warns for, kept as a candidate for the seismic classifier only. Work about
+    the reaches themselves (replays, satellite confirmation) passes
+    ``include_out_of_reach=False``.
+    """
     directory = directory or default_catalog_dir()
     events = [load_event(p) for p in sorted(directory.glob("*.yaml"))]
+    if not include_out_of_reach:
+        events = [e for e in events if e.extra.get("in_reach", True) is not False]
     ids = [e.event_id for e in events]
     if len(ids) != len(set(ids)):
         raise CatalogError("duplicate event_id in catalogue")

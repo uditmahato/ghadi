@@ -148,7 +148,9 @@ def main() -> int:
         ]
 
     client = CachedWaveformClient()
-    events = [e for e in load_catalog() if e.event_id not in EXCLUDE_EVENT_IDS]
+    events = [
+        e for e in load_catalog(include_out_of_reach=False) if e.event_id not in EXCLUDE_EVENT_IDS
+    ]
     report: list[dict[str, Any]] = []
 
     for event in events:

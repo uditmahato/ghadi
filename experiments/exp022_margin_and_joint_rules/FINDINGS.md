@@ -6,18 +6,18 @@ thresholds are loosened by a stated margin, and when the rules are applied toget
 
 **Answer.** Margin on the spectral test is expensive on its own and cheap once the other
 two rules are in force. With a 20 percent margin, the horizontal to vertical rule, and
-a partner station whose trigger time fits a source in the basin box, NK.KKN gives no
-false alarms in its corpus and IO.EVN gives about 6 per station month.
+a partner station whose trigger time fits a source in the catchment above Bidur, NK.KKN
+gives no false alarms in its corpus and IO.EVN gives about 6 per station month.
 
 False alarms per station month. "2st" is a fitting trigger at the other station.
 
-| Margin | NK.KKN spectral | + H/V | + 2st basin | + H/V + 2st basin | IO.EVN spectral | + H/V | + 2st basin | + H/V + 2st basin |
+| Margin | NK.KKN spectral | + H/V | + 2st catchment | + H/V + 2st catchment | IO.EVN spectral | + H/V | + 2st catchment | + H/V + 2st catchment |
 |---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| 0 | 13.7 | 0.0 | 0.0 | **0.0** | 88.8 | 18.4 | 9.2 | **6.1** |
-| 10% | 27.4 | 3.4 | 0.0 | **0.0** | 101.1 | 27.6 | 9.2 | **6.1** |
-| 20% | 34.2 | 10.3 | 3.4 | **0.0** | 110.2 | 39.8 | 9.2 | **6.1** |
-| 30% | 44.5 | 20.5 | 6.8 | **3.4** | 131.7 | 113.3 | 9.2 | **6.1** |
-| 50% | 47.9 | 41.1 | 6.8 | **3.4** | 202.1 | 196.0 | 9.2 | **9.2** |
+| 0 | 13.7 | 0.0 | 3.4 | **0.0** | 88.8 | 18.4 | 9.2 | **6.1** |
+| 10% | 27.4 | 3.4 | 3.4 | **0.0** | 101.1 | 27.6 | 9.2 | **6.1** |
+| 20% | 34.2 | 10.3 | 6.8 | **0.0** | 110.2 | 39.8 | 9.2 | **6.1** |
+| 30% | 44.5 | 20.5 | 10.3 | **3.4** | 131.7 | 113.3 | 9.2 | **6.1** |
+| 50% | 47.9 | 41.1 | 10.3 | **3.4** | 202.1 | 196.0 | 9.2 | **9.2** |
 
 NK.KKN: 0.292 station months, 14 candidate windows at the loosest margin. IO.EVN: 0.327
 station months, 66 candidates. Exact Poisson intervals are in `results.json`; at these
@@ -30,8 +30,8 @@ counts the upper limits are several times the point values.
   it holds NK.KKN to 10 and IO.EVN to 40; at 30 percent IO.EVN's H/V threshold (1.39)
   falls into the bulk of its noise and the rule stops working.
 * **The partner station is the rule that does not degrade.** Requiring the other
-  station's trigger to fit a source in the basin box holds IO.EVN at 9.2 at every
-  margin and NK.KKN at 0 to 6.8. Its cost is availability: the partner had no data for
+  station's trigger to fit a source in the catchment holds IO.EVN at 9.2 at every
+  margin and NK.KKN at 3.4 to 10.3. Its cost is availability: the partner had no data for
   11 to 16 of IO.EVN's spectral windows, and those are outside the counts.
 * **Together, at 20 percent margin: NK.KKN 0, IO.EVN 6.1.** Both are within a factor
   of ten of the target of 1 for the first time, and NK.KKN meets it on this corpus,
@@ -74,7 +74,18 @@ The defaults now carry the 20 percent margin: LF/HF at least 3.94, centroid at m
 configuration comments say where each number comes from, and the classifier's reason
 string carries the 21.9 percent earthquake overlap measured at this operating point.
 
-## The basin box
+## The catchment, and the box it replaced
+
+The partner rule now asks whether the pair of arrival times fits a source inside the
+catchment above Bidur: 4,763 square km, derived from the Copernicus 90 m elevation
+model by `scripts/build_catchment.py` and stored in `data/geo`. Its area agrees with
+the published figure for the Trishuli at Betrawati, about 4,640 square km, a little
+upstream. Replacing the box changed one thing: at NK.KKN the partner rule alone is
+weaker (3.4 to 10.3 instead of 0 to 6.8), because the real catchment is larger than
+the box and reaches closer to the station. With the H/V rule as well, nothing changed.
+The original text follows for the record.
+
+### The box (superseded)
 
 The partner rule here asks whether the pair of arrival times fits a source inside
 27.95 to 28.45 N, 85.20 to 85.70 E, a box drawn by hand around the upper Trishuli and

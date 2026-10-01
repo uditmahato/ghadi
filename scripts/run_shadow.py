@@ -38,7 +38,12 @@ import numpy as np
 REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO / "src"))
 
-from ghadi.config import STATION_SITES, Station  # noqa: E402
+from ghadi.basin import load_basin  # noqa: E402
+from ghadi.config import (  # noqa: E402
+    DEFAULT,
+    STATION_SITES,
+    Station,
+)
 from ghadi.delivery import FileSink, Outbox  # noqa: E402
 from ghadi.fdsn import CachedWaveformClient, WaveformRequest  # noqa: E402
 from ghadi.health import HealthServer  # noqa: E402
@@ -50,10 +55,12 @@ from ghadi.live import (  # noqa: E402
     horizontal_key,
     run_shadow,
 )
+from ghadi.origins_feed import RollingOrigins, fetch_usgs  # noqa: E402
 from ghadi.service import AuditLog, HealthMonitor, ServiceOutcome, verify_chain  # noqa: E402
 from ghadi.settings import SiteSettings, load_settings  # noqa: E402
 from ghadi.sources import ReplaySource, SeedLinkSource, packets_from_trace  # noqa: E402
 from ghadi.stream import Packet  # noqa: E402
+from ghadi.teleseism import Origin, explain  # noqa: E402
 
 RECENT = 20
 
@@ -158,6 +165,44 @@ class ShadowState:
         self.last_feed_utc: datetime | None = None
         self.recent: list[dict[str, Any]] = []
         self.lock = threading.Lock()
+        self.catalogue: RollingOrigins | None = None
+        self.explained_later = 0
+
+    def origins_at(self, feed_time: datetime) -> tuple[Origin, ...]:
+        """The origins known now, and a second look at decisions already made."""
+        if self.catalogue is None:
+            return ()
+        new = self.catalogue.refresh(feed_time)
+        if new:
+            self.explain_recent()
+        return self.catalogue.origins
+
+    def explain_recent(self) -> None:
+        """An origin published after a decision may explain it. Say so, on the record."""
+        if self.catalogue is None:
+            return
+        site = STATION_SITES[self.settings.station_key]
+        with self.lock:
+            candidates = [
+                e for e in self.recent if e["tier"] != "NONE" and not e.get("explained_later")
+            ]
+        for entry in candidates:
+            found = explain(
+                datetime.fromisoformat(entry["detected_utc"]),
+                self.catalogue.origins,
+                site.latitude,
+                site.longitude,
+                min_magnitude=DEFAULT.suppression.min_magnitude,
+                near_min_magnitude=DEFAULT.suppression.near_min_magnitude,
+                near_deg=DEFAULT.suppression.near_deg,
+            )
+            if not found.suppressed:
+                continue
+            entry["explained_later"] = found.reason
+            self.explained_later += 1
+            if entry.get("staged_id"):
+                self.outbox.explain(entry["staged_id"], found.reason)
+            print(f"  explained after the fact {entry['detected_utc']}: {found.reason}", flush=True)
 
     def on_verdict(self, verdict: WindowVerdict) -> None:
         window = verdict.window
@@ -220,6 +265,8 @@ class ShadowState:
             "seconds_since_last_window": round(feed_age_s, 1) if feed_age_s else None,
             "feed": self.stats.as_dict(),
             "reconnections": self.source.reconnections if self.source else 0,
+            "silent_sessions": self.source.silent_sessions if self.source else 0,
+            "packets_received": self.source.packets_received if self.source else 0,
             "dropped_packets": self.source.dropped_packets if self.source else 0,
             "decisions": {
                 "windows_seen": self.health.windows_seen,
@@ -230,6 +277,8 @@ class ShadowState:
             },
             "audit_chain_ok": chain_ok,
             "staged_waiting_for_a_person": len(self.outbox.pending()),
+            "catalogue": self.catalogue.status() if self.catalogue else None,
+            "explained_after_the_fact": self.explained_later,
             "recent_decisions": recent,
         }
 
@@ -277,6 +326,8 @@ def main(argv: list[str] | None = None) -> int:
     rep.add_argument("--packet-s", type=float, default=10.0, help="samples per feed packet")
     rep.add_argument("--delay-s", type=float, default=6.0, help="assumed feed delay")
     rep.add_argument("--speed", type=float, default=0.0, help="0 is as fast as possible")
+    rep.add_argument("--no-catalogue", action="store_true", help="replay with no origins")
+    rep.add_argument("--catalogue-file", type=Path, default=None, help="saved origins, JSON")
 
     live = sub.add_parser("live", parents=[common], help="connect to a SeedLink server")
     live.add_argument("--server", default=None, help="overrides the settings")
@@ -307,7 +358,10 @@ def main(argv: list[str] | None = None) -> int:
     if settings.partner_key:
         partner_site = STATION_SITES[settings.partner_key]
         partner_cfg = PartnerConfig(
-            settings.partner_key, partner_site.latitude, partner_site.longitude
+            settings.partner_key,
+            partner_site.latitude,
+            partner_site.longitude,
+            basin=load_basin(),
         )
     live_cfg = LiveConfig(
         station=settings.station_key,
@@ -356,6 +410,37 @@ def main(argv: list[str] | None = None) -> int:
             threading.Timer(args.hours * 3600.0, seedlink.stop).start()
 
     state = ShadowState(settings, args.mode, stats, health, seedlink, outbox, args.quiet)
+    if args.mode == "live":
+        state.catalogue = RollingOrigins()
+    elif args.catalogue_file:
+        # Origins saved earlier for this period, so the replay needs no network.
+        saved = [
+            Origin(
+                datetime.fromisoformat(o["time_utc"]),
+                o["latitude"],
+                o["longitude"],
+                o["magnitude"],
+                o.get("event_id", ""),
+                o.get("place", ""),
+            )
+            for o in json.loads(args.catalogue_file.read_text(encoding="utf-8"))
+        ]
+        state.catalogue = RollingOrigins(fetch=lambda a, b, m: saved, lookback_s=1e9)
+        print(f"catalogue   : {len(saved)} origins from {args.catalogue_file.name}")
+    elif not args.no_catalogue:
+        # A replay is given the origins for its own period once, as if the catalogue had
+        # been instant. The live service is not that lucky, which is why it also looks
+        # again at decisions it has already made.
+        try:
+            day = fetch_usgs(
+                args.start - timedelta(hours=2),
+                args.start + timedelta(minutes=args.minutes + 5),
+                4.5,
+            )
+            state.catalogue = RollingOrigins(fetch=lambda a, b, m: day, lookback_s=1e9)
+            print(f"catalogue   : {len(day)} origins for the replay period")
+        except Exception as exc:
+            print(f"catalogue   : not available for this replay ({exc})")
     health_server = HealthServer(
         settings.health_port,
         state.snapshot,
@@ -365,6 +450,15 @@ def main(argv: list[str] | None = None) -> int:
     if health_server.running:
         print(f"health      : {health_server.url}")
     state.write_status()
+    # The status file is otherwise written only when a window arrives, so a silent feed
+    # would leave it frozen and looking healthy. Keep it current through an outage.
+    stop_ticker = threading.Event()
+
+    def tick() -> None:
+        while not stop_ticker.wait(30.0):
+            state.write_status()
+
+    threading.Thread(target=tick, name="ghadi-status", daemon=True).start()
 
     try:
         outcomes = run_shadow(
@@ -377,6 +471,7 @@ def main(argv: list[str] | None = None) -> int:
             health=health,
             on_verdict=state.on_verdict,
             on_outcome=state.on_outcome,
+            origins_provider=state.origins_at if state.catalogue else None,
             station_lat=STATION_SITES[settings.station_key].latitude,
             station_lon=STATION_SITES[settings.station_key].longitude,
         )
@@ -384,6 +479,7 @@ def main(argv: list[str] | None = None) -> int:
         print("\nstopped by operator")
         outcomes = []
     finally:
+        stop_ticker.set()
         state.write_status()
         health_server.stop()
 

@@ -1,0 +1,272 @@
+{
+  "experiment": "exp027_ablation",
+  "margin": 0.2,
+  "stations": {
+    "NK.KKN": {
+      "station_months": 0.292,
+      "usable_windows": 366,
+      "cumulative": {
+        "trigger_only": {
+          "windows": 108,
+          "per_station_month": 369.86,
+          "ci95": [
+            303.41,
+            446.55
+          ]
+        },
+        "spectral": {
+          "windows": 10,
+          "per_station_month": 34.25,
+          "ci95": [
+            16.42,
+            62.98
+          ]
+        },
+        "spectral+catalogue": {
+          "windows": 7,
+          "per_station_month": 23.97,
+          "ci95": [
+            9.64,
+            49.39
+          ]
+        },
+        "spectral+catalogue+hv": {
+          "windows": 2,
+          "per_station_month": 6.85,
+          "ci95": [
+            0.83,
+            24.74
+          ]
+        },
+        "spectral+catalogue+hv+partner": {
+          "windows": 0,
+          "per_station_month": 0.0,
+          "ci95": [
+            0.0,
+            12.63
+          ]
+        }
+      },
+      "one_rule_added_to_spectral": {
+        "catalogue": {
+          "windows": 7,
+          "per_station_month": 23.97,
+          "ci95": [
+            9.64,
+            49.39
+          ]
+        },
+        "hv": {
+          "windows": 3,
+          "per_station_month": 10.27,
+          "ci95": [
+            2.12,
+            30.02
+          ]
+        },
+        "partner": {
+          "windows": 2,
+          "per_station_month": 6.85,
+          "ci95": [
+            0.83,
+            24.74
+          ]
+        }
+      },
+      "one_rule_left_out": {
+        "catalogue": {
+          "windows": 0,
+          "per_station_month": 0.0,
+          "ci95": [
+            0.0,
+            12.63
+          ]
+        },
+        "hv": {
+          "windows": 2,
+          "per_station_month": 6.85,
+          "ci95": [
+            0.83,
+            24.74
+          ]
+        },
+        "partner": {
+          "windows": 2,
+          "per_station_month": 6.85,
+          "ci95": [
+            0.83,
+            24.74
+          ]
+        }
+      },
+      "pairs": {
+        "catalogue+hv": {
+          "windows": 2,
+          "per_station_month": 6.85,
+          "ci95": [
+            0.83,
+            24.74
+          ]
+        },
+        "catalogue+partner": {
+          "windows": 2,
+          "per_station_month": 6.85,
+          "ci95": [
+            0.83,
+            24.74
+          ]
+        },
+        "hv+partner": {
+          "windows": 0,
+          "per_station_month": 0.0,
+          "ci95": [
+            0.0,
+            12.63
+          ]
+        }
+      },
+      "partner_unavailable_among_spectral": 3,
+      "all_rules_with_fallback_when_partner_missing": {
+        "windows": 1,
+        "per_station_month": 3.42,
+        "ci95": [
+          0.09,
+          19.08
+        ]
+      }
+    },
+    "IO.EVN": {
+      "station_months": 0.327,
+      "usable_windows": 409,
+      "cumulative": {
+        "trigger_only": {
+          "windows": 372,
+          "per_station_month": 1137.61,
+          "ci95": [
+            1024.93,
+            1259.3
+          ]
+        },
+        "spectral": {
+          "windows": 36,
+          "per_station_month": 110.09,
+          "ci95": [
+            77.11,
+            152.41
+          ]
+        },
+        "spectral+catalogue": {
+          "windows": 27,
+          "per_station_month": 82.57,
+          "ci95": [
+            54.41,
+            120.13
+          ]
+        },
+        "spectral+catalogue+hv": {
+          "windows": 12,
+          "per_station_month": 36.7,
+          "ci95": [
+            18.96,
+            64.1
+          ]
+        },
+        "spectral+catalogue+hv+partner": {
+          "windows": 2,
+          "per_station_month": 6.12,
+          "ci95": [
+            0.74,
+            22.09
+          ]
+        }
+      },
+      "one_rule_added_to_spectral": {
+        "catalogue": {
+          "windows": 27,
+          "per_station_month": 82.57,
+          "ci95": [
+            54.41,
+            120.13
+          ]
+        },
+        "hv": {
+          "windows": 13,
+          "per_station_month": 39.76,
+          "ci95": [
+            21.17,
+            67.98
+          ]
+        },
+        "partner": {
+          "windows": 3,
+          "per_station_month": 9.17,
+          "ci95": [
+            1.89,
+            26.81
+          ]
+        }
+      },
+      "one_rule_left_out": {
+        "catalogue": {
+          "windows": 2,
+          "per_station_month": 6.12,
+          "ci95": [
+            0.74,
+            22.09
+          ]
+        },
+        "hv": {
+          "windows": 2,
+          "per_station_month": 6.12,
+          "ci95": [
+            0.74,
+            22.09
+          ]
+        },
+        "partner": {
+          "windows": 12,
+          "per_station_month": 36.7,
+          "ci95": [
+            18.96,
+            64.1
+          ]
+        }
+      },
+      "pairs": {
+        "catalogue+hv": {
+          "windows": 12,
+          "per_station_month": 36.7,
+          "ci95": [
+            18.96,
+            64.1
+          ]
+        },
+        "catalogue+partner": {
+          "windows": 2,
+          "per_station_month": 6.12,
+          "ci95": [
+            0.74,
+            22.09
+          ]
+        },
+        "hv+partner": {
+          "windows": 2,
+          "per_station_month": 6.12,
+          "ci95": [
+            0.74,
+            22.09
+          ]
+        }
+      },
+      "partner_unavailable_among_spectral": 11,
+      "all_rules_with_fallback_when_partner_missing": {
+        "windows": 5,
+        "per_station_month": 15.29,
+        "ci95": [
+          4.96,
+          35.68
+        ]
+      }
+    }
+  }
+}

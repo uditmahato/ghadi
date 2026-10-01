@@ -1,0 +1,683 @@
+{
+  "experiment": "exp028_station_survey",
+  "source": {
+    "lat": 28.255,
+    "lon": 85.52
+  },
+  "radius_km": 300.0,
+  "probed_utc": "2026-10-01T07:02:33.787982+00:00",
+  "stations": {
+    "XQ.NA080": {
+      "lat": 28.271,
+      "lon": 85.3793,
+      "distance_km": 13.9,
+      "channels": [
+        {
+          "location": "",
+          "channel": "HHZ",
+          "start": "2015-06-19",
+          "end": "2016-05-15",
+          "sampling_rate": 200.0
+        }
+      ],
+      "restricted": false
+    },
+    "XQ.NA100": {
+      "lat": 27.9277,
+      "lon": 85.5546,
+      "distance_km": 36.6,
+      "channels": [
+        {
+          "location": "",
+          "channel": "HHZ",
+          "start": "2015-06-25",
+          "end": "2015-11-15",
+          "sampling_rate": 200.0
+        },
+        {
+          "location": "",
+          "channel": "HHZ",
+          "start": "2016-01-12",
+          "end": "2016-05-12",
+          "sampling_rate": 100.0
+        }
+      ],
+      "restricted": false
+    },
+    "XQ.NA090": {
+      "lat": 27.9154,
+      "lon": 85.4189,
+      "distance_km": 39.0,
+      "channels": [
+        {
+          "location": "",
+          "channel": "HHZ",
+          "start": "2015-06-24",
+          "end": "2015-09-05",
+          "sampling_rate": 100.0
+        },
+        {
+          "location": "",
+          "channel": "HHZ",
+          "start": "2015-09-05",
+          "end": "2016-05-16",
+          "sampling_rate": 200.0
+        }
+      ],
+      "restricted": false
+    },
+    "XQ.NA070": {
+      "lat": 27.9841,
+      "lon": 85.2594,
+      "distance_km": 39.5,
+      "channels": [
+        {
+          "location": "",
+          "channel": "HHZ",
+          "start": "2015-06-23",
+          "end": "2016-05-16",
+          "sampling_rate": 100.0
+        }
+      ],
+      "restricted": false
+    },
+    "XQ.NA110": {
+      "lat": 27.7981,
+      "lon": 85.6536,
+      "distance_km": 52.5,
+      "channels": [
+        {
+          "location": "",
+          "channel": "HHZ",
+          "start": "2015-06-25",
+          "end": "2015-12-14",
+          "sampling_rate": 200.0
+        },
+        {
+          "location": "",
+          "channel": "HHZ",
+          "start": "2016-01-12",
+          "end": "2016-05-14",
+          "sampling_rate": 100.0
+        }
+      ],
+      "restricted": false
+    },
+    "XQ.NA130": {
+      "lat": 27.8776,
+      "lon": 85.8915,
+      "distance_km": 55.6,
+      "channels": [
+        {
+          "location": "",
+          "channel": "HHZ",
+          "start": "2015-06-20",
+          "end": "2016-05-13",
+          "sampling_rate": 100.0
+        }
+      ],
+      "restricted": false
+    },
+    "NK.KKN": {
+      "lat": 27.8,
+      "lon": 85.279,
+      "distance_km": 55.9,
+      "channels": [
+        {
+          "location": "",
+          "channel": "BHZ",
+          "start": "2016-05-22",
+          "end": null,
+          "sampling_rate": 50.0
+        }
+      ],
+      "restricted": false,
+      "event": {
+        "checked_channel": ".BHZ",
+        "archive": true,
+        "triggers": 1,
+        "max_sta_lta": 9.5,
+        "seen": true,
+        "onset_utc": "2026-08-26T02:52:30.320000+00:00",
+        "seconds_after_origin": 20.3,
+        "lf_hf": 4.92,
+        "centroid_hz": 1.89
+      },
+      "live": {
+        "live_packets": 0,
+        "live_delay_median_s": null
+      }
+    },
+    "XQ.NA170": {
+      "lat": 27.7583,
+      "lon": 85.3617,
+      "distance_km": 57.4,
+      "channels": [
+        {
+          "location": "",
+          "channel": "HHZ",
+          "start": "2015-07-04",
+          "end": "2015-09-08",
+          "sampling_rate": 100.0
+        },
+        {
+          "location": "",
+          "channel": "HHZ",
+          "start": "2015-09-08",
+          "end": "2015-12-05",
+          "sampling_rate": 200.0
+        },
+        {
+          "location": "",
+          "channel": "HHZ",
+          "start": "2016-01-02",
+          "end": "2016-05-13",
+          "sampling_rate": 100.0
+        }
+      ],
+      "restricted": false
+    },
+    "XQ.NA010": {
+      "lat": 27.8366,
+      "lon": 85.1509,
+      "distance_km": 59.0,
+      "channels": [
+        {
+          "location": "",
+          "channel": "HHZ",
+          "start": "2015-06-06",
+          "end": "2015-12-05",
+          "sampling_rate": 200.0
+        },
+        {
+          "location": "",
+          "channel": "HHZ",
+          "start": "2016-01-10",
+          "end": "2016-05-15",
+          "sampling_rate": 100.0
+        }
+      ],
+      "restricted": false
+    },
+    "XQ.NA020": {
+      "lat": 27.9125,
+      "lon": 85.0546,
+      "distance_km": 59.5,
+      "channels": [
+        {
+          "location": "",
+          "channel": "HHZ",
+          "start": "2015-06-17",
+          "end": "2015-09-06",
+          "sampling_rate": 100.0
+        },
+        {
+          "location": "",
+          "channel": "HHZ",
+          "start": "2015-09-06",
+          "end": "2016-05-15",
+          "sampling_rate": 200.0
+        }
+      ],
+      "restricted": false
+    },
+    "XQ.NA180": {
+      "lat": 27.7163,
+      "lon": 85.5776,
+      "distance_km": 60.2,
+      "channels": [
+        {
+          "location": "",
+          "channel": "HHZ",
+          "start": "2015-06-24",
+          "end": "2016-03-24",
+          "sampling_rate": 100.0
+        }
+      ],
+      "restricted": false
+    },
+    "XQ.NA050": {
+      "lat": 28.0571,
+      "lon": 84.8335,
+      "distance_km": 70.8,
+      "channels": [
+        {
+          "location": "",
+          "channel": "HHZ",
+          "start": "2015-06-27",
+          "end": "2015-09-01",
+          "sampling_rate": 100.0
+        },
+        {
+          "location": "",
+          "channel": "HHZ",
+          "start": "2015-09-01",
+          "end": "2016-05-15",
+          "sampling_rate": 200.0
+        }
+      ],
+      "restricted": false
+    },
+    "XQ.NA200": {
+      "lat": 27.7191,
+      "lon": 85.9541,
+      "distance_km": 73.3,
+      "channels": [
+        {
+          "location": "",
+          "channel": "HHZ",
+          "start": "2015-06-26",
+          "end": "2016-05-11",
+          "sampling_rate": 100.0
+        }
+      ],
+      "restricted": false
+    },
+    "XQ.NA270": {
+      "lat": 27.5942,
+      "lon": 85.3234,
+      "distance_km": 76.0,
+      "channels": [
+        {
+          "location": "",
+          "channel": "HHZ",
+          "start": "2015-06-15",
+          "end": "2016-05-14",
+          "sampling_rate": 200.0
+        }
+      ],
+      "restricted": false
+    },
+    "XQ.NA040": {
+      "lat": 28.2054,
+      "lon": 84.7436,
+      "distance_km": 76.3,
+      "channels": [
+        {
+          "location": "",
+          "channel": "HHZ",
+          "start": "2015-06-19",
+          "end": "2015-07-07",
+          "sampling_rate": 100.0
+        },
+        {
+          "location": "",
+          "channel": "HHZ",
+          "start": "2015-08-31",
+          "end": "2016-05-13",
+          "sampling_rate": 200.0
+        }
+      ],
+      "restricted": false
+    },
+    "XQ.NA160": {
+      "lat": 27.8699,
+      "lon": 84.8323,
+      "distance_km": 79.9,
+      "channels": [
+        {
+          "location": "",
+          "channel": "HHZ",
+          "start": "2015-06-28",
+          "end": "2015-09-01",
+          "sampling_rate": 100.0
+        }
+      ],
+      "restricted": false
+    },
+    "XQ.NA210": {
+      "lat": 27.7386,
+      "lon": 86.1582,
+      "distance_km": 85.0,
+      "channels": [
+        {
+          "location": "",
+          "channel": "HHZ",
+          "start": "2015-06-24",
+          "end": "2015-12-17",
+          "sampling_rate": 200.0
+        },
+        {
+          "location": "",
+          "channel": "HHZ",
+          "start": "2016-01-09",
+          "end": "2016-05-11",
+          "sampling_rate": 100.0
+        }
+      ],
+      "restricted": false
+    },
+    "XQ.NA030": {
+      "lat": 28.1159,
+      "lon": 84.6438,
+      "distance_km": 87.3,
+      "channels": [
+        {
+          "location": "",
+          "channel": "HHZ",
+          "start": "2015-06-20",
+          "end": "2016-03-21",
+          "sampling_rate": 100.0
+        }
+      ],
+      "restricted": false
+    },
+    "XQ.NA150": {
+      "lat": 28.0016,
+      "lon": 84.623,
+      "distance_km": 92.4,
+      "channels": [
+        {
+          "location": "",
+          "channel": "HHZ",
+          "start": "2015-06-19",
+          "end": "2016-05-16",
+          "sampling_rate": 100.0
+        }
+      ],
+      "restricted": false
+    },
+    "XQ.NA250": {
+      "lat": 27.7759,
+      "lon": 84.6502,
+      "distance_km": 100.6,
+      "channels": [
+        {
+          "location": "",
+          "channel": "HHZ",
+          "start": "2015-06-21",
+          "end": "2015-08-30",
+          "sampling_rate": 100.0
+        },
+        {
+          "location": "",
+          "channel": "HHZ",
+          "start": "2015-08-30",
+          "end": "2015-11-08",
+          "sampling_rate": 200.0
+        },
+        {
+          "location": "",
+          "channel": "HHZ",
+          "start": "2015-11-08",
+          "end": "2016-01-14",
+          "sampling_rate": 100.0
+        },
+        {
+          "location": "",
+          "channel": "HHZ",
+          "start": "2016-01-14",
+          "end": "2016-05-16",
+          "sampling_rate": 200.0
+        }
+      ],
+      "restricted": false
+    },
+    "XQ.NA340": {
+      "lat": 27.4529,
+      "lon": 85.0465,
+      "distance_km": 100.6,
+      "channels": [
+        {
+          "location": "",
+          "channel": "HHZ",
+          "start": "2015-06-28",
+          "end": "2015-12-08",
+          "sampling_rate": 200.0
+        },
+        {
+          "location": "",
+          "channel": "HHZ",
+          "start": "2016-01-04",
+          "end": "2016-05-12",
+          "sampling_rate": 100.0
+        }
+      ],
+      "restricted": false
+    },
+    "XQ.NA300": {
+      "lat": 27.4914,
+      "lon": 86.0916,
+      "distance_km": 101.8,
+      "channels": [
+        {
+          "location": "",
+          "channel": "HHZ",
+          "start": "2015-07-02",
+          "end": "2016-05-11",
+          "sampling_rate": 100.0
+        }
+      ],
+      "restricted": false
+    },
+    "XQ.NA330": {
+      "lat": 27.5858,
+      "lon": 84.6989,
+      "distance_km": 109.8,
+      "channels": [
+        {
+          "location": "",
+          "channel": "HHZ",
+          "start": "2015-06-29",
+          "end": "2016-05-11",
+          "sampling_rate": 100.0
+        }
+      ],
+      "restricted": false
+    },
+    "XQ.NA360": {
+      "lat": 27.2719,
+      "lon": 85.6978,
+      "distance_km": 110.7,
+      "channels": [
+        {
+          "location": "",
+          "channel": "HHZ",
+          "start": "2015-07-01",
+          "end": "2015-11-26",
+          "sampling_rate": 200.0
+        },
+        {
+          "location": "",
+          "channel": "HHZ",
+          "start": "2016-01-08",
+          "end": "2016-05-13",
+          "sampling_rate": 100.0
+        }
+      ],
+      "restricted": false
+    },
+    "XQ.NA400": {
+      "lat": 27.2828,
+      "lon": 84.9888,
+      "distance_km": 120.1,
+      "channels": [
+        {
+          "location": "",
+          "channel": "HHZ",
+          "start": "2015-06-28",
+          "end": "2015-08-29",
+          "sampling_rate": 100.0
+        },
+        {
+          "location": "",
+          "channel": "HHZ",
+          "start": "2015-08-29",
+          "end": "2016-05-11",
+          "sampling_rate": 200.0
+        }
+      ],
+      "restricted": false
+    },
+    "XQ.NA370": {
+      "lat": 27.211,
+      "lon": 85.9242,
+      "distance_km": 122.7,
+      "channels": [
+        {
+          "location": "",
+          "channel": "HHZ",
+          "start": "2015-06-27",
+          "end": "2016-05-12",
+          "sampling_rate": 100.0
+        }
+      ],
+      "restricted": false
+    },
+    "XQ.NA410": {
+      "lat": 27.1499,
+      "lon": 85.403,
+      "distance_km": 123.4,
+      "channels": [
+        {
+          "location": "",
+          "channel": "HHZ",
+          "start": "2015-06-28",
+          "end": "2015-09-15",
+          "sampling_rate": 200.0
+        },
+        {
+          "location": "",
+          "channel": "HHZ",
+          "start": "2016-01-04",
+          "end": "2016-05-11",
+          "sampling_rate": 100.0
+        }
+      ],
+      "restricted": false
+    },
+    "IO.EVN": {
+      "lat": 27.958651,
+      "lon": 86.811653,
+      "distance_km": 130.9,
+      "channels": [
+        {
+          "location": "",
+          "channel": "BHZ",
+          "start": "2014-05-15",
+          "end": null,
+          "sampling_rate": 20.0
+        },
+        {
+          "location": "",
+          "channel": "HHZ",
+          "start": "2014-05-15",
+          "end": null,
+          "sampling_rate": 100.0
+        }
+      ],
+      "restricted": false,
+      "event": {
+        "checked_channel": ".BHZ",
+        "archive": true,
+        "triggers": 2,
+        "max_sta_lta": 8.31,
+        "seen": true,
+        "onset_utc": "2026-08-26T02:52:43.100000+00:00",
+        "seconds_after_origin": 33.1,
+        "lf_hf": 15.07,
+        "centroid_hz": 1.53
+      },
+      "live": {
+        "live_packets": 0,
+        "live_delay_median_s": null
+      }
+    },
+    "XQ.NA230": {
+      "lat": 27.5173,
+      "lon": 86.5864,
+      "distance_km": 133.1,
+      "channels": [
+        {
+          "location": "",
+          "channel": "HHZ",
+          "start": "2015-06-23",
+          "end": "2016-05-10",
+          "sampling_rate": 100.0
+        }
+      ],
+      "restricted": false
+    },
+    "XQ.NA390": {
+      "lat": 27.4321,
+      "lon": 84.3927,
+      "distance_km": 143.7,
+      "channels": [
+        {
+          "location": "",
+          "channel": "HHZ",
+          "start": "2015-06-27",
+          "end": "2015-08-29",
+          "sampling_rate": 100.0
+        },
+        {
+          "location": "",
+          "channel": "HHZ",
+          "start": "2015-08-29",
+          "end": "2016-05-10",
+          "sampling_rate": 200.0
+        }
+      ],
+      "restricted": false
+    },
+    "XQ.NA420": {
+      "lat": 26.994,
+      "lon": 85.9017,
+      "distance_km": 145.2,
+      "channels": [
+        {
+          "location": "",
+          "channel": "HHZ",
+          "start": "2015-06-28",
+          "end": "2015-09-06",
+          "sampling_rate": 100.0
+        },
+        {
+          "location": "",
+          "channel": "HHZ",
+          "start": "2015-09-06",
+          "end": "2016-05-11",
+          "sampling_rate": 200.0
+        }
+      ],
+      "restricted": false
+    },
+    "XQ.NA320": {
+      "lat": 27.1734,
+      "lon": 86.434,
+      "distance_km": 150.2,
+      "channels": [
+        {
+          "location": "",
+          "channel": "HHZ",
+          "start": "2015-07-01",
+          "end": "2015-12-27",
+          "sampling_rate": 200.0
+        },
+        {
+          "location": "",
+          "channel": "HHZ",
+          "start": "2016-01-10",
+          "end": "2016-05-10",
+          "sampling_rate": 100.0
+        }
+      ],
+      "restricted": false
+    },
+    "XQ.NA380": {
+      "lat": 27.0135,
+      "lon": 86.1474,
+      "distance_km": 151.3,
+      "channels": [
+        {
+          "location": "",
+          "channel": "HHZ",
+          "start": "2015-06-25",
+          "end": "2016-05-12",
+          "sampling_rate": 100.0
+        }
+      ],
+      "restricted": false
+    }
+  }
+}

@@ -109,6 +109,8 @@ class SeedLinkSource:
     queue_size: int = 1000
     reconnections: int = field(default=0, init=False)
     dropped_packets: int = field(default=0, init=False)
+    packets_received: int = field(default=0, init=False)
+    silent_sessions: int = field(default=0, init=False)  # connections that delivered nothing
     _stop: threading.Event = field(default_factory=threading.Event, init=False, repr=False)
 
     @property
@@ -143,14 +145,25 @@ class SeedLinkSource:
         backoff = 1.0
         try:
             while not self._stop.is_set():
+                before = self.packets_received
                 try:
                     self._connect_and_stream(inbox)
-                    backoff = 1.0  # a clean end is not a failure to back off from
                 except Exception:  # any failure at all means reconnect
-                    self.reconnections += 1
-                    if self._stop.wait(backoff):
-                        break
+                    pass
+                if self._stop.is_set():
+                    break
+                # Every return is a lost connection, whether it raised or the client
+                # gave up reading. A session that delivered nothing is a silent feed:
+                # count it and wait longer each time, so an outage at the station does
+                # not become a tight reconnect loop against a public server.
+                self.reconnections += 1
+                if self.packets_received == before:
+                    self.silent_sessions += 1
                     backoff = min(backoff * 2, self.max_backoff_s)
+                else:
+                    backoff = 1.0
+                if self._stop.wait(backoff):
+                    break
         finally:
             inbox.put(None)
 
@@ -177,6 +190,7 @@ class SeedLinkSource:
                     data=np.asarray(trace.data, dtype=float),
                     received_utc=datetime.now(tz=UTC),
                 )
+                source.packets_received += 1
                 try:
                     inbox.put_nowait(packet)
                 except queue.Full:

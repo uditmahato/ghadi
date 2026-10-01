@@ -71,6 +71,8 @@ def load_events() -> list[dict[str, Any]]:
     events = []
     for path in sorted(CATALOG_DIR.glob("*.yaml")):
         raw = yaml.safe_load(path.read_text(encoding="utf-8"))
+        if raw.get("in_reach", True) is False:
+            continue  # outside every reach; a seismic candidate only
         events.append(
             {
                 "event_id": raw["event_id"],
