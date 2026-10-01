@@ -42,7 +42,16 @@ from typing import Any
 REPO = Path(__file__).resolve().parents[1]
 EXPERIMENTS = REPO / "experiments"
 # Keys whose values record when or where something ran, not what it found.
-VOLATILE = {"generated_utc", "created_utc", "resolved_utc", "run_utc", "updated_utc", "cache_hits"}
+VOLATILE = {
+    "generated_utc",
+    "created_utc",
+    "resolved_utc",
+    "run_utc",
+    "updated_utc",
+    "probed_utc",
+    "built_utc",
+    "cache_hits",
+}
 # Experiments whose results hold a live record next to a regenerable part.
 LIVE_RECORD = {"exp025_first_live_day": ("live_run",)}
 # Values that hold the moment they were built and nothing the experiment measured.
