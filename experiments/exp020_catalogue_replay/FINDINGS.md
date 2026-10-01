@@ -11,14 +11,17 @@ search window.
 
 | Event | Time source | Search window | NK.KKN | IO.EVN |
 |---|---|---|---|---|
-| Jure 2014 | news | 45 min each side | before the archive | 4 decisions, none mass movement like |
-| Langtang 2015 | news | 20 min each side | before the archive | 6 decisions, none |
-| Melamchi 2021 | news | 3 h 15 min each side | 10 decisions, none | 42 decisions, none |
-| Thame 2024 | news | 1 h 45 min each side | 2 decisions, none | 12 decisions, none |
-| Rasuwagadhi 2025 | news | 1 h 15 min each side | 3 decisions, none | 11 decisions, none |
+| Jure 2014 | news | 45 min each side | before the archive | 3 decisions, none mass movement like |
+| Langtang 2015 | news | 20 min each side | before the archive | 5 decisions, none |
+| Melamchi 2021 | news | 3 h 15 min each side | 9 decisions, none | 41 decisions, none |
+| Thame 2024 | news | 1 h 45 min each side | no trigger | 11 decisions, none |
+| Rasuwagadhi 2025 | news | 1 h 15 min each side | 2 decisions, none | 10 decisions, none |
 | **Bhote Koshi 2026** | seismic | 15 min each side | **Advisory at 02:52:30 UTC**, decided 02:55:00 | **Advisory at 02:52:43 UTC**, decided 02:55:00 |
 
-Run 2026-09-25. Feed delay 6 s per packet, the measured median. No gauge for any event.
+Run 2026-09-25, regenerated 2026-10-01 under the current live code (a trigger on the edge of a
+filled gap is skipped, thresholds carry a 20 percent margin, the configured warning latency
+is the measured 160 s). A few decision counts fell; no conclusion changed. Feed delay 6 s
+per packet, the measured median. No gauge for any event.
 
 ## The 2026 event, minute by minute
 
@@ -27,9 +30,11 @@ Run 2026-09-25. Feed delay 6 s per packet, the measured median. No gauge for any
 * **02:55:00** the first window that holds a full 120 s decision segment after the
   onset closes at both stations, and each decides: mass movement like, Advisory, score
   0.60, held below Warning for want of a second source.
-* Lead time at the default 60 s warning latency: Timure 3 min, Syabrubesi 10 min,
-  Bidur 37 min. **At the latency this replay actually measured, about 156 s from onset
-  to decision, Timure has about 1.4 min, Syabrubesi 8.4, Bidur 35.4.**
+* Lead time at the 60 s warning latency the configuration held when this was first
+  run: Timure 3 min, Syabrubesi 10 min, Bidur 37 min. **At the latency this replay
+  measured, about 156 s from onset to decision, Timure has about 1.4 min, Syabrubesi
+  8.4, Bidur 35.4.** The configuration now holds 160 s, and the regenerated results
+  carry 1.3, 8.3, and 35.3 min.
 
 The decision latency is not a bug to be tuned away. The decision segment is 120 s long
 by design (exp005), the feed adds 6 s, and the window that holds the segment closes up
@@ -56,7 +61,7 @@ from orbit. The reasons differ by event and none is the detector working as inte
 
 * Jure 2014 and Langtang 2015 predate the NK.KKN archive, so only IO.EVN, 94 and
   130 km away, could see them.
-* Melamchi 2021 was a debris flow that built over hours; IO.EVN triggered 42 times in
+* Melamchi 2021 was a debris flow that built over hours; IO.EVN triggered 41 times in
   the 6.5 hour window and none of the segments had the cascade's low frequency shape.
 * Thame 2024 was a lake outburst, mostly water. The seismic signature of water moving
   down a channel is not the signature this detector was built on.
@@ -65,7 +70,7 @@ from orbit. The reasons differ by event and none is the detector working as inte
 
 So the positive class is still one, the miss rate on the other kinds of event is
 unmeasured, and this replay does not change either. What it does show is that the
-detector did not fire on the *noise* around those events either: 104 decisions across
+detector did not fire on the *noise* around those events either: 81 decisions across
 the older events, all correctly not mass movement like.
 
 ## Design

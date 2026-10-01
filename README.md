@@ -84,6 +84,28 @@ We ran the same fair test on Thame, the 2024 glacial lake flood, which was the b
 
 This is the first confirmation of the 2026 source that does not come from the seismic station. The same method did not cleanly confirm any of the older events in the catalogue. Spring snowmelt and peak monsoon produce so much natural change that those events are lost in it, so the positive class is still one event. The full record is in `experiments/exp012_satellite_confirmation`, and the dashboard shows it in its own panel below the evidence.
 
+## What it would catch, and what each rule adds
+
+Two measurements sit behind every claim about the detector.
+
+The first asks how small an event it would still catch. The 2026 signal was scaled down and added to 120 real recordings of ordinary noise, then put through the same decision the live service makes. An event shaped like 2026 is caught half the time at about one fortieth of its size, and nine times in ten at about one tenth. The thresholds carry a 20 percent margin, and without it almost nothing is caught, which is why the margin is there.
+
+![How small an event is still caught](docs/figures/fig02_detection_curve.png)
+
+The second asks what each rule adds. Starting from the raw trigger, each rule is added in turn on the same recordings. The second station does most of the work. The orange bar is the honest number: what you get when the second station has no data and the system falls back on the other rules.
+
+![Each rule added in turn](docs/figures/fig03_ablation.png)
+
+Every experiment can be rebuilt from the saved data with one command, and every figure is drawn from a saved result:
+
+```bash
+python scripts/reproduce.py
+```
+
+```bash
+python scripts/make_figures.py
+```
+
 ## What is honest about this
 
 Please read this before you trust any number.

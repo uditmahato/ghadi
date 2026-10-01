@@ -326,6 +326,7 @@ def main(argv: list[str] | None = None) -> int:
     rep.add_argument("--delay-s", type=float, default=6.0, help="assumed feed delay")
     rep.add_argument("--speed", type=float, default=0.0, help="0 is as fast as possible")
     rep.add_argument("--no-catalogue", action="store_true", help="replay with no origins")
+    rep.add_argument("--catalogue-file", type=Path, default=None, help="saved origins, JSON")
 
     live = sub.add_parser("live", parents=[common], help="connect to a SeedLink server")
     live.add_argument("--server", default=None, help="overrides the settings")
@@ -407,6 +408,21 @@ def main(argv: list[str] | None = None) -> int:
     state = ShadowState(settings, args.mode, stats, health, seedlink, outbox, args.quiet)
     if args.mode == "live":
         state.catalogue = RollingOrigins()
+    elif args.catalogue_file:
+        # Origins saved earlier for this period, so the replay needs no network.
+        saved = [
+            Origin(
+                datetime.fromisoformat(o["time_utc"]),
+                o["latitude"],
+                o["longitude"],
+                o["magnitude"],
+                o.get("event_id", ""),
+                o.get("place", ""),
+            )
+            for o in json.loads(args.catalogue_file.read_text(encoding="utf-8"))
+        ]
+        state.catalogue = RollingOrigins(fetch=lambda a, b, m: saved, lookback_s=1e9)
+        print(f"catalogue   : {len(saved)} origins from {args.catalogue_file.name}")
     elif not args.no_catalogue:
         # A replay is given the origins for its own period once, as if the catalogue had
         # been instant. The live service is not that lucky, which is why it also looks

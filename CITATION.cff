@@ -1,0 +1,20 @@
+cff-version: 1.2.0
+message: "If you use this software or its results, please cite it as below."
+title: "GHADI: seismic detection of mass movements that cause cascading flood surges"
+abstract: >-
+  A research system for detecting, from open seismic stations, the slope failures that
+  start cascading flood surges in transboundary Himalayan rivers, built around the
+  26 August 2026 Bhote Koshi event. It is detection, not prediction. The positive class
+  is one event, and every result states that limit.
+type: software
+authors:
+  - name: "GHADI project contributors"
+repository-code: "https://github.com/uditmahato/ghadi"
+license: MIT
+version: 0.1.0
+keywords:
+  - seismology
+  - landslide
+  - flood early warning
+  - Himalaya
+  - Sentinel-1

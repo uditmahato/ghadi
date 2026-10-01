@@ -49,8 +49,40 @@ def decisions(audit: Path) -> list[dict[str, Any]]:
     return out
 
 
+def saved_catalogue() -> Path:
+    """The period's origins, fetched once and kept so the replay runs offline."""
+    path = HERE / "catalogue.json"
+    if path.exists():
+        return path
+    sys.path.insert(0, str(REPO_ROOT / "src"))
+    from datetime import UTC, datetime, timedelta
+
+    from ghadi.origins_feed import fetch_usgs
+
+    start = datetime(2026, 9, 26, 8, 20, tzinfo=UTC)
+    origins = fetch_usgs(start - timedelta(hours=2), start + timedelta(minutes=MINUTES + 5), 4.5)
+    path.write_text(
+        json.dumps(
+            [
+                {
+                    "time_utc": o.time_utc.isoformat(),
+                    "latitude": o.latitude,
+                    "longitude": o.longitude,
+                    "magnitude": o.magnitude,
+                    "event_id": o.event_id,
+                    "place": o.place,
+                }
+                for o in origins
+            ]
+        ),
+        encoding="utf-8",
+    )
+    return path
+
+
 def main() -> int:
     results = json.loads((HERE / "results.json").read_text(encoding="utf-8"))
+    catalogue = saved_catalogue()
     with tempfile.TemporaryDirectory() as tmp:
         subprocess.run(
             [
@@ -63,6 +95,8 @@ def main() -> int:
                 str(MINUTES),
                 "--state-dir",
                 tmp,
+                "--catalogue-file",
+                str(catalogue),
                 "--quiet",
             ],
             check=True,
