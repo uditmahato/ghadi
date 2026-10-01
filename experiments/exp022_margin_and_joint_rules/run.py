@@ -22,9 +22,10 @@ stated margin, and when the rules are applied together?
   where the other station or the horizontals were unavailable, because a rule that
   cannot be applied is not a rule that passed.
 
-The basin box is approximate: the upper Trishuli and Bhote Koshi catchment above Bidur,
-27.95 to 28.45 N and 85.20 to 85.70 E. It stands in for a river geometry the repository
-does not hold and is stated here so it can be replaced.
+The location test uses the catchment above Bidur, 4,763 square km, derived from the
+Copernicus 90 m elevation model by ``scripts/build_catchment.py``. The first version
+of this experiment used a box drawn by hand (27.95 to 28.45 N, 85.20 to 85.70 E); both
+are computed so the effect of the replacement can be seen.
 
     python experiments/exp022_margin_and_joint_rules/run.py
 """
@@ -44,6 +45,7 @@ REPO_ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(REPO_ROOT / "src"))
 
 from ghadi.associate import Pick, SearchRegion, arrival_bracket, feasible_grid  # noqa: E402
+from ghadi.basin import load_basin  # noqa: E402
 from ghadi.config import DEFAULT, EVEREST, KAKANI, STATION_SITES, Station, StationSite  # noqa: E402
 from ghadi.detect import sta_lta  # noqa: E402
 from ghadi.fdsn import CachedWaveformClient, WaveformRequest  # noqa: E402
@@ -58,6 +60,9 @@ MARGINS = (0.0, 0.1, 0.2, 0.3, 0.5)
 REGION = SearchRegion(27.4, 29.0, 84.6, 86.6, step_km=4.0)
 ZONE = (28.255, 85.520, 8.0)
 BASIN_BOX = (27.95, 28.45, 85.20, 85.70)  # lat_min, lat_max, lon_min, lon_max, approximate
+# The catchment above Bidur, derived from an elevation model (scripts/build_catchment.py).
+# It replaces the hand drawn box, which is kept for comparison.
+CATCHMENT = load_basin()
 BASE = {
     "NK.KKN": {"lf_hf": 4.9188, "centroid_hz": 1.8852, "hv_segment": 2.3248},
     "IO.EVN": {"lf_hf": 15.0726, "centroid_hz": 1.5325, "hv_segment": 1.9805},
@@ -194,6 +199,7 @@ def examine_window(
             "other_any_source": False,
             "other_zone": False,
             "other_basin_box": False,
+            "other_catchment": False,
         }
         if have_3c:
             a = max(round(seg["on_s"] * sr), 0)
@@ -226,6 +232,8 @@ def examine_window(
                     s["other_zone"] = True
                 if bool((mask & in_box(lats, lons)).any()):
                     s["other_basin_box"] = True
+                if bool((mask & CATCHMENT.contains(lats, lons)).any()):
+                    s["other_catchment"] = True
         rec["segments"].append(s)
     return rec
 
@@ -237,6 +245,8 @@ def count_rules(windows: list[dict[str, Any]], thr: dict[str, float]) -> dict[st
         "spectral_two_station_any",
         "spectral_two_station_basin",
         "spectral_hv_two_station_basin",
+        "spectral_two_station_catchment",
+        "spectral_hv_two_station_catchment",
     )
     counts = dict.fromkeys(names, 0)
     counts["hv_unavailable_among_spectral"] = 0
@@ -265,6 +275,10 @@ def count_rules(windows: list[dict[str, Any]], thr: dict[str, float]) -> dict[st
             counts["spectral_two_station_basin"] += 1
         if any(s["other_basin_box"] for s in hv_ok):
             counts["spectral_hv_two_station_basin"] += 1
+        if any(s["other_catchment"] for s in segs):
+            counts["spectral_two_station_catchment"] += 1
+        if any(s["other_catchment"] for s in hv_ok):
+            counts["spectral_hv_two_station_catchment"] += 1
     return counts
 
 
@@ -276,6 +290,7 @@ def main() -> int:
         "margins": list(MARGINS),
         "base_thresholds": BASE,
         "basin_box": BASIN_BOX,
+        "catchment": {"name": CATCHMENT.name, "area_km2": CATCHMENT.area_km2},
         "zone": ZONE,
         "stations": {},
     }
@@ -318,8 +333,8 @@ def main() -> int:
             "spectral",
             "spectral_hv",
             "spectral_two_station_any",
-            "spectral_two_station_basin",
-            "spectral_hv_two_station_basin",
+            "spectral_two_station_catchment",
+            "spectral_hv_two_station_catchment",
         )
         print("  margin " + " ".join(f"{c[:14]:>14}" for c in cols) + "   hv n/a other n/a")
         for m, rec in by_margin.items():

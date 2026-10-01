@@ -38,6 +38,7 @@ import numpy as np
 REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO / "src"))
 
+from ghadi.basin import load_basin  # noqa: E402
 from ghadi.config import (  # noqa: E402
     DEFAULT,
     STATION_SITES,
@@ -357,7 +358,10 @@ def main(argv: list[str] | None = None) -> int:
     if settings.partner_key:
         partner_site = STATION_SITES[settings.partner_key]
         partner_cfg = PartnerConfig(
-            settings.partner_key, partner_site.latitude, partner_site.longitude
+            settings.partner_key,
+            partner_site.latitude,
+            partner_site.longitude,
+            basin=load_basin(),
         )
     live_cfg = LiveConfig(
         station=settings.station_key,

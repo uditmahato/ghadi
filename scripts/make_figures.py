@@ -272,8 +272,8 @@ def fig04_margin() -> None:
     series = (
         ("spectral only", "spectral", BLUE),
         ("+ H/V", "spectral_hv", ORANGE),
-        ("+ partner", "spectral_two_station_basin", AQUA),
-        ("+ H/V + partner", "spectral_hv_two_station_basin", YELLOW),
+        ("+ partner", "spectral_two_station_catchment", AQUA),
+        ("+ H/V + partner", "spectral_hv_two_station_catchment", YELLOW),
     )
     fig, axes = plt.subplots(1, 2, figsize=(11, 4.2))
     for ax, key in zip(axes, ("NK.KKN", "IO.EVN"), strict=True):

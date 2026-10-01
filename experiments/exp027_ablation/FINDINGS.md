@@ -17,7 +17,7 @@ False alarms per station month, defaults (20 percent margin). Windows in bracket
 | + spectral | 34.3 (10) | 110.1 (36) |
 | + catalogue | 24.0 (7) | 82.6 (27) |
 | + H/V | 6.9 (2) | 36.7 (12) |
-| + partner in the basin box | **0.0** (0) | **6.1** (2) |
+| + partner in the catchment | **0.0** (0) | **6.1** (2) |
 | All rules, falling back to catalogue and H/V when the partner has no data | **3.4** (1) | **15.3** (5) |
 
 One rule added to the spectral test, and one rule left out of the full set:
@@ -25,8 +25,8 @@ One rule added to the spectral test, and one rule left out of the full set:
 | | NK.KKN added | NK.KKN left out | IO.EVN added | IO.EVN left out |
 |---|---:|---:|---:|---:|
 | Catalogue | 24.0 | 0.0 | 82.6 | 6.1 |
-| H/V | 10.3 | 3.4 | 39.8 | 6.1 |
-| Partner | 3.4 | 6.9 | 9.2 | 36.7 |
+| H/V | 10.3 | 6.9 | 39.8 | 6.1 |
+| Partner | 6.9 | 6.9 | 9.2 | 36.7 |
 
 NK.KKN: 0.292 station months, 366 windows. IO.EVN: 0.327 station months, 409 windows.
 Run 2026-10-01, fully offline from the results of exp018, exp022, and exp024. Exact
@@ -35,11 +35,12 @@ three to five times the point values.
 
 * **The spectral test removes nine tenths of the triggers** and still leaves 34 and
   110 a month. It is necessary and nowhere near sufficient.
-* **The partner rule is the strongest single addition:** 34 to 3.4 at NK.KKN and 110
-  to 9.2 at IO.EVN on its own. Leaving it out of the full set costs the most.
-* **Catalogue and H/V are redundant with the partner rule on this corpus.** Leaving
-  either out of the full set changes nothing at IO.EVN and little at NK.KKN. They are
-  not redundant with each other: together without the partner they give 6.9 and 36.7.
+* **The partner rule is the strongest single addition:** 34 to 6.9 at NK.KKN and 110
+  to 9.2 at IO.EVN on its own. Leaving it out of the full set costs the most at IO.EVN.
+* **The catalogue is redundant with the partner rule on this corpus, and H/V nearly so.**
+  Leaving the catalogue out of the full set changes nothing. Leaving H/V out changes
+  nothing at IO.EVN and costs 6.9 at NK.KKN. They are not redundant with each other:
+  together without the partner they give 6.9 and 36.7.
 * **They are what stands when the partner is down.** The partner had no data for 3 of
   NK.KKN's 10 spectral windows and 11 of IO.EVN's 36. A window that cannot be
   corroborated falls back to the catalogue and H/V rules, and with that fallback the
@@ -60,5 +61,7 @@ three to five times the point values.
 
 A window is a false alarm under a set of rules if any of its trigger segments passes
 every rule in the set. Spectral, H/V, and partner values per segment are exp022's. The
-catalogue rule uses exp024's M4.5 catalogue and the default suppression rule (M5.5
+partner rule uses the catchment above Bidur derived from an elevation model
+(`data/geo`), which replaced a hand drawn box on 2026-10-01 and moved two NK.KKN cells.
+The catalogue rule uses exp024's M4.5 catalogue and the default suppression rule (M5.5
 anywhere, M5.0 within 80 degrees). The trigger only row is exp018's.

@@ -21,7 +21,8 @@ The rules:
 * **catalogue**: the onset is not inside the phase window of an M5.5 earthquake
   anywhere or an M5.0 within 80 degrees.
 * **hv**: the horizontal to vertical energy ratio over the segment.
-* **partner**: the other station triggered at a time fitting a source in the basin box.
+* **partner**: the other station triggered at a time fitting a source in the catchment
+  above Bidur (derived from an elevation model).
 
     python experiments/exp027_ablation/run.py
 """
@@ -116,7 +117,7 @@ def main() -> int:
                     {
                         "catalogue": catalogue_ok(start + timedelta(seconds=s["on_s"])),
                         "hv": s["hv_segment"] is not None and s["hv_segment"] >= thr["hv_min"],
-                        "partner": bool(s["other_basin_box"]),
+                        "partner": bool(s["other_catchment"]),
                     }
                 )
             if segs:

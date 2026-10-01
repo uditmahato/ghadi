@@ -276,3 +276,23 @@ def test_the_decision_does_not_depend_on_the_feed_delay() -> None:
             round(real[0].segment_centroid_hz, 6),
         )
     assert seen[6.0] == seen[20.0] == seen[45.0], seen
+
+
+def test_with_a_catchment_the_partner_must_fit_a_source_inside_it() -> None:
+    """A partner arrival that fits somewhere in the region, but not in the catchment."""
+    from ghadi.basin import load_basin
+    from ghadi.live import _Partner
+
+    onset = T0 + timedelta(seconds=300)
+    anywhere = _Partner(PartnerConfig("IO.EVN", *EVN), KKN[0], KKN[1])
+    inside = _Partner(PartnerConfig("IO.EVN", *EVN, basin=load_basin()), KKN[0], KKN[1])
+    # IO.EVN 20 s after NK.KKN: a source near the 2026 zone, inside the catchment.
+    for p in (anywhere, inside):
+        p.onsets.append(onset + timedelta(seconds=20))
+    assert anywhere.corroborates(onset, "NK.KKN") and inside.corroborates(onset, "NK.KKN")
+    # IO.EVN 35 s before NK.KKN: a source far to the east, near Everest.
+    for p in (anywhere, inside):
+        p.onsets.clear()
+        p.onsets.append(onset - timedelta(seconds=35))
+    assert anywhere.corroborates(onset, "NK.KKN")
+    assert not inside.corroborates(onset, "NK.KKN")

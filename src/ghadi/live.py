@@ -42,7 +42,8 @@ from datetime import UTC, datetime, timedelta
 
 import numpy as np
 
-from .associate import Pick, SearchRegion, arrival_bracket
+from .associate import Pick, SearchRegion, arrival_bracket, feasible_grid
+from .basin import Basin
 from .classify import classify_segment
 from .config import DEFAULT, GhadiConfig
 from .detect import sta_lta
@@ -88,6 +89,9 @@ class PartnerConfig:
     lat: float
     lon: float
     region: SearchRegion = DEFAULT_REGION
+    # When given, a partner trigger corroborates only if the two arrival times fit a
+    # source inside this catchment, not merely somewhere in the region.
+    basin: Basin | None = None
     keep_s: float = 1800.0  # how long partner triggers are remembered
     upgrade_s: float = 600.0  # how long an uncorroborated decision can still be upgraded
 
@@ -418,7 +422,15 @@ class _Partner:
     def corroborates(self, detected_utc: datetime, primary_key: str) -> bool:
         pick = Pick(primary_key, self.station_lat, self.station_lon, detected_utc)
         lo, hi = arrival_bracket(pick, self.config.lat, self.config.lon, self.config.region)
-        return any(lo <= o <= hi for o in self.onsets)
+        fitting = [o for o in self.onsets if lo <= o <= hi]
+        if self.config.basin is None:
+            return bool(fitting)
+        for onset in fitting:
+            other = Pick(self.config.key, self.config.lat, self.config.lon, onset)
+            lats, lons, mask = feasible_grid(pick, other, self.config.region)
+            if bool((mask & self.config.basin.contains(lats, lons)).any()):
+                return True
+        return False
 
 
 def observations_from_source(
