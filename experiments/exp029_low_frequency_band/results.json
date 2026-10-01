@@ -1,0 +1,156 @@
+{
+  "experiment": "exp029_low_frequency_band",
+  "bands": {
+    "0.5-20 Hz": [
+      0.5,
+      20.0
+    ],
+    "0.1-0.5 Hz": [
+      0.1,
+      0.5
+    ],
+    "0.05-0.1 Hz": [
+      0.05,
+      0.1
+    ],
+    "0.02-0.05 Hz": [
+      0.02,
+      0.05
+    ]
+  },
+  "events": [
+    {
+      "event": "Chamoli 2021",
+      "station": "NK.KKN",
+      "distance_km": 610.2,
+      "status": "ok",
+      "bands": {
+        "0.5-20 Hz": {
+          "snr": 3.35,
+          "noise_median": 1.52,
+          "noise_p95": 3.65,
+          "noise_max": 177.78,
+          "noise_windows": 150,
+          "noise_at_or_above": 10,
+          "empirical_p": 0.0728
+        },
+        "0.1-0.5 Hz": {
+          "snr": 2.67,
+          "noise_median": 1.61,
+          "noise_p95": 1.94,
+          "noise_max": 2.76,
+          "noise_windows": 150,
+          "noise_at_or_above": 1,
+          "empirical_p": 0.0132
+        },
+        "0.05-0.1 Hz": {
+          "snr": 5.08,
+          "noise_median": 1.66,
+          "noise_p95": 3.1,
+          "noise_max": 5.87,
+          "noise_windows": 150,
+          "noise_at_or_above": 1,
+          "empirical_p": 0.0132
+        },
+        "0.02-0.05 Hz": {
+          "snr": 0.93,
+          "noise_median": 1.41,
+          "noise_p95": 2.86,
+          "noise_max": 4.53,
+          "noise_windows": 150,
+          "noise_at_or_above": 131,
+          "empirical_p": 0.8742
+        }
+      }
+    },
+    {
+      "event": "Bhote Koshi 2026",
+      "station": "NK.KKN",
+      "distance_km": 55.9,
+      "status": "ok",
+      "bands": {
+        "0.5-20 Hz": {
+          "snr": 370.98,
+          "noise_median": 1.45,
+          "noise_p95": 2.78,
+          "noise_max": 12.38,
+          "noise_windows": 150,
+          "noise_at_or_above": 0,
+          "empirical_p": 0.0066
+        },
+        "0.1-0.5 Hz": {
+          "snr": 209.72,
+          "noise_median": 1.5,
+          "noise_p95": 1.88,
+          "noise_max": 2.06,
+          "noise_windows": 150,
+          "noise_at_or_above": 0,
+          "empirical_p": 0.0066
+        },
+        "0.05-0.1 Hz": {
+          "snr": 475.21,
+          "noise_median": 1.57,
+          "noise_p95": 2.8,
+          "noise_max": 4.12,
+          "noise_windows": 150,
+          "noise_at_or_above": 0,
+          "empirical_p": 0.0066
+        },
+        "0.02-0.05 Hz": {
+          "snr": 83.89,
+          "noise_median": 1.23,
+          "noise_p95": 2.33,
+          "noise_max": 3.82,
+          "noise_windows": 150,
+          "noise_at_or_above": 0,
+          "empirical_p": 0.0066
+        }
+      }
+    },
+    {
+      "event": "Bhote Koshi 2026",
+      "station": "IO.EVN",
+      "distance_km": 131.0,
+      "status": "ok",
+      "bands": {
+        "0.5-20 Hz": {
+          "snr": 304.33,
+          "noise_median": 1.84,
+          "noise_p95": 7.29,
+          "noise_max": 79.2,
+          "noise_windows": 150,
+          "noise_at_or_above": 0,
+          "empirical_p": 0.0066
+        },
+        "0.1-0.5 Hz": {
+          "snr": 195.77,
+          "noise_median": 1.57,
+          "noise_p95": 2.15,
+          "noise_max": 880.18,
+          "noise_windows": 150,
+          "noise_at_or_above": 1,
+          "empirical_p": 0.0132
+        },
+        "0.05-0.1 Hz": {
+          "snr": 1325.15,
+          "noise_median": 1.52,
+          "noise_p95": 2.59,
+          "noise_max": 59.02,
+          "noise_windows": 150,
+          "noise_at_or_above": 0,
+          "empirical_p": 0.0066
+        },
+        "0.02-0.05 Hz": {
+          "snr": 2129.51,
+          "noise_median": 1.28,
+          "noise_p95": 3.59,
+          "noise_max": 11.19,
+          "noise_windows": 150,
+          "noise_at_or_above": 0,
+          "empirical_p": 0.0066
+        }
+      }
+    }
+  ],
+  "noise": {}
+}
