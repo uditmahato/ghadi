@@ -258,3 +258,21 @@ def test_a_trigger_on_the_edge_of_a_filled_gap_is_not_an_arrival() -> None:
     verdict = observation_from_window(window, live=LIVE, feed_time=T0 + timedelta(minutes=5))
     assert verdict.observation is None
     assert verdict.reason in ("no_trigger", "gap_edge")
+
+
+def test_the_decision_does_not_depend_on_the_feed_delay() -> None:
+    """exp025: a feed 20 s behind once had every window closed before its last packets."""
+    data = burst_trace(seconds=3 * WINDOW_S, onset_s=400.0)
+    seen = {}
+    for delay in (6.0, 20.0, 45.0):
+        packets = packets_from_trace(data, SR, T0, station="NK.KKN", delay_s=delay)
+        stats = FeedStats()
+        obs = list(observations_from_source(ReplaySource(packets), live=LIVE, stats=stats))
+        real = [o for o in obs if o.detected_utc >= T0 + timedelta(seconds=395)]
+        assert real, f"no decision at delay {delay}"
+        seen[delay] = (
+            real[0].detected_utc,
+            round(real[0].segment_lf_hf, 6),
+            round(real[0].segment_centroid_hz, 6),
+        )
+    assert seen[6.0] == seen[20.0] == seen[45.0], seen
