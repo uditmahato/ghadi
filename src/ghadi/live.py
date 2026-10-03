@@ -136,25 +136,34 @@ class FeedStats:
     corroborated: int = 0
     upgrades: int = 0
     horizontals_missing: int = 0
+    # Delays of windows that arrived on time. A station that comes back from an outage
+    # sends hours of stored data at once; those windows are counted as backlog and kept
+    # out of these, because a backlog is not what the feed's delay is (exp025 follow up:
+    # the first restart after an outage reported a median delay of 744 s that was all
+    # backlog).
     delays_s: list[float] = field(default_factory=list)
+    backlog_delays_s: list[float] = field(default_factory=list)
     # Seconds from the picked onset to the moment the decision could be made: the end
     # of the window that held the full decision segment, plus the feed delay.
     decision_latencies_s: list[float] = field(default_factory=list)
+    late_decisions: int = 0
 
-    def observe(self, window: StreamWindow, *, usable: bool, triggered: bool) -> None:
+    def observe(
+        self, window: StreamWindow, *, usable: bool, triggered: bool, stale: bool = False
+    ) -> None:
         self.windows += 1
         if not usable:
             self.unusable_windows += 1
         if triggered:
             self.triggered_windows += 1
         if math.isfinite(window.max_delay_s):
-            self.delays_s.append(window.max_delay_s)
+            (self.backlog_delays_s if stale else self.delays_s).append(window.max_delay_s)
 
-    def note_decision(self, window: StreamWindow, detected_utc: datetime) -> None:
-        delay = window.max_delay_s if math.isfinite(window.max_delay_s) else 0.0
-        self.decision_latencies_s.append(
-            (window.end_utc - detected_utc).total_seconds() + max(delay, 0.0)
-        )
+    def note_decision(self, lag_s: float, *, late: bool) -> None:
+        if late:
+            self.late_decisions += 1
+        else:
+            self.decision_latencies_s.append(lag_s)
 
     def percentile(self, q: float) -> float:
         if not self.delays_s:
@@ -172,6 +181,10 @@ class FeedStats:
             "unusable_windows": self.unusable_windows,
             "triggered_windows": self.triggered_windows,
             "stale_windows": self.stale_windows,
+            "backlog_delay_max_s": round(max(self.backlog_delays_s), 1)
+            if self.backlog_delays_s
+            else float("nan"),
+            "late_decisions": self.late_decisions,
             "late_packets": self.late_packets,
             "corroborated": self.corroborated,
             "upgrades": self.upgrades,
@@ -325,8 +338,25 @@ def observation_from_window(
         event_id=event_id,
         segment_hv=hv,
         seismic_corroborated=bool(corroborated_by(detected)) if corroborated_by else False,
+        decided_lag_s=decision_lag_s(window, detected, now if stale else None),
+        late=stale,
     )
     return WindowVerdict(window, obs, "ok", stale)
+
+
+def decision_lag_s(
+    window: StreamWindow, detected_utc: datetime, feed_time: datetime | None
+) -> float:
+    """Seconds from an onset to the moment its decision could be made.
+
+    On time, that is the end of the window plus the delay of the packets that built it.
+    From a backlog it is the moment the data finally arrived, which can be hours.
+    """
+    delay = window.max_delay_s if math.isfinite(window.max_delay_s) else 0.0
+    on_time = (window.end_utc - detected_utc).total_seconds() + max(delay, 0.0)
+    if feed_time is None:
+        return on_time
+    return max(on_time, (feed_time - detected_utc).total_seconds())
 
 
 OnVerdict = Callable[[WindowVerdict], None]
@@ -500,11 +530,16 @@ def observations_from_source(
             elif obs.seismic_corroborated and stats is not None:
                 stats.corroborated += 1
         if stats is not None:
-            stats.observe(window, usable=verdict.reason != "unusable", triggered=obs is not None)
+            stats.observe(
+                window,
+                usable=verdict.reason != "unusable",
+                triggered=obs is not None,
+                stale=verdict.stale,
+            )
             if verdict.stale:
                 stats.stale_windows += 1
-            if obs is not None:
-                stats.note_decision(window, obs.detected_utc)
+            if obs is not None and obs.decided_lag_s is not None:
+                stats.note_decision(obs.decided_lag_s, late=obs.late)
                 if lcfg.horizontals and horizontals is None:
                     stats.horizontals_missing += 1
         if on_verdict is not None:

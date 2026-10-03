@@ -228,6 +228,15 @@ class ShadowState:
             "suppressed": outcome.suppression.suppressed,
             "staged_id": staged.staged_id if staged else None,
         }
+        seismic = outcome.audit.payload.get("seismic")
+        if staged and isinstance(seismic, dict) and seismic.get("late"):
+            # Built from data that arrived long after it was recorded. The person at the
+            # outbox must see that before anything else.
+            lag = seismic.get("decided_lag_s")
+            self.outbox.explain(
+                staged.staged_id,
+                f"decided late, {lag:.0f} s after the onset, from backlog data",
+            )
         with self.lock:
             self.recent.append(entry)
             del self.recent[:-RECENT]

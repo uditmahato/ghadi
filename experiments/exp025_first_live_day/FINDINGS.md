@@ -12,10 +12,10 @@ archive data at all: they were made by a bug in how the live loop closed its win
 | | Live run, 26 Sep | Replay under today's code |
 |---|---:|---:|
 | Windows | 484 | 1,216 |
-| Decisions | 10 | 20 |
+| Decisions | 10 | 21 (one is an earlier decision reissued as corroborated) |
 | Mass movement like | 1 | 0 |
 | Set aside as distant earthquakes | 0 | 4 |
-| Corroborated by the partner station | not available | 6 |
+| Corroborated by the partner station, source inside the catchment | not available | 4 |
 | Alerts staged for a person | 1 | **0** |
 
 Run 2026-10-01. The live records are the service's own audit log. The replay fetched
@@ -30,9 +30,9 @@ rule (exp024) it is set aside. Its horizontal to vertical ratio was 1.09, well u
 1.86 the rule now asks for, so the H/V rule would have rejected it too.
 
 The replay also sets aside an M5.6 at 73 degrees (14:19) and an M5.0 at 49 degrees
-(20:01 and 20:09). The partner station saw the Yemen and M5.6 arrivals as well:
-**agreement between two stations does not protect against a distant earthquake,**
-because both stations see it. Only the catalogue and the H/V rule do.
+(20:01 and 20:09). The partner station saw the Yemen arrival as well, at a time that
+fits a source inside the catchment: **agreement between two stations does not protect
+against a distant earthquake,** because both stations see it. Only the catalogue and the H/V rule do.
 
 ## Five decisions that were never there
 

@@ -296,3 +296,53 @@ def test_with_a_catchment_the_partner_must_fit_a_source_inside_it() -> None:
         p.onsets.append(onset - timedelta(seconds=35))
     assert anywhere.corroborates(onset, "NK.KKN")
     assert not inside.corroborates(onset, "NK.KKN")
+
+
+def test_backlog_is_kept_out_of_the_live_delay_figures() -> None:
+    """A station back from an outage sends hours of stored data at once."""
+    data = burst_trace(seconds=3 * WINDOW_S, onset_s=400.0)
+    on_time = packets_from_trace(data, SR, T0, station="NK.KKN", delay_s=15.0)
+    stats = FeedStats()
+    list(observations_from_source(ReplaySource(on_time), live=LIVE, stats=stats))
+    assert stats.stale_windows == 0 and stats.late_decisions == 0
+    assert stats.as_dict()["delay_p95_s"] == pytest.approx(15.0, abs=1.0)
+
+    # The same data delivered two hours late, all at once.
+    arrival = T0 + timedelta(hours=2)
+    backlog = [
+        replace(p, received_utc=arrival + timedelta(seconds=i)) for i, p in enumerate(on_time)
+    ]
+    stats = FeedStats()
+    obs = list(observations_from_source(ReplaySource(backlog), live=LIVE, stats=stats))
+    assert stats.stale_windows > 0
+    assert stats.delays_s == [], "backlog windows must not enter the live delay figures"
+    assert stats.as_dict()["backlog_delay_max_s"] > 3600
+    real = [o for o in obs if o.detected_utc >= T0 + timedelta(seconds=395)]
+    assert real and real[0].late and real[0].decided_lag_s is not None
+    assert real[0].decided_lag_s > 3600
+    assert stats.late_decisions >= 1
+
+
+def test_a_late_decision_quotes_its_real_lead_time() -> None:
+    """A lead time is never quoted from a budget the feed did not keep."""
+    from ghadi.service import WindowObservation, process_window
+
+    base = dict(
+        window_start_utc=T0,
+        detected_utc=T0 + timedelta(seconds=90),
+        segment_lf_hf=6.0,
+        segment_centroid_hz=1.5,
+        segment_hv=2.5,
+    )
+    on_time = process_window(
+        WindowObservation(**base, decided_lag_s=156.0), reach="TRISHULI-R07", model_version="t"
+    )
+    late = process_window(
+        WindowObservation(**base, decided_lag_s=7200.0, late=True),
+        reach="TRISHULI-R07",
+        model_version="t",
+    )
+    assert on_time.lead_times_min is not None and late.lead_times_min is not None
+    assert on_time.lead_times_min["Bidur"] == pytest.approx(38.0 - 156.0 / 60.0)
+    assert late.lead_times_min["Bidur"] < 0, "two hours late is after the water"
+    assert late.audit.payload["seismic"]["late"] is True

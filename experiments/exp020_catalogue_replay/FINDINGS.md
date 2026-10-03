@@ -33,8 +33,9 @@ per packet, the measured median. No gauge for any event.
 * Lead time at the 60 s warning latency the configuration held when this was first
   run: Timure 3 min, Syabrubesi 10 min, Bidur 37 min. **At the latency this replay
   measured, about 156 s from onset to decision, Timure has about 1.4 min, Syabrubesi
-  8.4, Bidur 35.4.** The configuration now holds 160 s, and the regenerated results
-  carry 1.3, 8.3, and 35.3 min.
+  8.4, Bidur 35.4.** Since 2026-10-03 each decision carries the lag the live
+  path measured for it, and the regenerated results quote 1.4, 8.4, and 35.4 min from
+  NK.KKN and 1.6, 8.6, and 35.6 from IO.EVN.
 
 The decision latency is not a bug to be tuned away. The decision segment is 120 s long
 by design (exp005), the feed adds 6 s, and the window that holds the segment closes up
