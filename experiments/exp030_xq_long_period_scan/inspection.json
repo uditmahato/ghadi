@@ -1,0 +1,2485 @@
+{
+  "experiment": "exp030_xq_long_period_scan",
+  "step": "inspect",
+  "counts": {
+    "local": {
+      "earthquake_like": 34,
+      "mass_movement_like_at_one": 1,
+      "no_short_period_arrival": 11
+    },
+    "distant_like": {
+      "earthquake_like": 16,
+      "no_short_period_arrival": 13,
+      "mass_movement_like_at_one": 1
+    }
+  },
+  "candidates": [
+    {
+      "kind": "local",
+      "peak_utc": "2015-09-18T11:40:00+00:00",
+      "duration_s": 8480,
+      "strongest_station": "NA170",
+      "strongest_ratio": 11860.0,
+      "contrast": 150.52,
+      "summary": "earthquake_like",
+      "stations": [
+        {
+          "station": "NA170",
+          "status": "ok",
+          "triggers_in_window": 2,
+          "max_sta_lta": 10.2,
+          "onset_s_from_peak": -15.9,
+          "peak_sta_lta": 10.2,
+          "lf_hf": 5.43,
+          "centroid_hz": 2.38,
+          "duration_80_s": 92.9,
+          "hv_segment": 2.02,
+          "signal_present": true,
+          "verdict": "earthquake_like"
+        },
+        {
+          "station": "NA210",
+          "status": "ok",
+          "triggers_in_window": 3,
+          "max_sta_lta": 11.9,
+          "onset_s_from_peak": -13.7,
+          "peak_sta_lta": 5.4,
+          "lf_hf": 0.02,
+          "centroid_hz": 14.51,
+          "duration_80_s": 93.4,
+          "hv_segment": 3.68,
+          "signal_present": true,
+          "verdict": "earthquake_like"
+        }
+      ]
+    },
+    {
+      "kind": "local",
+      "peak_utc": "2015-10-14T07:48:40+00:00",
+      "duration_s": 7770,
+      "strongest_station": "NA110",
+      "strongest_ratio": 4519.2,
+      "contrast": 13.98,
+      "summary": "earthquake_like",
+      "stations": [
+        {
+          "station": "NA110",
+          "status": "ok",
+          "triggers_in_window": 4,
+          "max_sta_lta": 11.8,
+          "onset_s_from_peak": -4.6,
+          "peak_sta_lta": 11.8,
+          "lf_hf": 3.04,
+          "centroid_hz": 2.81,
+          "duration_80_s": 83.5,
+          "hv_segment": 6.56,
+          "signal_present": true,
+          "verdict": "earthquake_like"
+        },
+        {
+          "station": "NA130",
+          "status": "ok",
+          "triggers_in_window": 2,
+          "max_sta_lta": 6.3,
+          "onset_s_from_peak": -218.6,
+          "peak_sta_lta": 6.3,
+          "lf_hf": 0.02,
+          "centroid_hz": 14.08,
+          "duration_80_s": 96.3,
+          "hv_segment": 6.22,
+          "signal_present": true,
+          "verdict": "earthquake_like"
+        }
+      ]
+    },
+    {
+      "kind": "local",
+      "peak_utc": "2015-11-09T06:42:50+00:00",
+      "duration_s": 1140,
+      "strongest_station": "NA110",
+      "strongest_ratio": 3271.8,
+      "contrast": 283.24,
+      "summary": "earthquake_like",
+      "stations": [
+        {
+          "station": "NA110",
+          "status": "ok",
+          "triggers_in_window": 4,
+          "max_sta_lta": 11.6,
+          "onset_s_from_peak": -3.9,
+          "peak_sta_lta": 11.6,
+          "lf_hf": 4.79,
+          "centroid_hz": 2.52,
+          "duration_80_s": 83.0,
+          "hv_segment": 16.73,
+          "signal_present": true,
+          "verdict": "earthquake_like"
+        },
+        {
+          "station": "NA010",
+          "status": "ok",
+          "triggers_in_window": 3,
+          "max_sta_lta": 5.6,
+          "onset_s_from_peak": -131.0,
+          "peak_sta_lta": 5.6,
+          "lf_hf": 0.0,
+          "centroid_hz": 12.81,
+          "duration_80_s": 97.8,
+          "hv_segment": 1.85,
+          "signal_present": true,
+          "verdict": "earthquake_like"
+        }
+      ]
+    },
+    {
+      "kind": "local",
+      "peak_utc": "2015-09-05T15:52:00+00:00",
+      "duration_s": 1890,
+      "strongest_station": "NA020",
+      "strongest_ratio": 1301.1,
+      "contrast": 39.9,
+      "summary": "earthquake_like",
+      "stations": [
+        {
+          "station": "NA020",
+          "status": "ok",
+          "triggers_in_window": 2,
+          "max_sta_lta": 11.9,
+          "onset_s_from_peak": -17.0,
+          "peak_sta_lta": 11.9,
+          "lf_hf": 106.0,
+          "centroid_hz": 0.85,
+          "duration_80_s": 69.4,
+          "hv_segment": 1.2,
+          "signal_present": true,
+          "verdict": "earthquake_like"
+        },
+        {
+          "station": "NA010",
+          "status": "ok",
+          "triggers_in_window": 3,
+          "max_sta_lta": 8.4,
+          "onset_s_from_peak": 59.8,
+          "peak_sta_lta": 7.5,
+          "lf_hf": 0.01,
+          "centroid_hz": 10.8,
+          "duration_80_s": 103.2,
+          "hv_segment": 1.57,
+          "signal_present": true,
+          "verdict": "earthquake_like"
+        }
+      ]
+    },
+    {
+      "kind": "local",
+      "peak_utc": "2015-09-09T00:16:10+00:00",
+      "duration_s": 540,
+      "strongest_station": "NA250",
+      "strongest_ratio": 495.5,
+      "contrast": 65.01,
+      "summary": "earthquake_like",
+      "stations": [
+        {
+          "station": "NA250",
+          "status": "ok",
+          "triggers_in_window": 1,
+          "max_sta_lta": 7.5,
+          "onset_s_from_peak": 81.6,
+          "peak_sta_lta": 7.5,
+          "lf_hf": 14.04,
+          "centroid_hz": 2.54,
+          "duration_80_s": 0.4,
+          "hv_segment": 0.37,
+          "signal_present": false,
+          "verdict": "earthquake_like"
+        },
+        {
+          "station": "NA100",
+          "status": "ok",
+          "triggers_in_window": 2,
+          "max_sta_lta": 11.2,
+          "onset_s_from_peak": 47.3,
+          "peak_sta_lta": 11.2,
+          "lf_hf": 0.0,
+          "centroid_hz": 11.35,
+          "duration_80_s": 101.2,
+          "hv_segment": 1.58,
+          "signal_present": true,
+          "verdict": "earthquake_like"
+        }
+      ]
+    },
+    {
+      "kind": "local",
+      "peak_utc": "2016-04-23T03:12:40+00:00",
+      "duration_s": 3480,
+      "strongest_station": "NA130",
+      "strongest_ratio": 490.6,
+      "contrast": 27.02,
+      "summary": "earthquake_like",
+      "stations": [
+        {
+          "station": "NA130",
+          "status": "ok",
+          "triggers_in_window": 11,
+          "max_sta_lta": 11.2,
+          "onset_s_from_peak": -124.8,
+          "peak_sta_lta": 11.2,
+          "lf_hf": 0.11,
+          "centroid_hz": 9.54,
+          "duration_80_s": 60.4,
+          "hv_segment": 0.57,
+          "signal_present": true,
+          "verdict": "earthquake_like"
+        },
+        {
+          "station": "NA010",
+          "status": "ok",
+          "triggers_in_window": 2,
+          "max_sta_lta": 6.2,
+          "onset_s_from_peak": -142.3,
+          "peak_sta_lta": 5.2,
+          "lf_hf": 0.01,
+          "centroid_hz": 9.97,
+          "duration_80_s": 101.3,
+          "hv_segment": 1.98,
+          "signal_present": true,
+          "verdict": "earthquake_like"
+        }
+      ]
+    },
+    {
+      "kind": "local",
+      "peak_utc": "2016-03-30T10:56:30+00:00",
+      "duration_s": 420,
+      "strongest_station": "NA090",
+      "strongest_ratio": 427.6,
+      "contrast": 52.54,
+      "summary": "mass_movement_like_at_one",
+      "stations": [
+        {
+          "station": "NA090",
+          "status": "ok",
+          "triggers_in_window": 2,
+          "max_sta_lta": 11.5,
+          "onset_s_from_peak": -15.1,
+          "peak_sta_lta": 11.5,
+          "lf_hf": 45.06,
+          "centroid_hz": 0.98,
+          "duration_80_s": 84.2,
+          "hv_segment": 34.27,
+          "signal_present": true,
+          "verdict": "mass_movement_like"
+        },
+        {
+          "station": "NA040",
+          "status": "ok",
+          "triggers_in_window": 0,
+          "max_sta_lta": 4.0,
+          "verdict": "no_short_period_arrival"
+        }
+      ]
+    },
+    {
+      "kind": "local",
+      "peak_utc": "2016-03-05T03:06:30+00:00",
+      "duration_s": 1170,
+      "strongest_station": "NA110",
+      "strongest_ratio": 311.1,
+      "contrast": 20.63,
+      "summary": "no_short_period_arrival",
+      "stations": [
+        {
+          "station": "NA110",
+          "status": "ok",
+          "triggers_in_window": 2,
+          "max_sta_lta": 9.7,
+          "verdict": "no_short_period_arrival"
+        },
+        {
+          "station": "NA040",
+          "status": "ok",
+          "triggers_in_window": 0,
+          "max_sta_lta": 4.1,
+          "verdict": "no_short_period_arrival"
+        }
+      ]
+    },
+    {
+      "kind": "local",
+      "peak_utc": "2016-03-07T08:05:50+00:00",
+      "duration_s": 290,
+      "strongest_station": "NA040",
+      "strongest_ratio": 219.2,
+      "contrast": 26.4,
+      "summary": "earthquake_like",
+      "stations": [
+        {
+          "station": "NA040",
+          "status": "ok",
+          "triggers_in_window": 0,
+          "max_sta_lta": 4.1,
+          "verdict": "no_short_period_arrival"
+        },
+        {
+          "station": "NA130",
+          "status": "ok",
+          "triggers_in_window": 2,
+          "max_sta_lta": 12.0,
+          "onset_s_from_peak": -347.3,
+          "peak_sta_lta": 12.0,
+          "lf_hf": 0.04,
+          "centroid_hz": 11.78,
+          "duration_80_s": 77.5,
+          "hv_segment": 4.92,
+          "signal_present": true,
+          "verdict": "earthquake_like"
+        }
+      ]
+    },
+    {
+      "kind": "local",
+      "peak_utc": "2015-10-25T16:29:20+00:00",
+      "duration_s": 2470,
+      "strongest_station": "NA040",
+      "strongest_ratio": 208.3,
+      "contrast": 9.61,
+      "summary": "earthquake_like",
+      "stations": [
+        {
+          "station": "NA040",
+          "status": "ok",
+          "triggers_in_window": 2,
+          "max_sta_lta": 12.0,
+          "onset_s_from_peak": 1.4,
+          "peak_sta_lta": 12.0,
+          "lf_hf": 0.06,
+          "centroid_hz": 10.75,
+          "duration_80_s": 28.4,
+          "hv_segment": 2.1,
+          "signal_present": true,
+          "verdict": "earthquake_like"
+        },
+        {
+          "station": "NA130",
+          "status": "ok",
+          "triggers_in_window": 0,
+          "max_sta_lta": 3.0,
+          "verdict": "no_short_period_arrival"
+        }
+      ]
+    },
+    {
+      "kind": "local",
+      "peak_utc": "2015-08-24T12:46:30+00:00",
+      "duration_s": 1470,
+      "strongest_station": "NA250",
+      "strongest_ratio": 178.7,
+      "contrast": 7.07,
+      "summary": "earthquake_like",
+      "stations": [
+        {
+          "station": "NA250",
+          "status": "ok",
+          "triggers_in_window": 2,
+          "max_sta_lta": 12.0,
+          "onset_s_from_peak": -67.4,
+          "peak_sta_lta": 12.0,
+          "lf_hf": 1.58,
+          "centroid_hz": 4.38,
+          "duration_80_s": 98.8,
+          "hv_segment": 109.75,
+          "signal_present": true,
+          "verdict": "earthquake_like"
+        },
+        {
+          "station": "NA130",
+          "status": "ok",
+          "triggers_in_window": 0,
+          "max_sta_lta": 1.5,
+          "verdict": "no_short_period_arrival"
+        }
+      ]
+    },
+    {
+      "kind": "local",
+      "peak_utc": "2016-03-11T09:29:20+00:00",
+      "duration_s": 40,
+      "strongest_station": "NA130",
+      "strongest_ratio": 171.5,
+      "contrast": 28.7,
+      "summary": "earthquake_like",
+      "stations": [
+        {
+          "station": "NA130",
+          "status": "ok",
+          "triggers_in_window": 2,
+          "max_sta_lta": 12.0,
+          "onset_s_from_peak": -80.0,
+          "peak_sta_lta": 12.0,
+          "lf_hf": 0.11,
+          "centroid_hz": 10.29,
+          "duration_80_s": 22.6,
+          "hv_segment": 4.96,
+          "signal_present": true,
+          "verdict": "earthquake_like"
+        },
+        {
+          "station": "NA110",
+          "status": "ok",
+          "triggers_in_window": 6,
+          "max_sta_lta": 12.0,
+          "onset_s_from_peak": -74.6,
+          "peak_sta_lta": 12.0,
+          "lf_hf": 0.06,
+          "centroid_hz": 9.27,
+          "duration_80_s": 28.4,
+          "hv_segment": 7.2,
+          "signal_present": true,
+          "verdict": "earthquake_like"
+        }
+      ]
+    },
+    {
+      "kind": "local",
+      "peak_utc": "2015-08-20T06:03:00+00:00",
+      "duration_s": 180,
+      "strongest_station": "NA020",
+      "strongest_ratio": 162.8,
+      "contrast": 38.66,
+      "summary": "earthquake_like",
+      "stations": [
+        {
+          "station": "NA020",
+          "status": "ok",
+          "triggers_in_window": 1,
+          "max_sta_lta": 12.0,
+          "onset_s_from_peak": -2.9,
+          "peak_sta_lta": 12.0,
+          "lf_hf": 0.03,
+          "centroid_hz": 7.71,
+          "duration_80_s": 29.7,
+          "hv_segment": 2.35,
+          "signal_present": true,
+          "verdict": "earthquake_like"
+        },
+        {
+          "station": "NA010",
+          "status": "ok",
+          "triggers_in_window": 3,
+          "max_sta_lta": 12.0,
+          "onset_s_from_peak": -3.2,
+          "peak_sta_lta": 12.0,
+          "lf_hf": 0.06,
+          "centroid_hz": 5.69,
+          "duration_80_s": 36.8,
+          "hv_segment": 2.95,
+          "signal_present": true,
+          "verdict": "earthquake_like"
+        }
+      ]
+    },
+    {
+      "kind": "local",
+      "peak_utc": "2015-07-30T14:34:10+00:00",
+      "duration_s": 170,
+      "strongest_station": "NA110",
+      "strongest_ratio": 98.7,
+      "contrast": 22.23,
+      "summary": "earthquake_like",
+      "stations": [
+        {
+          "station": "NA110",
+          "status": "ok",
+          "triggers_in_window": 2,
+          "max_sta_lta": 12.0,
+          "onset_s_from_peak": -9.1,
+          "peak_sta_lta": 12.0,
+          "lf_hf": 0.57,
+          "centroid_hz": 4.63,
+          "duration_80_s": 41.9,
+          "hv_segment": 3.48,
+          "signal_present": true,
+          "verdict": "earthquake_like"
+        },
+        {
+          "station": "NA210",
+          "status": "ok",
+          "triggers_in_window": 3,
+          "max_sta_lta": 12.0,
+          "onset_s_from_peak": -16.0,
+          "peak_sta_lta": 12.0,
+          "lf_hf": 0.57,
+          "centroid_hz": 4.74,
+          "duration_80_s": 21.4,
+          "hv_segment": 3.02,
+          "signal_present": true,
+          "verdict": "earthquake_like"
+        }
+      ]
+    },
+    {
+      "kind": "local",
+      "peak_utc": "2016-01-05T11:20:30+00:00",
+      "duration_s": 2560,
+      "strongest_station": "NA250",
+      "strongest_ratio": 97.1,
+      "contrast": 4.76,
+      "summary": "no_short_period_arrival",
+      "stations": [
+        {
+          "station": "NA250",
+          "status": "ok",
+          "triggers_in_window": 1,
+          "max_sta_lta": 12.0,
+          "verdict": "no_short_period_arrival"
+        },
+        {
+          "station": "NA130",
+          "status": "ok",
+          "triggers_in_window": 0,
+          "max_sta_lta": 3.7,
+          "verdict": "no_short_period_arrival"
+        }
+      ]
+    },
+    {
+      "kind": "local",
+      "peak_utc": "2016-03-15T05:36:00+00:00",
+      "duration_s": 580,
+      "strongest_station": "NA040",
+      "strongest_ratio": 86.9,
+      "contrast": 4.99,
+      "summary": "earthquake_like",
+      "stations": [
+        {
+          "station": "NA040",
+          "status": "ok",
+          "triggers_in_window": 4,
+          "max_sta_lta": 5.3,
+          "verdict": "no_short_period_arrival"
+        },
+        {
+          "station": "NA130",
+          "status": "ok",
+          "triggers_in_window": 2,
+          "max_sta_lta": 8.8,
+          "onset_s_from_peak": -291.6,
+          "peak_sta_lta": 8.8,
+          "lf_hf": 0.05,
+          "centroid_hz": 12.05,
+          "duration_80_s": 105.5,
+          "hv_segment": 5.01,
+          "signal_present": true,
+          "verdict": "earthquake_like"
+        }
+      ]
+    },
+    {
+      "kind": "local",
+      "peak_utc": "2016-03-19T04:52:20+00:00",
+      "duration_s": 450,
+      "strongest_station": "NA040",
+      "strongest_ratio": 85.5,
+      "contrast": 16.48,
+      "summary": "no_short_period_arrival",
+      "stations": [
+        {
+          "station": "NA040",
+          "status": "ok",
+          "triggers_in_window": 1,
+          "max_sta_lta": 5.0,
+          "verdict": "no_short_period_arrival"
+        },
+        {
+          "station": "NA130",
+          "status": "ok",
+          "triggers_in_window": 0,
+          "max_sta_lta": 3.4,
+          "verdict": "no_short_period_arrival"
+        }
+      ]
+    },
+    {
+      "kind": "local",
+      "peak_utc": "2016-05-03T11:10:40+00:00",
+      "duration_s": 110,
+      "strongest_station": "NA100",
+      "strongest_ratio": 84.5,
+      "contrast": 24.59,
+      "summary": "earthquake_like",
+      "stations": [
+        {
+          "station": "NA100",
+          "status": "ok",
+          "triggers_in_window": 7,
+          "max_sta_lta": 10.7,
+          "onset_s_from_peak": -18.9,
+          "peak_sta_lta": 9.3,
+          "lf_hf": 0.01,
+          "centroid_hz": 11.9,
+          "duration_80_s": 105.4,
+          "hv_segment": 1.51,
+          "signal_present": true,
+          "verdict": "earthquake_like"
+        },
+        {
+          "station": "NA210",
+          "status": "ok",
+          "triggers_in_window": 4,
+          "max_sta_lta": 6.3,
+          "onset_s_from_peak": -6.3,
+          "peak_sta_lta": 6.0,
+          "lf_hf": 0.03,
+          "centroid_hz": 12.09,
+          "duration_80_s": 99.7,
+          "hv_segment": 1.98,
+          "signal_present": true,
+          "verdict": "earthquake_like"
+        }
+      ]
+    },
+    {
+      "kind": "local",
+      "peak_utc": "2015-12-11T10:57:20+00:00",
+      "duration_s": 50,
+      "strongest_station": "NA130",
+      "strongest_ratio": 80.3,
+      "contrast": 38.56,
+      "summary": "earthquake_like",
+      "stations": [
+        {
+          "station": "NA130",
+          "status": "ok",
+          "triggers_in_window": 5,
+          "max_sta_lta": 11.3,
+          "onset_s_from_peak": -5.5,
+          "peak_sta_lta": 10.5,
+          "lf_hf": 0.05,
+          "centroid_hz": 13.1,
+          "duration_80_s": 103.0,
+          "hv_segment": 3.47,
+          "signal_present": true,
+          "verdict": "earthquake_like"
+        },
+        {
+          "station": "NA210",
+          "status": "ok",
+          "triggers_in_window": 4,
+          "max_sta_lta": 9.0,
+          "onset_s_from_peak": 58.2,
+          "peak_sta_lta": 6.3,
+          "lf_hf": 0.01,
+          "centroid_hz": 12.93,
+          "duration_80_s": 94.6,
+          "hv_segment": 2.21,
+          "signal_present": true,
+          "verdict": "earthquake_like"
+        }
+      ]
+    },
+    {
+      "kind": "local",
+      "peak_utc": "2016-02-13T14:37:20+00:00",
+      "duration_s": 240,
+      "strongest_station": "NA110",
+      "strongest_ratio": 71.8,
+      "contrast": 11.65,
+      "summary": "earthquake_like",
+      "stations": [
+        {
+          "station": "NA110",
+          "status": "ok",
+          "triggers_in_window": 5,
+          "max_sta_lta": 12.0,
+          "onset_s_from_peak": -0.4,
+          "peak_sta_lta": 12.0,
+          "lf_hf": 0.5,
+          "centroid_hz": 3.95,
+          "duration_80_s": 24.9,
+          "hv_segment": 1.04,
+          "signal_present": true,
+          "verdict": "earthquake_like"
+        },
+        {
+          "station": "NA210",
+          "status": "ok",
+          "triggers_in_window": 4,
+          "max_sta_lta": 12.0,
+          "onset_s_from_peak": 4.4,
+          "peak_sta_lta": 12.0,
+          "lf_hf": 0.76,
+          "centroid_hz": 4.87,
+          "duration_80_s": 35.3,
+          "hv_segment": 2.27,
+          "signal_present": true,
+          "verdict": "earthquake_like"
+        }
+      ]
+    },
+    {
+      "kind": "local",
+      "peak_utc": "2016-04-11T09:20:10+00:00",
+      "duration_s": 100,
+      "strongest_station": "NA040",
+      "strongest_ratio": 56.5,
+      "contrast": 17.49,
+      "summary": "earthquake_like",
+      "stations": [
+        {
+          "station": "NA040",
+          "status": "ok",
+          "triggers_in_window": 2,
+          "max_sta_lta": 7.5,
+          "verdict": "no_short_period_arrival"
+        },
+        {
+          "station": "NA210",
+          "status": "ok",
+          "triggers_in_window": 5,
+          "max_sta_lta": 8.6,
+          "onset_s_from_peak": -71.1,
+          "peak_sta_lta": 8.6,
+          "lf_hf": 0.07,
+          "centroid_hz": 10.14,
+          "duration_80_s": 101.2,
+          "hv_segment": 1.6,
+          "signal_present": true,
+          "verdict": "earthquake_like"
+        }
+      ]
+    },
+    {
+      "kind": "local",
+      "peak_utc": "2015-07-04T19:42:30+00:00",
+      "duration_s": 190,
+      "strongest_station": "NA130",
+      "strongest_ratio": 54.2,
+      "contrast": 12.35,
+      "summary": "earthquake_like",
+      "stations": [
+        {
+          "station": "NA130",
+          "status": "ok",
+          "triggers_in_window": 3,
+          "max_sta_lta": 12.0,
+          "onset_s_from_peak": -3.7,
+          "peak_sta_lta": 12.0,
+          "lf_hf": 0.26,
+          "centroid_hz": 6.15,
+          "duration_80_s": 34.6,
+          "hv_segment": 3.25,
+          "signal_present": true,
+          "verdict": "earthquake_like"
+        },
+        {
+          "station": "NA110",
+          "status": "ok",
+          "triggers_in_window": 4,
+          "max_sta_lta": 12.0,
+          "onset_s_from_peak": -1.5,
+          "peak_sta_lta": 12.0,
+          "lf_hf": 0.13,
+          "centroid_hz": 5.39,
+          "duration_80_s": 31.2,
+          "hv_segment": 1.29,
+          "signal_present": true,
+          "verdict": "earthquake_like"
+        }
+      ]
+    },
+    {
+      "kind": "local",
+      "peak_utc": "2015-12-14T02:26:20+00:00",
+      "duration_s": 1390,
+      "strongest_station": "NA250",
+      "strongest_ratio": 51.9,
+      "contrast": 7.63,
+      "summary": "no_short_period_arrival",
+      "stations": [
+        {
+          "station": "NA250",
+          "status": "ok",
+          "triggers_in_window": 0,
+          "max_sta_lta": 3.2,
+          "verdict": "no_short_period_arrival"
+        },
+        {
+          "station": "NA130",
+          "status": "ok",
+          "triggers_in_window": 2,
+          "max_sta_lta": 11.7,
+          "verdict": "no_short_period_arrival"
+        }
+      ]
+    },
+    {
+      "kind": "local",
+      "peak_utc": "2015-07-28T03:36:30+00:00",
+      "duration_s": 190,
+      "strongest_station": "NA110",
+      "strongest_ratio": 49.1,
+      "contrast": 8.54,
+      "summary": "earthquake_like",
+      "stations": [
+        {
+          "station": "NA110",
+          "status": "ok",
+          "triggers_in_window": 6,
+          "max_sta_lta": 12.0,
+          "onset_s_from_peak": -12.2,
+          "peak_sta_lta": 12.0,
+          "lf_hf": 0.71,
+          "centroid_hz": 5.37,
+          "duration_80_s": 38.3,
+          "hv_segment": 3.03,
+          "signal_present": true,
+          "verdict": "earthquake_like"
+        },
+        {
+          "station": "NA130",
+          "status": "ok",
+          "triggers_in_window": 3,
+          "max_sta_lta": 12.0,
+          "onset_s_from_peak": -12.8,
+          "peak_sta_lta": 12.0,
+          "lf_hf": 0.65,
+          "centroid_hz": 5.46,
+          "duration_80_s": 25.9,
+          "hv_segment": 3.74,
+          "signal_present": true,
+          "verdict": "earthquake_like"
+        }
+      ]
+    },
+    {
+      "kind": "local",
+      "peak_utc": "2016-03-08T09:25:20+00:00",
+      "duration_s": 30,
+      "strongest_station": "NA110",
+      "strongest_ratio": 41.9,
+      "contrast": 14.8,
+      "summary": "earthquake_like",
+      "stations": [
+        {
+          "station": "NA110",
+          "status": "ok",
+          "triggers_in_window": 7,
+          "max_sta_lta": 8.1,
+          "onset_s_from_peak": -348.2,
+          "peak_sta_lta": 7.4,
+          "lf_hf": 0.01,
+          "centroid_hz": 15.83,
+          "duration_80_s": 93.4,
+          "hv_segment": 4.11,
+          "signal_present": true,
+          "verdict": "earthquake_like"
+        },
+        {
+          "station": "NA010",
+          "status": "ok",
+          "triggers_in_window": 1,
+          "max_sta_lta": 5.7,
+          "onset_s_from_peak": -161.2,
+          "peak_sta_lta": 5.7,
+          "lf_hf": 0.01,
+          "centroid_hz": 12.59,
+          "duration_80_s": 106.2,
+          "hv_segment": 1.56,
+          "signal_present": true,
+          "verdict": "earthquake_like"
+        }
+      ]
+    },
+    {
+      "kind": "local",
+      "peak_utc": "2016-03-14T09:58:20+00:00",
+      "duration_s": 130,
+      "strongest_station": "NA040",
+      "strongest_ratio": 41.0,
+      "contrast": 13.27,
+      "summary": "earthquake_like",
+      "stations": [
+        {
+          "station": "NA040",
+          "status": "ok",
+          "triggers_in_window": 0,
+          "max_sta_lta": 4.3,
+          "verdict": "no_short_period_arrival"
+        },
+        {
+          "station": "NA010",
+          "status": "ok",
+          "triggers_in_window": 3,
+          "max_sta_lta": 9.6,
+          "onset_s_from_peak": -178.1,
+          "peak_sta_lta": 5.2,
+          "lf_hf": 0.02,
+          "centroid_hz": 11.49,
+          "duration_80_s": 95.2,
+          "hv_segment": 1.82,
+          "signal_present": true,
+          "verdict": "earthquake_like"
+        }
+      ]
+    },
+    {
+      "kind": "local",
+      "peak_utc": "2015-11-24T04:11:50+00:00",
+      "duration_s": 1440,
+      "strongest_station": "NA250",
+      "strongest_ratio": 40.9,
+      "contrast": 6.03,
+      "summary": "earthquake_like",
+      "stations": [
+        {
+          "station": "NA250",
+          "status": "ok",
+          "triggers_in_window": 1,
+          "max_sta_lta": 7.4,
+          "onset_s_from_peak": -251.0,
+          "peak_sta_lta": 7.4,
+          "lf_hf": 0.0,
+          "centroid_hz": 12.79,
+          "duration_80_s": 94.9,
+          "hv_segment": 1.49,
+          "signal_present": true,
+          "verdict": "earthquake_like"
+        },
+        {
+          "station": "NA080",
+          "status": "ok",
+          "triggers_in_window": 1,
+          "max_sta_lta": 7.8,
+          "verdict": "no_short_period_arrival"
+        }
+      ]
+    },
+    {
+      "kind": "local",
+      "peak_utc": "2016-04-08T11:25:30+00:00",
+      "duration_s": 230,
+      "strongest_station": "NA210",
+      "strongest_ratio": 34.5,
+      "contrast": 9.17,
+      "summary": "no_short_period_arrival",
+      "stations": [
+        {
+          "station": "NA210",
+          "status": "ok",
+          "triggers_in_window": 2,
+          "max_sta_lta": 5.9,
+          "verdict": "no_short_period_arrival"
+        },
+        {
+          "station": "NA040",
+          "status": "ok",
+          "triggers_in_window": 0,
+          "max_sta_lta": 3.8,
+          "verdict": "no_short_period_arrival"
+        }
+      ]
+    },
+    {
+      "kind": "local",
+      "peak_utc": "2016-01-04T02:04:10+00:00",
+      "duration_s": 1080,
+      "strongest_station": "NA130",
+      "strongest_ratio": 33.9,
+      "contrast": 3.19,
+      "summary": "earthquake_like",
+      "stations": [
+        {
+          "station": "NA130",
+          "status": "ok",
+          "triggers_in_window": 1,
+          "max_sta_lta": 6.0,
+          "onset_s_from_peak": -231.6,
+          "peak_sta_lta": 6.0,
+          "lf_hf": 0.03,
+          "centroid_hz": 11.91,
+          "duration_80_s": 99.3,
+          "hv_segment": 5.72,
+          "signal_present": true,
+          "verdict": "earthquake_like"
+        },
+        {
+          "station": "NA250",
+          "status": "ok",
+          "triggers_in_window": 1,
+          "max_sta_lta": 6.0,
+          "onset_s_from_peak": -2.2,
+          "peak_sta_lta": 6.0,
+          "lf_hf": 0.01,
+          "centroid_hz": 11.44,
+          "duration_80_s": 100.7,
+          "hv_segment": 1.77,
+          "signal_present": true,
+          "verdict": "earthquake_like"
+        }
+      ]
+    },
+    {
+      "kind": "local",
+      "peak_utc": "2016-04-21T10:25:20+00:00",
+      "duration_s": 140,
+      "strongest_station": "NA040",
+      "strongest_ratio": 33.9,
+      "contrast": 7.83,
+      "summary": "no_short_period_arrival",
+      "stations": [
+        {
+          "station": "NA040",
+          "status": "ok",
+          "triggers_in_window": 0,
+          "max_sta_lta": 4.8,
+          "verdict": "no_short_period_arrival"
+        },
+        {
+          "station": "NA130",
+          "status": "ok",
+          "triggers_in_window": 1,
+          "max_sta_lta": 7.9,
+          "verdict": "no_short_period_arrival"
+        }
+      ]
+    },
+    {
+      "kind": "local",
+      "peak_utc": "2016-03-10T07:37:40+00:00",
+      "duration_s": 160,
+      "strongest_station": "NA110",
+      "strongest_ratio": 25.5,
+      "contrast": 7.86,
+      "summary": "earthquake_like",
+      "stations": [
+        {
+          "station": "NA110",
+          "status": "ok",
+          "triggers_in_window": 5,
+          "max_sta_lta": 12.0,
+          "onset_s_from_peak": 1.2,
+          "peak_sta_lta": 12.0,
+          "lf_hf": 0.07,
+          "centroid_hz": 8.64,
+          "duration_80_s": 19.4,
+          "hv_segment": 6.22,
+          "signal_present": true,
+          "verdict": "earthquake_like"
+        },
+        {
+          "station": "NA130",
+          "status": "ok",
+          "triggers_in_window": 2,
+          "max_sta_lta": 12.0,
+          "onset_s_from_peak": 1.7,
+          "peak_sta_lta": 12.0,
+          "lf_hf": 0.06,
+          "centroid_hz": 9.52,
+          "duration_80_s": 10.4,
+          "hv_segment": 5.03,
+          "signal_present": true,
+          "verdict": "earthquake_like"
+        }
+      ]
+    },
+    {
+      "kind": "local",
+      "peak_utc": "2016-03-02T06:56:20+00:00",
+      "duration_s": 80,
+      "strongest_station": "NA040",
+      "strongest_ratio": 25.0,
+      "contrast": 6.7,
+      "summary": "earthquake_like",
+      "stations": [
+        {
+          "station": "NA040",
+          "status": "ok",
+          "triggers_in_window": 1,
+          "max_sta_lta": 5.2,
+          "onset_s_from_peak": -31.1,
+          "peak_sta_lta": 5.2,
+          "lf_hf": 0.0,
+          "centroid_hz": 15.78,
+          "duration_80_s": 96.3,
+          "hv_segment": 1.59,
+          "signal_present": true,
+          "verdict": "earthquake_like"
+        },
+        {
+          "station": "NA210",
+          "status": "ok",
+          "triggers_in_window": 5,
+          "max_sta_lta": 11.6,
+          "onset_s_from_peak": -182.7,
+          "peak_sta_lta": 11.6,
+          "lf_hf": 0.06,
+          "centroid_hz": 11.3,
+          "duration_80_s": 104.2,
+          "hv_segment": 2.42,
+          "signal_present": true,
+          "verdict": "earthquake_like"
+        }
+      ]
+    },
+    {
+      "kind": "local",
+      "peak_utc": "2015-11-16T02:48:50+00:00",
+      "duration_s": 150,
+      "strongest_station": "NA250",
+      "strongest_ratio": 24.3,
+      "contrast": 5.61,
+      "summary": "no_short_period_arrival",
+      "stations": [
+        {
+          "station": "NA250",
+          "status": "ok",
+          "triggers_in_window": 0,
+          "max_sta_lta": 3.4,
+          "verdict": "no_short_period_arrival"
+        },
+        {
+          "station": "NA210",
+          "status": "ok",
+          "triggers_in_window": 0,
+          "max_sta_lta": 4.8,
+          "verdict": "no_short_period_arrival"
+        }
+      ]
+    },
+    {
+      "kind": "local",
+      "peak_utc": "2016-04-17T06:29:20+00:00",
+      "duration_s": 160,
+      "strongest_station": "NA040",
+      "strongest_ratio": 23.7,
+      "contrast": 5.31,
+      "summary": "no_short_period_arrival",
+      "stations": [
+        {
+          "station": "NA040",
+          "status": "ok",
+          "triggers_in_window": 0,
+          "max_sta_lta": 4.8,
+          "verdict": "no_short_period_arrival"
+        },
+        {
+          "station": "NA130",
+          "status": "ok",
+          "triggers_in_window": 1,
+          "max_sta_lta": 6.1,
+          "verdict": "no_short_period_arrival"
+        }
+      ]
+    },
+    {
+      "kind": "local",
+      "peak_utc": "2016-03-01T12:40:00+00:00",
+      "duration_s": 240,
+      "strongest_station": "NA040",
+      "strongest_ratio": 23.6,
+      "contrast": 4.99,
+      "summary": "earthquake_like",
+      "stations": [
+        {
+          "station": "NA040",
+          "status": "ok",
+          "triggers_in_window": 0,
+          "max_sta_lta": 3.8,
+          "verdict": "no_short_period_arrival"
+        },
+        {
+          "station": "NA010",
+          "status": "ok",
+          "triggers_in_window": 1,
+          "max_sta_lta": 6.7,
+          "onset_s_from_peak": -24.6,
+          "peak_sta_lta": 6.7,
+          "lf_hf": 0.0,
+          "centroid_hz": 12.35,
+          "duration_80_s": 98.6,
+          "hv_segment": 1.57,
+          "signal_present": true,
+          "verdict": "earthquake_like"
+        }
+      ]
+    },
+    {
+      "kind": "local",
+      "peak_utc": "2016-03-06T07:37:50+00:00",
+      "duration_s": 620,
+      "strongest_station": "NA040",
+      "strongest_ratio": 22.9,
+      "contrast": 3.46,
+      "summary": "earthquake_like",
+      "stations": [
+        {
+          "station": "NA040",
+          "status": "ok",
+          "triggers_in_window": 2,
+          "max_sta_lta": 5.7,
+          "onset_s_from_peak": -265.0,
+          "peak_sta_lta": 5.4,
+          "lf_hf": 0.0,
+          "centroid_hz": 15.28,
+          "duration_80_s": 99.1,
+          "hv_segment": 1.08,
+          "signal_present": true,
+          "verdict": "earthquake_like"
+        },
+        {
+          "station": "NA110",
+          "status": "ok",
+          "triggers_in_window": 5,
+          "max_sta_lta": 10.1,
+          "onset_s_from_peak": -275.6,
+          "peak_sta_lta": 7.5,
+          "lf_hf": 0.22,
+          "centroid_hz": 11.29,
+          "duration_80_s": 95.3,
+          "hv_segment": 3.33,
+          "signal_present": true,
+          "verdict": "earthquake_like"
+        }
+      ]
+    },
+    {
+      "kind": "local",
+      "peak_utc": "2016-02-26T10:17:10+00:00",
+      "duration_s": 400,
+      "strongest_station": "NA040",
+      "strongest_ratio": 22.5,
+      "contrast": 3.92,
+      "summary": "earthquake_like",
+      "stations": [
+        {
+          "station": "NA040",
+          "status": "ok",
+          "triggers_in_window": 0,
+          "max_sta_lta": 3.2,
+          "verdict": "no_short_period_arrival"
+        },
+        {
+          "station": "NA210",
+          "status": "ok",
+          "triggers_in_window": 3,
+          "max_sta_lta": 6.3,
+          "onset_s_from_peak": -160.7,
+          "peak_sta_lta": 6.3,
+          "lf_hf": 0.01,
+          "centroid_hz": 13.35,
+          "duration_80_s": 82.5,
+          "hv_segment": 2.95,
+          "signal_present": true,
+          "verdict": "earthquake_like"
+        }
+      ]
+    },
+    {
+      "kind": "local",
+      "peak_utc": "2015-10-30T02:51:00+00:00",
+      "duration_s": 330,
+      "strongest_station": "NA040",
+      "strongest_ratio": 20.4,
+      "contrast": 3.61,
+      "summary": "no_short_period_arrival",
+      "stations": [
+        {
+          "station": "NA040",
+          "status": "ok",
+          "triggers_in_window": 2,
+          "max_sta_lta": 5.3,
+          "verdict": "no_short_period_arrival"
+        },
+        {
+          "station": "NA210",
+          "status": "ok",
+          "triggers_in_window": 3,
+          "max_sta_lta": 10.9,
+          "verdict": "no_short_period_arrival"
+        }
+      ]
+    },
+    {
+      "kind": "local",
+      "peak_utc": "2016-03-27T20:12:30+00:00",
+      "duration_s": 340,
+      "strongest_station": "NA040",
+      "strongest_ratio": 18.7,
+      "contrast": 3.36,
+      "summary": "earthquake_like",
+      "stations": [
+        {
+          "station": "NA040",
+          "status": "ok",
+          "triggers_in_window": 7,
+          "max_sta_lta": 11.9,
+          "onset_s_from_peak": -12.5,
+          "peak_sta_lta": 11.9,
+          "lf_hf": 0.01,
+          "centroid_hz": 12.22,
+          "duration_80_s": 87.4,
+          "hv_segment": 2.26,
+          "signal_present": true,
+          "verdict": "earthquake_like"
+        },
+        {
+          "station": "NA130",
+          "status": "ok",
+          "triggers_in_window": 0,
+          "max_sta_lta": 4.8,
+          "verdict": "no_short_period_arrival"
+        }
+      ]
+    },
+    {
+      "kind": "local",
+      "peak_utc": "2015-11-20T01:41:10+00:00",
+      "duration_s": 260,
+      "strongest_station": "NA250",
+      "strongest_ratio": 16.3,
+      "contrast": 3.03,
+      "summary": "earthquake_like",
+      "stations": [
+        {
+          "station": "NA250",
+          "status": "ok",
+          "triggers_in_window": 5,
+          "max_sta_lta": 10.8,
+          "onset_s_from_peak": -110.6,
+          "peak_sta_lta": 6.7,
+          "lf_hf": 0.01,
+          "centroid_hz": 13.17,
+          "duration_80_s": 93.1,
+          "hv_segment": 1.59,
+          "signal_present": true,
+          "verdict": "earthquake_like"
+        },
+        {
+          "station": "NA080",
+          "status": "ok",
+          "triggers_in_window": 0,
+          "max_sta_lta": 1.7,
+          "verdict": "no_short_period_arrival"
+        }
+      ]
+    },
+    {
+      "kind": "local",
+      "peak_utc": "2016-02-24T16:39:10+00:00",
+      "duration_s": 210,
+      "strongest_station": "NA090",
+      "strongest_ratio": 16.0,
+      "contrast": 3.37,
+      "summary": "no_short_period_arrival",
+      "stations": [
+        {
+          "station": "NA090",
+          "status": "ok",
+          "triggers_in_window": 0,
+          "max_sta_lta": 3.1,
+          "verdict": "no_short_period_arrival"
+        },
+        {
+          "station": "NA130",
+          "status": "ok",
+          "triggers_in_window": 0,
+          "max_sta_lta": 3.0,
+          "verdict": "no_short_period_arrival"
+        }
+      ]
+    },
+    {
+      "kind": "local",
+      "peak_utc": "2016-02-26T17:52:30+00:00",
+      "duration_s": 90,
+      "strongest_station": "NA040",
+      "strongest_ratio": 15.7,
+      "contrast": 3.38,
+      "summary": "earthquake_like",
+      "stations": [
+        {
+          "station": "NA040",
+          "status": "ok",
+          "triggers_in_window": 5,
+          "max_sta_lta": 11.5,
+          "onset_s_from_peak": -326.7,
+          "peak_sta_lta": 7.0,
+          "lf_hf": 0.01,
+          "centroid_hz": 11.29,
+          "duration_80_s": 96.0,
+          "hv_segment": 1.97,
+          "signal_present": true,
+          "verdict": "earthquake_like"
+        },
+        {
+          "station": "NA210",
+          "status": "ok",
+          "triggers_in_window": 3,
+          "max_sta_lta": 10.8,
+          "onset_s_from_peak": -320.7,
+          "peak_sta_lta": 10.8,
+          "lf_hf": 0.77,
+          "centroid_hz": 4.97,
+          "duration_80_s": 103.6,
+          "hv_segment": 2.51,
+          "signal_present": true,
+          "verdict": "earthquake_like"
+        }
+      ]
+    },
+    {
+      "kind": "local",
+      "peak_utc": "2015-11-23T22:47:00+00:00",
+      "duration_s": 110,
+      "strongest_station": "NA040",
+      "strongest_ratio": 14.8,
+      "contrast": 3.03,
+      "summary": "earthquake_like",
+      "stations": [
+        {
+          "station": "NA040",
+          "status": "ok",
+          "triggers_in_window": 1,
+          "max_sta_lta": 12.0,
+          "onset_s_from_peak": -0.3,
+          "peak_sta_lta": 12.0,
+          "lf_hf": 0.09,
+          "centroid_hz": 11.19,
+          "duration_80_s": 40.6,
+          "hv_segment": 2.33,
+          "signal_present": true,
+          "verdict": "earthquake_like"
+        },
+        {
+          "station": "NA130",
+          "status": "ok",
+          "triggers_in_window": 1,
+          "max_sta_lta": 11.1,
+          "onset_s_from_peak": -70.6,
+          "peak_sta_lta": 11.1,
+          "lf_hf": 0.03,
+          "centroid_hz": 11.01,
+          "duration_80_s": 105.0,
+          "hv_segment": 5.6,
+          "signal_present": true,
+          "verdict": "earthquake_like"
+        }
+      ]
+    },
+    {
+      "kind": "local",
+      "peak_utc": "2016-03-28T02:21:50+00:00",
+      "duration_s": 100,
+      "strongest_station": "NA040",
+      "strongest_ratio": 14.8,
+      "contrast": 3.8,
+      "summary": "earthquake_like",
+      "stations": [
+        {
+          "station": "NA040",
+          "status": "ok",
+          "triggers_in_window": 2,
+          "max_sta_lta": 8.6,
+          "onset_s_from_peak": -14.6,
+          "peak_sta_lta": 8.6,
+          "lf_hf": 0.0,
+          "centroid_hz": 13.86,
+          "duration_80_s": 99.4,
+          "hv_segment": 1.56,
+          "signal_present": true,
+          "verdict": "earthquake_like"
+        },
+        {
+          "station": "NA210",
+          "status": "ok",
+          "triggers_in_window": 0,
+          "max_sta_lta": 4.7,
+          "verdict": "no_short_period_arrival"
+        }
+      ]
+    },
+    {
+      "kind": "local",
+      "peak_utc": "2016-03-21T02:20:30+00:00",
+      "duration_s": 40,
+      "strongest_station": "NA040",
+      "strongest_ratio": 12.5,
+      "contrast": 3.06,
+      "summary": "earthquake_like",
+      "stations": [
+        {
+          "station": "NA040",
+          "status": "ok",
+          "triggers_in_window": 2,
+          "max_sta_lta": 6.1,
+          "onset_s_from_peak": 27.9,
+          "peak_sta_lta": 6.1,
+          "lf_hf": 0.01,
+          "centroid_hz": 13.21,
+          "duration_80_s": 99.0,
+          "hv_segment": 1.69,
+          "signal_present": true,
+          "verdict": "earthquake_like"
+        },
+        {
+          "station": "NA130",
+          "status": "ok",
+          "triggers_in_window": 3,
+          "max_sta_lta": 11.7,
+          "onset_s_from_peak": 20.9,
+          "peak_sta_lta": 5.7,
+          "lf_hf": 0.04,
+          "centroid_hz": 13.27,
+          "duration_80_s": 99.9,
+          "hv_segment": 5.71,
+          "signal_present": true,
+          "verdict": "earthquake_like"
+        }
+      ]
+    },
+    {
+      "kind": "local",
+      "peak_utc": "2015-12-02T11:00:40+00:00",
+      "duration_s": 70,
+      "strongest_station": "NA250",
+      "strongest_ratio": 7.5,
+      "contrast": 3.28,
+      "summary": "no_short_period_arrival",
+      "stations": [
+        {
+          "station": "NA250",
+          "status": "ok",
+          "triggers_in_window": 0,
+          "max_sta_lta": 3.7,
+          "verdict": "no_short_period_arrival"
+        },
+        {
+          "station": "NA130",
+          "status": "ok",
+          "triggers_in_window": 1,
+          "max_sta_lta": 8.0,
+          "verdict": "no_short_period_arrival"
+        }
+      ]
+    },
+    {
+      "kind": "distant_like",
+      "peak_utc": "2016-01-11T17:14:00+00:00",
+      "duration_s": 12740,
+      "strongest_station": "NA210",
+      "strongest_ratio": 939.9,
+      "contrast": 1.48,
+      "summary": "earthquake_like",
+      "stations": [
+        {
+          "station": "NA210",
+          "status": "ok",
+          "triggers_in_window": 6,
+          "max_sta_lta": 11.9,
+          "onset_s_from_peak": 57.1,
+          "peak_sta_lta": 6.3,
+          "lf_hf": 3.51,
+          "centroid_hz": 2.02,
+          "duration_80_s": 40.2,
+          "hv_segment": 1.36,
+          "signal_present": true,
+          "verdict": "earthquake_like"
+        },
+        {
+          "station": "NA250",
+          "status": "ok",
+          "triggers_in_window": 4,
+          "max_sta_lta": 11.9,
+          "onset_s_from_peak": -101.4,
+          "peak_sta_lta": 10.3,
+          "lf_hf": 0.02,
+          "centroid_hz": 7.69,
+          "duration_80_s": 83.6,
+          "hv_segment": 2.29,
+          "signal_present": true,
+          "verdict": "earthquake_like"
+        }
+      ]
+    },
+    {
+      "kind": "distant_like",
+      "peak_utc": "2015-12-09T11:02:20+00:00",
+      "duration_s": 14970,
+      "strongest_station": "NA130",
+      "strongest_ratio": 817.5,
+      "contrast": 1.41,
+      "summary": "no_short_period_arrival",
+      "stations": [
+        {
+          "station": "NA130",
+          "status": "ok",
+          "triggers_in_window": 1,
+          "max_sta_lta": 8.2,
+          "verdict": "no_short_period_arrival"
+        },
+        {
+          "station": "NA250",
+          "status": "ok",
+          "triggers_in_window": 2,
+          "max_sta_lta": 5.9,
+          "verdict": "no_short_period_arrival"
+        }
+      ]
+    },
+    {
+      "kind": "distant_like",
+      "peak_utc": "2015-11-27T08:41:10+00:00",
+      "duration_s": 2860,
+      "strongest_station": "NA080",
+      "strongest_ratio": 216.1,
+      "contrast": 1.8,
+      "summary": "mass_movement_like_at_one",
+      "stations": [
+        {
+          "station": "NA080",
+          "status": "ok",
+          "triggers_in_window": 0,
+          "max_sta_lta": 2.2,
+          "verdict": "no_short_period_arrival"
+        },
+        {
+          "station": "NA210",
+          "status": "ok",
+          "triggers_in_window": 4,
+          "max_sta_lta": 11.9,
+          "onset_s_from_peak": -295.3,
+          "peak_sta_lta": 11.6,
+          "lf_hf": 6.96,
+          "centroid_hz": 2.04,
+          "duration_80_s": 101.3,
+          "hv_segment": 1.9,
+          "signal_present": true,
+          "verdict": "mass_movement_like"
+        }
+      ]
+    },
+    {
+      "kind": "distant_like",
+      "peak_utc": "2016-04-20T10:23:10+00:00",
+      "duration_s": 8570,
+      "strongest_station": "NA210",
+      "strongest_ratio": 181.1,
+      "contrast": 1.6,
+      "summary": "no_short_period_arrival",
+      "stations": [
+        {
+          "station": "NA210",
+          "status": "ok",
+          "triggers_in_window": 1,
+          "max_sta_lta": 5.7,
+          "verdict": "no_short_period_arrival"
+        },
+        {
+          "station": "NA010",
+          "status": "ok",
+          "triggers_in_window": 2,
+          "max_sta_lta": 8.1,
+          "verdict": "no_short_period_arrival"
+        }
+      ]
+    },
+    {
+      "kind": "distant_like",
+      "peak_utc": "2016-04-13T18:50:50+00:00",
+      "duration_s": 3510,
+      "strongest_station": "NA100",
+      "strongest_ratio": 73.0,
+      "contrast": 1.34,
+      "summary": "no_short_period_arrival",
+      "stations": [
+        {
+          "station": "NA100",
+          "status": "ok",
+          "triggers_in_window": 0,
+          "max_sta_lta": 2.0,
+          "verdict": "no_short_period_arrival"
+        },
+        {
+          "station": "NA130",
+          "status": "ok",
+          "triggers_in_window": 0,
+          "max_sta_lta": 3.7,
+          "verdict": "no_short_period_arrival"
+        }
+      ]
+    },
+    {
+      "kind": "distant_like",
+      "peak_utc": "2015-07-31T17:10:20+00:00",
+      "duration_s": 570,
+      "strongest_station": "NA210",
+      "strongest_ratio": 44.9,
+      "contrast": 1.47,
+      "summary": "earthquake_like",
+      "stations": [
+        {
+          "station": "NA210",
+          "status": "ok",
+          "triggers_in_window": 2,
+          "max_sta_lta": 9.6,
+          "onset_s_from_peak": -257.1,
+          "peak_sta_lta": 9.6,
+          "lf_hf": 0.32,
+          "centroid_hz": 6.03,
+          "duration_80_s": 104.3,
+          "hv_segment": 2.34,
+          "signal_present": true,
+          "verdict": "earthquake_like"
+        },
+        {
+          "station": "NA130",
+          "status": "ok",
+          "triggers_in_window": 1,
+          "max_sta_lta": 6.0,
+          "verdict": "no_short_period_arrival"
+        }
+      ]
+    },
+    {
+      "kind": "distant_like",
+      "peak_utc": "2016-03-01T10:46:00+00:00",
+      "duration_s": 7690,
+      "strongest_station": "NA130",
+      "strongest_ratio": 38.5,
+      "contrast": 1.36,
+      "summary": "earthquake_like",
+      "stations": [
+        {
+          "station": "NA130",
+          "status": "ok",
+          "triggers_in_window": 1,
+          "max_sta_lta": 12.0,
+          "onset_s_from_peak": -21.6,
+          "peak_sta_lta": 12.0,
+          "lf_hf": 0.22,
+          "centroid_hz": 5.29,
+          "duration_80_s": 25.2,
+          "hv_segment": 2.99,
+          "signal_present": true,
+          "verdict": "earthquake_like"
+        },
+        {
+          "station": "NA110",
+          "status": "ok",
+          "triggers_in_window": 8,
+          "max_sta_lta": 12.0,
+          "onset_s_from_peak": -21.4,
+          "peak_sta_lta": 12.0,
+          "lf_hf": 0.13,
+          "centroid_hz": 4.58,
+          "duration_80_s": 8.4,
+          "hv_segment": 1.71,
+          "signal_present": true,
+          "verdict": "earthquake_like"
+        }
+      ]
+    },
+    {
+      "kind": "distant_like",
+      "peak_utc": "2016-03-26T01:28:30+00:00",
+      "duration_s": 480,
+      "strongest_station": "NA100",
+      "strongest_ratio": 33.2,
+      "contrast": 1.36,
+      "summary": "earthquake_like",
+      "stations": [
+        {
+          "station": "NA100",
+          "status": "ok",
+          "triggers_in_window": 10,
+          "max_sta_lta": 10.4,
+          "onset_s_from_peak": -280.3,
+          "peak_sta_lta": 10.4,
+          "lf_hf": 0.0,
+          "centroid_hz": 12.11,
+          "duration_80_s": 108.8,
+          "hv_segment": 1.48,
+          "signal_present": true,
+          "verdict": "earthquake_like"
+        },
+        {
+          "station": "NA110",
+          "status": "ok",
+          "triggers_in_window": 4,
+          "max_sta_lta": 10.5,
+          "onset_s_from_peak": 19.6,
+          "peak_sta_lta": 5.6,
+          "lf_hf": 0.0,
+          "centroid_hz": 16.19,
+          "duration_80_s": 87.5,
+          "hv_segment": 0.69,
+          "signal_present": true,
+          "verdict": "earthquake_like"
+        }
+      ]
+    },
+    {
+      "kind": "distant_like",
+      "peak_utc": "2015-06-25T20:01:40+00:00",
+      "duration_s": 7970,
+      "strongest_station": "NA080",
+      "strongest_ratio": 31.0,
+      "contrast": 1.39,
+      "summary": "earthquake_like",
+      "stations": [
+        {
+          "station": "NA080",
+          "status": "ok",
+          "triggers_in_window": 0,
+          "max_sta_lta": 1.6,
+          "verdict": "no_short_period_arrival"
+        },
+        {
+          "station": "NA010",
+          "status": "ok",
+          "triggers_in_window": 6,
+          "max_sta_lta": 8.5,
+          "onset_s_from_peak": -103.7,
+          "peak_sta_lta": 8.2,
+          "lf_hf": 0.04,
+          "centroid_hz": 8.91,
+          "duration_80_s": 98.1,
+          "hv_segment": 2.17,
+          "signal_present": true,
+          "verdict": "earthquake_like"
+        }
+      ]
+    },
+    {
+      "kind": "distant_like",
+      "peak_utc": "2016-03-29T01:44:50+00:00",
+      "duration_s": 1250,
+      "strongest_station": "NA110",
+      "strongest_ratio": 30.4,
+      "contrast": 2.25,
+      "summary": "earthquake_like",
+      "stations": [
+        {
+          "station": "NA110",
+          "status": "ok",
+          "triggers_in_window": 6,
+          "max_sta_lta": 6.7,
+          "onset_s_from_peak": -288.3,
+          "peak_sta_lta": 5.1,
+          "lf_hf": 0.0,
+          "centroid_hz": 14.97,
+          "duration_80_s": 95.3,
+          "hv_segment": 0.96,
+          "signal_present": true,
+          "verdict": "earthquake_like"
+        },
+        {
+          "station": "NA040",
+          "status": "ok",
+          "triggers_in_window": 5,
+          "max_sta_lta": 8.3,
+          "onset_s_from_peak": 79.7,
+          "peak_sta_lta": 8.2,
+          "lf_hf": 0.0,
+          "centroid_hz": 14.51,
+          "duration_80_s": 99.7,
+          "hv_segment": 1.68,
+          "signal_present": true,
+          "verdict": "earthquake_like"
+        }
+      ]
+    },
+    {
+      "kind": "distant_like",
+      "peak_utc": "2015-12-31T19:39:20+00:00",
+      "duration_s": 320,
+      "strongest_station": "NA130",
+      "strongest_ratio": 25.1,
+      "contrast": 1.85,
+      "summary": "no_short_period_arrival",
+      "stations": [
+        {
+          "station": "NA130",
+          "status": "ok",
+          "triggers_in_window": 1,
+          "max_sta_lta": 7.4,
+          "verdict": "no_short_period_arrival"
+        },
+        {
+          "station": "NA250",
+          "status": "ok",
+          "triggers_in_window": 3,
+          "max_sta_lta": 5.7,
+          "verdict": "no_short_period_arrival"
+        }
+      ]
+    },
+    {
+      "kind": "distant_like",
+      "peak_utc": "2015-09-24T10:35:30+00:00",
+      "duration_s": 380,
+      "strongest_station": "NA130",
+      "strongest_ratio": 22.6,
+      "contrast": 1.58,
+      "summary": "earthquake_like",
+      "stations": [
+        {
+          "station": "NA130",
+          "status": "ok",
+          "triggers_in_window": 0,
+          "max_sta_lta": 1.7,
+          "verdict": "no_short_period_arrival"
+        },
+        {
+          "station": "NA100",
+          "status": "ok",
+          "triggers_in_window": 2,
+          "max_sta_lta": 8.4,
+          "onset_s_from_peak": -294.5,
+          "peak_sta_lta": 8.4,
+          "lf_hf": 0.0,
+          "centroid_hz": 12.38,
+          "duration_80_s": 98.4,
+          "hv_segment": 1.61,
+          "signal_present": true,
+          "verdict": "earthquake_like"
+        }
+      ]
+    },
+    {
+      "kind": "distant_like",
+      "peak_utc": "2015-07-15T08:31:00+00:00",
+      "duration_s": 240,
+      "strongest_station": "NA210",
+      "strongest_ratio": 21.7,
+      "contrast": 1.57,
+      "summary": "earthquake_like",
+      "stations": [
+        {
+          "station": "NA210",
+          "status": "ok",
+          "triggers_in_window": 3,
+          "max_sta_lta": 11.9,
+          "onset_s_from_peak": -189.4,
+          "peak_sta_lta": 6.0,
+          "lf_hf": 0.14,
+          "centroid_hz": 9.01,
+          "duration_80_s": 103.9,
+          "hv_segment": 2.32,
+          "signal_present": true,
+          "verdict": "earthquake_like"
+        },
+        {
+          "station": "NA130",
+          "status": "ok",
+          "triggers_in_window": 3,
+          "max_sta_lta": 11.9,
+          "onset_s_from_peak": -225.2,
+          "peak_sta_lta": 7.9,
+          "lf_hf": 0.02,
+          "centroid_hz": 15.47,
+          "duration_80_s": 96.7,
+          "hv_segment": 2.5,
+          "signal_present": true,
+          "verdict": "earthquake_like"
+        }
+      ]
+    },
+    {
+      "kind": "distant_like",
+      "peak_utc": "2015-11-10T14:43:10+00:00",
+      "duration_s": 290,
+      "strongest_station": "NA130",
+      "strongest_ratio": 21.3,
+      "contrast": 1.88,
+      "summary": "earthquake_like",
+      "stations": [
+        {
+          "station": "NA130",
+          "status": "ok",
+          "triggers_in_window": 1,
+          "max_sta_lta": 10.8,
+          "verdict": "no_short_period_arrival"
+        },
+        {
+          "station": "NA100",
+          "status": "ok",
+          "triggers_in_window": 1,
+          "max_sta_lta": 10.3,
+          "onset_s_from_peak": -264.3,
+          "peak_sta_lta": 10.3,
+          "lf_hf": 0.0,
+          "centroid_hz": 12.29,
+          "duration_80_s": 73.0,
+          "hv_segment": 1.33,
+          "signal_present": true,
+          "verdict": "earthquake_like"
+        }
+      ]
+    },
+    {
+      "kind": "distant_like",
+      "peak_utc": "2016-03-16T00:55:20+00:00",
+      "duration_s": 380,
+      "strongest_station": "NA110",
+      "strongest_ratio": 21.3,
+      "contrast": 1.4,
+      "summary": "earthquake_like",
+      "stations": [
+        {
+          "station": "NA110",
+          "status": "ok",
+          "triggers_in_window": 4,
+          "max_sta_lta": 9.5,
+          "onset_s_from_peak": -247.0,
+          "peak_sta_lta": 6.3,
+          "lf_hf": 0.0,
+          "centroid_hz": 15.31,
+          "duration_80_s": 93.6,
+          "hv_segment": 1.16,
+          "signal_present": true,
+          "verdict": "earthquake_like"
+        },
+        {
+          "station": "NA130",
+          "status": "ok",
+          "triggers_in_window": 0,
+          "max_sta_lta": 3.4,
+          "verdict": "no_short_period_arrival"
+        }
+      ]
+    },
+    {
+      "kind": "distant_like",
+      "peak_utc": "2015-11-05T08:53:10+00:00",
+      "duration_s": 400,
+      "strongest_station": "NA080",
+      "strongest_ratio": 21.0,
+      "contrast": 1.93,
+      "summary": "no_short_period_arrival",
+      "stations": [
+        {
+          "station": "NA080",
+          "status": "ok",
+          "triggers_in_window": 1,
+          "max_sta_lta": 5.3,
+          "verdict": "no_short_period_arrival"
+        },
+        {
+          "station": "NA210",
+          "status": "ok",
+          "triggers_in_window": 0,
+          "max_sta_lta": 4.6,
+          "verdict": "no_short_period_arrival"
+        }
+      ]
+    },
+    {
+      "kind": "distant_like",
+      "peak_utc": "2015-09-03T22:50:00+00:00",
+      "duration_s": 290,
+      "strongest_station": "NA130",
+      "strongest_ratio": 19.2,
+      "contrast": 1.54,
+      "summary": "no_short_period_arrival",
+      "stations": [
+        {
+          "station": "NA130",
+          "status": "ok",
+          "triggers_in_window": 0,
+          "max_sta_lta": 1.6,
+          "verdict": "no_short_period_arrival"
+        },
+        {
+          "station": "NA080",
+          "status": "ok",
+          "triggers_in_window": 0,
+          "max_sta_lta": 1.7,
+          "verdict": "no_short_period_arrival"
+        }
+      ]
+    },
+    {
+      "kind": "distant_like",
+      "peak_utc": "2016-04-17T08:58:40+00:00",
+      "duration_s": 2630,
+      "strongest_station": "NA210",
+      "strongest_ratio": 18.8,
+      "contrast": 1.33,
+      "summary": "no_short_period_arrival",
+      "stations": [
+        {
+          "station": "NA210",
+          "status": "ok",
+          "triggers_in_window": 0,
+          "max_sta_lta": 4.0,
+          "verdict": "no_short_period_arrival"
+        },
+        {
+          "station": "NA040",
+          "status": "ok",
+          "triggers_in_window": 3,
+          "max_sta_lta": 7.7,
+          "verdict": "no_short_period_arrival"
+        }
+      ]
+    },
+    {
+      "kind": "distant_like",
+      "peak_utc": "2015-09-10T13:01:10+00:00",
+      "duration_s": 1390,
+      "strongest_station": "NA100",
+      "strongest_ratio": 18.7,
+      "contrast": 2.9,
+      "summary": "no_short_period_arrival",
+      "stations": [
+        {
+          "station": "NA100",
+          "status": "ok",
+          "triggers_in_window": 0,
+          "max_sta_lta": 4.7,
+          "verdict": "no_short_period_arrival"
+        },
+        {
+          "station": "NA130",
+          "status": "ok",
+          "triggers_in_window": 0,
+          "max_sta_lta": 2.8,
+          "verdict": "no_short_period_arrival"
+        }
+      ]
+    },
+    {
+      "kind": "distant_like",
+      "peak_utc": "2016-02-10T09:01:20+00:00",
+      "duration_s": 430,
+      "strongest_station": "NA100",
+      "strongest_ratio": 18.3,
+      "contrast": 1.18,
+      "summary": "earthquake_like",
+      "stations": [
+        {
+          "station": "NA100",
+          "status": "ok",
+          "triggers_in_window": 2,
+          "max_sta_lta": 11.8,
+          "onset_s_from_peak": 58.9,
+          "peak_sta_lta": 5.5,
+          "lf_hf": 0.0,
+          "centroid_hz": 11.86,
+          "duration_80_s": 35.1,
+          "hv_segment": 1.48,
+          "signal_present": true,
+          "verdict": "earthquake_like"
+        },
+        {
+          "station": "NA110",
+          "status": "ok",
+          "triggers_in_window": 4,
+          "max_sta_lta": 7.4,
+          "verdict": "no_short_period_arrival"
+        }
+      ]
+    },
+    {
+      "kind": "distant_like",
+      "peak_utc": "2016-01-16T05:14:10+00:00",
+      "duration_s": 1320,
+      "strongest_station": "NA210",
+      "strongest_ratio": 17.5,
+      "contrast": 1.78,
+      "summary": "earthquake_like",
+      "stations": [
+        {
+          "station": "NA210",
+          "status": "ok",
+          "triggers_in_window": 2,
+          "max_sta_lta": 5.8,
+          "verdict": "no_short_period_arrival"
+        },
+        {
+          "station": "NA100",
+          "status": "ok",
+          "triggers_in_window": 3,
+          "max_sta_lta": 7.7,
+          "onset_s_from_peak": -38.8,
+          "peak_sta_lta": 7.4,
+          "lf_hf": 0.0,
+          "centroid_hz": 11.79,
+          "duration_80_s": 77.3,
+          "hv_segment": 1.67,
+          "signal_present": true,
+          "verdict": "earthquake_like"
+        }
+      ]
+    },
+    {
+      "kind": "distant_like",
+      "peak_utc": "2016-04-04T16:52:20+00:00",
+      "duration_s": 970,
+      "strongest_station": "NA110",
+      "strongest_ratio": 17.1,
+      "contrast": 1.16,
+      "summary": "no_short_period_arrival",
+      "stations": [
+        {
+          "station": "NA110",
+          "status": "ok",
+          "triggers_in_window": 0,
+          "max_sta_lta": 4.9,
+          "verdict": "no_short_period_arrival"
+        },
+        {
+          "station": "NA010",
+          "status": "ok",
+          "triggers_in_window": 0,
+          "max_sta_lta": 3.6,
+          "verdict": "no_short_period_arrival"
+        }
+      ]
+    },
+    {
+      "kind": "distant_like",
+      "peak_utc": "2015-07-01T00:56:10+00:00",
+      "duration_s": 110,
+      "strongest_station": "NA050",
+      "strongest_ratio": 16.7,
+      "contrast": 2.27,
+      "summary": "earthquake_like",
+      "stations": [
+        {
+          "station": "NA050",
+          "status": "ok",
+          "triggers_in_window": 3,
+          "max_sta_lta": 11.2,
+          "onset_s_from_peak": -30.5,
+          "peak_sta_lta": 11.2,
+          "lf_hf": 0.38,
+          "centroid_hz": 11.38,
+          "duration_80_s": 103.0,
+          "hv_segment": 52.13,
+          "signal_present": true,
+          "verdict": "earthquake_like"
+        },
+        {
+          "station": "NA100",
+          "status": "ok",
+          "triggers_in_window": 1,
+          "max_sta_lta": 5.2,
+          "verdict": "no_short_period_arrival"
+        }
+      ]
+    },
+    {
+      "kind": "distant_like",
+      "peak_utc": "2016-02-07T23:07:10+00:00",
+      "duration_s": 210,
+      "strongest_station": "NA210",
+      "strongest_ratio": 16.3,
+      "contrast": 1.42,
+      "summary": "earthquake_like",
+      "stations": [
+        {
+          "station": "NA210",
+          "status": "ok",
+          "triggers_in_window": 5,
+          "max_sta_lta": 11.8,
+          "onset_s_from_peak": -123.2,
+          "peak_sta_lta": 11.8,
+          "lf_hf": 0.94,
+          "centroid_hz": 4.05,
+          "duration_80_s": 112.8,
+          "hv_segment": 2.05,
+          "signal_present": true,
+          "verdict": "earthquake_like"
+        },
+        {
+          "station": "NA130",
+          "status": "ok",
+          "triggers_in_window": 3,
+          "max_sta_lta": 12.0,
+          "onset_s_from_peak": -126.9,
+          "peak_sta_lta": 12.0,
+          "lf_hf": 0.07,
+          "centroid_hz": 8.37,
+          "duration_80_s": 115.8,
+          "hv_segment": 4.68,
+          "signal_present": true,
+          "verdict": "earthquake_like"
+        }
+      ]
+    },
+    {
+      "kind": "distant_like",
+      "peak_utc": "2016-05-06T16:13:20+00:00",
+      "duration_s": 540,
+      "strongest_station": "NA010",
+      "strongest_ratio": 16.2,
+      "contrast": 1.75,
+      "summary": "no_short_period_arrival",
+      "stations": [
+        {
+          "station": "NA010",
+          "status": "ok",
+          "triggers_in_window": 1,
+          "max_sta_lta": 5.7,
+          "verdict": "no_short_period_arrival"
+        },
+        {
+          "station": "NA210",
+          "status": "ok",
+          "triggers_in_window": 2,
+          "max_sta_lta": 7.0,
+          "verdict": "no_short_period_arrival"
+        }
+      ]
+    },
+    {
+      "kind": "distant_like",
+      "peak_utc": "2015-07-22T05:22:20+00:00",
+      "duration_s": 430,
+      "strongest_station": "NA130",
+      "strongest_ratio": 15.5,
+      "contrast": 1.49,
+      "summary": "earthquake_like",
+      "stations": [
+        {
+          "station": "NA130",
+          "status": "ok",
+          "triggers_in_window": 1,
+          "max_sta_lta": 10.3,
+          "verdict": "no_short_period_arrival"
+        },
+        {
+          "station": "NA210",
+          "status": "ok",
+          "triggers_in_window": 3,
+          "max_sta_lta": 12.0,
+          "onset_s_from_peak": -91.8,
+          "peak_sta_lta": 7.2,
+          "lf_hf": 0.02,
+          "centroid_hz": 13.15,
+          "duration_80_s": 96.3,
+          "hv_segment": 2.69,
+          "signal_present": true,
+          "verdict": "earthquake_like"
+        }
+      ]
+    },
+    {
+      "kind": "distant_like",
+      "peak_utc": "2015-10-20T09:07:30+00:00",
+      "duration_s": 250,
+      "strongest_station": "NA130",
+      "strongest_ratio": 14.8,
+      "contrast": 1.38,
+      "summary": "no_short_period_arrival",
+      "stations": [
+        {
+          "station": "NA130",
+          "status": "ok",
+          "triggers_in_window": 1,
+          "max_sta_lta": 8.4,
+          "verdict": "no_short_period_arrival"
+        },
+        {
+          "station": "NA010",
+          "status": "ok",
+          "triggers_in_window": 1,
+          "max_sta_lta": 5.3,
+          "verdict": "no_short_period_arrival"
+        }
+      ]
+    },
+    {
+      "kind": "distant_like",
+      "peak_utc": "2016-02-03T21:05:50+00:00",
+      "duration_s": 1100,
+      "strongest_station": "NA210",
+      "strongest_ratio": 14.4,
+      "contrast": 1.56,
+      "summary": "earthquake_like",
+      "stations": [
+        {
+          "station": "NA210",
+          "status": "ok",
+          "triggers_in_window": 3,
+          "max_sta_lta": 12.0,
+          "onset_s_from_peak": -145.2,
+          "peak_sta_lta": 12.0,
+          "lf_hf": 0.08,
+          "centroid_hz": 7.34,
+          "duration_80_s": 33.6,
+          "hv_segment": 2.02,
+          "signal_present": true,
+          "verdict": "earthquake_like"
+        },
+        {
+          "station": "NA130",
+          "status": "ok",
+          "triggers_in_window": 5,
+          "max_sta_lta": 12.0,
+          "onset_s_from_peak": -149.8,
+          "peak_sta_lta": 12.0,
+          "lf_hf": 0.11,
+          "centroid_hz": 9.84,
+          "duration_80_s": 19.6,
+          "hv_segment": 4.12,
+          "signal_present": true,
+          "verdict": "earthquake_like"
+        }
+      ]
+    },
+    {
+      "kind": "distant_like",
+      "peak_utc": "2015-12-29T02:44:20+00:00",
+      "duration_s": 1190,
+      "strongest_station": "NA130",
+      "strongest_ratio": 14.3,
+      "contrast": 2.15,
+      "summary": "no_short_period_arrival",
+      "stations": [
+        {
+          "station": "NA130",
+          "status": "ok",
+          "triggers_in_window": 1,
+          "max_sta_lta": 5.5,
+          "verdict": "no_short_period_arrival"
+        },
+        {
+          "station": "NA250",
+          "status": "ok",
+          "triggers_in_window": 1,
+          "max_sta_lta": 5.6,
+          "verdict": "no_short_period_arrival"
+        }
+      ]
+    },
+    {
+      "kind": "distant_like",
+      "peak_utc": "2016-04-24T03:52:10+00:00",
+      "duration_s": 370,
+      "strongest_station": "NA130",
+      "strongest_ratio": 14.3,
+      "contrast": 1.48,
+      "summary": "no_short_period_arrival",
+      "stations": [
+        {
+          "station": "NA130",
+          "status": "ok",
+          "triggers_in_window": 0,
+          "max_sta_lta": 4.5,
+          "verdict": "no_short_period_arrival"
+        },
+        {
+          "station": "NA110",
+          "status": "ok",
+          "triggers_in_window": 0,
+          "max_sta_lta": 4.6,
+          "verdict": "no_short_period_arrival"
+        }
+      ]
+    }
+  ]
+}
