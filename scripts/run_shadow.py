@@ -165,6 +165,7 @@ class ShadowState:
         self.last_feed_utc: datetime | None = None
         self.recent: list[dict[str, Any]] = []
         self.lock = threading.Lock()
+        self.write_lock = threading.Lock()
         self.catalogue: RollingOrigins | None = None
         self.explained_later = 0
 
@@ -292,11 +293,15 @@ class ShadowState:
         }
 
     def write_status(self) -> None:
-        path = self.settings.status_path
-        path.parent.mkdir(parents=True, exist_ok=True)
-        tmp = path.with_suffix(".json.tmp")
-        tmp.write_text(json.dumps(self.snapshot(), indent=2, default=str), encoding="utf-8")
-        tmp.replace(path)
+        # Two threads write this file: the loop, after every window, and the ticker that
+        # keeps it current through an outage. One at a time, or the rename collides.
+        body = json.dumps(self.snapshot(), indent=2, default=str)
+        with self.write_lock:
+            path = self.settings.status_path
+            path.parent.mkdir(parents=True, exist_ok=True)
+            tmp = path.with_suffix(".json.tmp")
+            tmp.write_text(body, encoding="utf-8")
+            tmp.replace(path)
 
 
 def summarise(outcomes: list[ServiceOutcome], stats: FeedStats, health: HealthMonitor) -> None:
