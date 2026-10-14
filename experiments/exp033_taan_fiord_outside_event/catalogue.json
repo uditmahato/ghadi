@@ -1,0 +1,452 @@
+[
+ {
+  "origin_utc": "2014-06-05T05:38:01.090000+00:00",
+  "lat": 61.1822,
+  "lon": -140.2548,
+  "depth_km": 11.51,
+  "magnitude": 5.1,
+  "magnitude_type": "mwr",
+  "event_type": "earthquake"
+ },
+ {
+  "origin_utc": "2014-06-05T05:44:28.860000+00:00",
+  "lat": 61.1732,
+  "lon": -140.2787,
+  "depth_km": 10.0,
+  "magnitude": 5.1,
+  "magnitude_type": "mww",
+  "event_type": "earthquake"
+ },
+ {
+  "origin_utc": "2014-07-20T02:15:44.154000+00:00",
+  "lat": 60.3235,
+  "lon": -140.3079,
+  "depth_km": 5.6,
+  "magnitude": 5.0,
+  "magnitude_type": "mw",
+  "event_type": "earthquake"
+ },
+ {
+  "origin_utc": "2014-07-17T11:53:01.040000+00:00",
+  "lat": 60.374,
+  "lon": -140.332,
+  "depth_km": 11.6,
+  "magnitude": 4.8,
+  "magnitude_type": "mb",
+  "event_type": "earthquake"
+ },
+ {
+  "origin_utc": "2014-07-12T11:15:31.650000+00:00",
+  "lat": 61.162,
+  "lon": -140.3,
+  "depth_km": 1.0,
+  "magnitude": 4.7,
+  "magnitude_type": "mwr",
+  "event_type": "earthquake"
+ },
+ {
+  "origin_utc": "2013-11-19T14:44:21.469000+00:00",
+  "lat": 59.5143,
+  "lon": -138.9978,
+  "depth_km": 18.4,
+  "magnitude": 4.5,
+  "magnitude_type": "mw",
+  "event_type": "earthquake"
+ },
+ {
+  "origin_utc": "2013-08-23T21:28:57.689000+00:00",
+  "lat": 61.5689,
+  "lon": -141.0852,
+  "depth_km": 13.3,
+  "magnitude": 4.4,
+  "magnitude_type": "mw",
+  "event_type": "earthquake"
+ },
+ {
+  "origin_utc": "2013-07-15T16:59:49.111000+00:00",
+  "lat": 61.5564,
+  "lon": -141.0889,
+  "depth_km": 12.2,
+  "magnitude": 4.4,
+  "magnitude_type": "mb",
+  "event_type": "earthquake"
+ },
+ {
+  "origin_utc": "2013-07-15T13:16:55.350000+00:00",
+  "lat": 61.5624,
+  "lon": -141.0654,
+  "depth_km": 11.5,
+  "magnitude": 4.4,
+  "magnitude_type": "mb",
+  "event_type": "earthquake"
+ },
+ {
+  "origin_utc": "2013-07-14T08:15:15.111000+00:00",
+  "lat": 61.5674,
+  "lon": -141.0786,
+  "depth_km": 9.0,
+  "magnitude": 4.4,
+  "magnitude_type": "mb",
+  "event_type": "earthquake"
+ },
+ {
+  "origin_utc": "2017-11-13T16:00:37.572000+00:00",
+  "lat": 60.561,
+  "lon": -142.656,
+  "depth_km": 19.1,
+  "magnitude": 4.3,
+  "magnitude_type": "mw",
+  "event_type": "earthquake"
+ },
+ {
+  "origin_utc": "2013-02-26T22:33:44.277000+00:00",
+  "lat": 59.5112,
+  "lon": -142.68,
+  "depth_km": 5.0,
+  "magnitude": 4.3,
+  "magnitude_type": "mb",
+  "event_type": "earthquake"
+ },
+ {
+  "origin_utc": "2013-10-16T15:27:15.280000+00:00",
+  "lat": 58.7904,
+  "lon": -141.8809,
+  "depth_km": 4.28,
+  "magnitude": 4.2,
+  "magnitude_type": "mb",
+  "event_type": "earthquake"
+ },
+ {
+  "origin_utc": "2016-12-26T23:59:50.290000+00:00",
+  "lat": 60.1571,
+  "lon": -141.1619,
+  "depth_km": 12.5,
+  "magnitude": 4.1,
+  "magnitude_type": "mw",
+  "event_type": "earthquake"
+ },
+ {
+  "origin_utc": "2017-11-05T22:27:43.410000+00:00",
+  "lat": 61.4049,
+  "lon": -140.0544,
+  "depth_km": 3.75,
+  "magnitude": 4.0,
+  "magnitude_type": "mwr",
+  "event_type": "earthquake"
+ },
+ {
+  "origin_utc": "2015-11-14T02:12:22.397000+00:00",
+  "lat": 60.4282,
+  "lon": -141.2024,
+  "depth_km": 12.9,
+  "magnitude": 4.0,
+  "magnitude_type": "mw",
+  "event_type": "earthquake"
+ },
+ {
+  "origin_utc": "2015-08-10T07:53:58.990000+00:00",
+  "lat": 59.5427,
+  "lon": -138.9379,
+  "depth_km": 14.1,
+  "magnitude": 3.9,
+  "magnitude_type": "ml",
+  "event_type": "earthquake"
+ },
+ {
+  "origin_utc": "2016-08-03T15:04:32.700000+00:00",
+  "lat": 60.1628,
+  "lon": -139.525,
+  "depth_km": 10.2,
+  "magnitude": 3.9,
+  "magnitude_type": "mw",
+  "event_type": "earthquake"
+ },
+ {
+  "origin_utc": "2017-02-28T23:48:28.522000+00:00",
+  "lat": 61.536,
+  "lon": -141.0639,
+  "depth_km": 18.3,
+  "magnitude": 3.9,
+  "magnitude_type": "ml",
+  "event_type": "earthquake"
+ },
+ {
+  "origin_utc": "2018-06-10T00:29:18.290000+00:00",
+  "lat": 61.1529,
+  "lon": -140.517,
+  "depth_km": 5.0,
+  "magnitude": 3.9,
+  "magnitude_type": "mwr",
+  "event_type": "earthquake"
+ },
+ {
+  "origin_utc": "2017-10-11T06:05:20.580000+00:00",
+  "lat": 61.587,
+  "lon": -141.0809,
+  "depth_km": 10.3,
+  "magnitude": 3.9,
+  "magnitude_type": "mw",
+  "event_type": "earthquake"
+ },
+ {
+  "origin_utc": "2018-05-15T20:31:53.140000+00:00",
+  "lat": 61.1665,
+  "lon": -140.5385,
+  "depth_km": 5.84,
+  "magnitude": 3.9,
+  "magnitude_type": "mwr",
+  "event_type": "earthquake"
+ },
+ {
+  "origin_utc": "2018-05-02T07:15:57.019000+00:00",
+  "lat": 58.7642,
+  "lon": -141.3021,
+  "depth_km": 9.8,
+  "magnitude": 3.9,
+  "magnitude_type": "ml",
+  "event_type": "earthquake"
+ },
+ {
+  "origin_utc": "2013-12-24T20:56:47.882000+00:00",
+  "lat": 60.2569,
+  "lon": -141.6712,
+  "depth_km": 10.8,
+  "magnitude": 3.9,
+  "magnitude_type": "ml",
+  "event_type": "earthquake"
+ },
+ {
+  "origin_utc": "2013-07-15T19:09:52.748000+00:00",
+  "lat": 61.5414,
+  "lon": -141.034,
+  "depth_km": 7.9,
+  "magnitude": 3.9,
+  "magnitude_type": "ml",
+  "event_type": "earthquake"
+ },
+ {
+  "origin_utc": "2014-07-22T01:23:09.826000+00:00",
+  "lat": 60.344,
+  "lon": -140.3261,
+  "depth_km": 9.4,
+  "magnitude": 3.8,
+  "magnitude_type": "ml",
+  "event_type": "earthquake"
+ },
+ {
+  "origin_utc": "2017-08-10T09:38:02.940000+00:00",
+  "lat": 60.4135,
+  "lon": -140.5865,
+  "depth_km": 7.35,
+  "magnitude": 3.8,
+  "magnitude_type": "mwr",
+  "event_type": "earthquake"
+ },
+ {
+  "origin_utc": "2014-06-05T22:52:39.850000+00:00",
+  "lat": 61.517,
+  "lon": -140.69,
+  "depth_km": 1.0,
+  "magnitude": 3.7,
+  "magnitude_type": "mwr",
+  "event_type": "earthquake"
+ },
+ {
+  "origin_utc": "2018-02-01T13:40:27.710000+00:00",
+  "lat": 61.1743,
+  "lon": -139.8564,
+  "depth_km": 5.0,
+  "magnitude": 3.7,
+  "magnitude_type": "mwr",
+  "event_type": "earthquake"
+ },
+ {
+  "origin_utc": "2017-12-24T19:15:04.618000+00:00",
+  "lat": 60.2961,
+  "lon": -143.0989,
+  "depth_km": 7.1,
+  "magnitude": 3.7,
+  "magnitude_type": "mw",
+  "event_type": "earthquake"
+ },
+ {
+  "origin_utc": "2016-10-28T11:19:36.340000+00:00",
+  "lat": 61.405,
+  "lon": -140.007,
+  "depth_km": 1.53,
+  "magnitude": 3.7,
+  "magnitude_type": "ml",
+  "event_type": "earthquake"
+ },
+ {
+  "origin_utc": "2016-07-28T01:42:17+00:00",
+  "lat": 61.2297,
+  "lon": -139.2366,
+  "depth_km": 7.5,
+  "magnitude": 3.7,
+  "magnitude_type": "mwr",
+  "event_type": "earthquake"
+ },
+ {
+  "origin_utc": "2016-01-17T02:53:54.319000+00:00",
+  "lat": 59.8159,
+  "lon": -141.7597,
+  "depth_km": 9.8,
+  "magnitude": 3.7,
+  "magnitude_type": "ml",
+  "event_type": "earthquake"
+ },
+ {
+  "origin_utc": "2015-12-19T04:16:19.491000+00:00",
+  "lat": 60.0002,
+  "lon": -141.5529,
+  "depth_km": 17.5,
+  "magnitude": 3.7,
+  "magnitude_type": "ml",
+  "event_type": "earthquake"
+ },
+ {
+  "origin_utc": "2014-07-17T13:09:26.147000+00:00",
+  "lat": 60.3291,
+  "lon": -140.3488,
+  "depth_km": 1.2,
+  "magnitude": 3.6,
+  "magnitude_type": "ml",
+  "event_type": "earthquake"
+ },
+ {
+  "origin_utc": "2017-03-26T18:47:34.416000+00:00",
+  "lat": 59.5555,
+  "lon": -138.9578,
+  "depth_km": 20.4,
+  "magnitude": 3.6,
+  "magnitude_type": "ml",
+  "event_type": "earthquake"
+ },
+ {
+  "origin_utc": "2016-06-25T23:22:01.940000+00:00",
+  "lat": 61.4339,
+  "lon": -140.5386,
+  "depth_km": 6.87,
+  "magnitude": 3.6,
+  "magnitude_type": "ml",
+  "event_type": "earthquake"
+ },
+ {
+  "origin_utc": "2015-06-06T00:00:02.003000+00:00",
+  "lat": 59.8664,
+  "lon": -139.2339,
+  "depth_km": 10.9,
+  "magnitude": 3.6,
+  "magnitude_type": "ml",
+  "event_type": "earthquake"
+ },
+ {
+  "origin_utc": "2013-09-21T08:40:47.162000+00:00",
+  "lat": 60.2156,
+  "lon": -140.9758,
+  "depth_km": 16.3,
+  "magnitude": 3.6,
+  "magnitude_type": "ml",
+  "event_type": "earthquake"
+ },
+ {
+  "origin_utc": "2013-07-14T16:04:51.568000+00:00",
+  "lat": 61.5617,
+  "lon": -141.06,
+  "depth_km": 9.2,
+  "magnitude": 3.6,
+  "magnitude_type": "ml",
+  "event_type": "earthquake"
+ },
+ {
+  "origin_utc": "2013-02-26T23:56:29.687000+00:00",
+  "lat": 60.0447,
+  "lon": -141.6515,
+  "depth_km": 12.7,
+  "magnitude": 3.6,
+  "magnitude_type": "ml",
+  "event_type": "earthquake"
+ },
+ {
+  "origin_utc": "2014-11-10T17:17:43+00:00",
+  "lat": 61.5402,
+  "lon": -140.7113,
+  "depth_km": 1.0,
+  "magnitude": 3.6,
+  "magnitude_type": "mwr",
+  "event_type": "earthquake"
+ },
+ {
+  "origin_utc": "2014-04-24T09:14:04.119000+00:00",
+  "lat": 59.8975,
+  "lon": -141.1665,
+  "depth_km": 11.8,
+  "magnitude": 3.5,
+  "magnitude_type": "ml",
+  "event_type": "earthquake"
+ },
+ {
+  "origin_utc": "2018-04-16T03:21:56.402000+00:00",
+  "lat": 59.8489,
+  "lon": -139.0838,
+  "depth_km": 9.6,
+  "magnitude": 3.5,
+  "magnitude_type": "ml",
+  "event_type": "earthquake"
+ },
+ {
+  "origin_utc": "2013-07-17T11:22:57.498000+00:00",
+  "lat": 61.5377,
+  "lon": -141.0625,
+  "depth_km": 12.5,
+  "magnitude": 3.5,
+  "magnitude_type": "ml",
+  "event_type": "earthquake"
+ },
+ {
+  "origin_utc": "2013-07-14T08:16:19.541000+00:00",
+  "lat": 61.578,
+  "lon": -141.0426,
+  "depth_km": 20.1,
+  "magnitude": 3.5,
+  "magnitude_type": "ml",
+  "event_type": "earthquake"
+ },
+ {
+  "origin_utc": "2013-02-17T05:59:16.230000+00:00",
+  "lat": 60.193,
+  "lon": -139.558,
+  "depth_km": 9.0,
+  "magnitude": 3.5,
+  "magnitude_type": "ml",
+  "event_type": "earthquake"
+ },
+ {
+  "origin_utc": "2014-09-08T21:57:44.910000+00:00",
+  "lat": 61.555,
+  "lon": -140.9926,
+  "depth_km": 1.0,
+  "magnitude": 3.4,
+  "magnitude_type": "ml",
+  "event_type": "earthquake"
+ },
+ {
+  "origin_utc": "2014-06-26T17:58:36.979000+00:00",
+  "lat": 61.2576,
+  "lon": -139.5417,
+  "depth_km": 12.2,
+  "magnitude": 3.4,
+  "magnitude_type": "ml",
+  "event_type": "earthquake"
+ },
+ {
+  "origin_utc": "2017-10-12T02:35:17.947000+00:00",
+  "lat": 61.5751,
+  "lon": -141.1039,
+  "depth_km": 8.8,
+  "magnitude": 3.4,
+  "magnitude_type": "ml",
+  "event_type": "earthquake"
+ }
+]

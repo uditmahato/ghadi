@@ -29,7 +29,8 @@ and 15 at the Everest one. Injected copies of the 2026 signal are caught half th
 at 2.5 percent of its amplitude. The 2017 Piz Cengalo rock avalanche in Switzerland
 shows the same low frequency tendency against its own region's earthquakes on five
 stations, but the Nepal thresholds pass it at only one, so the operating rule is local
-while the signature is not. A search of catalogued events, satellite radar, a
+while the signature is not. The 2015 Taan Fiord landslide in Alaska, twenty times larger,
+stands beyond every local earthquake on four stations. A search of catalogued events, satellite radar, a
 neighbouring range, and a year of dense network data from 2015 to 2016 found no second
 event of this kind in the region, so every estimate rests on one positive case. We
 release the code, the data and a shadow service that runs the detector live without
@@ -255,7 +256,26 @@ earthquake at every station, and 0 to 22 percent of 46 to 50 local earthquakes r
 values, an overlap like NK.KKN's [exp031]. But the Nepal thresholds pass it at one station
 of five, and its H/V ratio sits at the local earthquake median at every station.
 
-**TO COME: Taan Fiord, Alaska, 2015 [exp033].**
+On 18 October 2015 about 60 to 75 million cubic metres of rock fell from the slope at
+the terminus of Tyndall Glacier into Taan Fiord, Alaska (Higman and others, 2018). On four
+stations from 18 to 85 km the landslide's segment has an LF/HF of 108 to 723 and a
+centroid of 0.79 to 1.14 Hz, and none of 28 to 41 local earthquakes on any of them reaches
+its values [exp033]. Two stations at 127 and 135 km did not trigger on it. The Nepal
+thresholds pass the landslide here, but they also pass 22 to 78 percent of the region's
+earthquakes, which are low in frequency at these stations too. Its H/V ratio is below
+most earthquakes' at two stations and above most at the other two.
+
+Across the three events the separation grows with size. Bondo, the smallest at about
+three million cubic metres, overlaps up to 22 percent of its region's earthquakes; Taan
+Fiord, twenty or more times larger, overlaps none. Whatever its cause in Nepal, the 2026
+event's H/V signature appears at neither outside event.
+
+Taan Fiord also showed a failure a live system would meet. An M4.1 earthquake 470 km
+away arrived three minutes before the landslide, below the distant earthquake screen's
+magnitude, and its late waves passed the Nepal rule at three stations. A first analysis
+that took the strongest trigger near the reported time measured that earthquake instead
+of the landslide; only the causal rule, that nothing arrives before its own origin,
+separated them [exp033].
 
 A rule set relative to each station's own earthquakes, at the 0.80 quantile, passes six
 of seven station records of the two events, where the absolute rule passes three, and
@@ -287,8 +307,9 @@ its decisions, its outages, and its measured false alarm rate.
 
 * **One event.** The thresholds were set on the event they detect. The margin, the
   injection test and the outside events reduce that dependence; they do not remove it.
-* **Thresholds and the H/V rule are local.** They did not carry to Bondo [exp031]. The
-  H/V rule in particular must not be described as a general mark of mass movements.
+* **Thresholds and the H/V rule are local.** They missed Bondo at four stations of five
+  [exp031] and passed most Alaskan earthquakes [exp033]. The H/V signature appears at
+  neither outside event and must not be described as a general mark of mass movements.
 * **One fragile station.** Kakani has gone silent for hours at a time, and the partner
   is 131 km away. There is no third open station [exp028].
 * **Which arrival triggers matters.** For an emergent source the 120 s segment's content

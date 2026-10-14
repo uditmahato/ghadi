@@ -64,7 +64,7 @@ tested on national network data, not to be relied on by itself.
 | 3. Method | Trigger, decision segment, spectral and H/V rules with a 20 percent margin, distant earthquake screening, two station agreement inside the catchment, fusion and the human gate | exp002, exp005, exp006, exp021, exp022, exp024, `docs/ARCHITECTURE.md` |
 | 4. Detection of the 2026 event | When each station decides; lead time per town; why Timure cannot be saved | exp011, exp020 |
 | 5. How far it can be trusted | Earthquake overlap; false alarm rates per station; what each rule adds; smallest event caught | exp003, exp004, exp009, exp018, exp019, exp026, exp027, fig02, fig03, fig04, fig05 |
-| 6. The search for a second event, and a test elsewhere | Catalogued events, radar, Chamoli, the 2015 to 2016 network scan; why the positive class stays at one. Then Bondo 2017: the signature appears on another range and network, the thresholds and H/V rule do not carry over | exp008, exp016, exp023, exp029, exp030, exp031, exp032 |
+| 6. The search for a second event, and a test elsewhere | Catalogued events, radar, Chamoli, the 2015 to 2016 network scan; why the positive class stays at one. Then Bondo 2017: the signature appears on another range and network, the thresholds and H/V rule do not carry over | exp008, exp016, exp023, exp029, exp030, exp031, exp032, exp033 |
 | 7. Running it live | The first live day and the bug it exposed; feed delay; backlog handling; the long shadow run | exp025, the shadow run (to come) |
 | 8. Limits | n = 1; thresholds shaped on the event they detect; one fragile station; no third open station | exp028, every FINDINGS limits section |
 | 9. What would make it work | National network data, river gauges as the second signal, operation by an agency | `docs/outreach` |
@@ -80,8 +80,8 @@ tested on national network data, not to be relied on by itself.
 | About 35 minutes of warning at Bidur | Moderate | One calibrated travel record |
 | False alarm rates | Moderate | Measured on archive noise; the live run will test them |
 | It would catch a smaller event | Weak | Injection of one event shape only |
-| The low frequency signature is a property of this kind of source | Moderate | Two Nepal stations and five Swiss stations on a second event (exp031) |
-| The thresholds and the H/V rule work elsewhere | Shown false | The Nepal rule passes Bondo at one station of five; Bondo's H/V is at the earthquake median (exp031) |
+| The low frequency signature is a property of this kind of source | Moderate to strong | Two Nepal stations, five Swiss stations on Bondo (exp031), four Alaskan stations on Taan Fiord, where no earthquake reaches it (exp033) |
+| The thresholds and the H/V rule work elsewhere | Shown false | The Nepal rule passes Bondo at one station of five (exp031) and passes most Alaskan earthquakes (exp033); H/V is not distinctive at either |
 | A rule set from each station's own earthquakes would carry to a new network | Moderate | 6 of 7 station records at the 0.80 quantile, same earthquake share, but three times IO.EVN's noise alarms (exp032) |
 | It would catch a different kind of event in Nepal | Not shown | n = 1. Say so plainly |
 
@@ -112,8 +112,8 @@ confirmed.
 1. **The long shadow run.** At least two months on the cloud machine
    ([DEPLOY_AWS.md](../DEPLOY_AWS.md)), so section 7 reports live false alarms and delay,
    not only archive ones.
-2. **Testing on events elsewhere.** Bondo 2017 is done (exp031). A second outside event
-   would help, ideally a large one with open data, such as Taan Fiord, Alaska, 2015. It
+2. **Testing on events elsewhere.** Bondo 2017 (exp031) and Taan Fiord 2015 (exp033) are
+   done. It
    does not raise the Nepal count above one, and the paper must not say it does. The rule
    set relative to each station's own earthquakes is tested (exp032).
 3. **The reading list confirmed** and the introduction written against Cook and others

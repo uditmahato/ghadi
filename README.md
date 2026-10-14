@@ -116,6 +116,7 @@ Good signs:
 * The same difference shows up on a second station 131 km away, so it is a property of the source and not a quirk of one site.
 * A short real time test over SeedLink looks fast enough, about 16 seconds on average.
 * The same pattern shows up far from Nepal. A rock avalanche in the Swiss Alps in 2017 is lower in pitch than its own region's earthquakes on all five stations we checked, so the pattern belongs to this kind of event and not only to one place.
+* A much bigger landslide in Alaska in 2015 stands out even more. On four stations, not one local earthquake comes close to it. Bigger events are easier to tell apart.
 
 Hard limits, and they matter:
 
@@ -129,7 +130,7 @@ Hard limits, and they matter:
 * The gauge is still the only truly independent source, and it needs the data agreement.
 * There is no third station. Of 33 open stations within 300 km, 31 were a temporary network that closed in 2016. The two in use are the only two, and on the day we checked neither was sending live data.
 * We searched the densest year of open data for a second event and did not find one. From 2015 to 2016 a temporary network had twelve stations near the source. A scan of nearly 3,000 station days found 263 events no earthquake list explains. Looked at closely, they are small earthquakes or sensors settling, not slope failures. So there is still one confirmed event, and a second will have to come from the future or from data we do not yet have.
-* The settings tuned on Nepal do not carry over. They would have caught that Swiss avalanche at only one station out of five, and the test of how much the ground moves sideways could not tell it apart from an earthquake at all. Any new place needs its settings tuned on its own earthquakes.
+* The settings tuned on Nepal do not carry over. They would have caught that Swiss avalanche at only one station out of five. In Alaska they catch the landslide but also most ordinary earthquakes. The test of how much the ground moves sideways does not tell either event apart from an earthquake. Any new place needs its settings tuned on its own earthquakes.
 * A lower frequency band can see this kind of event from much further away. A large avalanche 610 km off, invisible in the band the detector uses, shows faintly below 0.5 Hz. That band also sees every distant earthquake, so it is a lead to follow, not a feature yet.
 * The first live run lasted 20 hours and raised one Advisory. It was a magnitude 5.2 earthquake near Yemen, 4,000 km away. The check that sets distant earthquakes aside existed, but the live loop had no earthquake list to check against. It has one now, refreshed every two minutes. Earthquake lists are published some minutes after the waves arrive, so the service also looks back at what it already decided and tells the person at the outbox when an alert has since been explained.
 
