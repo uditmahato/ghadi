@@ -42,7 +42,10 @@ measured decision delay of about 160 s that leaves roughly 35 minutes of warning
 Bidur and 8 at Syabrubesi, while Timure, 4 minutes downstream, cannot be warned by any
 detector. Counting the times the second station is missing, the system raises about 3
 false alarms per station month at the Nepal station and 15 at the Indian one. Injected
-copies of the 2026 signal are caught half the time at 2.5 percent of its amplitude. A
+copies of the 2026 signal are caught half the time at 2.5 percent of its amplitude. The
+2017 Piz Cengalo rock avalanche in Switzerland shows the same low frequency tendency
+against its own region's earthquakes on five stations, but the Nepal thresholds pass it
+at only one, so the operating rule is local while the signature is not. A
 search of catalogued events, satellite radar, a neighbouring range, and a year of dense
 network data from 2015 to 2016 found no second event of this kind, so every estimate
 rests on one positive case. We release the code, the data and a shadow service that
@@ -61,7 +64,7 @@ tested on national network data, not to be relied on by itself.
 | 3. Method | Trigger, decision segment, spectral and H/V rules with a 20 percent margin, distant earthquake screening, two station agreement inside the catchment, fusion and the human gate | exp002, exp005, exp006, exp021, exp022, exp024, `docs/ARCHITECTURE.md` |
 | 4. Detection of the 2026 event | When each station decides; lead time per town; why Timure cannot be saved | exp011, exp020 |
 | 5. How far it can be trusted | Earthquake overlap; false alarm rates per station; what each rule adds; smallest event caught | exp003, exp004, exp009, exp018, exp019, exp026, exp027, fig02, fig03, fig04, fig05 |
-| 6. The search for a second event | Catalogued events, radar, Chamoli, the 2015 to 2016 network scan; why the positive class stays at one | exp008, exp016, exp023, exp029, exp030 |
+| 6. The search for a second event, and a test elsewhere | Catalogued events, radar, Chamoli, the 2015 to 2016 network scan; why the positive class stays at one. Then Bondo 2017: the signature appears on another range and network, the thresholds and H/V rule do not carry over | exp008, exp016, exp023, exp029, exp030, exp031 |
 | 7. Running it live | The first live day and the bug it exposed; feed delay; backlog handling; the long shadow run | exp025, the shadow run (to come) |
 | 8. Limits | n = 1; thresholds shaped on the event they detect; one fragile station; no third open station | exp028, every FINDINGS limits section |
 | 9. What would make it work | National network data, river gauges as the second signal, operation by an agency | `docs/outreach` |
@@ -77,7 +80,9 @@ tested on national network data, not to be relied on by itself.
 | About 35 minutes of warning at Bidur | Moderate | One calibrated travel record |
 | False alarm rates | Moderate | Measured on archive noise; the live run will test them |
 | It would catch a smaller event | Weak | Injection of one event shape only |
-| It would catch a different kind of event | Not shown | n = 1. Say so plainly |
+| The low frequency signature is a property of this kind of source | Moderate | Two Nepal stations and five Swiss stations on a second event (exp031) |
+| The thresholds and the H/V rule work elsewhere | Shown false | The Nepal rule passes Bondo at one station of five; Bondo's H/V is at the earthquake median (exp031) |
+| It would catch a different kind of event in Nepal | Not shown | n = 1. Say so plainly |
 
 ## Reading list
 
@@ -94,7 +99,7 @@ confirmed.
 | Ekström and Stark (2013). Simple scaling of catastrophic landslide dynamics. *Science* 339, 1416 to 1419 | Large landslides produce strong long period signals; supports exp029 and exp030 | check |
 | Hibert, Ekström and Stark (2014). Dynamics of the Bingham Canyon Mine landslides from seismic signal analysis. *Geophysical Research Letters* 41 | Seismic analysis of landslide dynamics | check |
 | Chmiel, Walter and others (2021). Machine learning improves debris flow warning. *Geophysical Research Letters* 48 | Seismic debris flow warning in an instrumented catchment; the dense network contrast | check |
-| Walter and others (2020). Direct observations of a three million cubic meter rock slope collapse with almost immediate initiation of ensuing debris flows. *Geophysical Research Letters* 47 | Bondo 2017, a well recorded cascade outside the Himalaya | check |
+| Walter and others (2019 or 2020; other papers cite it both ways). Direct observations of a three million cubic meter rock slope collapse with almost immediate initiation of ensuing debris flows. *Geophysical Research Letters* 47 | Bondo 2017, a well recorded cascade outside the Himalaya | check |
 | Allen (1978). Automatic earthquake recognition and timing from single traces. *Bulletin of the Seismological Society of America* 68, 1521 to 1532 | The STA/LTA trigger | check |
 | Nakamura (1989). A method for dynamic characteristics estimation of subsurface using microtremor on the ground surface. *Quarterly Report of RTRI* 30 | The H/V ratio | check |
 | Sattar and others (2025). The Sikkim flood of October 2023. *Science* | South Lhonak outburst, a recent transboundary cascade | check |
@@ -106,9 +111,11 @@ confirmed.
 1. **The long shadow run.** At least two months on the cloud machine
    ([DEPLOY_AWS.md](../DEPLOY_AWS.md)), so section 7 reports live false alarms and delay,
    not only archive ones.
-2. **Testing on events elsewhere.** Run the detector on a well recorded cascade outside
-   Nepal (Bondo 2017, South Lhonak 2023) to show whether it sees this kind of event at
-   all. It does not raise the Nepal count above one, and the paper must not say it does.
+2. **Testing on events elsewhere.** Bondo 2017 is done (exp031). A second outside event
+   would help, ideally a large one with open data, such as Taan Fiord, Alaska, 2015. It
+   does not raise the Nepal count above one, and the paper must not say it does. A rule
+   set relative to each station's own earthquakes, which exp031 suggests would carry
+   between networks better, is worth one experiment.
 3. **The reading list confirmed** and the introduction written against Cook and others
    (2021).
 4. **A coauthor from the region or the field.** Someone who knows the valley or works on
