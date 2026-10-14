@@ -8,6 +8,7 @@ question**. They should go out in week one.
 | [ndrrma.md](ndrrma.md) | NDRRMA | B1 | Does BIPAD expose an API? Access to incident records |
 | [dhm.md](dhm.md) | DHM | B2 | Gauge series at native sampling; status of the CAP SOP |
 | [dmg-nemrc.md](dmg-nemrc.md) | DMG / NEMRC | B3 | Waveform access, station metadata, collaboration |
+| [researchers.md](researchers.md) | Research groups working on seismic detection of Himalayan cascades | none | A critical read of the paper draft, valley data, coauthorship |
 
 ## Status
 

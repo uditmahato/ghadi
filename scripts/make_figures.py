@@ -413,6 +413,64 @@ def fig06_radar_nulls() -> None:
     save(fig, "fig06_radar_nulls.png")
 
 
+def fig07_lead_time() -> None:
+    d = load("exp020_catalogue_replay")
+    travel = load("exp011_lead_time_headline")
+    if d is None or travel is None:
+        print("fig07 skipped: exp020 or exp011 has no results")
+        return
+    event = next(e for e in d["events"] if e["event_id"].startswith("NPL-2026"))
+    nk = next(x for x in event["stations"]["NK.KKN"]["decisions"] if x.get("lead_times_min"))
+    lead = nk["lead_times_min"]
+    towns = [s["settlement"] for s in travel["scenarios"]["budget_60s"]["settlements"]]
+    arrival = {
+        s["settlement"]: s["arrival_min"] for s in travel["scenarios"]["budget_60s"]["settlements"]
+    }
+    reality = travel["scenarios"]["reality_2026_20min"]["warning_latency_s"] / 60.0
+    decided = arrival[towns[0]] - lead[towns[0]]
+
+    fig, ax = plt.subplots(figsize=(8.2, 3.6))
+    ys = np.arange(len(towns))[::-1]
+    for y, town in zip(ys, towns, strict=True):
+        ax.barh(y, arrival[town], height=0.5, color=BLUE, alpha=0.18)
+        ax.barh(y, lead[town], left=decided, height=0.5, color=BLUE)
+        ax.annotate(
+            f"{lead[town]:.1f} min of warning",
+            (decided + lead[town], y),
+            xytext=(6, 0),
+            textcoords="offset points",
+            va="center",
+            fontsize=9,
+            color=INK,
+        )
+    ax.axvline(decided, color=ORANGE, linewidth=1.6)
+    ax.annotate(
+        f"decision, {decided:.1f} min",
+        (decided, ys[0] + 0.5),
+        xytext=(4, 0),
+        textcoords="offset points",
+        color=ORANGE,
+        fontsize=9,
+    )
+    ax.axvline(reality, color=MUTED, linewidth=1.2, linestyle="--")
+    ax.annotate(
+        "first warning in 2026, about 20 min",
+        (reality, ys[-1] - 0.6),
+        xytext=(4, 0),
+        textcoords="offset points",
+        color=MUTED,
+        fontsize=9,
+    )
+    ax.set_ylim(ys[-1] - 0.85, ys[0] + 0.75)
+    ax.set_yticks(ys)
+    ax.set_yticklabels([f"{t} (water at {arrival[t]:g} min)" for t in towns])
+    ax.set_xlim(0, max(arrival.values()) * 1.3)
+    ax.set_xlabel("minutes after the onset at NK.KKN")
+    ax.set_title("Warning each town would have had in 2026, at the measured decision time")
+    ax.grid(axis="y", visible=False)
+    save(fig, "fig07_lead_time.png")
+
+
 FIGURES = {
     "fig01": fig01_event,
     "fig02": fig02_detection_curve,
@@ -420,6 +478,7 @@ FIGURES = {
     "fig04": fig04_margin,
     "fig05": fig05_suppression,
     "fig06": fig06_radar_nulls,
+    "fig07": fig07_lead_time,
 }
 
 
