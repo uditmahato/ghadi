@@ -31,6 +31,7 @@ python scripts/run_shadow.py live --settings deploy/ghadi.toml --hours 0
 ```
 
 With the container and systemd, see the comments in `deploy/ghadi-shadow.service`.
+To put it on a small always on machine in AWS, follow [DEPLOY_AWS.md](DEPLOY_AWS.md).
 
 To try it for one hour on your own machine, leave out `--settings` and pass `--hours 1`.
 State goes to `data/shadow`.
