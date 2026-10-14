@@ -45,8 +45,9 @@ Floods that start as mass movements are among the deadliest hazards in the Himal
 slope or glacier fails, the debris blocks a river or becomes a flow, and a surge travels
 down valleys where people live close to the water. The 2021 Chamoli disaster began with
 about 27 million cubic metres of rock and ice falling from Ronti Peak and left over 200
-dead or missing (Shugar and others, 2021). The 2021 Melamchi flood buried the lower
-valley in sediment. The 2023 South Lhonak outburst in Sikkim released about 50 million
+dead or missing (Shugar and others, 2021). The 2021 Melamchi flood cut up to about 100 m
+into high valley fills, set off new landslides and buried the lower valley in sediment
+(Chen and others, 2025). The 2023 South Lhonak outburst in Sikkim released about 50 million
 cubic metres of water after a moraine collapsed into the lake (Sattar and others, 2025).
 On 26 August 2026 an ice and rock avalanche in the Lhende Khola sent a surge down the
 Bhote Koshi and the Trishuli.

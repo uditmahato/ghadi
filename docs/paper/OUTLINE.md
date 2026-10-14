@@ -104,7 +104,7 @@ confirmed.
 | Allen (1978). Automatic earthquake recognition and timing from single traces. *Bulletin of the Seismological Society of America* 68, 1521 to 1532 | The STA/LTA trigger | check |
 | Nakamura (1989). A method for dynamic characteristics estimation of subsurface using microtremor on the ground surface. *Quarterly Report of RTRI* 30 | The H/V ratio | check |
 | Sattar and others (2025). The Sikkim flood of October 2023. *Science* | South Lhonak outburst, a recent transboundary cascade | check |
-| Melamchi 2021 flood studies | Needed for the introduction | to find |
+| Chen and others (2025), Erosional cascade during the 2021 Melamchi flood, *Nature Geoscience* 18 | Melamchi for the introduction | confirmed |
 | USGS and WMO accounts of the 2026 event | Already listed in `data/catalog/NPL-2026-08-26-BHOTEKOSHI-001.yaml` | have |
 
 ## What is still missing before submission
@@ -116,8 +116,8 @@ confirmed.
    done. It
    does not raise the Nepal count above one, and the paper must not say it does. The rule
    set relative to each station's own earthquakes is tested (exp032).
-3. **The reading list confirmed** and the introduction written against Cook and others
-   (2021).
+3. **The reading list confirmed** (done, see [REFERENCES.md](REFERENCES.md)) and the
+   introduction written against Cook and others (2021) (done in the draft).
 4. **A coauthor from the region or the field.** Someone who knows the valley or works on
    seismic hazard detection. It strengthens the paper and opens the door to data.
 5. **Figures for sections 4 and 7**: a lead time figure per town and a live run timeline.

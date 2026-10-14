@@ -50,12 +50,13 @@ specific claim; this list only confirms that the reference is real and correct.
    About 14.7 million cubic metres of moraine into South Lhonak Lake, about 50 million
    cubic metres of water released.
 
-7. **Melamchi 2021.** No single standard reference was confirmed. Candidates: Duwadi and
-   others (2024), Assessment of the 2021 debris flow and flood related loss and damage
-   in Melamchi Watershed of Central Nepal, *Journal of Nepal Hydrogeological
-   Association*, doi:10.3126/jnha.v1i1.78226 (confirmed record); and the multiscale
-   cascading hazard and erosional cascade studies by Zekkos, Clark and others (journal
-   not yet confirmed). **To finish.**
+7. **Chen, Hollingsworth, Clark, Chamlagain, Bista, Zekkos, Siwakoti and West (2025).**
+   Erosional cascade during the 2021 Melamchi flood. *Nature Geoscience* 18, 32 to 36.
+   doi:10.1038/s41561-024-01596-x. **Confirmed.** The standard reference for Melamchi:
+   the flood cut up to about 100 m into high valley fills, set off new landslides and
+   buried the lower valley in sediment. Its data are on HydroShare (Nepal-FRES).
+   A local loss and damage study: Duwadi and others (2024), *Journal of Nepal
+   Hydrogeological Association*, doi:10.3126/jnha.v1i1.78226.
 
 ## Seismic methods
 
