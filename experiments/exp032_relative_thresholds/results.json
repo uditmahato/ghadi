@@ -1,0 +1,513 @@
+{
+  "experiment": "exp032_relative_thresholds",
+  "segment_s": 120.0,
+  "records": {
+    "NK.KKN": {
+      "event": "2026 Bhote Koshi",
+      "event_values": [
+        4.918825432527951,
+        1.8851624520050314
+      ],
+      "n_quakes": 64
+    },
+    "IO.EVN": {
+      "event": "2026 Bhote Koshi",
+      "event_values": [
+        15.072605742437103,
+        1.5325246132329207
+      ],
+      "n_quakes": 132
+    },
+    "CH.VDL": {
+      "event": "2017 Bondo",
+      "event_values": [
+        3.869,
+        2.231
+      ],
+      "n_quakes": 49
+    },
+    "CH.DAVOX": {
+      "event": "2017 Bondo",
+      "event_values": [
+        1.099,
+        2.926
+      ],
+      "n_quakes": 50
+    },
+    "CH.MUGIO": {
+      "event": "2017 Bondo",
+      "event_values": [
+        3.015,
+        2.532
+      ],
+      "n_quakes": 49
+    },
+    "CH.MMK": {
+      "event": "2017 Bondo",
+      "event_values": [
+        2.501,
+        2.698
+      ],
+      "n_quakes": 49
+    },
+    "CH.SGT05": {
+      "event": "2017 Bondo",
+      "event_values": [
+        6.771,
+        1.986
+      ],
+      "n_quakes": 46
+    }
+  },
+  "absolute": {
+    "rule": "absolute: each Nepal station's 2026 values with a 20 percent margin; Swiss stations get NK.KKN's",
+    "events_passed": 3,
+    "stations": {
+      "NK.KKN": {
+        "lf_hf_min": 3.935,
+        "centroid_max_hz": 2.262,
+        "event_passes": true,
+        "quake_pass_share": 0.219,
+        "noise": {
+          "windows": 10,
+          "station_months": 0.292,
+          "per_station_month": 34.22
+        }
+      },
+      "IO.EVN": {
+        "lf_hf_min": 12.058,
+        "centroid_max_hz": 1.839,
+        "event_passes": true,
+        "quake_pass_share": 0.061,
+        "noise": {
+          "windows": 36,
+          "station_months": 0.327,
+          "per_station_month": 110.23
+        }
+      },
+      "CH.VDL": {
+        "lf_hf_min": 3.935,
+        "centroid_max_hz": 2.262,
+        "event_passes": false,
+        "quake_pass_share": 0.0
+      },
+      "CH.DAVOX": {
+        "lf_hf_min": 3.935,
+        "centroid_max_hz": 2.262,
+        "event_passes": false,
+        "quake_pass_share": 0.02
+      },
+      "CH.MUGIO": {
+        "lf_hf_min": 3.935,
+        "centroid_max_hz": 2.262,
+        "event_passes": false,
+        "quake_pass_share": 0.0
+      },
+      "CH.MMK": {
+        "lf_hf_min": 3.935,
+        "centroid_max_hz": 2.262,
+        "event_passes": false,
+        "quake_pass_share": 0.061
+      },
+      "CH.SGT05": {
+        "lf_hf_min": 3.935,
+        "centroid_max_hz": 2.262,
+        "event_passes": true,
+        "quake_pass_share": 0.196
+      }
+    }
+  },
+  "relative_sweep": [
+    {
+      "quantile": 0.7,
+      "events_passed": 6,
+      "stations": {
+        "NK.KKN": {
+          "lf_hf_min": 3.113,
+          "centroid_max_hz": 2.339,
+          "event_passes": true,
+          "quake_pass_share": 0.266,
+          "n_quakes": 64,
+          "noise": {
+            "windows": 12,
+            "station_months": 0.292,
+            "per_station_month": 41.06
+          }
+        },
+        "IO.EVN": {
+          "lf_hf_min": 3.658,
+          "centroid_max_hz": 2.28,
+          "event_passes": true,
+          "quake_pass_share": 0.258,
+          "n_quakes": 132,
+          "noise": {
+            "windows": 166,
+            "station_months": 0.327,
+            "per_station_month": 508.3
+          }
+        },
+        "CH.VDL": {
+          "lf_hf_min": 0.764,
+          "centroid_max_hz": 3.928,
+          "event_passes": true,
+          "quake_pass_share": 0.286,
+          "n_quakes": 49
+        },
+        "CH.DAVOX": {
+          "lf_hf_min": 1.138,
+          "centroid_max_hz": 3.052,
+          "event_passes": false,
+          "quake_pass_share": 0.28,
+          "n_quakes": 50
+        },
+        "CH.MUGIO": {
+          "lf_hf_min": 0.797,
+          "centroid_max_hz": 4.113,
+          "event_passes": true,
+          "quake_pass_share": 0.265,
+          "n_quakes": 49
+        },
+        "CH.MMK": {
+          "lf_hf_min": 1.116,
+          "centroid_max_hz": 3.41,
+          "event_passes": true,
+          "quake_pass_share": 0.286,
+          "n_quakes": 49
+        },
+        "CH.SGT05": {
+          "lf_hf_min": 3.6,
+          "centroid_max_hz": 2.558,
+          "event_passes": true,
+          "quake_pass_share": 0.261,
+          "n_quakes": 46
+        }
+      }
+    },
+    {
+      "quantile": 0.75,
+      "events_passed": 6,
+      "stations": {
+        "NK.KKN": {
+          "lf_hf_min": 3.663,
+          "centroid_max_hz": 2.179,
+          "event_passes": true,
+          "quake_pass_share": 0.234,
+          "n_quakes": 64,
+          "noise": {
+            "windows": 10,
+            "station_months": 0.292,
+            "per_station_month": 34.22
+          }
+        },
+        "IO.EVN": {
+          "lf_hf_min": 3.947,
+          "centroid_max_hz": 2.145,
+          "event_passes": true,
+          "quake_pass_share": 0.235,
+          "n_quakes": 132,
+          "noise": {
+            "windows": 143,
+            "station_months": 0.327,
+            "per_station_month": 437.88
+          }
+        },
+        "CH.VDL": {
+          "lf_hf_min": 1.04,
+          "centroid_max_hz": 3.68,
+          "event_passes": true,
+          "quake_pass_share": 0.245,
+          "n_quakes": 49
+        },
+        "CH.DAVOX": {
+          "lf_hf_min": 1.435,
+          "centroid_max_hz": 3.042,
+          "event_passes": false,
+          "quake_pass_share": 0.22,
+          "n_quakes": 50
+        },
+        "CH.MUGIO": {
+          "lf_hf_min": 0.951,
+          "centroid_max_hz": 3.824,
+          "event_passes": true,
+          "quake_pass_share": 0.245,
+          "n_quakes": 49
+        },
+        "CH.MMK": {
+          "lf_hf_min": 1.313,
+          "centroid_max_hz": 3.217,
+          "event_passes": true,
+          "quake_pass_share": 0.245,
+          "n_quakes": 49
+        },
+        "CH.SGT05": {
+          "lf_hf_min": 4.199,
+          "centroid_max_hz": 2.38,
+          "event_passes": true,
+          "quake_pass_share": 0.239,
+          "n_quakes": 46
+        }
+      }
+    },
+    {
+      "quantile": 0.8,
+      "events_passed": 6,
+      "stations": {
+        "NK.KKN": {
+          "lf_hf_min": 4.48,
+          "centroid_max_hz": 2.091,
+          "event_passes": true,
+          "quake_pass_share": 0.203,
+          "n_quakes": 64,
+          "noise": {
+            "windows": 8,
+            "station_months": 0.292,
+            "per_station_month": 27.37
+          }
+        },
+        "IO.EVN": {
+          "lf_hf_min": 4.943,
+          "centroid_max_hz": 2.104,
+          "event_passes": true,
+          "quake_pass_share": 0.159,
+          "n_quakes": 132,
+          "noise": {
+            "windows": 114,
+            "station_months": 0.327,
+            "per_station_month": 349.08
+          }
+        },
+        "CH.VDL": {
+          "lf_hf_min": 1.156,
+          "centroid_max_hz": 3.6,
+          "event_passes": true,
+          "quake_pass_share": 0.184,
+          "n_quakes": 49
+        },
+        "CH.DAVOX": {
+          "lf_hf_min": 1.773,
+          "centroid_max_hz": 2.902,
+          "event_passes": false,
+          "quake_pass_share": 0.22,
+          "n_quakes": 50
+        },
+        "CH.MUGIO": {
+          "lf_hf_min": 1.076,
+          "centroid_max_hz": 3.309,
+          "event_passes": true,
+          "quake_pass_share": 0.204,
+          "n_quakes": 49
+        },
+        "CH.MMK": {
+          "lf_hf_min": 1.516,
+          "centroid_max_hz": 2.975,
+          "event_passes": true,
+          "quake_pass_share": 0.163,
+          "n_quakes": 49
+        },
+        "CH.SGT05": {
+          "lf_hf_min": 5.927,
+          "centroid_max_hz": 2.289,
+          "event_passes": true,
+          "quake_pass_share": 0.174,
+          "n_quakes": 46
+        }
+      }
+    },
+    {
+      "quantile": 0.85,
+      "events_passed": 4,
+      "stations": {
+        "NK.KKN": {
+          "lf_hf_min": 6.841,
+          "centroid_max_hz": 1.791,
+          "event_passes": false,
+          "quake_pass_share": 0.156,
+          "n_quakes": 64,
+          "noise": {
+            "windows": 4,
+            "station_months": 0.292,
+            "per_station_month": 13.69
+          }
+        },
+        "IO.EVN": {
+          "lf_hf_min": 5.805,
+          "centroid_max_hz": 1.972,
+          "event_passes": true,
+          "quake_pass_share": 0.136,
+          "n_quakes": 132,
+          "noise": {
+            "windows": 96,
+            "station_months": 0.327,
+            "per_station_month": 293.96
+          }
+        },
+        "CH.VDL": {
+          "lf_hf_min": 1.398,
+          "centroid_max_hz": 3.289,
+          "event_passes": true,
+          "quake_pass_share": 0.143,
+          "n_quakes": 49
+        },
+        "CH.DAVOX": {
+          "lf_hf_min": 1.874,
+          "centroid_max_hz": 2.856,
+          "event_passes": false,
+          "quake_pass_share": 0.12,
+          "n_quakes": 50
+        },
+        "CH.MUGIO": {
+          "lf_hf_min": 1.178,
+          "centroid_max_hz": 3.11,
+          "event_passes": true,
+          "quake_pass_share": 0.122,
+          "n_quakes": 49
+        },
+        "CH.MMK": {
+          "lf_hf_min": 1.954,
+          "centroid_max_hz": 2.712,
+          "event_passes": true,
+          "quake_pass_share": 0.163,
+          "n_quakes": 49
+        },
+        "CH.SGT05": {
+          "lf_hf_min": 7.739,
+          "centroid_max_hz": 2.049,
+          "event_passes": false,
+          "quake_pass_share": 0.152,
+          "n_quakes": 46
+        }
+      }
+    },
+    {
+      "quantile": 0.9,
+      "events_passed": 3,
+      "stations": {
+        "NK.KKN": {
+          "lf_hf_min": 10.191,
+          "centroid_max_hz": 1.567,
+          "event_passes": false,
+          "quake_pass_share": 0.109,
+          "n_quakes": 64,
+          "noise": {
+            "windows": 4,
+            "station_months": 0.292,
+            "per_station_month": 13.69
+          }
+        },
+        "IO.EVN": {
+          "lf_hf_min": 7.255,
+          "centroid_max_hz": 1.799,
+          "event_passes": true,
+          "quake_pass_share": 0.091,
+          "n_quakes": 132,
+          "noise": {
+            "windows": 68,
+            "station_months": 0.327,
+            "per_station_month": 208.22
+          }
+        },
+        "CH.VDL": {
+          "lf_hf_min": 1.75,
+          "centroid_max_hz": 3.073,
+          "event_passes": true,
+          "quake_pass_share": 0.082,
+          "n_quakes": 49
+        },
+        "CH.DAVOX": {
+          "lf_hf_min": 2.198,
+          "centroid_max_hz": 2.741,
+          "event_passes": false,
+          "quake_pass_share": 0.1,
+          "n_quakes": 50
+        },
+        "CH.MUGIO": {
+          "lf_hf_min": 2.127,
+          "centroid_max_hz": 2.952,
+          "event_passes": true,
+          "quake_pass_share": 0.122,
+          "n_quakes": 49
+        },
+        "CH.MMK": {
+          "lf_hf_min": 2.614,
+          "centroid_max_hz": 2.434,
+          "event_passes": false,
+          "quake_pass_share": 0.122,
+          "n_quakes": 49
+        },
+        "CH.SGT05": {
+          "lf_hf_min": 10.232,
+          "centroid_max_hz": 1.9,
+          "event_passes": false,
+          "quake_pass_share": 0.065,
+          "n_quakes": 46
+        }
+      }
+    },
+    {
+      "quantile": 0.95,
+      "events_passed": 1,
+      "stations": {
+        "NK.KKN": {
+          "lf_hf_min": 16.506,
+          "centroid_max_hz": 1.447,
+          "event_passes": false,
+          "quake_pass_share": 0.047,
+          "n_quakes": 64,
+          "noise": {
+            "windows": 2,
+            "station_months": 0.292,
+            "per_station_month": 6.84
+          }
+        },
+        "IO.EVN": {
+          "lf_hf_min": 13.584,
+          "centroid_max_hz": 1.491,
+          "event_passes": false,
+          "quake_pass_share": 0.045,
+          "n_quakes": 132,
+          "noise": {
+            "windows": 32,
+            "station_months": 0.327,
+            "per_station_month": 97.99
+          }
+        },
+        "CH.VDL": {
+          "lf_hf_min": 1.823,
+          "centroid_max_hz": 2.915,
+          "event_passes": true,
+          "quake_pass_share": 0.041,
+          "n_quakes": 49
+        },
+        "CH.DAVOX": {
+          "lf_hf_min": 2.824,
+          "centroid_max_hz": 2.425,
+          "event_passes": false,
+          "quake_pass_share": 0.08,
+          "n_quakes": 50
+        },
+        "CH.MUGIO": {
+          "lf_hf_min": 3.307,
+          "centroid_max_hz": 2.477,
+          "event_passes": false,
+          "quake_pass_share": 0.061,
+          "n_quakes": 49
+        },
+        "CH.MMK": {
+          "lf_hf_min": 4.905,
+          "centroid_max_hz": 2.142,
+          "event_passes": false,
+          "quake_pass_share": 0.061,
+          "n_quakes": 49
+        },
+        "CH.SGT05": {
+          "lf_hf_min": 16.202,
+          "centroid_max_hz": 1.857,
+          "event_passes": false,
+          "quake_pass_share": 0.022,
+          "n_quakes": 46
+        }
+      }
+    }
+  ],
+  "note": "spectral layer only; the H/V, partner and catalogue rules are not applied"
+}
