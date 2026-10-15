@@ -1,0 +1,452 @@
+[
+ {
+  "origin_utc": "2017-03-06T20:12:07.401209+00:00",
+  "lat": 46.90669014,
+  "lon": 8.925293642,
+  "depth_km": 4.223144531,
+  "magnitude": 4.628068684,
+  "magnitude_type": "MLh",
+  "event_type": "earthquake"
+ },
+ {
+  "origin_utc": "2021-12-18T10:34:47.618170+00:00",
+  "lat": 45.62046719,
+  "lon": 9.606283699,
+  "depth_km": 26.1796875,
+  "magnitude": 4.413493852,
+  "magnitude_type": "MLhc",
+  "event_type": "earthquake"
+ },
+ {
+  "origin_utc": "2020-10-25T19:35:43.383892+00:00",
+  "lat": 46.90474746,
+  "lon": 9.124707839,
+  "depth_km": 1.436523438,
+  "magnitude": 4.324859837,
+  "magnitude_type": "MLh",
+  "event_type": "earthquake"
+ },
+ {
+  "origin_utc": "2018-01-17T19:07:19.446511+00:00",
+  "lat": 47.14502578,
+  "lon": 9.98787128,
+  "depth_km": 1.04296875,
+  "magnitude": 4.144057863,
+  "magnitude_type": "MLh",
+  "event_type": "earthquake"
+ },
+ {
+  "origin_utc": "2016-10-24T14:44:11.584989+00:00",
+  "lat": 46.3383041,
+  "lon": 7.580277771,
+  "depth_km": 8.241210938,
+  "magnitude": 4.140819089,
+  "magnitude_type": "MLh",
+  "event_type": "earthquake"
+ },
+ {
+  "origin_utc": "2014-08-28T17:49:19.576365+00:00",
+  "lat": 45.63735391,
+  "lon": 10.66320713,
+  "depth_km": 3.58203125,
+  "magnitude": 4.068268604,
+  "magnitude_type": "MLh",
+  "event_type": "earthquake"
+ },
+ {
+  "origin_utc": "2018-02-01T01:47:33.109241+00:00",
+  "lat": 47.15320547,
+  "lon": 9.996274209,
+  "depth_km": 1.04296875,
+  "magnitude": 4.066972575,
+  "magnitude_type": "MLh",
+  "event_type": "earthquake"
+ },
+ {
+  "origin_utc": "2021-07-01T11:11:50.282499+00:00",
+  "lat": 46.61232363,
+  "lon": 8.373586727,
+  "depth_km": 8.266601562,
+  "magnitude": 4.020872296,
+  "magnitude_type": "MLhc",
+  "event_type": "earthquake"
+ },
+ {
+  "origin_utc": "2020-08-08T19:44:45.743049+00:00",
+  "lat": 47.17926484,
+  "lon": 10.66589575,
+  "depth_km": 8.84296875,
+  "magnitude": 3.954060274,
+  "magnitude_type": "MLh",
+  "event_type": "earthquake"
+ },
+ {
+  "origin_utc": "2020-11-10T12:53:23.115762+00:00",
+  "lat": 46.90311152,
+  "lon": 9.115465173,
+  "depth_km": 1.690429688,
+  "magnitude": 3.937206497,
+  "magnitude_type": "MLhc",
+  "event_type": "earthquake"
+ },
+ {
+  "origin_utc": "2016-10-07T07:27:07.298413+00:00",
+  "lat": 46.51416738,
+  "lon": 9.543706509,
+  "depth_km": 10.01855469,
+  "magnitude": 3.842221869,
+  "magnitude_type": "MLh",
+  "event_type": "earthquake"
+ },
+ {
+  "origin_utc": "2017-07-21T17:03:55.765469+00:00",
+  "lat": 45.68617187,
+  "lon": 10.66161918,
+  "depth_km": 5.278125,
+  "magnitude": 3.618586442,
+  "magnitude_type": "MLh",
+  "event_type": "earthquake"
+ },
+ {
+  "origin_utc": "2020-10-25T19:43:09.942212+00:00",
+  "lat": 46.90597441,
+  "lon": 9.124710694,
+  "depth_km": 1.411132812,
+  "magnitude": 3.596233409,
+  "magnitude_type": "MLh",
+  "event_type": "earthquake"
+ },
+ {
+  "origin_utc": "2016-01-31T22:43:58.992628+00:00",
+  "lat": 47.10066484,
+  "lon": 10.08683544,
+  "depth_km": 5.77578125,
+  "magnitude": 3.535349947,
+  "magnitude_type": "MLh",
+  "event_type": "earthquake"
+ },
+ {
+  "origin_utc": "2017-09-03T09:15:46.729012+00:00",
+  "lat": 45.72608594,
+  "lon": 10.62884868,
+  "depth_km": 4.2015625,
+  "magnitude": 3.41441911,
+  "magnitude_type": "MLh",
+  "event_type": "earthquake"
+ },
+ {
+  "origin_utc": "2017-11-21T09:22:01.498462+00:00",
+  "lat": 47.14533252,
+  "lon": 8.545989822,
+  "depth_km": 31.70849609,
+  "magnitude": 3.337104376,
+  "magnitude_type": "MLh",
+  "event_type": "earthquake"
+ },
+ {
+  "origin_utc": "2014-12-15T06:58:17.922639+00:00",
+  "lat": 47.51413418,
+  "lon": 9.146917639,
+  "depth_km": 25.278320309999998,
+  "magnitude": 3.271614869,
+  "magnitude_type": "MLh",
+  "event_type": "earthquake"
+ },
+ {
+  "origin_utc": "2015-11-28T21:29:56.634979+00:00",
+  "lat": 45.76224961,
+  "lon": 9.797219581,
+  "depth_km": 11.93554688,
+  "magnitude": 3.266371353,
+  "magnitude_type": "MLh",
+  "event_type": "earthquake"
+ },
+ {
+  "origin_utc": "2016-10-03T06:43:43.460716+00:00",
+  "lat": 46.66917246,
+  "lon": 8.512954326,
+  "depth_km": 4.940429688,
+  "magnitude": 3.246569964,
+  "magnitude_type": "MLh",
+  "event_type": "earthquake"
+ },
+ {
+  "origin_utc": "2016-09-10T15:13:52.413971+00:00",
+  "lat": 45.42151094,
+  "lon": 9.642174302,
+  "depth_km": 44.9484375,
+  "magnitude": 3.245068296,
+  "magnitude_type": "MLh",
+  "event_type": "earthquake"
+ },
+ {
+  "origin_utc": "2018-04-12T02:23:59.083046+00:00",
+  "lat": 47.15361445,
+  "lon": 10.00968968,
+  "depth_km": 0.255859375,
+  "magnitude": 3.222348068,
+  "magnitude_type": "MLh",
+  "event_type": "earthquake"
+ },
+ {
+  "origin_utc": "2016-04-11T10:47:23.027884+00:00",
+  "lat": 46.43114355,
+  "lon": 10.01505152,
+  "depth_km": 7.555664062,
+  "magnitude": 3.172655965,
+  "magnitude_type": "MLh",
+  "event_type": "earthquake"
+ },
+ {
+  "origin_utc": "2014-11-14T04:14:12.083150+00:00",
+  "lat": 47.12968887,
+  "lon": 9.186057695,
+  "depth_km": -0.4169921875,
+  "magnitude": 3.146207421,
+  "magnitude_type": "MLh",
+  "event_type": "earthquake"
+ },
+ {
+  "origin_utc": "2020-10-25T22:23:35.341294+00:00",
+  "lat": 46.90556543,
+  "lon": 9.133949026,
+  "depth_km": 1.715820312,
+  "magnitude": 3.137874755,
+  "magnitude_type": "MLh",
+  "event_type": "earthquake"
+ },
+ {
+  "origin_utc": "2015-08-29T13:07:19.081028+00:00",
+  "lat": 46.68893594,
+  "lon": 10.64291106,
+  "depth_km": 9.4015625,
+  "magnitude": 3.124111095,
+  "magnitude_type": "MLh",
+  "event_type": "earthquake"
+ },
+ {
+  "origin_utc": "2016-01-02T10:42:44.598405+00:00",
+  "lat": 46.52889082,
+  "lon": 7.997354657,
+  "depth_km": 6.870117188,
+  "magnitude": 3.109575887,
+  "magnitude_type": "MLh",
+  "event_type": "earthquake"
+ },
+ {
+  "origin_utc": "2020-05-26T05:50:25.805139+00:00",
+  "lat": 46.90740586,
+  "lon": 9.13652018,
+  "depth_km": 2.083984375,
+  "magnitude": 3.087375634,
+  "magnitude_type": "MLh",
+  "event_type": "earthquake"
+ },
+ {
+  "origin_utc": "2015-01-25T17:34:26.607649+00:00",
+  "lat": 46.77734883,
+  "lon": 10.16033013,
+  "depth_km": 7.212890625,
+  "magnitude": 3.055667484,
+  "magnitude_type": "MLh",
+  "event_type": "earthquake"
+ },
+ {
+  "origin_utc": "2020-08-09T00:50:36.420796+00:00",
+  "lat": 47.17803672,
+  "lon": 10.66884916,
+  "depth_km": 8.88359375,
+  "magnitude": 3.033798981,
+  "magnitude_type": "MLh",
+  "event_type": "earthquake"
+ },
+ {
+  "origin_utc": "2016-02-17T20:17:04.497392+00:00",
+  "lat": 47.10066484,
+  "lon": 10.08683544,
+  "depth_km": 5.08515625,
+  "magnitude": 3.008493979,
+  "magnitude_type": "MLh",
+  "event_type": "earthquake"
+ },
+ {
+  "origin_utc": "2020-01-25T19:13:28.756778+00:00",
+  "lat": 46.23524004,
+  "lon": 7.714763478,
+  "depth_km": 3.670898438,
+  "magnitude": 2.999039894,
+  "magnitude_type": "MLh",
+  "event_type": "earthquake"
+ },
+ {
+  "origin_utc": "2014-02-25T00:52:45.052562+00:00",
+  "lat": 46.23912539,
+  "lon": 7.838893483,
+  "depth_km": 6.095703125,
+  "magnitude": 2.976155639,
+  "magnitude_type": "MLh",
+  "event_type": "earthquake"
+ },
+ {
+  "origin_utc": "2016-02-03T21:37:39.432584+00:00",
+  "lat": 45.76354375,
+  "lon": 10.72328166,
+  "depth_km": 9.21875,
+  "magnitude": 2.968915725,
+  "magnitude_type": "MLh",
+  "event_type": "earthquake"
+ },
+ {
+  "origin_utc": "2020-08-12T21:15:48.889351+00:00",
+  "lat": 46.01766035,
+  "lon": 7.713770044,
+  "depth_km": 3.010742188,
+  "magnitude": 2.958122313,
+  "magnitude_type": "MLh",
+  "event_type": "earthquake"
+ },
+ {
+  "origin_utc": "2014-07-07T06:46:35.263405+00:00",
+  "lat": 46.41212578,
+  "lon": 10.56045807,
+  "depth_km": 10.48828125,
+  "magnitude": 2.94237924,
+  "magnitude_type": "MLh",
+  "event_type": "earthquake"
+ },
+ {
+  "origin_utc": "2019-06-05T17:39:22.423208+00:00",
+  "lat": 47.62179932,
+  "lon": 9.127709243,
+  "depth_km": 18.746582030000003,
+  "magnitude": 2.933668735,
+  "magnitude_type": "MLh",
+  "event_type": "earthquake"
+ },
+ {
+  "origin_utc": "2021-09-28T19:05:38.580779+00:00",
+  "lat": 45.79915938,
+  "lon": 10.99293153,
+  "depth_km": 12.103125,
+  "magnitude": 2.918629807,
+  "magnitude_type": "MLhc",
+  "event_type": "earthquake"
+ },
+ {
+  "origin_utc": "2014-08-28T11:30:40.581541+00:00",
+  "lat": 46.61784492,
+  "lon": 10.52655283,
+  "depth_km": 10.91992188,
+  "magnitude": 2.910521505,
+  "magnitude_type": "MLh",
+  "event_type": "earthquake"
+ },
+ {
+  "origin_utc": "2020-08-28T05:32:55.907430+00:00",
+  "lat": 45.77428984,
+  "lon": 10.66772692,
+  "depth_km": 9.85859375,
+  "magnitude": 2.892946162,
+  "magnitude_type": "MLh",
+  "event_type": "earthquake"
+ },
+ {
+  "origin_utc": "2020-05-27T00:55:26.620602+00:00",
+  "lat": 46.90495195,
+  "lon": 9.136513931,
+  "depth_km": 2.744140625,
+  "magnitude": 2.887628908,
+  "magnitude_type": "MLh",
+  "event_type": "earthquake"
+ },
+ {
+  "origin_utc": "2020-07-11T11:53:12.383992+00:00",
+  "lat": 46.22910527,
+  "lon": 8.90416953,
+  "depth_km": 13.47167969,
+  "magnitude": 2.877274746,
+  "magnitude_type": "MLh",
+  "event_type": "earthquake"
+ },
+ {
+  "origin_utc": "2021-10-21T09:24:25.870488+00:00",
+  "lat": 45.59099219,
+  "lon": 10.36202953,
+  "depth_km": 19.2734375,
+  "magnitude": 2.875645296,
+  "magnitude_type": "MLhc",
+  "event_type": "earthquake"
+ },
+ {
+  "origin_utc": "2015-03-23T03:58:10.918662+00:00",
+  "lat": 45.71848828,
+  "lon": 10.45257188,
+  "depth_km": 9.47265625,
+  "magnitude": 2.871552967,
+  "magnitude_type": "MLh",
+  "event_type": "earthquake"
+ },
+ {
+  "origin_utc": "2017-03-06T21:57:32.599279+00:00",
+  "lat": 46.90822383,
+  "lon": 8.920928293,
+  "depth_km": 4.826171875,
+  "magnitude": 2.854038662,
+  "magnitude_type": "MLh",
+  "event_type": "earthquake"
+ },
+ {
+  "origin_utc": "2016-10-24T14:45:04.236193+00:00",
+  "lat": 46.34341641,
+  "lon": 7.579637025,
+  "depth_km": 7.64453125,
+  "magnitude": 2.837276524,
+  "magnitude_type": "MLh",
+  "event_type": "earthquake"
+ },
+ {
+  "origin_utc": "2018-08-16T09:45:10.583149+00:00",
+  "lat": 46.81517988,
+  "lon": 10.08991837,
+  "depth_km": 5.981445312,
+  "magnitude": 2.836403559,
+  "magnitude_type": "MLh",
+  "event_type": "earthquake"
+ },
+ {
+  "origin_utc": "2018-08-30T12:27:40.201398+00:00",
+  "lat": 46.91374512,
+  "lon": 8.926567238,
+  "depth_km": 4.991210938,
+  "magnitude": 2.830965045,
+  "magnitude_type": "MLh",
+  "event_type": "earthquake"
+ },
+ {
+  "origin_utc": "2020-05-27T07:11:29.136015+00:00",
+  "lat": 46.90311152,
+  "lon": 9.133942894,
+  "depth_km": 2.985351562,
+  "magnitude": 2.816291945,
+  "magnitude_type": "MLh",
+  "event_type": "earthquake"
+ },
+ {
+  "origin_utc": "2019-11-20T20:22:44.360513+00:00",
+  "lat": 46.24853203,
+  "lon": 9.97566215,
+  "depth_km": 11.40234375,
+  "magnitude": 2.800070307,
+  "magnitude_type": "MLh",
+  "event_type": "earthquake"
+ },
+ {
+  "origin_utc": "2016-03-13T00:58:49.449115+00:00",
+  "lat": 46.67941797,
+  "lon": 10.64647443,
+  "depth_km": 9.06640625,
+  "magnitude": 2.799859851,
+  "magnitude_type": "MLh",
+  "event_type": "earthquake"
+ }
+]
