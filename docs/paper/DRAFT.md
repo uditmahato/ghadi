@@ -131,7 +131,10 @@ a decision is made only on a window that holds the whole segment. Features over 
 window flatter the separation and are not available when the alert must be made
 [exp005]. This sets the decision time: the segment, plus the feed delay, plus up to a
 minute until the window that holds it closes. Its floor is about 126 s and its median
-in replay about 156 s [exp020].
+in replay about 156 s [exp020]. The segment starts at the first trigger. Four other start
+rules, among them the strongest trigger, a later start and a 180 s segment, were tested
+on the three events and on 649 earthquakes measured the same way; none passed the events
+at more stations, and every later start let more earthquakes through [exp034].
 
 **Spectral rule.** Two features: the ratio of energy below and above 3 Hz (LF/HF), and
 the spectral centroid. The split frequency changes the ratio by about three times and
@@ -313,9 +316,15 @@ its decisions, its outages, and its measured false alarm rate.
   neither outside event and must not be described as a general mark of mass movements.
 * **One fragile station.** Kakani has gone silent for hours at a time, and the partner
   is 131 km away. There is no third open station [exp028].
-* **Which arrival triggers matters.** For an emergent source the 120 s segment's content
-  depends on where the trigger fires; at Bondo two stations at the same distance gave
-  different answers for this reason [exp031].
+* **The station's own record matters more than the trigger.** Starting the segment
+  anywhere from 10 s before to 10 s after the trigger changes LF/HF by 11 percent or less
+  at the Nepal and Swiss stations and changes no record's verdict [exp034]. Starting later
+  makes the events look lower in frequency, but the earthquakes faster, so the first
+  trigger stays the rule. Two Swiss stations at the same distance gave different answers
+  at Bondo because of their records, the site or the path, not the trigger, which corrects
+  the explanation first given in exp031. NK.KKN, the station the service decides on, only
+  just passes a rule set on its own earthquakes, and fails it from 5 s after the trigger
+  [exp034].
 * **The travel times are from one flood.** The 4, 11 and 38 minutes are this event's.
   A smaller or slower surge travels differently.
 * **False alarm rates rest on small counts** measured on about a third of a station
