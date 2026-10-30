@@ -17,14 +17,19 @@ produced a seismic signal large enough that USGS initially catalogued it as an M
 earthquake before identifying it as landslide-generated. That signal existed minutes
 before the water reached the first settlements. Nobody was listening for it.
 
-We have been examining whether such signals can be reliably distinguished from
-earthquakes and from background noise on NK.KKN. Working from the openly available
-archive, the separation is visible on the discriminants physics predicts: the 26 August
-signal is markedly lower in frequency and longer in duration than the regional
-earthquakes recorded on the same station in the preceding weeks. Whether that
-separation survives contact with six months of continuous noise, and at what
-false-alarm rate, is exactly what we do not yet know — and it is why we are writing to
-the people who know this network best rather than proceeding alone.
+We have been examining whether such signals can be distinguished from earthquakes and
+from background noise, using the open archive of NK.KKN and of IO.EVN in the Everest
+region. On the first two minutes after onset, the 26 August signal is lower in frequency
+than most regional earthquakes on both stations, though about one earthquake in five
+looks as low on NK.KKN. A detector that also checks the ground's sideways motion,
+screens out distant earthquakes, and requires the second station to agree would have
+decided about 2.6 minutes after the failure, leaving about 35 minutes before the water
+reached Bidur. On noise recorded across 2024 to 2026 it raises about 3 false alarms a
+month at NK.KKN and 15 at IO.EVN. That is still above what an operator should accept,
+and the main reason is that only two open stations exist, 131 km apart, and one of them
+is often silent. Your network's stations near the valley are what would change that,
+and it is why we are writing to the people who know this network best rather than
+proceeding alone.
 
 Three specific requests:
 
@@ -63,6 +68,10 @@ Yours sincerely,
 - Instrument response is issue 2.4 and is the concrete near-term ask.
 - Be careful not to imply the network is being underused as a criticism. The framing
   is a use nobody has tried, not a failure by the people running it.
-- Do not overstate the reconnaissance result. Four windows, one of each class, is
-  not evidence of a detector, and this audience will know that immediately. Claiming
-  more would cost the collaboration.
+- Do not overstate the result. It rests on one event; the false alarm rates are from
+  about a third of a station month of noise per station; the thresholds did not carry
+  to the Bondo avalanche in Switzerland (exp031). This audience will know all of that
+  immediately, and saying it first is what earns the collaboration.
+- Updated 2026-10-14 with the results through exp032. The figures in the letter are
+  from exp020, exp027 and exp005; check them against the latest experiments before
+  sending.

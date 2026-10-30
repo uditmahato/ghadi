@@ -23,6 +23,8 @@
             "unusable_windows": 2,
             "triggered_windows": 3,
             "stale_windows": 0,
+            "backlog_delay_max_s": NaN,
+            "late_decisions": 0,
             "late_packets": 0,
             "corroborated": 0,
             "upgrades": 0,
@@ -93,6 +95,8 @@
             "unusable_windows": 2,
             "triggered_windows": 5,
             "stale_windows": 0,
+            "backlog_delay_max_s": NaN,
+            "late_decisions": 0,
             "late_packets": 0,
             "corroborated": 0,
             "upgrades": 0,
@@ -177,6 +181,8 @@
             "unusable_windows": 2,
             "triggered_windows": 9,
             "stale_windows": 0,
+            "backlog_delay_max_s": NaN,
+            "late_decisions": 0,
             "late_packets": 0,
             "corroborated": 0,
             "upgrades": 0,
@@ -286,6 +292,8 @@
             "unusable_windows": 2,
             "triggered_windows": 41,
             "stale_windows": 0,
+            "backlog_delay_max_s": NaN,
+            "late_decisions": 0,
             "late_packets": 0,
             "corroborated": 0,
             "upgrades": 0,
@@ -694,6 +702,8 @@
             "unusable_windows": 2,
             "triggered_windows": 0,
             "stale_windows": 0,
+            "backlog_delay_max_s": NaN,
+            "late_decisions": 0,
             "late_packets": 0,
             "corroborated": 0,
             "upgrades": 0,
@@ -720,6 +730,8 @@
             "unusable_windows": 2,
             "triggered_windows": 11,
             "stale_windows": 0,
+            "backlog_delay_max_s": NaN,
+            "late_decisions": 0,
             "late_packets": 0,
             "corroborated": 0,
             "upgrades": 0,
@@ -858,6 +870,8 @@
             "unusable_windows": 2,
             "triggered_windows": 2,
             "stale_windows": 0,
+            "backlog_delay_max_s": NaN,
+            "late_decisions": 0,
             "late_packets": 0,
             "corroborated": 0,
             "upgrades": 0,
@@ -905,6 +919,8 @@
             "unusable_windows": 2,
             "triggered_windows": 10,
             "stale_windows": 0,
+            "backlog_delay_max_s": NaN,
+            "late_decisions": 0,
             "late_packets": 0,
             "corroborated": 0,
             "upgrades": 0,
@@ -1034,6 +1050,8 @@
             "unusable_windows": 3,
             "triggered_windows": 1,
             "stale_windows": 1,
+            "backlog_delay_max_s": 6.0,
+            "late_decisions": 0,
             "late_packets": 0,
             "corroborated": 0,
             "upgrades": 0,
@@ -1060,9 +1078,9 @@
               "suppressed": false,
               "suppression_reason": null,
               "lead_times_min": {
-                "Timure": 1.3333333333333335,
-                "Syabrubesi": 8.333333333333334,
-                "Bidur": 35.333333333333336
+                "Timure": 1.405333333333333,
+                "Syabrubesi": 8.405333333333333,
+                "Bidur": 35.40533333333333
               }
             }
           ]
@@ -1075,6 +1093,8 @@
             "unusable_windows": 3,
             "triggered_windows": 2,
             "stale_windows": 1,
+            "backlog_delay_max_s": 6.0,
+            "late_decisions": 0,
             "late_packets": 0,
             "corroborated": 0,
             "upgrades": 0,
@@ -1110,9 +1130,9 @@
               "suppressed": false,
               "suppression_reason": null,
               "lead_times_min": {
-                "Timure": 1.3333333333333335,
-                "Syabrubesi": 8.333333333333334,
-                "Bidur": 35.333333333333336
+                "Timure": 1.6183333333333332,
+                "Syabrubesi": 8.618333333333332,
+                "Bidur": 35.61833333333333
               }
             }
           ]

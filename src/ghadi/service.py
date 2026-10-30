@@ -82,6 +82,12 @@ class WindowObservation:
     segment_hv: float | None = None
     # A second station saw this onset at a time fitting a source in the region (#31).
     seismic_corroborated: bool = False
+    # Seconds from the onset to the moment the decision could be made, when the live
+    # loop measured it. It replaces the assumed warning latency for this decision, so a
+    # lead time is never quoted from a budget the feed did not keep.
+    decided_lag_s: float | None = None
+    # The window came from a backlog: its data arrived long after it was recorded.
+    late: bool = False
 
 
 @dataclass(frozen=True)
@@ -184,7 +190,9 @@ def process_window(
             detected_utc=obs.detected_utc,
             reach=reach,
             model_version=model_version,
-            warning_latency_s=warning_latency_s,
+            warning_latency_s=(
+                obs.decided_lag_s if obs.decided_lag_s is not None else warning_latency_s
+            ),
             config=cfg.travel,
         )
         lead_times_min = context.lead_times_min
@@ -260,6 +268,8 @@ class AuditRecord:
                 "segment_centroid_hz": obs.segment_centroid_hz,
                 "segment_hv": obs.segment_hv,
                 "corroborated": obs.seismic_corroborated,
+                "decided_lag_s": None if obs.decided_lag_s is None else round(obs.decided_lag_s, 1),
+                "late": obs.late,
                 "mass_movement_like": classification_like,
                 "sensor_alive": obs.seismic_sensor_alive,
                 "suppressed": suppression.suppressed,

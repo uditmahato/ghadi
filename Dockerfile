@@ -23,14 +23,19 @@ COPY pyproject.toml README.md LICENSE ./
 COPY src ./src
 COPY scripts ./scripts
 COPY data/catalog ./data/catalog
+# The catchment outline. The partner station check needs it to tell a source inside the
+# catchment from one outside.
+COPY data/geo ./data/geo
 COPY deploy/ghadi.toml /etc/ghadi/ghadi.toml
 
 RUN pip install --no-cache-dir . \
     && apt-get purge -y build-essential \
     && apt-get autoremove -y
 
-# The service runs as an unprivileged user and owns only its state directory.
-RUN useradd --system --create-home --home-dir /var/lib/ghadi ghadi \
+# The service runs as an unprivileged user and owns only its state directory. The user id
+# is fixed so a state directory mounted from the host can be given to it (chown 10001).
+RUN groupadd --system --gid 10001 ghadi \
+    && useradd --system --uid 10001 --gid 10001 --create-home --home-dir /var/lib/ghadi ghadi \
     && chown -R ghadi:ghadi /var/lib/ghadi
 USER ghadi
 VOLUME ["/var/lib/ghadi"]
