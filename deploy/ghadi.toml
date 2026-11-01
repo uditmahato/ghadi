@@ -3,11 +3,15 @@
 
 [station]
 key = "NK.KKN"
-server = "rtserve.iris.washington.edu:18000"
+server = "rtserve.earthscope.org:18000"
 # Stream the horizontal components too, for the H/V rule.
 horizontals = true
 # A second station whose triggers corroborate the first. Leave empty for none.
-partner = "IO.EVN"
+# Empty for now: IO.EVN has no live public feed. rtserve.earthscope.org does not carry it
+# (checked 2026-10-30). GEOFON (geofon.gfz.de:18000) lists it but sent no data from it in
+# the 24 hours before 2026-11-01. The service also opens only one server connection, so a
+# partner on another server cannot be used yet. Set "IO.EVN" again once both are fixed.
+partner = ""
 
 [reach]
 id = "TRISHULI-R07"

@@ -81,8 +81,13 @@ the record too.
 
 ## What failure looks like
 
+When `ok` is false, `reason` says why in plain words. The feed itself must deliver: `ok`
+turns false when no packet has come from the station for 180 s, counted from the start or
+from the last packet, and when more than 3 connections in a row have delivered nothing.
+
 | You see | It means | Do |
 |---|---|---|
+| `ok: false`, `packets_received` 0, `consecutive_silent_sessions` climbing soon after the start | The service never reached the station: the server name does not resolve, the server is down, or it does not carry the station | Check `server` in the settings. NK.KKN streams from `rtserve.earthscope.org:18000`; the old name `rtserve.iris.washington.edu` no longer exists. Then restart the service |
 | `ok: false`, `seconds_since_last_window` large | The feed stopped or the server dropped us | Nothing at first. The loop reconnects with a growing wait. If it stays down for an hour, check the server name in the settings and whether the machine has network |
 | `silent_sessions` climbing, `packets_received` not moving | The server answers but this station sends nothing | The station's live feed is down. Other stations on the same server may be fine. Nothing to fix here: the service waits longer between tries, up to a minute, and resumes when data returns. Note the outage; time without data is time the system saw nothing |
 | `reconnections` climbing every few minutes | The server keeps closing the connection | Report it. The public server may be rate limiting; do not add a second connection |

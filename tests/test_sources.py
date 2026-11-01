@@ -50,3 +50,31 @@ def test_a_session_that_delivers_is_not_counted_as_silent(monkeypatch: pytest.Mo
     source.stop()
     assert first.station == source.station_key
     assert source.silent_sessions == 0
+
+
+def test_silent_sessions_in_a_row_reset_when_a_session_delivers(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.delenv("GHADI_OFFLINE", raising=False)
+
+    class SilentThenOne(SeedLinkSource):
+        calls: int = 0
+
+        def _connect_and_stream(self, inbox: queue.Queue[Packet | None]) -> None:
+            self.calls += 1
+            if self.calls == 4:
+                self.packets_received += 1
+                now = datetime.now(tz=UTC)
+                inbox.put(Packet(self.station_key, now, 50.0, np.zeros(10), now))
+
+    source = SilentThenOne(max_backoff_s=0.01)
+    packets = source.packets()
+    next(packets)
+    deadline = time.monotonic() + 2.0
+    while (
+        source.reconnections < 4 or source.consecutive_silent_sessions
+    ) and time.monotonic() < deadline:
+        time.sleep(0.005)
+    source.stop()
+    assert source.silent_sessions == 3
+    assert source.consecutive_silent_sessions == 0

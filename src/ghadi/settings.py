@@ -26,7 +26,7 @@ DEFAULT_SETTINGS_TOML = """\
 
 [station]
 key = "NK.KKN"                     # one of the stations in ghadi.config.STATION_SITES
-server = "rtserve.iris.washington.edu:18000"
+server = "rtserve.earthscope.org:18000"
 horizontals = true                 # also stream the N and E components (issue #37)
 partner = "IO.EVN"                 # a second station whose triggers corroborate (#31), or ""
 
@@ -120,7 +120,7 @@ def parse_settings(text: str, *, source: Path | None = None) -> SiteSettings:
         state_dir = (source.parent / state_dir).resolve()
     return SiteSettings(
         station_key=key,
-        server=str(_get(station, "server", "rtserve.iris.washington.edu:18000")),
+        server=str(_get(station, "server", "rtserve.earthscope.org:18000")),
         horizontals=bool(_get(station, "horizontals", True)),
         partner_key=partner,
         reach=str(_get(raw.get("reach", {}), "id", "TRISHULI-R07")),

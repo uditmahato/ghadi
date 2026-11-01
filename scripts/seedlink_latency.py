@@ -32,7 +32,7 @@ import time
 from datetime import UTC, datetime
 from pathlib import Path
 
-DEFAULT_SERVER = "rtserve.iris.washington.edu:18000"
+DEFAULT_SERVER = "rtserve.earthscope.org:18000"
 DEFAULT_NSLC = ("NK", "KKN", "", "BHZ")
 
 
