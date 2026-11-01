@@ -63,6 +63,43 @@ def _canonical(payload: dict[str, Any]) -> str:
     return json.dumps(payload, sort_keys=True, separators=(",", ":"), default=str)
 
 
+# Names that are not a person. The placeholders are the ones an example command carries;
+# on 2026-11-01 two rejections went on the record as "<your name>" and "Your Name"
+# because a pasted example ran as written. The log is append only, so the check has to
+# happen before the line is written.
+_NOT_A_PERSON = frozenset(
+    {
+        "system",
+        "auto",
+        "ghadi",
+        "name",
+        "your name",
+        "your full name",
+        "full name",
+        "first last",
+        "firstname lastname",
+        "first name last name",
+        "user",
+        "username",
+        "todo",
+        "a. officer",  # the example name in scripts/outbox.py and docs/RUNBOOK.md
+    }
+)
+
+
+def _person(name: str, action: str) -> str:
+    """The name, cleaned, or a refusal when it does not name a person."""
+    cleaned = " ".join(name.split())
+    if not cleaned:
+        raise DeliveryError(f"{action} must name a person")
+    if any(c in cleaned for c in "<>[]{}") or cleaned.lower() in _NOT_A_PERSON:
+        raise DeliveryError(
+            f"{action} must name a person: {cleaned!r} is not a name. If it came from an "
+            "example command, put your own name in its place"
+        )
+    return cleaned
+
+
 @dataclass(frozen=True)
 class StagedAlert:
     """An alert waiting for a person. Immutable: approval covers exactly this content."""
@@ -328,13 +365,12 @@ class Outbox:
     # -- the gate --------------------------------------------------------------------------
     def approve(self, staged_id: str, approver: str, note: str = "") -> Approval:
         """A named person approves one specific message."""
-        if not approver.strip() or approver.strip().lower() in ("system", "auto", "ghadi"):
-            raise DeliveryError("an approval must name a person")
+        person = _person(approver, "an approval")
         staged = self.get(staged_id)
         approval = Approval(
             staged_id=staged.staged_id,
             alert_sha256=staged.alert_sha256,
-            approver=approver.strip(),
+            approver=person,
             approved_utc=_now(),
             note=note,
         )
@@ -342,12 +378,11 @@ class Outbox:
         return approval
 
     def reject(self, staged_id: str, approver: str, note: str = "") -> None:
-        if not approver.strip():
-            raise DeliveryError("a rejection must name a person")
+        person = _person(approver, "a rejection")
         staged = self.get(staged_id)
         self.log.append(
             "rejected",
-            {"staged_id": staged.staged_id, "approver": approver.strip(), "note": note},
+            {"staged_id": staged.staged_id, "approver": person, "note": note},
         )
 
     def deliver(self, staged_id: str, approval: Approval) -> list[Receipt]:
