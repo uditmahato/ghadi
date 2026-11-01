@@ -6,6 +6,11 @@ person with curl can ask "is it alive and is it seeing data" without reading log
 
 ``ok`` is false when the feed is stale, the audit chain is broken, or the service has
 not decided on a window for too long. A quiet river is not a failure; a quiet feed is.
+
+``feed_problems`` holds the two rules about the feed itself, because a window based rule
+alone is too slow to notice a feed that never started. On 2026-10-30 a deployment whose
+server name no longer resolved reported ok for five minutes with no packet received and
+ten failed connections.
 """
 
 from __future__ import annotations
@@ -13,12 +18,57 @@ from __future__ import annotations
 import json
 import threading
 from collections.abc import Callable
+from datetime import datetime
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from typing import Any
 
-__all__ = ["HealthServer"]
+__all__ = [
+    "MAX_CONSECUTIVE_SILENT_SESSIONS",
+    "NO_PACKET_GRACE_S",
+    "HealthServer",
+    "feed_problems",
+]
 
 Snapshot = Callable[[], dict[str, Any]]
+
+# The primary station sends a packet every few seconds per channel, and the measured
+# feed delay is under half a minute at the 95th percentile (docs/LATENCY.md). Three
+# minutes with nothing, after start or after the last packet, is not a quiet moment.
+NO_PACKET_GRACE_S = 180.0
+# A connection that ends with nothing delivered happens now and then. Several in a row
+# means the server name, the server, or the station on it is wrong or down.
+MAX_CONSECUTIVE_SILENT_SESSIONS = 3
+
+
+def feed_problems(
+    *,
+    now: datetime,
+    started_utc: datetime,
+    last_packet_utc: datetime | None,
+    consecutive_silent_sessions: int,
+    grace_s: float = NO_PACKET_GRACE_S,
+    max_silent_sessions: int = MAX_CONSECUTIVE_SILENT_SESSIONS,
+) -> list[str]:
+    """Plain reasons the live feed is not healthy, or an empty list when it is."""
+    problems: list[str] = []
+    quiet_s = (now - (last_packet_utc or started_utc)).total_seconds()
+    if quiet_s > grace_s:
+        if last_packet_utc is None:
+            problems.append(
+                f"no packets from the station in the {quiet_s:.0f} s since the service "
+                f"started (allowed {grace_s:.0f} s)"
+            )
+        else:
+            problems.append(
+                f"no packets from the station for {quiet_s:.0f} s (allowed {grace_s:.0f} s)"
+            )
+    if consecutive_silent_sessions > max_silent_sessions:
+        problems.append(
+            f"{consecutive_silent_sessions} connections in a row delivered nothing (allowed "
+            f"{max_silent_sessions}); check that the server name resolves and that the "
+            "server carries the station"
+        )
+    return problems
 
 
 class HealthServer:

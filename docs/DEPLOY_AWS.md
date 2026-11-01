@@ -97,6 +97,47 @@ sudo bash -c "curl -fsSL https://raw.githubusercontent.com/uditmahato/ghadi/main
 sudo systemctl restart ghadi-shadow
 ```
 
+The update keeps `/etc/ghadi/ghadi.toml` as it is, so a change to the default settings
+does not reach a machine that is already running. Make such a change by hand.
+
+### Machines set up before 2026-10-30: change the server name
+
+The old SeedLink server name `rtserve.iris.washington.edu` no longer exists. EarthScope
+moved the server to `rtserve.earthscope.org:18000`. A machine set up with the old name
+connects to nothing: the health check says no packets have arrived. Fix the settings
+file, then restart:
+
+```bash
+sudo sed -i 's/rtserve.iris.washington.edu/rtserve.earthscope.org/' /etc/ghadi/ghadi.toml
+```
+
+```bash
+sudo systemctl restart ghadi-shadow
+```
+
+Within a few minutes `curl -s http://127.0.0.1:8771/health` should show
+`packets_received` going up and `ok` true.
+
+### No partner station for now
+
+The settings file has `partner = ""`. The partner station IO.EVN has no live public feed
+today: `rtserve.earthscope.org` does not carry it (checked 2026-10-30), and GEOFON
+(`geofon.gfz.de:18000`) lists it but sent no data from it in the 24 hours before
+2026-11-01. The service also opens only one server connection, so it cannot read a
+partner from a second server yet. Without a partner the service still decides on every
+window; it only loses the corroboration from a second station.
+
+A machine set up before this change may still say `partner = "IO.EVN"`. That does no
+harm, but it never delivers anything. To match the new default:
+
+```bash
+sudo sed -i 's/^partner = "IO.EVN"/partner = ""/' /etc/ghadi/ghadi.toml
+```
+
+```bash
+sudo systemctl restart ghadi-shadow
+```
+
 ## Keep a copy of the record
 
 The audit log is the evidence the paper will rest on. Copy `/var/lib/ghadi` off the

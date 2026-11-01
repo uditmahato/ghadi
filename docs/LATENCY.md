@@ -25,6 +25,11 @@ end-to-end budget and the project must be re-scoped honestly.
 | **Interruptions > 120 s** | **0** |
 | Largest inter-packet gap | 22.1 s (normal packet cadence, not an outage) |
 
+The server name in the table was right on the day it was measured. EarthScope has since
+moved the server to `rtserve.earthscope.org:18000`, and the old name no longer resolves
+(found 2026-10-30). NK.KKN streams BHZ, BHN and BHE there. The scripts and the service now
+use the new name.
+
 Latency is measured as `now - packet_end_time`: the age of the newest sample in the
 packet when it reached us, which is the quantity the detection path actually pays.
 
@@ -67,7 +72,7 @@ outages is unknown and worth asking NEMRC directly (blocker B3): a five-month ar
 gap and a healthy real-time feed are not contradictory, but the combination needs
 explaining before either is relied on.
 
-To run the full measurement:
+To run the full measurement (against `rtserve.earthscope.org:18000`, the default):
 
 ```bash
 uv run python scripts/seedlink_latency.py --hours 168 --out latency_log.csv

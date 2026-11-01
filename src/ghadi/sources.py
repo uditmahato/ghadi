@@ -32,7 +32,7 @@ from .stream import Packet
 
 __all__ = ["ReplaySource", "SeedLinkSource", "packets_from_trace"]
 
-DEFAULT_SEEDLINK_SERVER = "rtserve.iris.washington.edu:18000"
+DEFAULT_SEEDLINK_SERVER = "rtserve.earthscope.org:18000"
 
 
 def packets_from_trace(
@@ -111,6 +111,12 @@ class SeedLinkSource:
     dropped_packets: int = field(default=0, init=False)
     packets_received: int = field(default=0, init=False)
     silent_sessions: int = field(default=0, init=False)  # connections that delivered nothing
+    # Silent connections since the last one that delivered. A server name that does not
+    # resolve, or a station the server does not carry, makes this climb without end.
+    consecutive_silent_sessions: int = field(default=0, init=False)
+    # Arrival time of the newest packet from the primary station. A health check compares
+    # it with the clock; packets from the horizontals or a partner do not count.
+    last_primary_packet_utc: datetime | None = field(default=None, init=False)
     _stop: threading.Event = field(default_factory=threading.Event, init=False, repr=False)
 
     @property
@@ -159,8 +165,10 @@ class SeedLinkSource:
                 self.reconnections += 1
                 if self.packets_received == before:
                     self.silent_sessions += 1
+                    self.consecutive_silent_sessions += 1
                     backoff = min(backoff * 2, self.max_backoff_s)
                 else:
+                    self.consecutive_silent_sessions = 0
                     backoff = 1.0
                 if self._stop.wait(backoff):
                     break
@@ -191,6 +199,8 @@ class SeedLinkSource:
                     received_utc=datetime.now(tz=UTC),
                 )
                 source.packets_received += 1
+                if key == source.station_key:
+                    source.last_primary_packet_utc = packet.received_utc
                 try:
                     inbox.put_nowait(packet)
                 except queue.Full:

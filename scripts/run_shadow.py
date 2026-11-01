@@ -46,7 +46,7 @@ from ghadi.config import (  # noqa: E402
 )
 from ghadi.delivery import FileSink, Outbox  # noqa: E402
 from ghadi.fdsn import CachedWaveformClient, WaveformRequest  # noqa: E402
-from ghadi.health import HealthServer  # noqa: E402
+from ghadi.health import HealthServer, feed_problems  # noqa: E402
 from ghadi.live import (  # noqa: E402
     FeedStats,
     LiveConfig,
@@ -262,8 +262,23 @@ class ShadowState:
             and last_feed is None
             and ((now - self.started_utc).total_seconds() > 600.0)
         )
+        problems: list[str] = []
+        if not chain_ok:
+            problems.append("the audit chain does not verify")
+        if self.mode == "live" and self.source is not None:
+            problems += feed_problems(
+                now=now,
+                started_utc=self.started_utc,
+                last_packet_utc=self.source.last_primary_packet_utc,
+                consecutive_silent_sessions=self.source.consecutive_silent_sessions,
+            )
+        if stale:
+            problems.append(f"no window for {feed_age_s:.0f} s (allowed 600 s)")
+        if never:
+            problems.append("no window since the service started more than 600 s ago")
         return {
-            "ok": chain_ok and not stale and not never,
+            "ok": not problems,
+            "reason": "; ".join(problems) if problems else None,
             "mode": self.mode,
             "shadow": True,
             "station": self.settings.station_key,
@@ -276,6 +291,14 @@ class ShadowState:
             "feed": self.stats.as_dict(),
             "reconnections": self.source.reconnections if self.source else 0,
             "silent_sessions": self.source.silent_sessions if self.source else 0,
+            "consecutive_silent_sessions": (
+                self.source.consecutive_silent_sessions if self.source else 0
+            ),
+            "last_packet_utc": (
+                self.source.last_primary_packet_utc.isoformat()
+                if self.source and self.source.last_primary_packet_utc
+                else None
+            ),
             "packets_received": self.source.packets_received if self.source else 0,
             "dropped_packets": self.source.dropped_packets if self.source else 0,
             "decisions": {

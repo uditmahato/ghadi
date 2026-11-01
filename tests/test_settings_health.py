@@ -3,13 +3,32 @@
 from __future__ import annotations
 
 import json
+import queue
+import socket
+import threading
+import time
 import urllib.request
+from datetime import UTC, datetime, timedelta
 from pathlib import Path
 
 import pytest
 
-from ghadi.health import HealthServer
+from ghadi.health import (
+    MAX_CONSECUTIVE_SILENT_SESSIONS,
+    NO_PACKET_GRACE_S,
+    HealthServer,
+    feed_problems,
+)
 from ghadi.settings import DEFAULT_SETTINGS_TOML, load_settings, parse_settings
+from ghadi.sources import SeedLinkSource
+from ghadi.stream import Packet
+
+
+class UnresolvableSource(SeedLinkSource):
+    """A server name that no longer exists: every connection fails before it starts."""
+
+    def _connect_and_stream(self, inbox: queue.Queue[Packet | None]) -> None:
+        raise socket.gaierror(socket.EAI_NONAME, "Name or service not known")
 
 
 def test_defaults_parse_and_point_at_a_known_station() -> None:
@@ -65,3 +84,82 @@ def test_health_endpoint_can_be_disabled() -> None:
     disabled.start()
     assert not disabled.running
     disabled.stop()
+
+
+START = datetime(2026, 10, 30, 6, 0, tzinfo=UTC)
+
+
+def test_a_feed_that_never_delivered_is_not_ok_after_the_grace_period() -> None:
+    # The 2026-10-30 deployment: five minutes up, nothing received.
+    early = feed_problems(
+        now=START + timedelta(seconds=NO_PACKET_GRACE_S - 1),
+        started_utc=START,
+        last_packet_utc=None,
+        consecutive_silent_sessions=0,
+    )
+    assert early == []
+    late = feed_problems(
+        now=START + timedelta(minutes=5),
+        started_utc=START,
+        last_packet_utc=None,
+        consecutive_silent_sessions=0,
+    )
+    assert len(late) == 1
+    assert "no packets" in late[0] and "since the service started" in late[0]
+
+
+def test_a_feed_that_stopped_is_not_ok_after_the_grace_period() -> None:
+    last = START + timedelta(hours=2)
+    assert not feed_problems(
+        now=last + timedelta(seconds=30),
+        started_utc=START,
+        last_packet_utc=last,
+        consecutive_silent_sessions=0,
+    )
+    stopped = feed_problems(
+        now=last + timedelta(seconds=NO_PACKET_GRACE_S + 60),
+        started_utc=START,
+        last_packet_utc=last,
+        consecutive_silent_sessions=0,
+    )
+    assert len(stopped) == 1
+    assert f"for {NO_PACKET_GRACE_S + 60:.0f} s" in stopped[0]
+
+
+def test_silent_sessions_in_a_row_past_the_limit_are_not_ok() -> None:
+    def problems(silent: int) -> list[str]:
+        return feed_problems(
+            now=START + timedelta(seconds=20),
+            started_utc=START,
+            last_packet_utc=None,
+            consecutive_silent_sessions=silent,
+        )
+
+    assert problems(MAX_CONSECUTIVE_SILENT_SESSIONS) == []
+    over = problems(MAX_CONSECUTIVE_SILENT_SESSIONS + 1)
+    assert len(over) == 1
+    assert "in a row delivered nothing" in over[0] and "server name" in over[0]
+
+
+def test_a_source_that_never_connects_reports_both_problems(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.delenv("GHADI_OFFLINE", raising=False)
+    source = UnresolvableSource(max_backoff_s=0.01)
+    thread = threading.Thread(target=lambda: list(source.packets()), daemon=True)
+    started = datetime.now(tz=UTC)
+    thread.start()
+    deadline = time.monotonic() + 5.0
+    while source.consecutive_silent_sessions <= 10 and time.monotonic() < deadline:
+        time.sleep(0.01)
+    source.stop()
+    thread.join(timeout=2)
+    assert source.packets_received == 0
+    assert source.last_primary_packet_utc is None
+    found = feed_problems(
+        now=started + timedelta(minutes=5),
+        started_utc=started,
+        last_packet_utc=source.last_primary_packet_utc,
+        consecutive_silent_sessions=source.consecutive_silent_sessions,
+    )
+    assert len(found) == 2
