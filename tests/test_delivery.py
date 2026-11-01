@@ -134,6 +134,41 @@ def test_the_approver_must_be_a_person(tmp_path: Path) -> None:
             box.approve(staged.staged_id, name)
 
 
+PLACEHOLDERS = (
+    "<your name>",
+    "Your Name",
+    "  your   name ",
+    "[name]",
+    "{approver}",
+    "TODO",
+    "A. Officer",
+)
+
+
+@pytest.mark.parametrize("name", PLACEHOLDERS)
+def test_a_placeholder_from_an_example_is_not_a_name(tmp_path: Path, name: str) -> None:
+    # 2026-11-01: two rejections went on the record as "<your name>" and "Your Name".
+    box = outbox(tmp_path)
+    staged = box.stage(warning_outcome())
+    assert staged is not None
+    with pytest.raises(DeliveryError, match="not a name"):
+        box.reject(staged.staged_id, name, "a reason")
+    with pytest.raises(DeliveryError, match="not a name"):
+        box.approve(staged.staged_id, name)
+    assert [e["kind"] for e in box.log.entries()] == ["staged"]
+    assert [s.staged_id for s in box.pending()] == [staged.staged_id]
+
+
+def test_a_real_name_is_recorded_cleaned(tmp_path: Path) -> None:
+    box = outbox(tmp_path)
+    staged = box.stage(warning_outcome())
+    assert staged is not None
+    box.reject(staged.staged_id, "  Udit   Kumar Mahato ", "distant earthquake")
+    rejected = [e for e in box.log.entries() if e["kind"] == "rejected"]
+    assert rejected[0]["approver"] == "Udit Kumar Mahato"
+    assert box.pending() == []
+
+
 def test_a_message_altered_on_disk_cannot_be_delivered(tmp_path: Path) -> None:
     box = outbox(tmp_path)
     staged = box.stage(warning_outcome())

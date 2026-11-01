@@ -72,12 +72,25 @@ Approve it only if you are the person allowed to forward advisories under the op
 agreement, and put your name on it. Approval delivers to the desk outbox directory and,
 if a webhook has been agreed with the receiving office, to that endpoint. Nothing else.
 
+In the commands below, replace the staged id, `A. Officer` and the note with the real
+ones before you run them. The record is append only: a line, once written, stays.
+
 ```bash
-python scripts/outbox.py --settings deploy/ghadi.toml approve <staged id> --by "Your Name" --note "why"
+python scripts/outbox.py --settings deploy/ghadi.toml approve GHADI-LIVE-3f2a9c1b0d4e --by "A. Officer" --note "why"
 ```
 
 If it should not go anywhere, reject it with your name and a reason. A rejection is on
 the record too.
+
+```bash
+python scripts/outbox.py --settings deploy/ghadi.toml reject GHADI-LIVE-3f2a9c1b0d4e --by "A. Officer" --note "why"
+```
+
+The outbox refuses a name that is plainly not a person, such as `system`, `<your name>`,
+`Your Name` or the example `A. Officer`, so a pasted example cannot go on the record by
+mistake. Any other wrong name it cannot catch. If one does go on the record, run the
+command again with the right name and a note saying it corrects the earlier line. The
+earlier line stays, and the correction sits next to it.
 
 ## What failure looks like
 
