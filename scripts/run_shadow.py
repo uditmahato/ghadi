@@ -27,10 +27,13 @@ from __future__ import annotations
 
 import argparse
 import json
+import signal
 import sys
 import threading
+from collections.abc import Callable
 from datetime import UTC, datetime, timedelta
 from pathlib import Path
+from types import FrameType
 from typing import Any
 
 import numpy as np
@@ -496,6 +499,7 @@ def main(argv: list[str] | None = None) -> int:
             state.write_status()
 
     threading.Thread(target=tick, name="ghadi-status", daemon=True).start()
+    signal.signal(signal.SIGTERM, stop_handler(seedlink))
 
     try:
         outcomes = run_shadow(
@@ -526,6 +530,27 @@ def main(argv: list[str] | None = None) -> int:
     if outbox.pending():
         print(f"waiting     : {len(outbox.pending())} staged alert(s); see scripts/outbox.py list")
     return 0
+
+
+def stop_handler(seedlink: SeedLinkSource | None) -> Callable[[int, FrameType | None], None]:
+    """What to do when systemd or docker asks the service to stop.
+
+    A process that ignores the request is killed 30 s later, and a kill can land while
+    a decision is being written to the audit log (2026-11-01: exit status 137 on a
+    restart). So the first request ends the live feed after the packet in hand, the
+    loop decides on the windows it already holds, and the summary prints. A second
+    request, or one during a replay, stops at once, as Ctrl-C does.
+    """
+    asked = threading.Event()
+
+    def handle(signum: int, frame: FrameType | None) -> None:
+        if seedlink is None or asked.is_set():
+            raise KeyboardInterrupt
+        asked.set()
+        print("stop requested; finishing the packet in hand", flush=True)
+        seedlink.stop()
+
+    return handle
 
 
 def _replace(settings: SiteSettings, **changes: Any) -> SiteSettings:
