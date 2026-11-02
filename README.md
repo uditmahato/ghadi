@@ -68,6 +68,31 @@ python scripts/outbox.py list
 
 For a real feed, `docs/RUNBOOK.md` explains how to run it for a season and what each failure looks like.
 
+## The live run, now
+
+Since 30 October 2026 the shadow service has run day and night on a small AWS machine,
+listening to the live Kakani station. It sends nothing. What it collects:
+
+| From | What | Why |
+|---|---|---|
+| EarthScope SeedLink, `rtserve.earthscope.org:18000` | Live ground motion from `NK.KKN`, all three directions, 50 samples a second | The only input the detector decides on |
+| USGS earthquake catalogue | Every published earthquake worldwide, every two minutes | To set distant earthquakes aside, or explain them after the fact |
+
+On the machine, in `/var/lib/ghadi`, it keeps a line for every minute of data with its
+delay (`windows.jsonl`), a hash chained line for every trigger and decision
+(`audit.jsonl`), and every alert it would have raised with the name of the person who
+approved or rejected it (`delivery.jsonl`).
+
+| Run length | Date | What it answers |
+|---|---|---|
+| 7 days | 9 November 2026 | Whether the feed is fast and steady enough to warn anyone |
+| 1 month | early December 2026 | The first live false alarm rate for a whole station month |
+| 6 months | May 2027 | The minimum result the plan asks for: a false alarm rate on six months of continuous data |
+| One full monsoon | October 2027 | The rule for any step past shadow mode |
+
+[docs/LIVE_RUN.md](docs/LIVE_RUN.md) has the full picture: the machine, every file, how
+each figure will be used, and a log of the run.
+
 ### Independent confirmation from radar imagery
 
 Satellites cannot give warning time. A free radar satellite passes over a spot only every 12 days, and cloud hides the ground for weeks in the monsoon, so no orbit can see a slope fail and tell a village in minutes. But radar sees through cloud, and it can confirm, after the fact, where the ground changed.
@@ -124,7 +149,7 @@ Hard limits, and they matter:
 * About 22 in every 100 real earthquakes look like the target on the two seismic features, now that the thresholds carry a 20 percent margin. A distant earthquake is set aside by the catalogue check, and a regional one still needs the other rules and the gauge to become a Warning.
 * On quiet days with no earthquakes the detector still raises false alarms. Measured on the short piece of signal it really decides on, Kakani gives about 14 a month and the Everest station about 89 a month. The goal is 1. Near Everest many of these may be real ice or rock falls that never became floods.
 * The river gauge data needs an agreement with Nepal's hydrology office that is not yet in place, so the gauge data here is made up for testing.
-* The live feed can be connected, but only in shadow mode. Nothing leaves the machine without a named person approving it. This is a research tool, not a working warning system.
+* The live feed is connected, but only in shadow mode. Nothing leaves the machine without a named person approving it. This is a research tool, not a working warning system.
 * The time from a slope failing to a decision is about two and a half minutes, not the one minute the earlier lead times assumed. The decision needs two minutes of signal after the onset by design. So the nearest village, Timure, gets about one and a half minutes of warning, not three.
 * Three rules together bring the false alarms close to the goal. The seismic shape test, a test of how much the ground moves sideways, and a second station seeing the same event at a fitting time give none a month at Kakani and about 6 a month at Everest, with the thresholds loosened by 20 percent so a real event a little different from 2026 is not missed. The second station was missing for up to a quarter of the cases, and a decision made without it falls back to the single station rate.
 * The gauge is still the only truly independent source, and it needs the data agreement.
@@ -206,14 +231,19 @@ uv run python scripts/serve.py
 
 ```
 src/ghadi/    the package: config, catalog, fdsn, features, detect, classify,
-              hydro, dhm, fusion, cap, travel, alerting, service
-scripts/      the demo, the dashboard, and helper tools
+              hydro, dhm, fusion, cap, travel, alerting, service, live, feedlog
+scripts/      the demo, the dashboard, the shadow service and its reports
+deploy/       the settings, container and systemd unit for the live machine
 data/         event definitions and the gitignored waveform cache
 experiments/  one folder per question, each with its findings
 tests/        the test suite, run with no network
-docs/         the plan, the report, the experiments, and dashboard images
+docs/         the plan, the report, the experiments, the live run, and images
+
+On the live machine:
+/etc/ghadi/ghadi.toml   the settings
+/var/lib/ghadi/         everything the live run records (see docs/LIVE_RUN.md)
 ```
 
 ## Status
 
-The software chain is complete and runs from end to end, offline. The parts still missing are not code. They are the live seismic feed, a data agreement for the river gauges, and more confirmed events to learn from.
+The software chain is complete and runs from end to end. Since 30 October 2026 it has run in shadow mode on the live seismic feed, and it will keep running through the 2027 monsoon (see [docs/LIVE_RUN.md](docs/LIVE_RUN.md)). The parts still missing are not code. They are a live second station, a data agreement for the river gauges, and more confirmed events to learn from.
