@@ -82,7 +82,15 @@ sudo docker exec ghadi-shadow python scripts/outbox.py --settings /etc/ghadi/gha
 sudo docker exec ghadi-shadow python scripts/outbox.py --settings /etc/ghadi/ghadi.toml verify
 ```
 
-The audit log, the status file and the outbox are on the machine in `/var/lib/ghadi`.
+The feed figures since a given time, across restarts (the latency run, and the hours
+the system was watching):
+
+```bash
+sudo docker exec ghadi-shadow python scripts/feed_report.py --settings /etc/ghadi/ghadi.toml --since 2026-11-02T00:00Z
+```
+
+The audit log, the window log, the status file and the outbox are on the machine in
+`/var/lib/ghadi`.
 
 ## Update to a newer version
 

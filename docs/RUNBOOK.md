@@ -17,6 +17,7 @@ status file after every window and answers a health check on a local port.
 | State directory | `state_dir` in the settings; `data/shadow` by default |
 | Audit log | `<state_dir>/audit.jsonl` |
 | Status file | `<state_dir>/status.json` |
+| Window log | `<state_dir>/windows.jsonl`: one line per window, quiet ones too, and one per start and stop |
 | Staged alerts | `<state_dir>/staged/` |
 | Delivery log | `<state_dir>/delivery.jsonl` |
 | Desk outbox | `<state_dir>/outbox/` |
