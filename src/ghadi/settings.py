@@ -67,6 +67,10 @@ class SiteSettings:
         return self.state_dir / "audit.jsonl"
 
     @property
+    def windows_path(self) -> Path:
+        return self.state_dir / "windows.jsonl"
+
+    @property
     def status_path(self) -> Path:
         return self.state_dir / "status.json"
 

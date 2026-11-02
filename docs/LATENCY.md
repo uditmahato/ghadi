@@ -103,6 +103,18 @@ short of the seven day run issue #8 asks for. The shadow service (`scripts/run_s
 live`) now measures the same quantity for every window it decides on, so a seven day
 shadow run is the seven day latency run.
 
+Until 2026-11-02 those per window delays were kept only in memory, so every restart
+started the figures again. The service now writes every window to `windows.jsonl` in its
+state directory, across restarts, and this prints the distribution over any period:
+
+```bash
+python scripts/feed_report.py --settings deploy/ghadi.toml --since 2026-11-02T00:00Z
+```
+
+It reports the delay percentiles from windows that arrived on time, the number of
+interruptions longer than 120 s and the longest one, how many times the service
+started, and the hours watched, which is what a false alarm rate is divided by.
+
 exp020 measured a different and larger number: the time from a trigger onset to a
 decision on the live path, about 156 s in the median and up to 186 s. That is the
 decision segment (120 s), the feed delay, and the wait for the window that holds the

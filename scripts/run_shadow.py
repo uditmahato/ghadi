@@ -49,6 +49,7 @@ from ghadi.config import (  # noqa: E402
 )
 from ghadi.delivery import FileSink, Outbox  # noqa: E402
 from ghadi.fdsn import CachedWaveformClient, WaveformRequest  # noqa: E402
+from ghadi.feedlog import FeedLog  # noqa: E402
 from ghadi.health import HealthServer, feed_problems  # noqa: E402
 from ghadi.live import (  # noqa: E402
     FeedStats,
@@ -171,6 +172,9 @@ class ShadowState:
         self.write_lock = threading.Lock()
         self.catalogue: RollingOrigins | None = None
         self.explained_later = 0
+        # Every window, quiet ones too, so the latency run and the time watched survive
+        # a restart and go into the backup with the rest of the state directory.
+        self.feed_log = FeedLog(settings.windows_path)
 
     def origins_at(self, feed_time: datetime) -> tuple[Origin, ...]:
         """The origins known now, and a second look at decisions already made."""
@@ -213,6 +217,7 @@ class ShadowState:
         with self.lock:
             self.last_window_utc = window.end_utc
             self.last_feed_utc = datetime.now(tz=UTC)
+        self.feed_log.window(verdict, received_utc=self.last_feed_utc)
         if not self.quiet:
             flag = " STALE" if verdict.stale else ""
             print(
@@ -489,6 +494,12 @@ def main(argv: list[str] | None = None) -> int:
     health_server.start()
     if health_server.running:
         print(f"health      : {health_server.url}")
+    state.feed_log.start(
+        station=settings.station_key,
+        server=settings.server if args.mode == "live" else "replay",
+        window_s=settings.window_s,
+        hop_s=settings.hop_s,
+    )
     state.write_status()
     # The status file is otherwise written only when a window arrives, so a silent feed
     # would leave it frozen and looking healthy. Keep it current through an outage.
@@ -521,12 +532,14 @@ def main(argv: list[str] | None = None) -> int:
         outcomes = []
     finally:
         stop_ticker.set()
+        state.feed_log.stop(feed=stats.as_dict())
         state.write_status()
         health_server.stop()
 
     summarise(outcomes, stats, health)
     print(f"audit       : {settings.audit_path}")
     print(f"status      : {settings.status_path}")
+    print(f"windows     : {settings.windows_path}")
     if outbox.pending():
         print(f"waiting     : {len(outbox.pending())} staged alert(s); see scripts/outbox.py list")
     return 0
