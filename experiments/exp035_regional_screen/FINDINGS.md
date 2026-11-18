@@ -12,11 +12,11 @@ Bhote Koshi event?
 **Answer.** It would explain them, but only after the alert has gone out, and as
 first proposed it would also have explained away the 2026 event.
 
-* **It explains about half the regional ones.** M4.4 within 20 degrees explains 4 of
-  the 8 live Advisories whose times are known (the two Xizang-Qinghai earthquakes, the
-  Tajikistan M4.4 and the Afghanistan M4.9), and 3 of NK.KKN's 4 noise false alarms
-  from exp018 against 0.4 expected by chance. It costs little: the channel is set aside
-  9.1 percent of 2025 instead of 8.4 percent.
+* **It explains about half the regional ones.** Of the 16 live Advisories the live
+  screen explains 6. M4.4 within 20 degrees explains 4 more (the two Xizang-Qinghai
+  earthquakes, the Tajikistan M4.4 and the Afghanistan M4.9), and 3 of NK.KKN's 4 noise
+  false alarms from exp018 against 0.4 expected by chance. It costs little: the channel
+  is set aside 9.1 percent of 2025 instead of 8.4 percent.
 * **It cannot act in time.** USGS published none of 395 regional origins (M4.0 and
   above within 30 degrees, August to November 2026) before NK.KKN would have decided on
   them. M5.0 and above came in 17 minutes in the median. M4.4 to M4.6 took 6 hours in
@@ -27,8 +27,8 @@ first proposed it would also have explained away the 2026 event.
   UTC, 38.5 minutes after the decision, as an **M4.4 earthquake** 0.78 degrees from
   NK.KKN. Every setting at M4.4 or M4.0 would have taken that origin, and with the
   fetch threshold lowered to match, the live service would have attached "explained by
-  an M4.4 earthquake" to the one real Advisory, inside the two hour look back. A screen that does that to the one positive
-  must not be used.
+  an M4.4 earthquake" to the one real Advisory, inside the two hour look back. A screen
+  that does that to the one positive must not be used.
 * **The current screen has the same flaw, more slowly.** USGS now lists the event as an
   M5.2 *landslide*, and EMSC lists it as M5.2 too. The live parser ignores the event
   type, so M5.0 within 80 degrees, today's rule, explains the event with the catalogue
@@ -52,35 +52,37 @@ fortnight, fetched once and cached beside `run.py`.
 
 Each setting keeps the live screen (M5.5 and above anywhere, M5.0 and above within 80
 degrees) and adds a regional tier. "Set aside" is the share of the time inside a phase
-window of an origin the setting counts. The live columns cover the 8 of 16 Advisories
-whose times this experiment had (see "What it does not show"). The noise columns give
+window of an origin the setting counts. The live columns count the 16 Advisories of 2
+to 18 November (onsets in the table further down). The noise columns give
 false alarm windows removed (every passing segment explained), with the number expected
 by chance from the set aside share in brackets. The last column says whether the
 setting explains the 2026 event through its first published origin.
 
 ### NK.KKN
 
-| Regional tier | Set aside, 2025 | Set aside, live fortnight | Live explained, catalogue now | In operation, 2 h look back | 7 day look back | With EMSC added | exp018 (of 4) | exp022, 20% margin (of 10) | exp022 with H/V (of 3) | Hides 2026 event |
+| Regional tier | Set aside, 2025 | Set aside, live fortnight | Live explained (of 16), catalogue now | In operation, 2 h look back | 7 day look back | With EMSC added | exp018 (of 4) | exp022, 20% margin (of 10) | exp022 with H/V (of 3) | Hides 2026 event |
 |---|---:|---:|---:|---:|---:|---:|---|---|---|---|
-| none (live screen) | 8.4% | 6.3% | 0 | 0 | 0 | 1 | 1 (0.3) | 3 (0.8) | 1 (0.3) | no |
-| M4.0 within 10° | 8.7% | 6.6% | 2 | 1 | 2 | 4 | 1 (0.3) | 3 (0.9) | 1 (0.3) | **yes** |
-| M4.0 within 15° | 9.3% | 7.0% | 4 | 3 | 4 | 6 | 2 (0.4) | 4 (0.9) | 1 (0.3) | **yes** |
-| M4.0 within 20° | 9.8% | 7.5% | 4 | 3 | 4 | 6 | 3 (0.4) | 5 (1.0) | 1 (0.3) | **yes** |
-| M4.0 within 30° | 10.8% | 7.8% | 4 | 3 | 4 | 6 | 3 (0.4) | 5 (1.1) | 1 (0.3) | **yes** |
-| M4.4 within 10° | 8.5% | 6.5% | 2 | 1 | 2 | 4 | 1 (0.3) | 3 (0.9) | 1 (0.3) | **yes** |
-| M4.4 within 15° | 8.8% | 6.7% | 4 | 3 | 4 | 6 | 2 (0.4) | 4 (0.9) | 1 (0.3) | **yes** |
-| **M4.4 within 20°** | **9.1%** | **7.1%** | **4** | **3** | **4** | **6** | **3 (0.4)** | **5 (0.9)** | **1 (0.3)** | **yes** |
-| M4.4 within 30° | 9.5% | 7.4% | 4 | 3 | 4 | 6 | 3 (0.4) | 5 (1.0) | 1 (0.3) | **yes** |
-| M4.7 within 10° | 8.5% | 6.4% | 1 | 1 | 1 | 2 | 1 (0.3) | 3 (0.8) | 1 (0.3) | no |
-| M4.7 within 15° | 8.5% | 6.4% | 2 | 2 | 2 | 3 | 2 (0.3) | 4 (0.9) | 1 (0.3) | no |
-| M4.7 within 20° | 8.6% | 6.5% | 2 | 2 | 2 | 3 | 3 (0.3) | 5 (0.9) | 1 (0.3) | no |
-| M4.7 within 30° | 8.7% | 6.5% | 2 | 2 | 2 | 3 | 3 (0.3) | 5 (0.9) | 1 (0.3) | no |
-| M5.0 within 10° to 30° | 8.4% | 6.3% | 0 | 0 | 0 | 1 | 1 (0.3) | 3 (0.8) | 1 (0.3) | no |
+| none (live screen) | 8.4% | 6.3% | 6 | 6 | 6 | 7 | 1 (0.3) | 3 (0.8) | 1 (0.3) | no |
+| M4.0 within 10° | 8.7% | 6.6% | 8 | 7 | 8 | 10 | 1 (0.3) | 3 (0.9) | 1 (0.3) | **yes** |
+| M4.0 within 15° | 9.3% | 7.0% | 10 | 9 | 10 | 12 | 2 (0.4) | 4 (0.9) | 1 (0.3) | **yes** |
+| M4.0 within 20° | 9.8% | 7.5% | 10 | 9 | 10 | 12 | 3 (0.4) | 5 (1.0) | 1 (0.3) | **yes** |
+| M4.0 within 30° | 10.8% | 7.8% | 11 | 9 | 11 | 13 | 3 (0.4) | 5 (1.1) | 1 (0.3) | **yes** |
+| M4.4 within 10° | 8.5% | 6.5% | 8 | 7 | 8 | 10 | 1 (0.3) | 3 (0.9) | 1 (0.3) | **yes** |
+| M4.4 within 15° | 8.8% | 6.7% | 10 | 9 | 10 | 12 | 2 (0.4) | 4 (0.9) | 1 (0.3) | **yes** |
+| **M4.4 within 20°** | **9.1%** | **7.1%** | **10** | **9** | **10** | **12** | **3 (0.4)** | **5 (0.9)** | **1 (0.3)** | **yes** |
+| M4.4 within 30° | 9.5% | 7.4% | 11 | 9 | 11 | 13 | 3 (0.4) | 5 (1.0) | 1 (0.3) | **yes** |
+| M4.7 within 10° | 8.5% | 6.4% | 7 | 7 | 7 | 8 | 1 (0.3) | 3 (0.8) | 1 (0.3) | no |
+| M4.7 within 15° | 8.5% | 6.4% | 8 | 8 | 8 | 9 | 2 (0.3) | 4 (0.9) | 1 (0.3) | no |
+| M4.7 within 20° | 8.6% | 6.5% | 8 | 8 | 8 | 9 | 3 (0.3) | 5 (0.9) | 1 (0.3) | no |
+| M4.7 within 30° | 8.7% | 6.5% | 8 | 8 | 8 | 9 | 3 (0.3) | 5 (0.9) | 1 (0.3) | no |
+| M5.0 within 10° to 30° | 8.4% | 6.3% | 6 | 6 | 6 | 7 | 1 (0.3) | 3 (0.8) | 1 (0.3) | no |
 
 M5.0 within 30 degrees or less adds nothing, because the live screen already takes M5.0
 to 80 degrees. "In operation" counts an Advisory only when the explaining origin's first
 USGS version arrived within the look back and at or above the fetch threshold the
-setting needs (M4.4 for an M4.4 tier; the live feed fetches M4.5 and above today).
+setting needs (M4.4 for an M4.4 tier; the live feed fetches M4.5 and above today). The
+live screen's row, 6 in operation, is what the live service actually recorded, which
+checks the method.
 
 **The guarded variant** (earthquakes only, nothing within 144 km of the 2026 source zone,
 on every tier) gives the same numbers in every column to within 0.1 point of set aside
@@ -102,23 +104,40 @@ windows, near what chance gives. Its false alarms are mostly something else.
 
 ### The live Advisories, one by one
 
-| Advisory | Time used | Check of 18 November | Live screen | M4.4 within 20° | Reaches the live feed | With EMSC |
-|---|---|---|---|---|---|---|
-| f2dc21c114fb | trigger 2 Nov 15:37:20 | M4.7 Xizang-Qinghai, confirmed | no | M4.7 us7000tuxi, 8.6° | yes, 49 min | yes |
-| 9fa4b8c7c1c7 | trigger 2 Nov 20:57:02 | M4.5 same area, confirmed | no | M4.5 us7000tuzz, 8.6° | **no, published after 72 h** | yes |
-| 1872091fcf8e | trigger 3 Nov 20:39:30 | unexplained | no | no | | no |
-| a0f7dc64d0e1 | staged 8 Nov 09:01:26 | unexplained | no | no | | no |
-| 63233343367b | staged 9 Nov 10:42:25 | M4.4 Tajikistan | no | M4.4 us7000tx3a, 14.4° | yes, 107 min, needs fetch at M4.4 | yes |
-| 9a5c5f35d62a | staged 14 Nov 03:53:27 | M4.5 central India (EMSC) | no | **not in USGS** | | yes, M4.5 |
-| e63638fbf4db | staged 15 Nov 21:46:19 | M4.4 Nepal-India or M4.9 Afghanistan | no | M4.9 us7000tyga, 14.9° | yes, 11 min | yes |
-| 0ed3a703d0e9 | staged 18 Nov 00:56:24 | M4.7 Tajikistan (EMSC) | no | **not in USGS** | | yes, now mb 5.3 |
+Onsets were recovered on 18 November without the shadow machine's state. "Archive":
+recomputed from the EarthScope archive as the first trigger before staging whose
+segment passes the rule. "Outbox": the after the fact line gives the predicted P and the
+offset to the onset in whole seconds, and the sign was chosen that puts staging 126 to
+186 s after the onset (both kept for 014ddc0634dc, where both fit). "Staged": only the
+staged time is known, and the onset is taken as 156 s earlier; each USGS match there
+holds for any onset from 126 to 186 s before staging (exp020's range).
 
-Where only the staged time was available, the trigger was taken as 156 s earlier, and
-each USGS match holds for any trigger from 126 to 186 s before staging (exp020's
-range). The two EMSC matches were checked at 156 s only. USGS lists no origin of M4.0
-or above within 32 degrees for the central India or the 18 November Tajikistan events;
-EMSC has them from GFZ and GSRAS. Under the live screen with EMSC added, the Tajikistan
-event (now mb 5.3) is already explained.
+| Advisory | Onset (November, UTC) | Basis | Check of 18 November | Live screen | M4.4 within 20° | Reaches the live feed | With EMSC |
+|---|---|---|---|---|---|---|---|
+| f2dc21c114fb | 2nd 15:37:20.5 | archive | M4.7 Xizang-Qinghai, confirmed | no | M4.7 us7000tuxi, 8.6° | yes, 49 min | yes |
+| 9fa4b8c7c1c7 | 2nd 20:57:02.5 | archive | M4.5 same area, confirmed | no | M4.5 us7000tuzz, 8.6° | **no, published after 72 h** | yes |
+| 42846552e395 | 3rd 16:56:57.4 | archive | M5.2 Volcano Islands | M5.2 us7000tvie, 50° | same | yes | yes |
+| 1872091fcf8e | 3rd 20:39:29.7 | archive | likely an uncatalogued local earthquake | no | no | | no |
+| 7ab98bdba682 | 3rd 21:40:28.5 | archive | M5.2 Kyrgyzstan | M5.2 us7000tvtj, 15° | same | yes | yes |
+| 0584f9419052 | 4th 20:12:53.4 | archive, approximate | weak teleseismic match | no | no (M4.5 at 29°, only within 30°) | | no |
+| a0f7dc64d0e1 | 8th 08:58:51 | staged | unexplained | no | no | | no |
+| 9acc43bdf571 | 8th 20:25:46 | staged | weak teleseismic match | no | no | | no |
+| 014ddc0634dc | 9th 09:57:33 or 09:57:49 | outbox | M5.2 Indonesia (now M5.4) | M5.4 us7000tx32, 53° | same | yes | yes |
+| 63233343367b | 9th 10:39:49 | staged | M4.4 Tajikistan | no | M4.4 us7000tx3a, 14.4° | yes, 107 min, needs fetch at M4.4 | yes |
+| 1a91da207b62 | 14th 03:05:00 | outbox | M5.2 Sumatra | M5.2 us7000ty6n, 25° | same | yes | yes |
+| 9a5c5f35d62a | 14th 03:50:51 | staged | M4.5 central India (EMSC) | no | **not in USGS** | | yes, M4.5 |
+| c4cfb5f4ce70 | 15th 15:54:33 | outbox | M5.1 Gorontalo | M5.1 us7000tyf4, 44° | same | yes | yes |
+| c64d00494256 | 15th 17:51:53 | outbox | M5.0 Afghanistan | M5.0 us7000tyfh, 15° | same | yes | yes |
+| e63638fbf4db | 15th 21:43:43 | staged | M4.4 Nepal-India or M4.9 Afghanistan | no | M4.9 us7000tyga, 14.9° | yes, 11 min | yes |
+| 0ed3a703d0e9 | 18th 00:53:48 | staged | M4.7 Tajikistan (EMSC) | no | **not in USGS** | | yes, now mb 5.3 |
+
+USGS lists no origin of M4.0 or above within 32 degrees for the central India or the 18
+November Tajikistan events; EMSC has them from GFZ and GSRAS. Under the live screen with
+EMSC added, the Tajikistan event (now mb 5.3) is already explained. Settings that reach
+30 degrees also take an M4.5 at 29 degrees for 0584f9419052, first published after the
+two hour look back. 1872091fcf8e shows P and then a stronger S about 25 s later on the
+waveform, so it is most likely a local earthquake about 200 km away that no catalogue
+lists; no catalogue screen explains it.
 
 ### When USGS publishes regional origins
 
@@ -150,13 +169,13 @@ NK.KKN runs from 02:51:31 to 02:57:16, so it covers both stations' onsets.
 
 * **The regional earthquakes are real causes of false alarms.** Under M4.4 within 20
   degrees, three of NK.KKN's four exp018 noise false alarms fall in regional windows,
-  against 0.4 expected by chance, and so do four of the eight timed live Advisories. The
-  18 November check was right about what they are.
+  against 0.4 expected by chance, and so do four of the ten live Advisories the live
+  screen leaves unexplained. The 18 November check was right about what they are.
 * **A lower screen does not lower the alert rate.** It changes how an alert is labelled
   an hour or a day later, not whether it is staged. Even counting labelled alerts as
   handled, M4.4 within 20 degrees takes the 16 Advisories from 6 explained to 9 in
-  operation (10 with a seven day look back). That leaves 6 or 7 in 0.52 station months,
-  12 to 13 a month, against a goal of 1.
+  operation, 10 with a seven day look back and 12 with EMSC added as well. That leaves
+  7, 6 or 4 in 0.52 station months: 13, 12 or 8 a month, against a goal of 1.
 * **The catalogue cannot tell this system's target from an earthquake.** The first
   report of the 2026 event was an M4.4 earthquake in exactly the place the system
   watches. Any catalogue screen that reaches the catchment will, sooner or later,
@@ -172,11 +191,12 @@ NK.KKN runs from 02:51:31 to 02:57:16, so it covers both stations' onsets.
 
 ## What it does not show
 
-* **Only 8 of the 16 live Advisories had times.** The shadow machine's audit log was not
-  available to this experiment. The 6 distant ones are explained by the live screen on
-  the live record, and every setting keeps that screen, so they stay explained. The two
-  weak teleseismic matches (0584f9419052, 9acc43bdf571) were not tested. Five of the
-  eight times are the staged time less 156 s, not the trigger.
+* **Ten of the 16 onsets are reconstructed and six are estimates.** The shadow
+  machine's audit log was not available. Six onsets were recomputed from the archive
+  (0584f9419052's recomputed trigger narrowly fails the rule, so it is approximate),
+  four were derived from the outbox lines to about a second, and six are the staged
+  time less 156 s. The exact values can be read on the machine with
+  `scripts/outbox.py show <id>`.
 * **The noise counts use today's catalogue.** Magnitudes are as revised, not as first
   published, and the noise windows (2024 to 2025) have no publication history, so they
   say what a screen would explain eventually, not in operation.
@@ -198,8 +218,8 @@ Nothing in the live service changes in this experiment. For the user to decide:
   aside or explain an alert. Today's M5.0 within 80 degrees tier already reaches the
   catchment, and a replay with today's catalogue would hide the 2026 event. The same
   check belongs in any experiment or replay that applies the screen to the 2026 event.
-* **Then, if wanted, M4.4 within 15 or 20 degrees, guarded.** Both explain the same 4 of
-  8 live Advisories; 20 degrees removes one more NK.KKN noise window for 0.3 points more
+* **Then, if wanted, M4.4 within 15 or 20 degrees, guarded.** Both explain the same 4
+  more live Advisories; 20 degrees removes one more NK.KKN noise window for 0.3 points more
   time. It needs the fetch threshold lowered from M4.5 to M4.4 (one of the four was
   first published at M4.4). It labels alerts afterwards and does not stop them.
 * **A longer look back for after the fact explanations** (days, not two hours) would

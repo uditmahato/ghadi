@@ -145,81 +145,132 @@ EVENT_2026_HOURS = (
 LONG_LOOKBACK_S = 7 * 24 * 3600.0
 EVENT_2026_USGS_ID = "us7000tbwb"
 
-# The 16 Advisories the live service staged on NK.KKN from 2 to 18 November 2026, as
-# checked on 2026-11-18 from the shadow machine's audit log and staged alerts. A time
-# that was not available to this experiment is None, and the record says so.
-LIVE_ADVISORIES: list[dict[str, Any]] = [
-    {
-        "id": "GHADI-LIVE-f2dc21c114fb",
-        "trigger_utc": "2026-11-02T15:37:20.540000+00:00",
-        "staged_utc": None,
-        "check_2026_11_18": "M4.7 us7000tuxi, Xizang-Qinghai border, confirmed in the signal",
-    },
-    {
-        "id": "GHADI-LIVE-9fa4b8c7c1c7",
-        "trigger_utc": "2026-11-02T20:57:02.460000+00:00",
-        "staged_utc": None,
-        "check_2026_11_18": "M4.5 us7000tuzz, same area, confirmed in the signal",
-    },
-    {
-        "id": "GHADI-LIVE-1872091fcf8e",
-        "trigger_utc": "2026-11-03T20:39:29.540000+00:00",
-        "staged_utc": None,
-        "check_2026_11_18": "unexplained, strong emergent low frequency signal",
-    },
-    {
-        "id": "GHADI-LIVE-a0f7dc64d0e1",
-        "trigger_utc": None,
-        "staged_utc": "2026-11-08T09:01:26+00:00",
-        "check_2026_11_18": "unexplained",
-    },
-    {
-        "id": "GHADI-LIVE-63233343367b",
-        "trigger_utc": None,
-        "staged_utc": "2026-11-09T10:42:25+00:00",
-        "check_2026_11_18": "catalogue timing only: M4.4 Tajikistan us7000tx3a",
-    },
-    {
-        "id": "GHADI-LIVE-9a5c5f35d62a",
-        "trigger_utc": None,
-        "staged_utc": "2026-11-14T03:53:27+00:00",
-        "check_2026_11_18": "catalogue timing only: M4.5 central India, EMSC 20261114_0000284",
-    },
-    {
-        "id": "GHADI-LIVE-e63638fbf4db",
-        "trigger_utc": None,
-        "staged_utc": "2026-11-15T21:46:19+00:00",
-        "check_2026_11_18": (
-            "catalogue timing only: M4.4 Nepal-India border EMSC 20261115_0000259 "
-            "or M4.9 Afghanistan us7000tyga"
-        ),
-    },
-    {
-        "id": "GHADI-LIVE-0ed3a703d0e9",
-        "trigger_utc": None,
-        "staged_utc": "2026-11-18T00:56:24+00:00",
-        "check_2026_11_18": "catalogue timing only: M4.7 Tajikistan, EMSC 20261118_0000021",
-    },
-    {
-        "id": "GHADI-LIVE-0584f9419052",
-        "trigger_utc": None,
-        "staged_utc": None,
-        "check_2026_11_18": "weak teleseismic match",
-    },
-    {
-        "id": "GHADI-LIVE-9acc43bdf571",
-        "trigger_utc": None,
-        "staged_utc": None,
-        "check_2026_11_18": "weak teleseismic match",
-    },
-] + [
-    {
-        "id": f"distant M5.0 to M5.2, {i} of 6",
-        "trigger_utc": None,
-        "staged_utc": None,
-        "check_2026_11_18": "explained by the current screen on the live record",
+
+# The 16 Advisories the live service staged on NK.KKN from 2 to 18 November 2026. Onsets
+# as recovered on 2026-11-18 without the shadow machine's state: "archive" recomputed
+# from the EarthScope archive (the first trigger before staging whose segment passes
+# the rule), "outbox" from the after the fact line (predicted P plus or minus the stated
+# offset, the sign that puts staging 126 to 186 s after onset; both signs where both
+# fit), and "staged" where only the staged time is known.
+def _adv(
+    short_id: str,
+    staged: str,
+    basis: str,
+    onsets: tuple[str, ...],
+    check: str,
+) -> dict[str, Any]:
+    return {
+        "id": f"GHADI-LIVE-{short_id}",
+        "staged_utc": f"2026-11-{staged}+00:00",
+        "onset_basis": basis,
+        "onsets_utc": [f"2026-11-{o}+00:00" for o in onsets],
+        "check_2026_11_18": check,
     }
-    for i in range(1, 7)
+
+
+LIVE_ADVISORIES: list[dict[str, Any]] = [
+    _adv(
+        "f2dc21c114fb",
+        "02T15:40:24",
+        "archive",
+        ("02T15:37:20.540",),
+        "M4.7 us7000tuxi, Xizang-Qinghai border, confirmed in the signal",
+    ),
+    _adv(
+        "9fa4b8c7c1c7",
+        "02T21:00:20",
+        "archive",
+        ("02T20:57:02.460",),
+        "M4.5 us7000tuzz, same area, confirmed in the signal",
+    ),
+    _adv(
+        "42846552e395",
+        "03T16:59:22",
+        "archive",
+        ("03T16:56:57.380",),
+        "explained live: M5.2 Volcano Islands",
+    ),
+    _adv(
+        "1872091fcf8e",
+        "03T20:42:23",
+        "archive",
+        ("03T20:39:29.740",),
+        "unexplained; P then a stronger S 25 s later, likely an uncatalogued local "
+        "earthquake about 200 km away",
+    ),
+    _adv(
+        "7ab98bdba682",
+        "03T21:43:20",
+        "archive",
+        ("03T21:40:28.540",),
+        "explained live: M5.2 Kyrgyzstan",
+    ),
+    _adv(
+        "0584f9419052",
+        "04T20:15:23",
+        "archive, approximate",
+        ("04T20:12:53.380",),
+        "weak teleseismic match; the recomputed trigger narrowly fails the rule",
+    ),
+    _adv("a0f7dc64d0e1", "08T09:01:26.800", "staged", (), "unexplained"),
+    _adv("9acc43bdf571", "08T20:28:22.400", "staged", (), "weak teleseismic match"),
+    _adv(
+        "014ddc0634dc",
+        "09T10:00:34.750",
+        "outbox",
+        ("09T09:57:33", "09T09:57:49"),
+        "explained live: M5.2 Indonesia",
+    ),
+    _adv(
+        "63233343367b",
+        "09T10:42:25.290",
+        "staged",
+        (),
+        "catalogue timing only: M4.4 Tajikistan us7000tx3a",
+    ),
+    _adv(
+        "1a91da207b62",
+        "14T03:07:16.350",
+        "outbox",
+        ("14T03:05:00",),
+        "explained live: M5.2 Sumatra",
+    ),
+    _adv(
+        "9a5c5f35d62a",
+        "14T03:53:27.440",
+        "staged",
+        (),
+        "catalogue timing only: M4.5 central India, EMSC 20261114_0000284",
+    ),
+    _adv(
+        "c4cfb5f4ce70",
+        "15T15:57:31.840",
+        "outbox",
+        ("15T15:54:33",),
+        "explained live: M5.1 Gorontalo",
+    ),
+    _adv(
+        "c64d00494256",
+        "15T17:54:21.870",
+        "outbox",
+        ("15T17:51:53",),
+        "explained live: M5.0 Afghanistan",
+    ),
+    _adv(
+        "e63638fbf4db",
+        "15T21:46:19.340",
+        "staged",
+        (),
+        "catalogue timing only: M4.4 Nepal-India border EMSC 20261115_0000259 "
+        "or M4.9 Afghanistan us7000tyga",
+    ),
+    _adv(
+        "0ed3a703d0e9",
+        "18T00:56:24.170",
+        "staged",
+        (),
+        "catalogue timing only: M4.7 Tajikistan, EMSC 20261118_0000021",
+    ),
 ]
 
 
@@ -554,6 +605,15 @@ def publication(rows: list[Row]) -> dict[str, dict[str, Any]]:
         and epicentral_distance_deg(KAKANI.latitude, KAKANI.longitude, r.origin) <= 30.0
         and r.origin.magnitude >= REGIONAL_MIN_MAG
     ]
+    # And every M5.0 and above in the live fortnight, so the live screen's own after the
+    # fact explanations can be checked against the feed's look back.
+    wanted += [
+        r
+        for r in rows
+        if LIVE_PERIOD[0] <= r.origin.time_utc < LIVE_PERIOD[1]
+        and r.origin.magnitude >= 5.0
+        and r not in wanted
+    ]
     ids = [r.origin.event_id for r in wanted]
     if EVENT_2026_USGS_ID not in ids:
         ids.append(EVENT_2026_USGS_ID)
@@ -608,9 +668,11 @@ def latency_summary(rows: list[Row], pub: dict[str, dict[str, Any]]) -> dict[str
         if event_id == EVENT_2026_USGS_ID or event_id not in by_id or not rec["origin_versions"]:
             continue
         o = by_id[event_id].origin
+        deg = epicentral_distance_deg(KAKANI.latitude, KAKANI.longitude, o)
+        if deg > 30.0 or not LATENCY_PERIOD[0] <= o.time_utc < LATENCY_PERIOD[1]:
+            continue
         first = rec["origin_versions"][0]
         published = datetime.fromisoformat(first["published_utc"])
-        deg = epicentral_distance_deg(KAKANI.latitude, KAKANI.longitude, o)
         decision = o.time_utc + timedelta(seconds=p_travel_time_s(deg) + DECISION_AFTER_ONSET_S)
         per_event.append(
             {
@@ -700,8 +762,9 @@ def scr_fetch_min(scr: Screen) -> float:
 
 # --- live advisories ------------------------------------------------------------------
 def live_times(rec: dict[str, Any]) -> tuple[list[datetime], str] | None:
-    if rec["trigger_utc"]:
-        return [datetime.fromisoformat(rec["trigger_utc"])], "trigger"
+    """The onset to judge first, then the other candidates it could have been."""
+    if rec["onsets_utc"]:
+        return [datetime.fromisoformat(t) for t in rec["onsets_utc"]], rec["onset_basis"]
     if rec["staged_utc"]:
         staged = datetime.fromisoformat(rec["staged_utc"])
         ts = [
