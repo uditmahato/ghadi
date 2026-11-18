@@ -54,7 +54,7 @@ its own, so nothing waits a year.
 
 | Run length | Date reached | What it answers | Where the result goes |
 |---|---|---|---|
-| **7 days** | 2026-11-09, after 08:14 | Is the feed fast and steady enough for warning? The full week of feed delays and outages, which issue #8 asks for. Until now only 7 hours were measured | [LATENCY.md](LATENCY.md) |
+| **7 days** | 2026-11-09, after 08:14. **Done**, read at 15.8 days | Is the feed fast and steady enough for warning? **Yes**: no break longer than 120 s, window delay 22.5 s in the median and 26.0 s at the 95th percentile | [LATENCY.md](LATENCY.md) |
 | **1 month** | about 2026-12-02 | The first false alarm rate measured live for a whole station month. The current figures rest on about a third of a station month | [RESEARCH_REPORT.md](RESEARCH_REPORT.md), the paper |
 | **6 months** | about 2027-05-02 | The handoff's minimum viable result: a false alarm rate on at least six months of continuous NK.KKN data, across the dry season and the winter | The paper |
 | **One full monsoon** | about October 2027 | The project's own rule: no step past shadow mode, not even advisories to officials, without at least one full monsoon in shadow. The monsoon is when floods happen and the ground is noisiest | The case for tier T1 |
@@ -67,8 +67,8 @@ record, so outages are counted, not hidden.
 * **Latency.** The delay of every window, from the station to the machine, gives the
   distribution the warning time is built on. If the delay often passed 120 s, there
   would be no time left to warn anyone, and the project would have to be re-scoped.
-  In the first 19 minutes of the window log it was about 23 s in the median and 25.5 s
-  at the 95th percentile.
+  Over the first 15.8 days of the window log it was 22.5 s in the median, 26.0 s at the
+  95th percentile and 27.4 s at the 99th, with no break longer than 120 s.
 * **False alarm rate.** Triggers that turn into an alert, divided by the hours the
   system was really watching, give alarms per station month. The goal is 1. Until now it
   was measured only on archived data.
@@ -106,3 +106,4 @@ sudo docker exec ghadi-shadow python scripts/outbox.py --settings /etc/ghadi/gha
 | 2026-10-30 | Service started on the machine. The old server name `rtserve.iris.washington.edu` no longer existed, so it was moved to `rtserve.earthscope.org` |
 | 2026-10-31 | One alert staged: an M6.0 earthquake 352 km deep under Japan, published after the decision. Later rejected on the record by Udit Kumar Mahato |
 | By 2026-11-02 | Clean stop on restart, a guard against placeholder names in the outbox, and the window log added. The window log starts at 08:14, so the seven day count starts there |
+| 2026-11-18 | First fortnight read on the machine, 2 November 08:14 to 18 November 03:46: 378.97 hours watched of about 379.5, 2 service starts, no break longer than 120 s, window delay 22.5 s median and 26.0 s at the 95th percentile. 325 triggers decided, audit chain intact. 16 advisories staged, all held below WARNING because no partner station can corroborate; 6 explained afterwards by distant M5.0 to M5.2 earthquakes published late, 10 not yet explained. That is about 31 advisories a station month, 19 counting only the unexplained, against a goal of 1. Provisional: the month figure is due about 2026-12-02 |

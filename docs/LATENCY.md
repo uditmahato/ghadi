@@ -6,7 +6,51 @@ question that decides whether GHADI is a real-time warning system or a retrospec
 analysis project. If latency exceeds roughly 120 s there is no room left in the 180 s
 end-to-end budget and the project must be re-scoped honestly.
 
-## Result — 2026-09-02, 3.4 hours continuous
+## Result, 2026-11-02 to 2026-11-18: 15.8 days on the live shadow service
+
+**The seven day run issue #8 asks for is done, at more than twice that length. The feed
+is fast and steady enough for warning: no break longer than 120 s in 15.8 days.**
+
+| Quantity | Value |
+|---|---|
+| Server | `rtserve.earthscope.org:18000` (SeedLink) |
+| Stream | `NK.KKN..BHZ`, `BHN`, `BHE`, 50 Hz |
+| Period | 2026-11-02 08:14 to 2026-11-18 03:46 UTC, 15.8 days |
+| Windows decided | 22,773, one a minute, each 4 minutes long |
+| Windows with usable data | 22,738 |
+| **Hours watched** | **378.97** of about 379.5 (99.8 percent) |
+| Service starts | 2, both on the record |
+| Windows that arrived late (stale) | 9 |
+| Median window delay | **22.48 s** |
+| 95th percentile | **25.98 s** |
+| 99th percentile | 27.35 s |
+| Maximum | 168.63 s |
+| **Interruptions > 120 s** | **0** |
+
+Read on the machine with:
+
+```bash
+sudo docker exec ghadi-shadow python scripts/feed_report.py --settings /etc/ghadi/ghadi.toml --since 2026-11-02T08:14Z
+```
+
+**The window delay is not the same number as the packet delay below.** Each window
+records the delay of the latest packet in it, so the window figure is the worst packet
+of each minute, not a typical packet. That is why its median (22.5 s) sits above the
+3.4 hour run's packet median (15.8 s) while its 95th percentile (26.0 s) is close to that
+run's packet maximum (27.1 s). The window delay is the one the decision pays, because a
+window cannot be decided until its last packet has arrived.
+
+**What it means for warning.** In 99 windows of 100 the data was at most 27.4 s old when
+it was decided on. The one 169 s case is a single window. exp020's 156 s from trigger
+onset to decision already includes a feed delay of this size, so the 160 s warning
+latency in the configuration stands.
+
+**What this run still does not cover.** The monsoon, when telecom links fail and when
+warning matters most, and a real event, when the station may be shaken or its link cut.
+The run continues to the end of the 2027 monsoon to measure both (see
+[LIVE_RUN.md](LIVE_RUN.md)).
+
+## Earlier result, 2026-09-02: 3.4 hours continuous
 
 **The feed exists, it is reachable, it is fast, and over this window it did not drop.**
 
@@ -50,7 +94,10 @@ An earlier 3.5-minute smoke test gave median 16.0 s and p95 22.3 s. The 3.4-hour
 reproduces that almost exactly (15.8 / 22.8), which is reassuring about the short
 sample but does not extend its reach — see below.
 
-## This still is not issue 0.1
+## Why the 3.4 hour run was not enough
+
+The 15.8 day run above now answers the first three points below. The section is kept so
+the difference between a partial run and the measurement stays visible.
 
 Issue 0.1 asks for a **7-day** distribution. This is 3.4 hours, ended when the
 collecting process was killed (exit code 4, no error output — the run did not crash on
